@@ -6,14 +6,39 @@ option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
 project(Helios-Mercury LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
+configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config.ini COPYONLY)
+
+find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
-qt_add_executable(Helios-Mercury src/main.cpp)
+qt_add_executable(Helios-Mercury src/main.cpp
+    src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
+    src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
+    src/PacketFactory/IPacket.h
+    src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
+    src/PacketFactory/Packets/B3Packet.h src/PacketFactory/Packets/B3Packet.cpp
+    src/PacketFactory/Packets/BatteryFaultsPacket.h src/PacketFactory/Packets/BatteryFaultsPacket.cpp
+    src/PacketFactory/Packets/BatteryPacket.h src/PacketFactory/Packets/BatteryPacket.cpp
+    src/PacketFactory/Packets/KeyMotorPacket.h src/PacketFactory/Packets/KeyMotorPacket.cpp
+    src/PacketFactory/Packets/MbmsPacket.h src/PacketFactory/Packets/MbmsPacket.cpp
+    src/PacketFactory/Packets/MotorDetailsPacket.h src/PacketFactory/Packets/MotorDetailsPacket.cpp
+    src/PacketFactory/Packets/MpptPacket.h src/PacketFactory/Packets/MpptPacket.cpp
+    src/PacketFactory/Packets/ProximitySensorsPacket.h src/PacketFactory/Packets/ProximitySensorsPacket.cpp
+    src/PacketFactory/Packets/TelemetryPacket.h src/PacketFactory/Packets/TelemetryPacket.cpp
+    src/MessageAggregator/MessageAggregator.h src/MessageAggregator/MessageAggregator.cpp
+    src/MessageTransmitter/MessageTransmitter.h src/MessageTransmitter/MessageTransmitter.cpp
+    src/Config/ConfigManager.h src/Config/ConfigManager.cpp
+    src/Config/JsonDefinitions.h
+    src/Config/PacketDefinitions.h
+    src/Mercury.h src/Mercury.cpp
+    src/Config/PropertyDefinitions.h
+)
 
 qt_add_resources(Helios-Mercury "configuration"
     PREFIX "/"
@@ -26,6 +51,8 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    Qt6::Mqtt
+    Qt6::SerialPort
 )
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
