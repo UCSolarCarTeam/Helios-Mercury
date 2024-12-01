@@ -3,6 +3,11 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QLockFile>
+#include <QDir>
+#include <QDebug>
+
+#include "Mercury.h"
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
@@ -10,30 +15,23 @@
 
 int main(int argc, char *argv[])
 {
-    set_qt_environment();
+    QString tmpDir = QDir::tempPath();
+    QLockFile lockFile(tmpDir + "/heliosHermes.lock");
 
-    QGuiApplication app(argc, argv);
-
-    QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
-    QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreated,
-        &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
-
-    engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
-    engine.addImportPath(":/");
-
-    engine.load(url);
-
-    if (engine.rootObjects().isEmpty()) {
-        return -1;
+    if (!lockFile.tryLock(100))
+    {
+        qDebug() << "An instance of Hermes is already running";
+        qDebug() << "If you are sure you only have one instance of Hermes running, please delete the file /tmp/heliosHermes.lock.";
+        qDebug() << "Exiting - Get it right next time...";
+        return 1;
     }
+    else
+    {
+        qDebug() << "No other instance of Hermes exists.";
+        qDebug() << "Launching Hermes...";
+    }
+    
+    Mercury app(argc, argv);
 
     return app.exec();
 }
