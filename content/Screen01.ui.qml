@@ -26,16 +26,16 @@ Rectangle {
 
     Column {
         Text {
-            text: "PROX 1: " + prox.ProximitySensor1
+            text: "PROX 1: " + proximitySensors.ProximitySensor1
         }
         Text {
-            text: "PROX 2: " + prox.ProximitySensor2
+            text: "PROX 2: " + proximitySensors.ProximitySensor2
         }
         Text {
-            text: "PROX 3: " + prox.ProximitySensor3
+            text: "PROX 3: " + proximitySensors.ProximitySensor3
         }
         Text {
-            text: "PROX 4: " + prox.ProximitySensor4
+            text: "PROX 4: " + proximitySensors.ProximitySensor4
         }
     }
 
