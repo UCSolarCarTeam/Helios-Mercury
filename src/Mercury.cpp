@@ -30,9 +30,35 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     MessageAggregator* messageAggregator = new MessageAggregator(messageTransmitter, packetFactory);
     messageAggregator->startTransmission();
 
-    ProximitySensorsPacket &proxPack = packetFactory->getProximitySensorsPacket();
+    //initialize QML engine and set context properties
+    KeyMotorPacket &keyMotorPacket = packetFactory->getKeyMotorPacket();
+    MotorDetailsPacket &motorDetails0Packet = packetFactory->getMotorDetailsPacket(0);
+    MotorDetailsPacket &motorDetails1Packet = packetFactory->getMotorDetailsPacket(1);
+    B3Packet &b3Packet = packetFactory->getB3Packet();
+    TelemetryPacket &telemetryPacket = packetFactory->getTelemetryPacket();
+    BatteryFaultsPacket &batteryFaultsPacket = packetFactory->getBatteryFaultsPacket();
+    BatteryPacket &batteryPacket = packetFactory->getBatteryPacket();
+    MpptPacket &mppt0Packet = packetFactory->getMpptPacket(0);
+    MpptPacket &mppt1Packet = packetFactory->getMpptPacket(1);
+    MpptPacket &mppt2Packet = packetFactory->getMpptPacket(2);
+    MpptPacket &mppt3Packet = packetFactory->getMpptPacket(3);
+    MbmsPacket &mbmsPacket = packetFactory->getMbmsPacket();
+    ProximitySensorsPacket &proximitySensorsPacket = packetFactory->getProximitySensorsPacket();
 
-    engine_.rootContext()->setContextProperty("prox", &proxPack);
+
+    engine_.rootContext()->setContextProperty("keyMotor", &keyMotorPacket);
+    engine_.rootContext()->setContextProperty("motorDetails0", &motorDetails0Packet);
+    engine_.rootContext()->setContextProperty("motorDetails1", &motorDetails1Packet);
+    engine_.rootContext()->setContextProperty("b3", &b3Packet);
+    engine_.rootContext()->setContextProperty("telemetry", &telemetryPacket);
+    engine_.rootContext()->setContextProperty("batteryFaults", &batteryFaultsPacket);
+    engine_.rootContext()->setContextProperty("battery", &batteryPacket);
+    engine_.rootContext()->setContextProperty("mppt0", &mppt0Packet);
+    engine_.rootContext()->setContextProperty("mppt1", &mppt1Packet);
+    engine_.rootContext()->setContextProperty("mppt2", &mppt2Packet);
+    engine_.rootContext()->setContextProperty("mppt3", &mppt3Packet);
+    engine_.rootContext()->setContextProperty("mbms", &mbmsPacket);
+    engine_.rootContext()->setContextProperty("proximitySensors", &proximitySensorsPacket);
 
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
     QObject::connect(
