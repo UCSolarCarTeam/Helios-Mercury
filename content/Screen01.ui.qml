@@ -38,4 +38,22 @@ Rectangle {
             text: "PROX 4: " + proximitySensors.ProximitySensor4
         }
     }
+
+    Column {
+        Text {
+            text: "Motor Setpoint: " + keyMotor.MotorSetpoint
+        }
+        Text {
+            text: "Control Mode: " + keyMotor.ControlMode
+        }
+        Text {
+            text: "Motor Mode: " + keyMotor.MotorMode
+        }
+        Text {
+            text: "Software Enable: " + keyMotor.SoftwareEnable
+        }
+        Text {
+            text: "Debug Mode: " + keyMotor.DebugMode
+        }
+    }
 }
