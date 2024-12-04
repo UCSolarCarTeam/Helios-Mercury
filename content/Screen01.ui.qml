@@ -25,6 +25,11 @@ Rectangle {
     }
 
     Column {
+        id: column1
+        anchors.left: parent.left
+        anchors.top: parent.top
+        spacing: 10
+
         Text {
             text: "PROX 1: " + proximitySensors.ProximitySensor1
         }
@@ -40,6 +45,12 @@ Rectangle {
     }
 
     Column {
+        id: column2
+        anchors.left: column1.right
+        anchors.top: parent.top
+        anchors.leftMargin: 20
+        spacing: 10
+        
         Text {
             text: "Motor Setpoint: " + keyMotor.MotorSetpoint
         }
