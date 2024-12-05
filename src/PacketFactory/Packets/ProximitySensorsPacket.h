@@ -3,9 +3,8 @@
 
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
-#include <QObject>
 
-class ProximitySensorsPacket : public QObject, public IPacket {
+class ProximitySensorsPacket : public IPacket {
     Q_OBJECT
     DEFINE_PROPERTY(unsigned short, ProximitySensor1)
     DEFINE_PROPERTY(unsigned short, ProximitySensor2)

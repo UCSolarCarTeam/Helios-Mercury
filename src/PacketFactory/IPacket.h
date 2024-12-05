@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include <QByteArray>
 
-class IPacket {
+class IPacket : public QObject {
 public:
     virtual ~IPacket() {}
 
