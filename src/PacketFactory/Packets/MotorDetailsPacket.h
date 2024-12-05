@@ -2,106 +2,107 @@
 #define MOTORDETAILSPACKET_H
 
 #include "../IPacket.h"
+#include "../../Config/PropertyDefinitions.h"
 
 class MotorDetailsPacket : public IPacket {
+    Q_OBJECT
+    DEFINE_PROPERTY(short, ControlValue)
+
+    DEFINE_PROPERTY(bool, ControlMode)
+    DEFINE_PROPERTY(bool, MotorMode)
+    DEFINE_PROPERTY(bool, SoftwareEnable)
+    DEFINE_PROPERTY(bool, DebugMode)
+
+    DEFINE_PROPERTY(short, CurrentMotorTorque)
+    DEFINE_PROPERTY(short, CurrentRpmValue)
+    DEFINE_PROPERTY(char, MotorTemperature)
+    DEFINE_PROPERTY(short, InverterPeakCurrent)
+    DEFINE_PROPERTY(short, CurrentMotorPower)
+    DEFINE_PROPERTY(unsigned short, AbsuluteAngle)
+
+    // Warning Flags
+    DEFINE_PROPERTY(bool, MotorAboutToStall)
+    DEFINE_PROPERTY(bool, DelayInReadingTempSensor)
+    DEFINE_PROPERTY(bool, DelayInReadingPosSensor)
+    DEFINE_PROPERTY(bool, Inverter1TempVeryHigh)
+    DEFINE_PROPERTY(bool, Inverter2TempVeryHigh)
+    DEFINE_PROPERTY(bool, Inverter3TempVeryHigh)
+    DEFINE_PROPERTY(bool, Inverter4TempVeryHigh)
+    DEFINE_PROPERTY(bool, Inverter5TempVeryHigh)
+    DEFINE_PROPERTY(bool, Inverter6TempVeryHigh)
+    DEFINE_PROPERTY(bool, CpuTemperatureVeryHigh)
+    DEFINE_PROPERTY(bool, HallTemperatureVeryHigh)
+    DEFINE_PROPERTY(bool, DclinkTemperatureVeryHigh)
+    DEFINE_PROPERTY(bool, DelayInDclinkCommunication)
+    DEFINE_PROPERTY(bool, Inverter1OverCurrentWarning)
+    DEFINE_PROPERTY(bool, Inverter2OverCurrentWarning)
+    DEFINE_PROPERTY(bool, Inverter3OverCurrentWarning)
+    DEFINE_PROPERTY(bool, Inverter4OverCurrentWarning)
+    DEFINE_PROPERTY(bool, Inverter5OverCurrentWarning)
+    DEFINE_PROPERTY(bool, Inverter6OverCurrentWarning)
+    DEFINE_PROPERTY(bool, DcOvervoltageWarning)
+    DEFINE_PROPERTY(bool, DcUndervoltageWarning)
+    DEFINE_PROPERTY(bool, CanCommsTimeout)
+    DEFINE_PROPERTY(bool, Inverter1FaultWarning)
+    DEFINE_PROPERTY(bool, Inverter2FaultWarning)
+    DEFINE_PROPERTY(bool, Inverter3FaultWarning)
+    DEFINE_PROPERTY(bool, Inverter4FaultWarning)
+    DEFINE_PROPERTY(bool, Inverter5FaultWarning)
+    DEFINE_PROPERTY(bool, Inverter6FaultWarning)
+    DEFINE_PROPERTY(bool, CanSendWarning)
+    DEFINE_PROPERTY(bool, LostFramesOnCanBusWarning)
+    DEFINE_PROPERTY(bool, OverspeedWarning)
+    DEFINE_PROPERTY(bool, CpuOverload)
+    DEFINE_PROPERTY(bool, TorqueLimited)
+    DEFINE_PROPERTY(bool, StartAtHighRpm)
+
+    // Error Flags
+    DEFINE_PROPERTY(bool, InitError)
+    DEFINE_PROPERTY(bool, SettingsNotFound)
+    DEFINE_PROPERTY(bool, MotorStalled)
+    DEFINE_PROPERTY(bool, ControllerDataReadingTimeout)
+    DEFINE_PROPERTY(bool, InvalidHallSensorSequence)
+    DEFINE_PROPERTY(bool, InvalidHallSector)
+    DEFINE_PROPERTY(bool, ErrorReadingTempSensor)
+    DEFINE_PROPERTY(bool, PositionSensorReadingError)
+    DEFINE_PROPERTY(bool, ErrorReadingEncoder)
+    DEFINE_PROPERTY(bool, ZeroPositionOffsetNotSet)
+    DEFINE_PROPERTY(bool, HwEnableNotSet)
+    DEFINE_PROPERTY(bool, Inverter1TempTooHigh)
+    DEFINE_PROPERTY(bool, Inverter2TempTooHigh)
+    DEFINE_PROPERTY(bool, Inverter3TempTooHigh)
+    DEFINE_PROPERTY(bool, Inverter4TempTooHigh)
+    DEFINE_PROPERTY(bool, Inverter5TempTooHigh)
+    DEFINE_PROPERTY(bool, Inverter6TempTooHigh)
+    DEFINE_PROPERTY(bool, CpuTemperatureTooHigh)
+    DEFINE_PROPERTY(bool, HallTemperatureTooHigh)
+    DEFINE_PROPERTY(bool, DclinkTemperatureTooHigh)
+    DEFINE_PROPERTY(bool, ErrorInDclinkCommunication)
+    DEFINE_PROPERTY(bool, Inverter1OvercurrentError)
+    DEFINE_PROPERTY(bool, Inverter2OvercurrentError)
+    DEFINE_PROPERTY(bool, Inverter3OvercurrentError)
+    DEFINE_PROPERTY(bool, Inverter4OvercurrentError)
+    DEFINE_PROPERTY(bool, Inverter5OvercurrentError)
+    DEFINE_PROPERTY(bool, Inverter6OvercurrentError)
+    DEFINE_PROPERTY(bool, DcOvervoltageError)
+    DEFINE_PROPERTY(bool, DcUndervoltageError)
+    DEFINE_PROPERTY(bool, DoubleCanIdOnBus)
+    DEFINE_PROPERTY(bool, CanCommsTimeoutError)
+    DEFINE_PROPERTY(bool, Inverter1FaultError)
+    DEFINE_PROPERTY(bool, Inverter2FaultError)
+    DEFINE_PROPERTY(bool, Inverter3FaultError)
+    DEFINE_PROPERTY(bool, Inverter4FaultError)
+    DEFINE_PROPERTY(bool, Inverter5FaultError)
+    DEFINE_PROPERTY(bool, Inverter6FaultError)
+    DEFINE_PROPERTY(bool, CanSendError)
+    DEFINE_PROPERTY(bool, LostFramesOnCanBusError)
+    DEFINE_PROPERTY(bool, OverspeedError)
+    DEFINE_PROPERTY(bool, CpuOverloaded)
+
 public:
     MotorDetailsPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
-
-private:
-    short controlValue_;
-
-    bool controlMode_;
-    bool motorMode_;
-    bool softwareEnable_;
-    bool debugMode_;
-
-    short currentMotorTorque_;
-    short currentRpmValue_;
-    char motorTemperature_;
-    short inverterPeakCurrent_;
-    short currentMotorPower_;
-    unsigned short absuluteAngle_;
-
-    // Warning Flags
-    bool motorAboutToStall_;
-    bool delayInReadingTempSensor_;
-    bool delayInReadingPosSensor_;
-    bool inverter1TempVeryHigh_;
-    bool inverter2TempVeryHigh_;
-    bool inverter3TempVeryHigh_;
-    bool inverter4TempVeryHigh_;
-    bool inverter5TempVeryHigh_;
-    bool inverter6TempVeryHigh_;
-    bool cpuTemperatureVeryHigh_;
-    bool hallTemperatureVeryHigh_;
-    bool dclinkTemperatureVeryHigh_;
-    bool delayInDclinkCommunication_;
-    bool inverter1OverCurrentWarning_;
-    bool inverter2OverCurrentWarning_;
-    bool inverter3OverCurrentWarning_;
-    bool inverter4OverCurrentWarning_;
-    bool inverter5OverCurrentWarning_;
-    bool inverter6OverCurrentWarning_;
-    bool dcOvervoltageWarning_;
-    bool dcUndervoltageWarning_;
-    bool canCommsTimeout_;
-    bool inverter1faultWarning_;
-    bool inverter2faultWarning_;
-    bool inverter3faultWarning_;
-    bool inverter4faultWarning_;
-    bool inverter5faultWarning_;
-    bool inverter6faultWarning_;
-    bool canSendWarning_;
-    bool lostFramesOnCanBusWarning_;
-    bool overspeedWarning_;
-    bool cpuOverload_;
-    bool torqueLimited_;
-    bool startAtHighRpm_;
-
-    // Error Flags
-    bool initError_;
-    bool settingsNotFound_;
-    bool motorStalled_;
-    bool controllerDataReadingTimeout_;
-    bool invalidHallSensorSequence_;
-    bool invalidHallSector_;
-    bool errorReadingTempSensor_;
-    bool positionSensorReadingError_;
-    bool errorReadingEncoder_;
-    bool zeroPositionOffsetNotSet_;
-    bool hwEnableNotSet_;
-    bool inverter1TempTooHigh_;
-    bool inverter2TempTooHigh_;
-    bool inverter3TempTooHigh_;
-    bool inverter4TempTooHigh_;
-    bool inverter5TempTooHigh_;
-    bool inverter6TempTooHigh_;
-    bool cpuTemperatureTooHigh_;
-    bool hallTemperatureTooHigh_;
-    bool dclinkTemperatureTooHigh_;
-    bool errorInDclinkCommunication_;
-    bool inverter1OvercurrentError_;
-    bool inverter2OvercurrentError_;
-    bool inverter3OvercurrentError_;
-    bool inverter4OvercurrentError_;
-    bool inverter5OvercurrentError_;
-    bool inverter6OvercurrentError_;
-    bool dcOvervoltageError_;
-    bool dcUndervoltageError_;
-    bool doubleCanIdOnBus_;
-    bool canCommsTimeoutError_;
-    bool inverter1FaultError_;
-    bool inverter2FaultError_;
-    bool inverter3FaultError_;
-    bool inverter4FaultError_;
-    bool inverter5FaultError_;
-    bool inverter6FaultError_;
-    bool canSendError_;
-    bool lostFramesOnCanBusError_;
-    bool overspeedError_;
-    bool cpuOverloaded_;
 };
 
 #endif // MOTORDETAILSPACKET_H
