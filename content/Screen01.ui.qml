@@ -38,4 +38,66 @@ Rectangle {
             text: "PROX 4: " + proximitySensors.ProximitySensor4
         }
     }
+
+    Column {
+        anchors.top: parent.top
+        anchors.topMargin: 100
+        anchors.left: parent.left
+        anchors.leftMargin: 300
+
+        Text {
+            text: "GPS Year: " + telemetry.GpsYear
+        }
+        Text {
+            text: "GPS Month: " + telemetry.GpsMonth
+        }
+        Text {
+            text: "GPS Day: " + telemetry.GpsDay
+        }
+        Text {
+            text: "GPS Hour: " + telemetry.GpsHour
+        }
+        Text {
+            text: "GPS Minute: " + telemetry.GpsMinute
+        }
+        Text {
+            text: "GPS Second: " + telemetry.GpsSecond
+        }
+        Text {
+            text: "GPS Validity Flags: " + telemetry.GpsValidityFlags
+        }
+        Text {
+            text: "GPS Fix Status Flags: " + telemetry.GpsFixStatusFlags
+        }
+        Text {
+            text: "GPS Additional Flags: " + telemetry.GpsAdditionalFlags
+        }
+        Text {
+            text: "GPS Longitude: " + telemetry.GpsLongitude
+        }
+        Text {
+            text: "GPS Latitude: " + telemetry.GpsLatitude
+        }
+        Text {
+            text: "MPU Acceleration X: " + telemetry.MpuAccelerationX
+        }
+        Text {
+            text: "MPU Acceleration Y: " + telemetry.MpuAccelerationY
+        }
+        Text {
+            text: "MPU Acceleration Z: " + telemetry.MpuAccelerationZ
+        }
+        Text {
+            text: "MPU Rotation X: " + telemetry.MpuRotationX
+        }
+        Text {
+            text: "MPU Rotation Y: " + telemetry.MpuRotationY
+        }
+        Text {
+            text: "MPU Rotation Z: " + telemetry.MpuRotationZ
+        }
+        Text {
+            text: "MPU Temperature: " + telemetry.MpuTemperature
+        }
+    }
 }
