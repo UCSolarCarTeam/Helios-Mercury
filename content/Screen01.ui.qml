@@ -38,4 +38,25 @@ Rectangle {
             text: "PROX 4: " + proximitySensors.ProximitySensor4
         }
     }
+
+    Column {
+        Text {
+            text: "Channel Number: " + mppt0.ChannelNumber
+        }
+        Text {
+            text: "MPPT Status: " + mppt0.MpptStatus
+        }
+        Text {
+            text: "Array Voltage: " + mppt0.ArrayVoltage
+        }
+        Text {
+            text: "Array Current: " + mppt0.ArrayCurrent
+        }
+        Text {
+            text: "Battery Voltage: " + mppt0.BatteryVoltage
+        }
+        Text {
+            text: "Temperature: " + mppt0.Temperature
+        }
+    }
 }
