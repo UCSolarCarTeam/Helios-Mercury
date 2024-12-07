@@ -38,4 +38,80 @@ Rectangle {
             text: "PROX 4: " + proximitySensors.ProximitySensor4
         }
     }
+
+    Column {
+        anchors.top: parent.top
+        anchors.topMargin: 100
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            text: "Right Signal In: " + b3.RightSignalIn
+        }
+        Text {
+            text: "Left Signal In: " + b3.LeftSignalIn
+        }
+        Text {
+            text: "Hazard Lights In: " + b3.HazardLightsIn
+        }
+        Text {
+            text: "Headlights Switch In: " + b3.HeadlightsSwitchIn
+        }
+        Text {
+            text: "Forward Switch In: " + b3.ForwardSwitchIn
+        }
+        Text {
+            text: "Horn Switch In: " + b3.HornSwitchIn
+        }
+        Text {
+            text: "Forward In: " + b3.ForwardIn
+        }
+        Text {
+            text: "Neutral: " + b3.Neutral
+        }
+        Text {
+            text: "Reverse: " + b3.Reverse
+        }
+        Text {
+            text: "Brake Switch: " + b3.BrakeSwitch
+        }
+        Text {
+            text: "Handbrake Switch: " + b3.HandbrakeSwitch
+        }
+        Text {
+            text: "Motor Reset: " + b3.MotorReset
+        }
+        Text {
+            text: "Race Mode: " + b3.RaceMode
+        }
+        Text {
+            text: "Lap: " + b3.Lap
+        }
+        Text {
+            text: "Zoom Zoom: " + b3.ZoomZoom
+        }
+        Text {
+            text: "Acceleration: " + b3.Acceleration
+        }
+        Text {
+            text: "Regen Braking: " + b3.RegenBraking
+        }
+        Text {
+            text: "Right Signal Out: " + b3.RightSignalOut
+        }
+        Text {
+            text: "Left Signal Out: " + b3.LeftSignalOut
+        }
+        Text {
+            text: "Daytime Running Light Signal Out: " + b3.DaytimeRunningLightSignalOut
+        }
+        Text {
+            text: "Headlight Signal Out: " + b3.HeadlightSignalOut
+        }
+        Text {
+            text: "Brake Light Signal Out: " + b3.BrakeLightSignalOut
+        }
+        Text {
+            text: "Horn Signal Out: " + b3.HornSignalOut
+        }
+    }
 }
