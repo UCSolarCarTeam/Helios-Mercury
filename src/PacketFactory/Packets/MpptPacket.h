@@ -2,21 +2,22 @@
 #define MPPTPACKET_H
 
 #include "../IPacket.h"
+#include "../../Config/PropertyDefinitions.h"
 
 class MpptPacket : public IPacket {
+    Q_OBJECT
+    DEFINE_PROPERTY(unsigned char, ChannelNumber)
+    DEFINE_PROPERTY(unsigned char, MpptStatus)
+
+    DEFINE_PROPERTY(unsigned short, ArrayVoltage)
+    DEFINE_PROPERTY(unsigned short, ArrayCurrent)
+    DEFINE_PROPERTY(unsigned short, BatteryVoltage)
+    DEFINE_PROPERTY(unsigned short, Temperature)
+    
 public:
     MpptPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
-
-private:
-    unsigned char channelNumber_;
-    unsigned char mpptStatus_;
-
-    unsigned short arrayVoltage_;
-    unsigned short arrayCurrent_;
-    unsigned short batteryVoltage_;
-    unsigned short temperature_;
 };
 
 #endif // MPPTPACKET_H
