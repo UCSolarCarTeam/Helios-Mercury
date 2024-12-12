@@ -10,6 +10,7 @@
 #include "Packets/MbmsPacket.h"
 #include "Packets/BatteryFaultsPacket.h"
 #include "Packets/B3Packet.h"
+#include "Packets/PiPacket.h"
 
 #include <QScopedPointer>
 
@@ -30,6 +31,8 @@ public:
     MotorDetailsPacket& getMotorDetailsPacket(int index);
     MpptPacket& getMpptPacket(int index);
 
+    PiPacket& getPiPacket();
+
 private:
     QScopedPointer<KeyMotorPacket> keyMotorPacket_;
     QScopedPointer<TelemetryPacket> telemetryPacket_;
@@ -42,6 +45,8 @@ private:
     //amounts defined in config.ini
     QVector<MotorDetailsPacket*> motorDetailsPackets_;
     QVector<MpptPacket*> mpptPackets_;
+
+    QScopedPointer<PiPacket> piPacket_;
 };
 
 #endif // PACKETFACTORY_H
