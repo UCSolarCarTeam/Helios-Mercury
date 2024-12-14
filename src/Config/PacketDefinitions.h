@@ -40,6 +40,9 @@ namespace PacketDefinitions {
     const int PROXIMITY_SENSORS_ID = 10;
     const int PROXIMITY_SENSORS_LENGTH = 9;
 
+    const int PI_ID = 11;
+    const int PI_LENGTH = 4;
+
     const std::array<int, 11> packetLength = {
         -69,
         KEY_MOTOR_LENGTH,
