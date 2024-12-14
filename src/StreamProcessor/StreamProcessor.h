@@ -16,7 +16,7 @@ public slots:
     void processData(const QByteArray& data);
 
 private:
-    QByteArray extractPacket();
+    QList<QByteArray> extractPackets();
     QByteArray decodePacket(QByteArray packet);
     bool isValidChecksum(QByteArray& decodedPacket);
     void validateAndForwardPacket(QByteArray& packetBody);

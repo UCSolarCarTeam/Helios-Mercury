@@ -19,10 +19,11 @@ StreamProcessor::StreamProcessor(SerialReceiver* SerialReceiver, PacketFactory* 
  * 
  * Data is processed in the following steps:
  * 1. Append data to buffer
- * 2. Extract packet from buffer
- * 3. Decode packet
- * 4. Check checksum
- * 5. Identify and verify size then send to packet factory
+ * 2. Extract all packets from buffer
+ * 3. For each packet:
+ *     a. Decode packet
+ *     b. Check checksum
+ *     c. Identify and verify size then send to packet factory
  */
 void StreamProcessor::processData(const QByteArray& data) {
     qDebug() << "Starting data processing";
@@ -30,51 +31,57 @@ void StreamProcessor::processData(const QByteArray& data) {
     //append to data string
     buffer_.append(data);
 
-    //disect at 0x00
-    QByteArray bytePacket = extractPacket();
+    //disect all packets from buffer at occurances of 0x00
+    QList<QByteArray> bytePackets = extractPackets();
 
-    if(bytePacket.isNull()) {
-        qDebug() << "Failed to Extract Packet from buffer: " << buffer_;
+    if(bytePackets.isEmpty()) {
+        qDebug() << "Failed to Extract Packets from buffer: " << buffer_;
         return;
     };
 
-    //decode packet
-    QByteArray decodedPacket = decodePacket(bytePacket);
+    //process each packet
+    for(const QByteArray& bytePacket : bytePackets) {
+        qDebug() << "Byte Packet: " << bytePacket;
+        //decode packet
+        QByteArray decodedPacket = decodePacket(bytePacket);
 
-    if(decodedPacket.isNull()) {
-        qDebug() << "Packet is too small - figure it out: " << bytePacket;
-        return;
-    };
+        if(decodedPacket.isNull()) {
+            qDebug() << "Packet is too small - figure it out: " << bytePacket;
+            continue;
+        };
 
-    //checksum
-    if(!isValidChecksum(decodedPacket)) return;
+        //checksum
+        if(!isValidChecksum(decodedPacket)) continue;
 
-
-    //identify and verify size then send to packet factory
-    validateAndForwardPacket(decodedPacket);
+        //identify and verify size then send to packet factory
+        validateAndForwardPacket(decodedPacket);
+    }
 }
 
 /** Extract bytes between FRAMING_BYTES (this is a packet) */
-QByteArray StreamProcessor::extractPacket() {
+QList<QByteArray> StreamProcessor::extractPackets() {
+    QList<QByteArray> packets;
     while (true) {
         //Find start of packet at the framing byte
         int startOfPacketIndex = buffer_.indexOf(PacketDefinitions::FRAMING_BYTE);
 
-        if(startOfPacketIndex == -1) return NULL;
+        if(startOfPacketIndex == -1) break;
 
         buffer_ = buffer_.mid(startOfPacketIndex);
 
         //Find end of packet (next occurance of framing byte)
         int endOfPacketIndex = buffer_.indexOf(PacketDefinitions::FRAMING_BYTE, 1);
 
-        if(endOfPacketIndex == -1) return NULL;
+        if(endOfPacketIndex == -1) break;
 
         //extract packet and remove from buffer
         QByteArray packet = buffer_.mid(1, endOfPacketIndex - 1);
         buffer_.remove(0, endOfPacketIndex);
 
-        return packet;
+        packets.append(packet);
     }
+
+    return packets;
 }
 
 /** 
