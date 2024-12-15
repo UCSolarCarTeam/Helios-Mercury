@@ -2,47 +2,48 @@
 #define BATTERYPACKET_H
 
 #include "../IPacket.h"
+#include "../../Config/PropertyDefinitions.h"
 
 class BatteryPacket : public IPacket {
+    Q_OBJECT
+    DEFINE_PROPERTY(unsigned char, BmuAlive)
+
+    DEFINE_PROPERTY(bool, DischargeRelayEnabled)
+    DEFINE_PROPERTY(bool, ChargeRelayEnabled)
+    DEFINE_PROPERTY(bool, ChargerSafetyRelayEnabled)
+    DEFINE_PROPERTY(bool, MalfunctionIndicatorActive)
+    DEFINE_PROPERTY(bool, MultiPurposeInputSignalStatus)
+    DEFINE_PROPERTY(bool, AlwaysOnSignalStatus)
+    DEFINE_PROPERTY(bool, IsReadySignalStatus)
+    DEFINE_PROPERTY(bool, IsChargingSignalStatus)
+
+    DEFINE_PROPERTY(unsigned char, PopulatedCells)
+    DEFINE_PROPERTY(float, Input12V)
+    DEFINE_PROPERTY(float, FanVoltage)
+    DEFINE_PROPERTY(float, PackCurrent)
+    DEFINE_PROPERTY(float, PackVoltage)
+    DEFINE_PROPERTY(float, PackStateOfCharge)
+    DEFINE_PROPERTY(float, PackAmphours)
+    DEFINE_PROPERTY(float, PackDepthOfDischarge)
+    DEFINE_PROPERTY(unsigned char, HighTemperature)
+    DEFINE_PROPERTY(unsigned char, HighThermistorId)
+    DEFINE_PROPERTY(unsigned char, LowTemperature)
+    DEFINE_PROPERTY(unsigned char, LowThermistorId)
+    DEFINE_PROPERTY(unsigned char, AverageTemperature)
+    DEFINE_PROPERTY(unsigned char, InternalTemperature)
+    DEFINE_PROPERTY(unsigned char, FanSpeed)
+    DEFINE_PROPERTY(unsigned char, RequestedFanSpeed)
+
+    DEFINE_PROPERTY(unsigned short, LowCellVoltage)
+    DEFINE_PROPERTY(unsigned char, LowCellVoltageId)
+    DEFINE_PROPERTY(unsigned short, HighCellVoltage)
+    DEFINE_PROPERTY(unsigned char, HighCellVoltageId)
+    DEFINE_PROPERTY(unsigned short, AverageCellVoltage)
+
 public:
     BatteryPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
-
-private:
-    unsigned char bmuAlive_;
-
-    bool dischargeRelayEnabled_;
-    bool chargeRelayEnabled_;
-    bool chargerSafetyRelayEnabled_;
-    bool malfunctionIndicatorActive_;
-    bool multiPurposeInputSignalStatus_;
-    bool alwaysOnSignalStatus_;
-    bool isReadySignalStatus_;
-    bool isChargingSignalStatus_;
-
-    unsigned char populatedCells_;
-    float input12V_;
-    float fanVoltage_;
-    float packCurrent_;
-    float packVoltage_;
-    float packStateOfCharge_;
-    float packAmphours_;
-    float packDepthOfDischarge_;
-    unsigned char highTemperature_;
-    unsigned char highThermistorId_;
-    unsigned char lowTemperature_;
-    unsigned char lowThermistorId_;
-    unsigned char averageTemperature_;
-    unsigned char internalTemperature_;
-    unsigned char fanSpeed_;
-    unsigned char requestedFanSpeed_;
-
-    unsigned short lowCellVoltage_;
-    unsigned char lowCellVoltageId_;
-    unsigned short highCellVoltage_;
-    unsigned char highCellVoltageId_;
-    unsigned short averageCellVoltage_;
 };
 
 #endif // BATTERYPACKET_H
