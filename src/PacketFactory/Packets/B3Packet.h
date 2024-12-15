@@ -2,40 +2,41 @@
 #define B3PACKET_H
 
 #include "../IPacket.h"
+#include "../../Config/PropertyDefinitions.h"
 
 class B3Packet : public IPacket {
+    Q_OBJECT
+    DEFINE_PROPERTY(bool, RightSignalIn)
+    DEFINE_PROPERTY(bool, LeftSignalIn)
+    DEFINE_PROPERTY(bool, HazardLightsIn)
+    DEFINE_PROPERTY(bool, HeadlightsSwitchIn)
+    DEFINE_PROPERTY(bool, ForwardSwitchIn)
+    DEFINE_PROPERTY(bool, HornSwitchIn)
+    DEFINE_PROPERTY(bool, ForwardIn)
+
+    DEFINE_PROPERTY(bool, Neutral)
+    DEFINE_PROPERTY(bool, Reverse)
+    DEFINE_PROPERTY(bool, BrakeSwitch)
+    DEFINE_PROPERTY(bool, HandbrakeSwitch)
+    DEFINE_PROPERTY(bool, MotorReset)
+    DEFINE_PROPERTY(bool, RaceMode)
+    DEFINE_PROPERTY(bool, Lap)
+    DEFINE_PROPERTY(bool, ZoomZoom)
+
+    DEFINE_PROPERTY(unsigned short, Acceleration)
+    DEFINE_PROPERTY(unsigned short, RegenBraking)
+
+    DEFINE_PROPERTY(bool, RightSignalOut)
+    DEFINE_PROPERTY(bool, LeftSignalOut)
+    DEFINE_PROPERTY(bool, DaytimeRunningLightSignalOut)
+    DEFINE_PROPERTY(bool, HeadlightSignalOut)
+    DEFINE_PROPERTY(bool, BrakeLightSignalOut)
+    DEFINE_PROPERTY(bool, HornSignalOut)
+
 public:
     B3Packet();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
-
-private:
-    bool rightSignalIn_;
-    bool leftSignalIn_;
-    bool hazardLightsIn_;
-    bool headlightsSwitchIn_;
-    bool forwardSwitchIn_;
-    bool hornSwitchIn_;
-    bool forwardIn_;
-
-    bool neutral_;
-    bool reverse_;
-    bool brakeSwitch_;
-    bool handbrakeSwitch_;
-    bool motorReset_;
-    bool raceMode_;
-    bool lap_;
-    bool zoomZoom_;
-
-    unsigned short acceleration_;
-    unsigned short regenbraking_;
-
-    bool rightSignalOut_;
-    bool leftSignalOut_;
-    bool daytimeRunningLightSignalOut_;
-    bool headlightSignalOut_;
-    bool brakeLightSignalOut_;
-    bool hornSignalOut_;
 };
 
 #endif // B3PACKET_H
