@@ -20,7 +20,7 @@ namespace PacketDefinitions {
     const int MOTOR_DETAILS_1_LENGTH = 33;
 
     const int B3_ID = 4;
-    const int B3_LENGTH = 7;
+    const int B3_LENGTH = 8;
 
     const int TELEMETRY_ID = 5;
     const int TELEMETRY_LENGTH = 33;
