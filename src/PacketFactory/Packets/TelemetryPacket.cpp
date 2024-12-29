@@ -23,68 +23,68 @@ namespace {
 }
 
 TelemetryPacket::TelemetryPacket() {
-    gpsYear_ = 0;
-    gpsMonth_ = 0;
-    gpsDay_ = 0;
-    gpsHour_ = 0;
-    gpsMinute_ = 0;
-    gpsSecond_ = 0;
-    gpsValidityFlags_ = 0;
-    gpsFixStatusFlags_ = 0;
-    gpsAdditionalFlags_ = 0;
-    gpsLongitude_ = 0;
-    gpsLatitude_ = 0;
-    mpuAccelerationX_ = 0;
-    mpuAccelerationY_ = 0;
-    mpuAccelerationZ_ = 0;
-    mpuRotationX_ = 0;
-    mpuRotationY_ = 0;
-    mpuRotationZ_ = 0;
-    mpuTemperature_ = 0;
+    setGpsYear(0);
+    setGpsMonth(0);
+    setGpsDay(0);
+    setGpsHour(0);
+    setGpsMinute(0);
+    setGpsSecond(0);
+    setGpsValidityFlags(0);
+    setGpsFixStatusFlags(0);
+    setGpsAdditionalFlags(0);
+    setGpsLongitude(0);
+    setGpsLatitude(0);
+    setMpuAccelerationX(0);
+    setMpuAccelerationY(0);
+    setMpuAccelerationZ(0);
+    setMpuRotationX(0);
+    setMpuRotationY(0);
+    setMpuRotationZ(0);
+    setMpuTemperature(0);
 }
 
 void TelemetryPacket::populatePacket(const QByteArray& data) {
-    gpsYear_ = getValue<unsigned short>(data, GPS_YEAR_OFFSET);
-    gpsMonth_ = getValue<unsigned char>(data, GPS_MONTH_OFFSET);
-    gpsDay_ = getValue<unsigned char>(data, GPS_DAY_OFFSET);
-    gpsHour_ = getValue<unsigned char>(data, GPS_HOUR_OFFSET);
-    gpsMinute_ = getValue<unsigned char>(data, GPS_MINUTE_OFFSET);
-    gpsSecond_ = getValue<unsigned char>(data, GPS_SECOND_OFFSET);
-    gpsValidityFlags_ = getValue<unsigned char>(data, GPS_VALIDITY_FLAGS_OFFSET);
-    gpsFixStatusFlags_ = getValue<unsigned char>(data, GPS_FIX_STATUS_FLAGS_OFFSET);
-    gpsAdditionalFlags_ = getValue<unsigned char>(data, GPS_ADDITIONAL_FLAGS_OFFSET);
-    gpsLongitude_ = getValue<int>(data, GPS_LONGITUDE_OFFSET);
-    gpsLatitude_ = getValue<int>(data, GPS_LATITUDE_OFFSET);
-    mpuAccelerationX_ = getValue<unsigned short>(data, MPU_ACCELERATION_X_OFFSET);
-    mpuAccelerationY_ = getValue<unsigned short>(data, MPU_ACCELERATION_Y_OFFSET);
-    mpuAccelerationZ_ = getValue<unsigned short>(data, MPU_ACCELERATION_Z_OFFSET);
-    mpuRotationX_ = getValue<unsigned short>(data, MPU_ROTATION_X_OFFSET);
-    mpuRotationY_ = getValue<unsigned short>(data, MPU_ROTATION_Y_OFFSET);
-    mpuRotationZ_ = getValue<unsigned short>(data, MPU_ROTATION_Z_OFFSET);
-    mpuTemperature_ = getValue<unsigned short>(data, MPU_TEMPERATURE_OFFSET);
+    setGpsYear(getValue<unsigned short>(data, GPS_YEAR_OFFSET));
+    setGpsMonth(getValue<unsigned char>(data, GPS_MONTH_OFFSET));
+    setGpsDay(getValue<unsigned char>(data, GPS_DAY_OFFSET));
+    setGpsHour(getValue<unsigned char>(data, GPS_HOUR_OFFSET));
+    setGpsMinute(getValue<unsigned char>(data, GPS_MINUTE_OFFSET));
+    setGpsSecond(getValue<unsigned char>(data, GPS_SECOND_OFFSET));
+    setGpsValidityFlags(getValue<unsigned char>(data, GPS_VALIDITY_FLAGS_OFFSET));
+    setGpsFixStatusFlags(getValue<unsigned char>(data, GPS_FIX_STATUS_FLAGS_OFFSET));
+    setGpsAdditionalFlags(getValue<unsigned char>(data, GPS_ADDITIONAL_FLAGS_OFFSET));
+    setGpsLongitude(getValue<int>(data, GPS_LONGITUDE_OFFSET));
+    setGpsLatitude(getValue<int>(data, GPS_LATITUDE_OFFSET));
+    setMpuAccelerationX(getValue<unsigned short>(data, MPU_ACCELERATION_X_OFFSET));
+    setMpuAccelerationY(getValue<unsigned short>(data, MPU_ACCELERATION_Y_OFFSET));
+    setMpuAccelerationZ(getValue<unsigned short>(data, MPU_ACCELERATION_Z_OFFSET));
+    setMpuRotationX(getValue<unsigned short>(data, MPU_ROTATION_X_OFFSET));
+    setMpuRotationY(getValue<unsigned short>(data, MPU_ROTATION_Y_OFFSET));
+    setMpuRotationZ(getValue<unsigned short>(data, MPU_ROTATION_Z_OFFSET));
+    setMpuTemperature(getValue<unsigned short>(data, MPU_TEMPERATURE_OFFSET));
 }
 
 QJsonObject TelemetryPacket::toJson() {
     QJsonObject json;
     
-    json[JsonDefinitions::GPS_YEAR] = gpsYear_;
-    json[JsonDefinitions::GPS_MONTH] = gpsMonth_;
-    json[JsonDefinitions::GPS_DAY] = gpsDay_;
-    json[JsonDefinitions::GPS_HOUR] = gpsHour_;
-    json[JsonDefinitions::GPS_MINUTE] = gpsMinute_;
-    json[JsonDefinitions::GPS_SECOND] = gpsSecond_;
-    json[JsonDefinitions::GPS_VALIDITY_FLAGS] = gpsValidityFlags_;
-    json[JsonDefinitions::GPS_FIX_STATUS_FLAGS] = gpsFixStatusFlags_;
-    json[JsonDefinitions::GPS_ADDITIONAL_FLAGS] = gpsAdditionalFlags_;
-    json[JsonDefinitions::GPS_LONGITUDE] = gpsLongitude_;
-    json[JsonDefinitions::GPS_LATITUDE] = gpsLatitude_;
-    json[JsonDefinitions::MPU_ACCELERATION_X] = mpuAccelerationX_;
-    json[JsonDefinitions::MPU_ACCELERATION_Y] = mpuAccelerationY_;
-    json[JsonDefinitions::MPU_ACCELERATION_Z] = mpuAccelerationZ_;
-    json[JsonDefinitions::MPU_ROTATION_X] = mpuRotationX_;
-    json[JsonDefinitions::MPU_ROTATION_Y] = mpuRotationY_;
-    json[JsonDefinitions::MPU_ROTATION_Z] = mpuRotationZ_;
-    json[JsonDefinitions::MPU_TEMPERATURE] = mpuTemperature_;
+    json[JsonDefinitions::GPS_YEAR] = GpsYear_;
+    json[JsonDefinitions::GPS_MONTH] = GpsMonth_;
+    json[JsonDefinitions::GPS_DAY] = GpsDay_;
+    json[JsonDefinitions::GPS_HOUR] = GpsHour_;
+    json[JsonDefinitions::GPS_MINUTE] = GpsMinute_;
+    json[JsonDefinitions::GPS_SECOND] = GpsSecond_;
+    json[JsonDefinitions::GPS_VALIDITY_FLAGS] = GpsValidityFlags_;
+    json[JsonDefinitions::GPS_FIX_STATUS_FLAGS] = GpsFixStatusFlags_;
+    json[JsonDefinitions::GPS_ADDITIONAL_FLAGS] = GpsAdditionalFlags_;
+    json[JsonDefinitions::GPS_LONGITUDE] = GpsLongitude_;
+    json[JsonDefinitions::GPS_LATITUDE] = GpsLatitude_;
+    json[JsonDefinitions::MPU_ACCELERATION_X] = MpuAccelerationX_;
+    json[JsonDefinitions::MPU_ACCELERATION_Y] = MpuAccelerationY_;
+    json[JsonDefinitions::MPU_ACCELERATION_Z] = MpuAccelerationZ_;
+    json[JsonDefinitions::MPU_ROTATION_X] = MpuRotationX_;
+    json[JsonDefinitions::MPU_ROTATION_Y] = MpuRotationY_;
+    json[JsonDefinitions::MPU_ROTATION_Z] = MpuRotationZ_;
+    json[JsonDefinitions::MPU_TEMPERATURE] = MpuTemperature_;
 
     return json;
 }

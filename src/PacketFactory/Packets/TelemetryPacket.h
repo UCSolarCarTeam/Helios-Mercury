@@ -2,32 +2,32 @@
 #define TELEMETRYPACKET_H
 
 #include "../IPacket.h"
+#include "../../Config/PropertyDefinitions.h"
 
 class TelemetryPacket : public IPacket {
+    Q_OBJECT
+    DEFINE_PROPERTY(unsigned short, GpsYear)
+    DEFINE_PROPERTY(unsigned char, GpsMonth)
+    DEFINE_PROPERTY(unsigned char, GpsDay)
+    DEFINE_PROPERTY(unsigned char, GpsHour)
+    DEFINE_PROPERTY(unsigned char, GpsMinute)
+    DEFINE_PROPERTY(unsigned char, GpsSecond)
+    DEFINE_PROPERTY(unsigned char, GpsValidityFlags)
+    DEFINE_PROPERTY(unsigned char, GpsFixStatusFlags)
+    DEFINE_PROPERTY(unsigned char, GpsAdditionalFlags)
+    DEFINE_PROPERTY(int, GpsLongitude)
+    DEFINE_PROPERTY(int, GpsLatitude)
+    DEFINE_PROPERTY(unsigned short, MpuAccelerationX)
+    DEFINE_PROPERTY(unsigned short, MpuAccelerationY)
+    DEFINE_PROPERTY(unsigned short, MpuAccelerationZ)
+    DEFINE_PROPERTY(unsigned short, MpuRotationX)
+    DEFINE_PROPERTY(unsigned short, MpuRotationY)
+    DEFINE_PROPERTY(unsigned short, MpuRotationZ)
+    DEFINE_PROPERTY(unsigned short, MpuTemperature)
 public:
     TelemetryPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
-
-private:
-    unsigned short gpsYear_;
-    unsigned char gpsMonth_;
-    unsigned char gpsDay_;
-    unsigned char gpsHour_;
-    unsigned char gpsMinute_;
-    unsigned char gpsSecond_;
-    unsigned char gpsValidityFlags_;
-    unsigned char gpsFixStatusFlags_;
-    unsigned char gpsAdditionalFlags_;
-    int gpsLongitude_;
-    int gpsLatitude_;
-    unsigned short mpuAccelerationX_;
-    unsigned short mpuAccelerationY_;
-    unsigned short mpuAccelerationZ_;
-    unsigned short mpuRotationX_;
-    unsigned short mpuRotationY_;
-    unsigned short mpuRotationZ_;
-    unsigned short mpuTemperature_;
 };
 
 #endif // TELEMETRYPACKET_H
