@@ -1,5 +1,3 @@
-
-
 /*
 This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
 It is supposed to be strictly declarative and only uses a subset of QML. If you edit
@@ -616,271 +614,538 @@ Rectangle {
                     }
                 }
             }
-        }
-    }
 
-    Column {
-        id: motorDetails0Column
-        anchors.left: parent.right
-        anchors.top: label.bottom
-        width: childrenRect.width
-        Text {
-            text: "Control Value: " + motorDetails0.ControlValue
-        }
-        Text {
-            text: "Control Mode: " + motorDetails0.ControlMode
-        }
-        Text {
-            text: "Motor Mode: " + motorDetails0.MotorMode
-        }
-        Text {
-            text: "Software Enable: " + motorDetails0.SoftwareEnable
-        }
-        Text {
-            text: "Debug Mode: " + motorDetails0.DebugMode
-        }
-        Text {
-            text: "Current Motor Torque: " + motorDetails0.CurrentMotorTorque
-        }
-        Text {
-            text: "Current RPM Value: " + motorDetails0.CurrentRpmValue
-        }
-        Text {
-            text: "Motor Temperature: " + motorDetails0.MotorTemperature
-        }
-        Text {
-            text: "Inverter Peak Current: " + motorDetails0.InverterPeakCurrent
-        }
-        Text {
-            text: "Current Motor Power: " + motorDetails0.CurrentMotorPower
-        }
-        Text {
-            text: "Absolute Angle: " + motorDetails0.AbsuluteAngle
-        }
-        Text {
-            text: "Motor About To Stall: " + motorDetails0.MotorAboutToStall
-        }
-        Text {
-            text: "Delay In Reading Temp Sensor: " + motorDetails0.DelayInReadingTempSensor
-        }
-        Text {
-            text: "Delay In Reading Pos Sensor: " + motorDetails0.DelayInReadingPosSensor
-        }
-        Text {
-            text: "Inverter 1 Temp Very High: " + motorDetails0.Inverter1TempVeryHigh
-        }
-        Text {
-            text: "Inverter 2 Temp Very High: " + motorDetails0.Inverter2TempVeryHigh
-        }
-        Text {
-            text: "Inverter 3 Temp Very High: " + motorDetails0.Inverter3TempVeryHigh
-        }
-        Text {
-            text: "Inverter 4 Temp Very High: " + motorDetails0.Inverter4TempVeryHigh
-        }
-        Text {
-            text: "Inverter 5 Temp Very High: " + motorDetails0.Inverter5TempVeryHigh
-        }
-        Text {
-            text: "Inverter 6 Temp Very High: " + motorDetails0.Inverter6TempVeryHigh
-        }
-        Text {
-            text: "CPU Temperature Very High: " + motorDetails0.CpuTemperatureVeryHigh
-        }
-        Text {
-            text: "Hall Temperature Very High: " + motorDetails0.HallTemperatureVeryHigh
-        }
-        Text {
-            text: "DCLINK Temperature Very High: " + motorDetails0.DclinkTemperatureVeryHigh
-        }
-        Text {
-            text: "Delay In DCLINK Communication: " + motorDetails0.DelayInDclinkCommunication
-        }
-        Text {
-            text: "Inverter 1 Over Current Warning: " + motorDetails0.Inverter1OverCurrentWarning
-        }
-        Text {
-            text: "Inverter 2 Over Current Warning: " + motorDetails0.Inverter2OverCurrentWarning
-        }
-        Text {
-            text: "Inverter 3 Over Current Warning: " + motorDetails0.Inverter3OverCurrentWarning
-        }
-        Text {
-            text: "Inverter 4 Over Current Warning: " + motorDetails0.Inverter4OverCurrentWarning
-        }
-        Text {
-            text: "Inverter 5 Over Current Warning: " + motorDetails0.Inverter5OverCurrentWarning
-        }
-        Text {
-            text: "Inverter 6 Over Current Warning: " + motorDetails0.Inverter6OverCurrentWarning
-        }
-        Text {
-            text: "DC Overvoltage Warning: " + motorDetails0.DcOvervoltageWarning
-        }
-        Text {
-            text: "DC Undervoltage Warning: " + motorDetails0.DcUndervoltageWarning
-        }
-        Text {
-            text: "CAN Comms Timeout: " + motorDetails0.CanCommsTimeout
-        }
-        Text {
-            text: "Inverter 1 Fault Warning: " + motorDetails0.Inverter1FaultWarning
-        }
-        Text {
-            text: "Inverter 2 Fault Warning: " + motorDetails0.Inverter2FaultWarning
-        }
-        Text {
-            text: "Inverter 3 Fault Warning: " + motorDetails0.Inverter3FaultWarning
-        }
-        Text {
-            text: "Inverter 4 Fault Warning: " + motorDetails0.Inverter4FaultWarning
-        }
-        Text {
-            text: "Inverter 5 Fault Warning: " + motorDetails0.Inverter5FaultWarning
-        }
-        Text {
-            text: "Inverter 6 Fault Warning: " + motorDetails0.Inverter6FaultWarning
-        }
-        Text {
-            text: "CAN Send Warning: " + motorDetails0.CanSendWarning
-        }
-        Text {
-            text: "Lost Frames On CAN Bus Warning: " + motorDetails0.LostFramesOnCanBusWarning
-        }
-        Text {
-            text: "Overspeed Warning: " + motorDetails0.OverspeedWarning
-        }
-        Text {
-            text: "CPU Overload: " + motorDetails0.CpuOverload
-        }
-        Text {
-            text: "Torque Limited: " + motorDetails0.TorqueLimited
-        }
-        Text {
-            text: "Start At High RPM: " + motorDetails0.StartAtHighRpm
-        }
-        Text {
-            text: "Init Error: " + motorDetails0.InitError
-        }
-        Text {
-            text: "Settings Not Found: " + motorDetails0.SettingsNotFound
-        }
-        Text {
-            text: "Motor Stalled: " + motorDetails0.MotorStalled
-        }
-        Text {
-            text: "Controller Data Reading Timeout: " + motorDetails0.ControllerDataReadingTimeout
-        }
-        Text {
-            text: "Invalid Hall Sensor Sequence: " + motorDetails0.InvalidHallSensorSequence
-        }
-        Text {
-            text: "Invalid Hall Sector: " + motorDetails0.InvalidHallSector
-        }
-        Text {
-            text: "Error Reading Temp Sensor: " + motorDetails0.ErrorReadingTempSensor
-        }
-        Text {
-            text: "Position Sensor Reading Error: " + motorDetails0.PositionSensorReadingError
-        }
-        Text {
-            text: "Error Reading Encoder: " + motorDetails0.ErrorReadingEncoder
-        }
-        Text {
-            text: "Zero Position Offset Not Set: " + motorDetails0.ZeroPositionOffsetNotSet
-        }
-        Text {
-            text: "HW Enable Not Set: " + motorDetails0.HwEnableNotSet
-        }
-        Text {
-            text: "Inverter 1 Temp Too High: " + motorDetails0.Inverter1TempTooHigh
-        }
-        Text {
-            text: "Inverter 2 Temp Too High: " + motorDetails0.Inverter2TempTooHigh
-        }
-        Text {
-            text: "Inverter 3 Temp Too High: " + motorDetails0.Inverter3TempTooHigh
-        }
-        Text {
-            text: "Inverter 4 Temp Too High: " + motorDetails0.Inverter4TempTooHigh
-        }
-        Text {
-            text: "Inverter 5 Temp Too High: " + motorDetails0.Inverter5TempTooHigh
-        }
-        Text {
-            text: "Inverter 6 Temp Too High: " + motorDetails0.Inverter6TempTooHigh
-        }
-        Text {
-            text: "CPU Temperature Too High: " + motorDetails0.CpuTemperatureTooHigh
-        }
-        Text {
-            text: "Hall Temperature Too High: " + motorDetails0.HallTemperatureTooHigh
-        }
-        Text {
-            text: "DCLINK Temperature Too High: " + motorDetails0.DclinkTemperatureTooHigh
-        }
-        Text {
-            text: "Error In DCLINK Communication: " + motorDetails0.ErrorInDclinkCommunication
-        }
-        Text {
-            text: "Inverter 1 Overcurrent Error: " + motorDetails0.Inverter1OvercurrentError
-        }
-        Text {
-            text: "Inverter 2 Overcurrent Error: " + motorDetails0.Inverter2OvercurrentError
-        }
-        Text {
-            text: "Inverter 3 Overcurrent Error: " + motorDetails0.Inverter3OvercurrentError
-        }
-        Text {
-            text: "Inverter 4 Overcurrent Error: " + motorDetails0.Inverter4OvercurrentError
-        }
-        Text {
-            text: "Inverter 5 Overcurrent Error: " + motorDetails0.Inverter5OvercurrentError
-        }
-        Text {
-            text: "Inverter 6 Overcurrent Error: " + motorDetails0.Inverter6OvercurrentError
-        }
-        Text {
-            text: "DC Overvoltage Error: " + motorDetails0.DcOvervoltageError
-        }
-        Text {
-            text: "DC Undervoltage Error: " + motorDetails0.DcUndervoltageError
-        }
-        Text {
-            text: "Double CAN ID On Bus: " + motorDetails0.DoubleCanIdOnBus
-        }
-        Text {
-            text: "CAN Comms Timeout Error: " + motorDetails0.CanCommsTimeoutError
-        }
-        Text {
-            text: "Inverter 1 Fault Error: " + motorDetails0.Inverter1FaultError
-        }
-        Text {
-            text: "Inverter 2 Fault Error: " + motorDetails0.Inverter2FaultError
-        }
-        Text {
-            text: "Inverter 3 Fault Error: " + motorDetails0.Inverter3FaultError
-        }
-        Text {
-            text: "Inverter 4 Fault Error: " + motorDetails0.Inverter4FaultError
-        }
-        Text {
-            text: "Inverter 5 Fault Error: " + motorDetails0.Inverter5FaultError
-        }
-        Text {
-            text: "Inverter 6 Fault Error: " + motorDetails0.Inverter6FaultError
-        }
-        Text {
-            text: "CAN Send Error: " + motorDetails0.CanSendError
-        }
-        Text {
-            text: "Lost Frames On CAN Bus Error: " + motorDetails0.LostFramesOnCanBusError
-        }
-        Text {
-            text: "Overspeed Error: " + motorDetails0.OverspeedError
-        }
-        Text {
-            text: "CPU Overloaded: " + motorDetails0.CpuOverloaded
+            Row {
+                spacing: 20
+
+                Column {
+                    Text {
+                        text: "Motor Details 0"
+                    }
+                    Text {
+                        text: "Control Value: " + motorDetails0.ControlValue
+                    }
+                    Text {
+                        text: "Control Mode: " + motorDetails0.ControlMode
+                    }
+                    Text {
+                        text: "Motor Mode: " + motorDetails0.MotorMode
+                    }
+                    Text {
+                        text: "Software Enable: " + motorDetails0.SoftwareEnable
+                    }
+                    Text {
+                        text: "Debug Mode: " + motorDetails0.DebugMode
+                    }
+                    Text {
+                        text: "Current Motor Torque: " + motorDetails0.CurrentMotorTorque
+                    }
+                    Text {
+                        text: "Current RPM Value: " + motorDetails0.CurrentRpmValue
+                    }
+                    Text {
+                        text: "Motor Temperature: " + motorDetails0.MotorTemperature
+                    }
+                    Text {
+                        text: "Inverter Peak Current: " + motorDetails0.InverterPeakCurrent
+                    }
+                    Text {
+                        text: "Current Motor Power: " + motorDetails0.CurrentMotorPower
+                    }
+                    Text {
+                        text: "Absolute Angle: " + motorDetails0.AbsuluteAngle
+                    }
+                    Text {
+                        text: "Motor About To Stall: " + motorDetails0.MotorAboutToStall
+                    }
+                    Text {
+                        text: "Delay In Reading Temp Sensor: " + motorDetails0.DelayInReadingTempSensor
+                    }
+                    Text {
+                        text: "Delay In Reading Pos Sensor: " + motorDetails0.DelayInReadingPosSensor
+                    }
+                    Text {
+                        text: "Inverter 1 Temp Very High: " + motorDetails0.Inverter1TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 2 Temp Very High: " + motorDetails0.Inverter2TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 3 Temp Very High: " + motorDetails0.Inverter3TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 4 Temp Very High: " + motorDetails0.Inverter4TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 5 Temp Very High: " + motorDetails0.Inverter5TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 6 Temp Very High: " + motorDetails0.Inverter6TempVeryHigh
+                    }
+                    Text {
+                        text: "CPU Temperature Very High: " + motorDetails0.CpuTemperatureVeryHigh
+                    }
+                    Text {
+                        text: "Hall Temperature Very High: " + motorDetails0.HallTemperatureVeryHigh
+                    }
+                    Text {
+                        text: "DCLINK Temperature Very High: " + motorDetails0.DclinkTemperatureVeryHigh
+                    }
+                    Text {
+                        text: "Delay In DCLINK Communication: " + motorDetails0.DelayInDclinkCommunication
+                    }
+                    Text {
+                        text: "Inverter 1 Over Current Warning: " + motorDetails0.Inverter1OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 2 Over Current Warning: " + motorDetails0.Inverter2OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 3 Over Current Warning: " + motorDetails0.Inverter3OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 4 Over Current Warning: " + motorDetails0.Inverter4OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 5 Over Current Warning: " + motorDetails0.Inverter5OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 6 Over Current Warning: " + motorDetails0.Inverter6OverCurrentWarning
+                    }
+                    Text {
+                        text: "DC Overvoltage Warning: " + motorDetails0.DcOvervoltageWarning
+                    }
+                    Text {
+                        text: "DC Undervoltage Warning: " + motorDetails0.DcUndervoltageWarning
+                    }
+                    Text {
+                        text: "CAN Comms Timeout: " + motorDetails0.CanCommsTimeout
+                    }
+                    Text {
+                        text: "Inverter 1 Fault Warning: " + motorDetails0.Inverter1FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 2 Fault Warning: " + motorDetails0.Inverter2FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 3 Fault Warning: " + motorDetails0.Inverter3FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 4 Fault Warning: " + motorDetails0.Inverter4FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 5 Fault Warning: " + motorDetails0.Inverter5FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 6 Fault Warning: " + motorDetails0.Inverter6FaultWarning
+                    }
+                    Text {
+                        text: "CAN Send Warning: " + motorDetails0.CanSendWarning
+                    }
+                    Text {
+                        text: "Lost Frames On CAN Bus Warning: " + motorDetails0.LostFramesOnCanBusWarning
+                    }
+                    Text {
+                        text: "Overspeed Warning: " + motorDetails0.OverspeedWarning
+                    }
+                    Text {
+                        text: "CPU Overload: " + motorDetails0.CpuOverload
+                    }
+                    Text {
+                        text: "Torque Limited: " + motorDetails0.TorqueLimited
+                    }
+                    Text {
+                        text: "Start At High RPM: " + motorDetails0.StartAtHighRpm
+                    }
+                    Text {
+                        text: "Init Error: " + motorDetails0.InitError
+                    }
+                    Text {
+                        text: "Settings Not Found: " + motorDetails0.SettingsNotFound
+                    }
+                    Text {
+                        text: "Motor Stalled: " + motorDetails0.MotorStalled
+                    }
+                    Text {
+                        text: "Controller Data Reading Timeout: " + motorDetails0.ControllerDataReadingTimeout
+                    }
+                    Text {
+                        text: "Invalid Hall Sensor Sequence: " + motorDetails0.InvalidHallSensorSequence
+                    }
+                    Text {
+                        text: "Invalid Hall Sector: " + motorDetails0.InvalidHallSector
+                    }
+                    Text {
+                        text: "Error Reading Temp Sensor: " + motorDetails0.ErrorReadingTempSensor
+                    }
+                    Text {
+                        text: "Position Sensor Reading Error: " + motorDetails0.PositionSensorReadingError
+                    }
+                    Text {
+                        text: "Error Reading Encoder: " + motorDetails0.ErrorReadingEncoder
+                    }
+                    Text {
+                        text: "Zero Position Offset Not Set: " + motorDetails0.ZeroPositionOffsetNotSet
+                    }
+                    Text {
+                        text: "HW Enable Not Set: " + motorDetails0.HwEnableNotSet
+                    }
+                    Text {
+                        text: "Inverter 1 Temp Too High: " + motorDetails0.Inverter1TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 2 Temp Too High: " + motorDetails0.Inverter2TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 3 Temp Too High: " + motorDetails0.Inverter3TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 4 Temp Too High: " + motorDetails0.Inverter4TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 5 Temp Too High: " + motorDetails0.Inverter5TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 6 Temp Too High: " + motorDetails0.Inverter6TempTooHigh
+                    }
+                    Text {
+                        text: "CPU Temperature Too High: " + motorDetails0.CpuTemperatureTooHigh
+                    }
+                    Text {
+                        text: "Hall Temperature Too High: " + motorDetails0.HallTemperatureTooHigh
+                    }
+                    Text {
+                        text: "DCLINK Temperature Too High: " + motorDetails0.DclinkTemperatureTooHigh
+                    }
+                    Text {
+                        text: "Error In DCLINK Communication: " + motorDetails0.ErrorInDclinkCommunication
+                    }
+                    Text {
+                        text: "Inverter 1 Overcurrent Error: " + motorDetails0.Inverter1OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 2 Overcurrent Error: " + motorDetails0.Inverter2OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 3 Overcurrent Error: " + motorDetails0.Inverter3OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 4 Overcurrent Error: " + motorDetails0.Inverter4OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 5 Overcurrent Error: " + motorDetails0.Inverter5OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 6 Overcurrent Error: " + motorDetails0.Inverter6OvercurrentError
+                    }
+                    Text {
+                        text: "DC Overvoltage Error: " + motorDetails0.DcOvervoltageError
+                    }
+                    Text {
+                        text: "DC Undervoltage Error: " + motorDetails0.DcUndervoltageError
+                    }
+                    Text {
+                        text: "Double CAN ID On Bus: " + motorDetails0.DoubleCanIdOnBus
+                    }
+                    Text {
+                        text: "CAN Comms Timeout Error: " + motorDetails0.CanCommsTimeoutError
+                    }
+                    Text {
+                        text: "Inverter 1 Fault Error: " + motorDetails0.Inverter1FaultError
+                    }
+                    Text {
+                        text: "Inverter 2 Fault Error: " + motorDetails0.Inverter2FaultError
+                    }
+                    Text {
+                        text: "Inverter 3 Fault Error: " + motorDetails0.Inverter3FaultError
+                    }
+                    Text {
+                        text: "Inverter 4 Fault Error: " + motorDetails0.Inverter4FaultError
+                    }
+                    Text {
+                        text: "Inverter 5 Fault Error: " + motorDetails0.Inverter5FaultError
+                    }
+                    Text {
+                        text: "Inverter 6 Fault Error: " + motorDetails0.Inverter6FaultError
+                    }
+                    Text {
+                        text: "CAN Send Error: " + motorDetails0.CanSendError
+                    }
+                    Text {
+                        text: "Lost Frames On CAN Bus Error: " + motorDetails0.LostFramesOnCanBusError
+                    }
+                    Text {
+                        text: "Overspeed Error: " + motorDetails0.OverspeedError
+                    }
+                    Text {
+                        text: "CPU Overloaded: " + motorDetails0.CpuOverloaded
+                    }
+                }
+
+                Column {
+                    Text {
+                        text: "Motor Details 1"
+                    }
+                    Text {
+                        text: "Control Value: " + motorDetails1.ControlValue
+                    }
+                    Text {
+                        text: "Control Mode: " + motorDetails1.ControlMode
+                    }
+                    Text {
+                        text: "Motor Mode: " + motorDetails1.MotorMode
+                    }
+                    Text {
+                        text: "Software Enable: " + motorDetails1.SoftwareEnable
+                    }
+                    Text {
+                        text: "Debug Mode: " + motorDetails1.DebugMode
+                    }
+                    Text {
+                        text: "Current Motor Torque: " + motorDetails1.CurrentMotorTorque
+                    }
+                    Text {
+                        text: "Current RPM Value: " + motorDetails1.CurrentRpmValue
+                    }
+                    Text {
+                        text: "Motor Temperature: " + motorDetails1.MotorTemperature
+                    }
+                    Text {
+                        text: "Inverter Peak Current: " + motorDetails1.InverterPeakCurrent
+                    }
+                    Text {
+                        text: "Current Motor Power: " + motorDetails1.CurrentMotorPower
+                    }
+                    Text {
+                        text: "Absolute Angle: " + motorDetails1.AbsuluteAngle
+                    }
+                    Text {
+                        text: "Motor About To Stall: " + motorDetails1.MotorAboutToStall
+                    }
+                    Text {
+                        text: "Delay In Reading Temp Sensor: " + motorDetails1.DelayInReadingTempSensor
+                    }
+                    Text {
+                        text: "Delay In Reading Pos Sensor: " + motorDetails1.DelayInReadingPosSensor
+                    }
+                    Text {
+                        text: "Inverter 1 Temp Very High: " + motorDetails1.Inverter1TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 2 Temp Very High: " + motorDetails1.Inverter2TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 3 Temp Very High: " + motorDetails1.Inverter3TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 4 Temp Very High: " + motorDetails1.Inverter4TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 5 Temp Very High: " + motorDetails1.Inverter5TempVeryHigh
+                    }
+                    Text {
+                        text: "Inverter 6 Temp Very High: " + motorDetails1.Inverter6TempVeryHigh
+                    }
+                    Text {
+                        text: "CPU Temperature Very High: " + motorDetails1.CpuTemperatureVeryHigh
+                    }
+                    Text {
+                        text: "Hall Temperature Very High: " + motorDetails1.HallTemperatureVeryHigh
+                    }
+                    Text {
+                        text: "DCLINK Temperature Very High: " + motorDetails1.DclinkTemperatureVeryHigh
+                    }
+                    Text {
+                        text: "Delay In DCLINK Communication: " + motorDetails1.DelayInDclinkCommunication
+                    }
+                    Text {
+                        text: "Inverter 1 Over Current Warning: " + motorDetails1.Inverter1OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 2 Over Current Warning: " + motorDetails1.Inverter2OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 3 Over Current Warning: " + motorDetails1.Inverter3OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 4 Over Current Warning: " + motorDetails1.Inverter4OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 5 Over Current Warning: " + motorDetails1.Inverter5OverCurrentWarning
+                    }
+                    Text {
+                        text: "Inverter 6 Over Current Warning: " + motorDetails1.Inverter6OverCurrentWarning
+                    }
+                    Text {
+                        text: "DC Overvoltage Warning: " + motorDetails1.DcOvervoltageWarning
+                    }
+                    Text {
+                        text: "DC Undervoltage Warning: " + motorDetails1.DcUndervoltageWarning
+                    }
+                    Text {
+                        text: "CAN Comms Timeout: " + motorDetails1.CanCommsTimeout
+                    }
+                    Text {
+                        text: "Inverter 1 Fault Warning: " + motorDetails1.Inverter1FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 2 Fault Warning: " + motorDetails1.Inverter2FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 3 Fault Warning: " + motorDetails1.Inverter3FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 4 Fault Warning: " + motorDetails1.Inverter4FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 5 Fault Warning: " + motorDetails1.Inverter5FaultWarning
+                    }
+                    Text {
+                        text: "Inverter 6 Fault Warning: " + motorDetails1.Inverter6FaultWarning
+                    }
+                    Text {
+                        text: "CAN Send Warning: " + motorDetails1.CanSendWarning
+                    }
+                    Text {
+                        text: "Lost Frames On CAN Bus Warning: " + motorDetails1.LostFramesOnCanBusWarning
+                    }
+                    Text {
+                        text: "Overspeed Warning: " + motorDetails1.OverspeedWarning
+                    }
+                    Text {
+                        text: "CPU Overload: " + motorDetails1.CpuOverload
+                    }
+                    Text {
+                        text: "Torque Limited: " + motorDetails1.TorqueLimited
+                    }
+                    Text {
+                        text: "Start At High RPM: " + motorDetails1.StartAtHighRpm
+                    }
+                    Text {
+                        text: "Init Error: " + motorDetails1.InitError
+                    }
+                    Text {
+                        text: "Settings Not Found: " + motorDetails1.SettingsNotFound
+                    }
+                    Text {
+                        text: "Motor Stalled: " + motorDetails1.MotorStalled
+                    }
+                    Text {
+                        text: "Controller Data Reading Timeout: " + motorDetails1.ControllerDataReadingTimeout
+                    }
+                    Text {
+                        text: "Invalid Hall Sensor Sequence: " + motorDetails1.InvalidHallSensorSequence
+                    }
+                    Text {
+                        text: "Invalid Hall Sector: " + motorDetails1.InvalidHallSector
+                    }
+                    Text {
+                        text: "Error Reading Temp Sensor: " + motorDetails1.ErrorReadingTempSensor
+                    }
+                    Text {
+                        text: "Position Sensor Reading Error: " + motorDetails1.PositionSensorReadingError
+                    }
+                    Text {
+                        text: "Error Reading Encoder: " + motorDetails1.ErrorReadingEncoder
+                    }
+                    Text {
+                        text: "Zero Position Offset Not Set: " + motorDetails1.ZeroPositionOffsetNotSet
+                    }
+                    Text {
+                        text: "HW Enable Not Set: " + motorDetails1.HwEnableNotSet
+                    }
+                    Text {
+                        text: "Inverter 1 Temp Too High: " + motorDetails1.Inverter1TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 2 Temp Too High: " + motorDetails1.Inverter2TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 3 Temp Too High: " + motorDetails1.Inverter3TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 4 Temp Too High: " + motorDetails1.Inverter4TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 5 Temp Too High: " + motorDetails1.Inverter5TempTooHigh
+                    }
+                    Text {
+                        text: "Inverter 6 Temp Too High: " + motorDetails1.Inverter6TempTooHigh
+                    }
+                    Text {
+                        text: "CPU Temperature Too High: " + motorDetails1.CpuTemperatureTooHigh
+                    }
+                    Text {
+                        text: "Hall Temperature Too High: " + motorDetails1.HallTemperatureTooHigh
+                    }
+                    Text {
+                        text: "DCLINK Temperature Too High: " + motorDetails1.DclinkTemperatureTooHigh
+                    }
+                    Text {
+                        text: "Error In DCLINK Communication: " + motorDetails1.ErrorInDclinkCommunication
+                    }
+                    Text {
+                        text: "Inverter 1 Overcurrent Error: " + motorDetails1.Inverter1OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 2 Overcurrent Error: " + motorDetails1.Inverter2OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 3 Overcurrent Error: " + motorDetails1.Inverter3OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 4 Overcurrent Error: " + motorDetails1.Inverter4OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 5 Overcurrent Error: " + motorDetails1.Inverter5OvercurrentError
+                    }
+                    Text {
+                        text: "Inverter 6 Overcurrent Error: " + motorDetails1.Inverter6OvercurrentError
+                    }
+                    Text {
+                        text: "DC Overvoltage Error: " + motorDetails1.DcOvervoltageError
+                    }
+                    Text {
+                        text: "DC Undervoltage Error: " + motorDetails1.DcUndervoltageError
+                    }
+                    Text {
+                        text: "Double CAN ID On Bus: " + motorDetails1.DoubleCanIdOnBus
+                    }
+                    Text {
+                        text: "CAN Comms Timeout Error: " + motorDetails1.CanCommsTimeoutError
+                    }
+                    Text {
+                        text: "Inverter 1 Fault Error: " + motorDetails1.Inverter1FaultError
+                    }
+                    Text {
+                        text: "Inverter 2 Fault Error: " + motorDetails1.Inverter2FaultError
+                    }
+                    Text {
+                        text: "Inverter 3 Fault Error: " + motorDetails1.Inverter3FaultError
+                    }
+                    Text {
+                        text: "Inverter 4 Fault Error: " + motorDetails1.Inverter4FaultError
+                    }
+                    Text {
+                        text: "Inverter 5 Fault Error: " + motorDetails1.Inverter5FaultError
+                    }
+                    Text {
+                        text: "Inverter 6 Fault Error: " + motorDetails1.Inverter6FaultError
+                    }
+                    Text {
+                        text: "CAN Send Error: " + motorDetails1.CanSendError
+                    }
+                    Text {
+                        text: "Lost Frames On CAN Bus Error: " + motorDetails1.LostFramesOnCanBusError
+                    }
+                    Text {
+                        text: "Overspeed Error: " + motorDetails1.OverspeedError
+                    }
+                    Text {
+                        text: "CPU Overloaded: " + motorDetails1.CpuOverloaded
+                    }
+                }
+            }
         }
     }
 }
