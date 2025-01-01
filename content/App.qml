@@ -5,8 +5,8 @@ import QtQuick 6.2
 import Mercury
 
 Window {
-    width: mainScreen.width
-    height: mainScreen.height
+    width: 1920
+    height: 550
 
     visible: true
     title: "Mercury"
@@ -19,5 +19,11 @@ Window {
         source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/DebugCluster.qml")
     }
 
+    // Screen Background to black
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        z: -6969
+    }
 }
 
