@@ -17,7 +17,7 @@ Item {
     Image {
         id: raceClusterFrame
         x: 0
-        y: -1
+        y: 0
         source: "../Images/RaceClusterFrame.png"
         fillMode: Image.PreserveAspectFit
 
