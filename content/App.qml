@@ -11,8 +11,12 @@ Window {
     visible: true
     title: "Mercury"
 
-    Screen01 {
-        id: mainScreen
+    property bool rawMode: Qt.application.arguments.indexOf("-raw") !== -1
+
+    Loader {
+        id: dashLoader
+        anchors.fill: parent
+        source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/DebugCluster.qml")
     }
 
 }
