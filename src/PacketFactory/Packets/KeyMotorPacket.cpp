@@ -11,32 +11,26 @@ namespace {
     const char DEBUG_MODE_MASK = 0x08;
 }
 
-KeyMotorPacket::KeyMotorPacket() {
-    setMotorSetpoint(0);
-    setControlMode(false);
-    setMotorMode(false);
-    setSoftwareEnable(false);
-    setDebugMode(false);
-}
+KeyMotorPacket::KeyMotorPacket() {}
 
 void KeyMotorPacket::populatePacket(const QByteArray& data) {
-    setMotorSetpoint(getValue<unsigned short>(data, MOTOR_SETPOINT_OFFSET));
+    motorSetpoint_ = getValue<unsigned short>(data, MOTOR_SETPOINT_OFFSET);
 
     unsigned char controlBits = getValue<unsigned char>(data, CONTROL_BITS_OFFSET);
-    setControlMode(controlBits & CONTROL_MODE_MASK);
-    setMotorMode(controlBits & MOTOR_MODE_MASK);
-    setSoftwareEnable(controlBits & SOFTWARE_ENABLE_MASK);
-    setDebugMode(controlBits & DEBUG_MODE_MASK);
+    controlMode_ = controlBits & CONTROL_MODE_MASK;
+    motorMode_ = controlBits & MOTOR_MODE_MASK;
+    softwareEnable_ = controlBits & SOFTWARE_ENABLE_MASK;
+    debugMode_ = controlBits & DEBUG_MODE_MASK;
 }
 
 QJsonObject KeyMotorPacket::toJson() {
     QJsonObject json;
     
-    json[JsonDefinitions::MOTOR_SETPOINT] = MotorSetpoint_;
-    json[JsonDefinitions::CONTROL_MODE] = ControlMode_;
-    json[JsonDefinitions::MOTOR_MODE] = MotorMode_;
-    json[JsonDefinitions::SOFTWARE_ENABLE] = SoftwareEnable_;
-    json[JsonDefinitions::DEBUG_MODE] = DebugMode_;
+    json[JsonDefinitions::MOTOR_SETPOINT] = motorSetpoint_;
+    json[JsonDefinitions::CONTROL_MODE] = controlMode_;
+    json[JsonDefinitions::MOTOR_MODE] = motorMode_;
+    json[JsonDefinitions::SOFTWARE_ENABLE] = softwareEnable_;
+    json[JsonDefinitions::DEBUG_MODE] = debugMode_;
 
     return json;
 }
