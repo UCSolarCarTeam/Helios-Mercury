@@ -1145,6 +1145,27 @@ Rectangle {
                         text: "CPU Overloaded: " + motorDetails1.CpuOverloaded
                     }
                 }
+
+                Column {
+                    Text {
+                        text: "Key Motor"
+                    }
+                    Text {
+                        text: "Motor Setpoint: " + keyMotor.MotorSetpoint
+                    }
+                    Text {
+                        text: "Control Mode: " + keyMotor.ControlMode
+                    }
+                    Text {
+                        text: "Motor Mode: " + keyMotor.MotorMode
+                    }
+                    Text {
+                        text: "Software Enable: " + keyMotor.SoftwareEnable
+                    }
+                    Text {
+                        text: "Debug Mode: " + keyMotor.DebugMode
+                    }
+                }
             }
         }
     }
