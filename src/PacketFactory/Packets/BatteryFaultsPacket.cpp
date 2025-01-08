@@ -125,42 +125,52 @@ void BatteryFaultsPacket::populatePacket(const QByteArray& data) {
 QJsonObject BatteryFaultsPacket::toJson() {
     QJsonObject json;
     
-    json[JsonDefinitions::INTERNAL_COMMUNICATION_FAULT] = InternalCommunicationFault_;
-    json[JsonDefinitions::INTERNAL_CONVERSION_FAULT] = InternalConverversionFault_;
-    json[JsonDefinitions::WEAK_CELL_FAULT] = WeakCellFault_;
-    json[JsonDefinitions::LOW_CELL_VOLTAGE_FAULT] = LowCellVoltageFault_;
-    json[JsonDefinitions::OPEN_WIRING_FAULT] = OpenWiringFault_;
-    json[JsonDefinitions::CURRENT_SENSOR_FAULT] = CurrentSensorFault_;
-    json[JsonDefinitions::PACK_VOLTAGE_SENSOR_FAULT] = PackVoltageSensorFault_;
-    json[JsonDefinitions::WEAK_PACK_FAULT] = WeakPackFault_;
-    json[JsonDefinitions::VOLTAGE_REDUNDANCY_FAULT] = VoltageRedundancyFault_;
-    json[JsonDefinitions::FAN_MONITOR_FAULT] = FanMonitorFault_;
-    json[JsonDefinitions::THERMISTOR_FAULT] = ThermistorFault_;
-    json[JsonDefinitions::CANBUS_COMMUNICATION_FAULT] = CanbusCommunicationFault_;
-    json[JsonDefinitions::ALWAYS_ON_SUPPLY_FAULT] = AlwaysOnSupplyFault_;
-    json[JsonDefinitions::HIGH_VOLTAGE_ISOLATION_FAULT] = HighVoltageIsolationFault_;
-    json[JsonDefinitions::POWER_SUPPLY_12V_FAULT] = PowerSupply12VFault_;
-    json[JsonDefinitions::CHARGE_LIMIT_ENFORCEMENT_FAULT] = ChargeLimitEnforcementFault_;
-    json[JsonDefinitions::DISCHARGE_LIMIT_ENFORCEMENT_FAULT] = DischargeLimitEnforcementFault_;
-    json[JsonDefinitions::CHARGER_SAFETY_RELAY_FAULT] = ChargerSafetyRelayFault_;
-    json[JsonDefinitions::INTERNAL_MEMORY_FAULT] = InternalMemoryFault_;
-    json[JsonDefinitions::INTERNAL_THERMISTOR_FAULT] = InternalThermistorFault_;
-    json[JsonDefinitions::INTERNAL_LOGIC_FAULT] = InternalLogicFault_;
+    //Errors
+    QJsonObject errors;
 
-    json[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_SOC] = DclReducedDueToLowSoc_;
-    json[JsonDefinitions::DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = DclReducedDueToHighCellResistance_;
-    json[JsonDefinitions::DCL_REDUCED_DUE_TO_TEMPERATURE] = DclReducedDueToTemperature_;
-    json[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE] = DclReducedDueToLowCellVoltage_;
-    json[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE] = DclReducedDueToLowPackVoltage_;
-    json[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE] = DclAndCclReducedDueToVoltageFailsafe_;
-    json[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE] = DclAndCclReducedDueToCommunicationFailsafe_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_SOC] = CclReducedDueToHighSoc_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = CclReducedDueToHighCellResistance_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_TEMPERATURE] = CclReducedDueToTemperature_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE] = CclReducedDueToHighCellVoltage_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE] = CclReducedDueToHighPackVoltage_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_CHARGER_LATCH] = CclReducedDueToChargerLatch_;
-    json[JsonDefinitions::CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT] = CclReducedDueToAlternateCurrentLimit_;
+    errors[JsonDefinitions::INTERNAL_COMMUNICATION_FAULT] = InternalCommunicationFault_;
+    errors[JsonDefinitions::INTERNAL_CONVERSION_FAULT] = InternalConverversionFault_;
+    errors[JsonDefinitions::WEAK_CELL_FAULT] = WeakCellFault_;
+    errors[JsonDefinitions::LOW_CELL_VOLTAGE_FAULT] = LowCellVoltageFault_;
+    errors[JsonDefinitions::OPEN_WIRING_FAULT] = OpenWiringFault_;
+    errors[JsonDefinitions::CURRENT_SENSOR_FAULT] = CurrentSensorFault_;
+    errors[JsonDefinitions::PACK_VOLTAGE_SENSOR_FAULT] = PackVoltageSensorFault_;
+    errors[JsonDefinitions::WEAK_PACK_FAULT] = WeakPackFault_;
+    errors[JsonDefinitions::VOLTAGE_REDUNDANCY_FAULT] = VoltageRedundancyFault_;
+    errors[JsonDefinitions::FAN_MONITOR_FAULT] = FanMonitorFault_;
+    errors[JsonDefinitions::THERMISTOR_FAULT] = ThermistorFault_;
+    errors[JsonDefinitions::CANBUS_COMMUNICATION_FAULT] = CanbusCommunicationFault_;
+    errors[JsonDefinitions::ALWAYS_ON_SUPPLY_FAULT] = AlwaysOnSupplyFault_;
+    errors[JsonDefinitions::HIGH_VOLTAGE_ISOLATION_FAULT] = HighVoltageIsolationFault_;
+    errors[JsonDefinitions::POWER_SUPPLY_12V_FAULT] = PowerSupply12VFault_;
+    errors[JsonDefinitions::CHARGE_LIMIT_ENFORCEMENT_FAULT] = ChargeLimitEnforcementFault_;
+    errors[JsonDefinitions::DISCHARGE_LIMIT_ENFORCEMENT_FAULT] = DischargeLimitEnforcementFault_;
+    errors[JsonDefinitions::CHARGER_SAFETY_RELAY_FAULT] = ChargerSafetyRelayFault_;
+    errors[JsonDefinitions::INTERNAL_MEMORY_FAULT] = InternalMemoryFault_;
+    errors[JsonDefinitions::INTERNAL_THERMISTOR_FAULT] = InternalThermistorFault_;
+    errors[JsonDefinitions::INTERNAL_LOGIC_FAULT] = InternalLogicFault_;
+
+    json[JsonDefinitions::ERRORS] = errors;
+
+    //Limits/Warnings
+    QJsonObject limits;
+
+    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_SOC] = DclReducedDueToLowSoc_;
+    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = DclReducedDueToHighCellResistance_;
+    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_TEMPERATURE] = DclReducedDueToTemperature_;
+    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE] = DclReducedDueToLowCellVoltage_;
+    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE] = DclReducedDueToLowPackVoltage_;
+    limits[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE] = DclAndCclReducedDueToVoltageFailsafe_;
+    limits[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE] = DclAndCclReducedDueToCommunicationFailsafe_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_SOC] = CclReducedDueToHighSoc_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = CclReducedDueToHighCellResistance_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_TEMPERATURE] = CclReducedDueToTemperature_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE] = CclReducedDueToHighCellVoltage_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE] = CclReducedDueToHighPackVoltage_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_CHARGER_LATCH] = CclReducedDueToChargerLatch_;
+    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT] = CclReducedDueToAlternateCurrentLimit_;
+
+    json[JsonDefinitions::WARNINGS] = limits;
     
     return json;
 }

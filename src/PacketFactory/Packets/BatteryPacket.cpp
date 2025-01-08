@@ -112,7 +112,7 @@ void BatteryPacket::populatePacket(const QByteArray& data) {
 QJsonObject BatteryPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::BMU_ALIVE] = BmuAlive_;
+    json[JsonDefinitions::BMU_ALIVE] = BmuAlive_; 
     json[JsonDefinitions::DISCHARGE_RELAY_ENABLED] = DischargeRelayEnabled_;
     json[JsonDefinitions::CHARGE_RELAY_ENABLED] = ChargeRelayEnabled_;
     json[JsonDefinitions::CHARGER_SAFETY_ENABLED] = ChargerSafetyRelayEnabled_;
@@ -121,29 +121,52 @@ QJsonObject BatteryPacket::toJson() {
     json[JsonDefinitions::ALWAYS_ON_SIGNAL_STATUS] = AlwaysOnSignalStatus_;
     json[JsonDefinitions::IS_READY_SIGNAL_STATUS] = IsReadySignalStatus_;
     json[JsonDefinitions::IS_CHARGING_SIGNAL_STATUS] = IsChargingSignalStatus_;
-
-    json[JsonDefinitions::POPULATED_CELLS] = PopulatedCells_;
-    json[JsonDefinitions::INPUT_12V] = Input12V_;
-    json[JsonDefinitions::FAN_VOLTAGE] = FanVoltage_;
-    json[JsonDefinitions::PACK_CURRENT] = PackCurrent_;
-    json[JsonDefinitions::PACK_VOLTAGE] = PackVoltage_;
-    json[JsonDefinitions::PACK_STATE_OF_CHARGE] = PackStateOfCharge_;
-    json[JsonDefinitions::PACK_AMPHOURS] = PackAmphours_;
-    json[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = PackDepthOfDischarge_;
-    json[JsonDefinitions::HIGH_TEMPERATURE] = HighTemperature_;
     json[JsonDefinitions::HIGH_THERMISTOR_ID] = HighThermistorId_;
-    json[JsonDefinitions::LOW_TEMPERATURE] = LowTemperature_;
     json[JsonDefinitions::LOW_THERMISTOR_ID] = LowThermistorId_;
-    json[JsonDefinitions::AVERAGE_TEMPERATURE] = AverageTemperature_;
-    json[JsonDefinitions::INTERNAL_TEMPERATURE] = InternalTemperature_;
-    json[JsonDefinitions::FAN_SPEED] = FanSpeed_;
-    json[JsonDefinitions::REQUESTED_FAN_SPEED] = RequestedFanSpeed_;
 
-    json[JsonDefinitions::LOW_CELL_VOLTAGE] = LowCellVoltage_;
-    json[JsonDefinitions::LOW_CELL_VOLTAGE_ID] = LowCellVoltageId_;
-    json[JsonDefinitions::HIGH_CELL_VOLTAGE] = HighCellVoltage_;
-    json[JsonDefinitions::HIGH_CELL_VOLTAGE_ID] = HighCellVoltageId_;
-    json[JsonDefinitions::AVERAGE_CELL_VOLTAGE] = AverageCellVoltage_;
+    //Battery Cell
+    QJsonObject batteryCell;
+
+    batteryCell[JsonDefinitions::POPULATED_CELLS] = PopulatedCells_;
+    batteryCell[JsonDefinitions::LOW_CELL_VOLTAGE] = LowCellVoltage_;
+    batteryCell[JsonDefinitions::LOW_CELL_VOLTAGE_ID] = LowCellVoltageId_;
+    batteryCell[JsonDefinitions::HIGH_CELL_VOLTAGE] = HighCellVoltage_;
+    batteryCell[JsonDefinitions::HIGH_CELL_VOLTAGE_ID] = HighCellVoltageId_;
+    batteryCell[JsonDefinitions::AVERAGE_CELL_VOLTAGE] = AverageCellVoltage_;
+
+    json[JsonDefinitions::BATTERY_CELL] = batteryCell;
+
+    //Battery Fan
+    QJsonObject batteryFan;
+    
+    batteryFan[JsonDefinitions::FAN_VOLTAGE] = FanVoltage_;
+    batteryFan[JsonDefinitions::FAN_SPEED] = FanSpeed_;
+    batteryFan[JsonDefinitions::REQUESTED_FAN_SPEED] = RequestedFanSpeed_;
+
+    json[JsonDefinitions::BATTERY_FAN] = batteryFan;
+
+    //Battery Pack
+    QJsonObject batteryPack;
+
+    batteryPack[JsonDefinitions::INPUT_12V] = Input12V_;
+    batteryPack[JsonDefinitions::PACK_CURRENT] = PackCurrent_;
+    batteryPack[JsonDefinitions::PACK_VOLTAGE] = PackVoltage_;
+    batteryPack[JsonDefinitions::PACK_STATE_OF_CHARGE] = PackStateOfCharge_;
+    batteryPack[JsonDefinitions::PACK_AMPHOURS] = PackAmphours_;
+    batteryPack[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = PackDepthOfDischarge_;
+
+    json[JsonDefinitions::BATTERY_PACK] = batteryPack;
+
+    //Battery Temperature
+    QJsonObject batteryTemperature;
+
+    batteryTemperature[JsonDefinitions::HIGH_TEMPERATURE] = HighTemperature_;
+    batteryTemperature[JsonDefinitions::LOW_TEMPERATURE] = LowTemperature_;
+    batteryTemperature[JsonDefinitions::AVERAGE_TEMPERATURE] = AverageTemperature_;
+    batteryTemperature[JsonDefinitions::INTERNAL_TEMPERATURE] = InternalTemperature_;
+
+    json[JsonDefinitions::BATTERY_TEMPERATURE] = batteryTemperature;
+
 
     return json;
 }

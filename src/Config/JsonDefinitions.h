@@ -106,6 +106,8 @@ namespace JsonDefinitions {
     constexpr const char* LOST_FRAMES_ON_CAN_BUS_ERROR = "LostFramesOnCanBusError";
     constexpr const char* OVERSPEED_ERROR = "OverspeedError";
     constexpr const char* CPU_OVERLOADED = "CpuOverload";
+    constexpr const char* MOTOR_ERRORS = "MotorErrors";
+    constexpr const char* MOTOR_WARNINGS = "MotorWarnings";
 
     /**
      * B3 keys
@@ -197,6 +199,8 @@ namespace JsonDefinitions {
     constexpr const char* CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE = "CclReducedDueToHighPackVoltage";
     constexpr const char* CCL_REDUCED_DUE_TO_CHARGER_LATCH = "CclReducedDueToChargerLatch";
     constexpr const char* CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT = "CclReducedDueToAlternateCurrentLimit";
+    constexpr const char* WARNINGS = "Warnings";
+    constexpr const char* ERRORS = "Errors";
 
     /**
      * Battery keys
@@ -232,6 +236,10 @@ namespace JsonDefinitions {
     constexpr const char* HIGH_CELL_VOLTAGE = "HighCellVoltage";
     constexpr const char* HIGH_CELL_VOLTAGE_ID = "HighCellVoltageId";
     constexpr const char* AVERAGE_CELL_VOLTAGE = "AverageCellVoltage";
+    constexpr const char* BATTERY_CELL = "BatteryCell";
+    constexpr const char* BATTERY_FAN = "BatteryFan";
+    constexpr const char* BATTERY_PACK = "BatteryPack";
+    constexpr const char* BATTERY_TEMPERATURE = "BatteryTemperature";
 
     /**
      * Mppt keys
