@@ -19,7 +19,7 @@ void MessageAggregator::createJsonMessage() {
     QJsonObject message;
 
     message[JsonDefinitions::TITLE] = ConfigManager::instance().getPacketTitle();
-    message[JsonDefinitions::TIMESTAMP] = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+    message[JsonDefinitions::TIMESTAMP] = QDateTime::currentDateTime().toSecsSinceEpoch();
 
     message[JsonDefinitions::KEY_MOTOR] = packetFactory_->getKeyMotorPacket().toJson();
     message[JsonDefinitions::B3] = packetFactory_->getB3Packet().toJson();
@@ -36,7 +36,7 @@ void MessageAggregator::createJsonMessage() {
     for(int i = 0; i < ConfigManager::instance().getNumberOfMppts(); i++) {
         message[JsonDefinitions::MPPT + QString::number(i)] = packetFactory_->getMpptPacket(i).toJson();
     }
-    
+
     emit jsonPacketReady(QJsonDocument(message).toJson(QJsonDocument::Compact));
 }
 
