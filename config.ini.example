@@ -14,10 +14,9 @@ portName=/dev/pts/5
 baudrate=115200
 
 [Mqtt]
-localTopic=hermesExchange
-localHostname=127.0.0.1
-localPort=6969
 telemetryTopic=packet
+pingTopic=ping
+pongTopic=pong
 telemetryHostname=aedes.calgarysolarcar.ca
 telemetryPort=1883
 telemetryUsername=BEGONE

@@ -22,6 +22,8 @@ public:
     int getBaudrate() const;
 
     QString getTelemetryTopic() const;
+    QString getPingTopic() const;
+    QString getPongTopic() const;
     QString getTelemetryHostname() const;
     int getTelemetryPort() const;
     QString getTelemetryUsername() const;
@@ -40,6 +42,8 @@ private:
     QString portName_;
     int baudrate_;
     QString telemetryTopic_;
+    QString pingTopic_;
+    QString pongTopic_;
     QString telemetryHostname_;
     int telemetryPort_;
     QString telemetryUsername_;
