@@ -44,11 +44,3 @@ Rectangle {
         anchors.topMargin: 47
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;uuid:"9f71866d-e849-580f-bf4d-11a2d8bbaabc"}D{i:1;uuid:"453e6781-a095-5400-b8af-59f78b190a5c"}
-D{i:2;uuid:"eb6fb8e7-ca94-5815-884f-16df8083ee28"}
-}
-##^##*/
-
