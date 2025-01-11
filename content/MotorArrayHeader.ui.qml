@@ -1,16 +1,16 @@
 import QtQuick
 
 Rectangle {
-    id: frame_1
+    id: motorArrayHeader
     width: 1062
     height: 108
     color: "transparent"
-    property alias motor_right_currentText: motor_right_current.text
-    property alias total_arrays_currentText: total_arrays_current.text
-    property alias motor_left_currentText: motor_left_current.text
+    property alias motorLeftCurrentText: motorLeftCurrent.text
+    property alias motorRightCurrentText: motorRightCurrent.text
+    property alias totalArraysCurrentText: totalArraysCurrent.text
 
     Text {
-        id: motor_right_current
+        id: motorRightCurrent
         color: "#a2180f"
         text: qsTr("Motor R Current: 100 A")
         anchors.left: parent.left
@@ -21,14 +21,15 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.rightMargin: 477
+        anchors.rightMargin: 476
         font.weight: Font.Normal
+        anchors.leftMargin: 1
         font.family: "Jost"
         anchors.bottomMargin: 50
     }
 
     Text {
-        id: motor_left_current
+        id: motorLeftCurrent
         color: "#a2180f"
         text: qsTr("Motor L Current: 100 A")
         anchors.left: parent.left
@@ -39,14 +40,15 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.rightMargin: 477
+        anchors.rightMargin: 476
         font.weight: Font.Normal
+        anchors.leftMargin: 1
         font.family: "Jost"
         anchors.topMargin: 50
     }
 
     Text {
-        id: total_arrays_current
+        id: totalArraysCurrent
         color: "#a2180f"
         text: qsTr("Total Arrays Current: 100 A")
         anchors.left: parent.left
@@ -57,19 +59,19 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.rightMargin: -1
+        anchors.rightMargin: -2
         font.weight: Font.Normal
-        anchors.leftMargin: 478
+        anchors.leftMargin: 479
         font.family: "Jost"
-        anchors.bottomMargin: 21
-        anchors.topMargin: 29
+        anchors.bottomMargin: 11
+        anchors.topMargin: 39
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;uuid:"1daeb70c-049c-50c9-aec6-0203f1269e1e"}D{i:1;uuid:"4d77b6ee-b786-50ce-872f-e570e0c665a3"}
-D{i:2;uuid:"1accc5b1-bd34-50cb-b912-239b38b33728"}D{i:3;uuid:"1716d487-9ce6-5d24-8890-1e0c2aafaff9"}
+    D{i:0;uuid:"561a3ff8-7127-57b5-83ee-5a22abac9b18"}D{i:1;uuid:"5f9b3c5f-1efb-59bb-be77-f6758a34b8dd"}
+D{i:2;uuid:"def61ecd-71f4-5d2e-90ea-35921c648ee2"}D{i:3;uuid:"b35cb3df-299d-50b6-80bf-d732c16ec805"}
 }
 ##^##*/
 
