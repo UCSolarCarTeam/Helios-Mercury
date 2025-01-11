@@ -4,13 +4,13 @@
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
 
-class StatusPacket : public IPacket {
+class ConnectionStatusPacket : public IPacket {
     Q_OBJECT
     DEFINE_PROPERTY(bool, EmbeddedState)
     DEFINE_PROPERTY(bool, AWSState)
 
 public:
-    StatusPacket();
+    ConnectionStatusPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 };
