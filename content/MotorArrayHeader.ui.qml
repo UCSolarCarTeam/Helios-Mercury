@@ -67,11 +67,3 @@ Rectangle {
         anchors.topMargin: 39
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;uuid:"561a3ff8-7127-57b5-83ee-5a22abac9b18"}D{i:1;uuid:"5f9b3c5f-1efb-59bb-be77-f6758a34b8dd"}
-D{i:2;uuid:"def61ecd-71f4-5d2e-90ea-35921c648ee2"}D{i:3;uuid:"b35cb3df-299d-50b6-80bf-d732c16ec805"}
-}
-##^##*/
-
