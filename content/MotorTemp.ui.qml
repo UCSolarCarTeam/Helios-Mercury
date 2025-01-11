@@ -459,26 +459,3 @@ TEMPERATURE")
         anchors.topMargin: 190
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;uuid:"e5898a63-09e9-513a-9b98-0e5ea10e6074"}D{i:1;uuid:"1df26dbd-b52c-58ca-ad68-f57a299b73a5"}
-D{i:2;uuid:"1bc10868-eebf-5d7b-b4ce-d6606088cc76"}D{i:3;uuid:"d60bbb10-e7e2-5444-823f-183131bbd736"}
-D{i:4;uuid:"37ba46a0-4d15-55fd-98d5-68d74dddd47c"}D{i:5;uuid:"e3d2b3cd-1a05-5938-a91f-8e981bc6a9f3"}
-D{i:6;uuid:"24b022a5-35f4-531b-9f3f-302f3c76eafa"}D{i:7;uuid:"58894ea4-4692-5950-b1d1-8f6a3c8abd3c"}
-D{i:8;uuid:"2ed53ac5-af67-5b51-a26f-c74acc32044b"}D{i:9;uuid:"1ced7772-26d1-5982-a685-69c330892879"}
-D{i:10;uuid:"e34f608c-b91c-5453-9690-5e1047a1393a"}D{i:11;uuid:"ecf575c0-e841-5a73-b261-afeb90e55858"}
-D{i:12;uuid:"60a671cd-656d-5ead-917d-aa27878ded3b"}D{i:13;uuid:"9568cedf-4370-59e2-92c0-088b43fa5ab8"}
-D{i:14;uuid:"42904e18-c8ba-5cbe-b19d-cfe0530bc18a"}D{i:15;uuid:"069aa05d-bf73-5050-be8d-d2df1cdaf1c8"}
-D{i:16;uuid:"1e1de0c3-1731-58ba-b2c3-f9a55a901ba3"}D{i:17;uuid:"eeccfa54-118a-5c16-9203-5968588783ea"}
-D{i:18;uuid:"f617311e-1049-5331-a599-24e307672430"}D{i:19;uuid:"7c40d0cd-4999-5e97-bc5a-7ded9d4a2d5e"}
-D{i:20;uuid:"a6cb66f5-e70c-55d3-b06b-1de6bfc2b908"}D{i:21;uuid:"851b6245-a796-582f-88f7-a267a1f4e37e"}
-D{i:22;uuid:"944e02ba-4dce-564d-b1e6-38fa5e1f9aeb"}D{i:23;uuid:"7805c6f9-619a-50cd-baca-fbcd6c085d18"}
-D{i:24;uuid:"88645df0-7173-5f38-bb0a-37ad927350f9"}D{i:25;uuid:"41ece90d-3b41-5994-b668-a9b08e6cb272"}
-D{i:26;uuid:"7f9b169b-4a5a-5bb1-8cde-6efd53839acd"}D{i:27;uuid:"b020f8d2-95ef-55a9-85ea-26d5a46e2855"}
-D{i:28;uuid:"974fb6a6-2ef4-52d8-9aa7-f4d6032ee93e"}D{i:29;uuid:"4da98386-30a7-5949-a084-2aa7077fc2d0"}
-D{i:30;uuid:"5f45f2cd-19bf-5345-888c-13b769d1d091"}D{i:31;uuid:"d5771e65-c6bd-5b4e-8b63-ec4a3fd42036"}
-D{i:32;uuid:"9acbc4da-2050-5ef3-b9b0-f2a5a02bc391"}D{i:33;uuid:"26d59306-6c4e-5c56-a051-ca573ec564af"}
-}
-##^##*/
-
