@@ -55,3 +55,8 @@ compile_commands.json
 *creator.user*
 
 *_qmlcache.qrc
+
+# Qt Bridge 
+translations.db
+translations.db-shm
+translations.db-wal
