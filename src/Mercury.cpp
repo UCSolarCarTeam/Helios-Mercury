@@ -3,7 +3,7 @@
 #include "PacketFactory/PacketFactory.h"
 #include "Receivers/SerialReceiver.h"
 #include "Receivers/TelemetryReceiver.h"
-#include "Receivers/GPIOReader.h"
+#include "Receivers/GpioReader.h"
 #include "StreamProcessor/StreamProcessor.h"
 #include "MessageTransmitter/MessageTransmitter.h"
 #include "MessageAggregator/MessageAggregator.h"

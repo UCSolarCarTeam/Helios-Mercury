@@ -1,4 +1,4 @@
-#include "GPIOReader.h"
+#include "GpioReader.h"
 #include <QDebug>
 #include <unistd.h>
 #include <algorithm>
@@ -16,19 +16,19 @@ GPIOReader::~GPIOReader() {
 
 // Begin function to initialize GPIO pins
 void GPIOReader::begin(int pinData0, int pinData1) {
-    _pinData0 = pinData0;
-    _pinData1 = pinData1;
+    pinData0_ = pinData0;
+    pinData1_ = pinData1;
 
     if (gpioInitialise() < 0) {
         qWarning() << "pigpio initialization failed.";
         return;
     }
 
-    gpioSetMode(_pinData0, PI_INPUT);
-    gpioSetMode(_pinData1, PI_INPUT);
+    gpioSetMode(pinData0_, PI_INPUT);
+    gpioSetMode(pinData1_, PI_INPUT);
 
-    gpioSetAlertFuncEx(_pinData0, data0ISR, this);
-    gpioSetAlertFuncEx(_pinData1, data1ISR, this);
+    gpioSetAlertFuncEx(pinData0_, data0ISR, this);
+    gpioSetAlertFuncEx(pinData1_, data1ISR, this);
 
     reset();
     running = true;
@@ -39,27 +39,27 @@ void GPIOReader::begin(int pinData0, int pinData1) {
 void GPIOReader::stop() {
     running = false;
     wait();
-    gpioSetAlertFunc(_pinData0, nullptr);
-    gpioSetAlertFunc(_pinData1, nullptr);
+    gpioSetAlertFunc(pinData0_, nullptr);
+    gpioSetAlertFunc(pinData1_, nullptr);
     gpioTerminate();
 }
 
 // Reset the internal state
 void GPIOReader::reset() {
-    std::fill(std::begin(_bitData), std::end(_bitData), false);
-    _bitCnt = 0;
-    _data = 0;
-    _timestamp = gpioTick();
+    std::fill(std::begin(bitData_), std::end(bitData_), false);
+    bitCnt_ = 0;
+    data_ = 0;
+    timestamp_ = gpioTick();
 }
 
 // Emit data after receiving 26 bits
 void GPIOReader::emitData() {
     for (int i = 1; i < MAX_BITS - 1; ++i) {
-        if (_bitData[i]) {
-            _data |= (1UL << (i - 1));
+        if (bitData_[i]) {
+            data_ |= (1UL << (i - 1));
         }
     }
-    QByteArray dataArray = QByteArray::number(_data);
+    QByteArray dataArray = QByteArray::number(data_);
     packetFactory_->getPiPacket().populatePacket(dataArray);
     reset();
 }
@@ -69,9 +69,9 @@ void GPIOReader::data0ISR(int gpio, int level, uint32_t tick, void* userdata) {
     GPIOReader* instance = static_cast<GPIOReader*>(userdata);
     if (level == 0) { // Falling edge
         usleep(10000);
-        if (instance->_bitCnt < MAX_BITS) {
-            instance->_bitData[instance->_bitCnt++] = false;
-            if (instance->_bitCnt == MAX_BITS) {
+        if (instance->bitCnt_ < MAX_BITS) {
+            instance->bitData_[instance->bitCnt_++] = false;
+            if (instance->bitCnt_ == MAX_BITS) {
                 instance->emitData();
             }
         }
@@ -83,9 +83,9 @@ void GPIOReader::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
     GPIOReader* instance = static_cast<GPIOReader*>(userdata);
     if (level == 0) { // Falling edge
         usleep(10000);
-        if (instance->_bitCnt < MAX_BITS) {
-            instance->_bitData[instance->_bitCnt++] = true;
-            if (instance->_bitCnt == MAX_BITS) {
+        if (instance->bitCnt_ < MAX_BITS) {
+            instance->bitData_[instance->bitCnt_++] = true;
+            if (instance->bitCnt_ == MAX_BITS) {
                 instance->emitData();
             }
         }

@@ -24,12 +24,12 @@ protected:
 
 private:
     bool running = false;
-    int _pinData0, _pinData1;
-    int _bitCnt = 0;
+    int pinData0_, pinData1_;
+    int bitCnt_ = 0;
     static const int MAX_BITS = 26;
-    bool _bitData[MAX_BITS] = {false};
-    unsigned long _data = 0;
-    unsigned long _timestamp;
+    bool bitData_[MAX_BITS] = {false};
+    unsigned long data_ = 0;
+    unsigned long timestamp_;
     PacketFactory* packetFactory_;
 
     void reset();
