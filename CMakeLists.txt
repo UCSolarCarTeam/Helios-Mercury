@@ -23,7 +23,11 @@ endif()
 
 qt_add_executable(Helios-Mercury src/main.cpp
     src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
+<<<<<<< HEAD
     src/Receivers/GpioReader.cpp src/Receivers/GpioReader.h
+=======
+    src/Receivers/GPIOReader.cpp src/Receivers/GPIOReader.h
+>>>>>>> 14c70cac2cadec422a260597663b0141b7993d6f
     src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
     src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
