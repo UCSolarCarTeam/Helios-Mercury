@@ -47,3 +47,7 @@ void MessageTransmitter::setupTelemetryClient() {
 
     telemetryClient_->connectToHost();
 }
+
+QMqttClient* MessageTransmitter::getTelemetryClient() const {
+    return telemetryClient_;
+}

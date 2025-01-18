@@ -11,6 +11,7 @@ public:
     MessageTransmitter();
 
     void setupTelemetryClient();
+    QMqttClient* getTelemetryClient() const;
 
 public slots:
     void transmitMessage(const QByteArray& message);
