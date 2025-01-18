@@ -4,18 +4,18 @@
 #include <algorithm>
 
 // Constructor
-GPIOReader::GPIOReader(QObject* parent, PacketFactory* packetFactory) : QThread(parent), packetFactory_(packetFactory) {
+GpioReader::GpioReader(QObject* parent, PacketFactory* packetFactory) : QThread(parent), packetFactory_(packetFactory) {
     begin(20, 21);
 }
 
 // Destructor
-GPIOReader::~GPIOReader() {
+GpioReader::~GpioReader() {
     stop();
     gpioTerminate();
 }
 
 // Begin function to initialize GPIO pins
-void GPIOReader::begin(int pinData0, int pinData1) {
+void GpioReader::begin(int pinData0, int pinData1) {
     pinData0_ = pinData0;
     pinData1_ = pinData1;
 
@@ -36,7 +36,7 @@ void GPIOReader::begin(int pinData0, int pinData1) {
 }
 
 // Stop function to clean up
-void GPIOReader::stop() {
+void GpioReader::stop() {
     running = false;
     wait();
     gpioSetAlertFunc(pinData0_, nullptr);
@@ -45,7 +45,7 @@ void GPIOReader::stop() {
 }
 
 // Reset the internal state
-void GPIOReader::reset() {
+void GpioReader::reset() {
     std::fill(std::begin(bitData_), std::end(bitData_), false);
     bitCnt_ = 0;
     data_ = 0;
@@ -53,7 +53,7 @@ void GPIOReader::reset() {
 }
 
 // Emit data after receiving 26 bits
-void GPIOReader::emitData() {
+void GpioReader::emitData() {
     for (int i = 1; i < MAX_BITS - 1; ++i) {
         if (bitData_[i]) {
             data_ |= (1UL << (i - 1));
@@ -65,8 +65,8 @@ void GPIOReader::emitData() {
 }
 
 // ISR for Data0 (logical 0)
-void GPIOReader::data0ISR(int gpio, int level, uint32_t tick, void* userdata) {
-    GPIOReader* instance = static_cast<GPIOReader*>(userdata);
+void GpioReader::data0ISR(int gpio, int level, uint32_t tick, void* userdata) {
+    GpioReader* instance = static_cast<GpioReader*>(userdata);
     if (level == 0) { // Falling edge
         usleep(10000);
         if (instance->bitCnt_ < MAX_BITS) {
@@ -79,8 +79,8 @@ void GPIOReader::data0ISR(int gpio, int level, uint32_t tick, void* userdata) {
 }
 
 // ISR for Data1 (logical 1)
-void GPIOReader::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
-    GPIOReader* instance = static_cast<GPIOReader*>(userdata);
+void GpioReader::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
+    GpioReader* instance = static_cast<GpioReader*>(userdata);
     if (level == 0) { // Falling edge
         usleep(10000);
         if (instance->bitCnt_ < MAX_BITS) {
@@ -93,7 +93,7 @@ void GPIOReader::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
 }
 
 // Main run loop (can be used for additional logic)
-void GPIOReader::run() {
+void GpioReader::run() {
     while (running) {
         usleep(10000); // Polling interval (10ms)
     }

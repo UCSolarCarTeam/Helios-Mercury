@@ -6,12 +6,12 @@
 #include <pigpio.h>
 #include "../PacketFactory/PacketFactory.h"
 
-class GPIOReader : public QThread {
+class GpioReader : public QThread {
     Q_OBJECT
 
 public:
-    explicit GPIOReader(QObject* parent = nullptr, PacketFactory* packetFactory = nullptr);
-    ~GPIOReader();
+    explicit GpioReader(QObject* parent = nullptr, PacketFactory* packetFactory = nullptr);
+    ~GpioReader();
 
     void begin(int pinData0, int pinData1);
     void stop();

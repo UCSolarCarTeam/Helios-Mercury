@@ -15,15 +15,11 @@ void PiPacket::populatePacket(const QByteArray& data) {
 QJsonObject PiPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::RFID] = getDataAsLongLong();
+    json[JsonDefinitions::RFID] = getData().toLongLong();
 
     return json;
 }
 
 QByteArray PiPacket::getData() const {
     return wiegandData_;
-}
-
-qlonglong PiPacket::getDataAsLongLong() const {
-    return wiegandData_.toLongLong();
 }

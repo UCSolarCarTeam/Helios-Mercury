@@ -11,7 +11,6 @@ public:
     QJsonObject toJson() override;
 
     QByteArray getData() const;
-    qlonglong getDataAsLongLong() const;
 
 private:
     QByteArray wiegandData_;

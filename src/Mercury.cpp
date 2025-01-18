@@ -25,7 +25,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
     //initialize GPIOReader which will read GPIO data and forward directly to the PiPacket
-    GPIOReader* gpioReader = new GPIOReader(nullptr, packetFactory);
+    GpioReader* gpioReader = new GpioReader(nullptr, packetFactory);
 
     //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
     StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
