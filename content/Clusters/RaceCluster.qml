@@ -1,6 +1,8 @@
 import QtQuick 2.15
+import "../Components"
 
 Item {
+    id: _item
     width: 1920
     height: 550
     Text {
@@ -39,6 +41,13 @@ Item {
             height: 16
             text: qsTr("Motor L Current: XXX A")
             font.pixelSize: 12
+        }
+
+        ArrowIndicator {
+            id: arrowIndicator
+            x: 1292
+            y: 15
+            z:1000
         }
     }
 
