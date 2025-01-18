@@ -2,6 +2,7 @@
 #include "Config/ConfigManager.h"
 #include "PacketFactory/PacketFactory.h"
 #include "Receivers/SerialReceiver.h"
+#include "Receivers/TelemetryReceiver.h"
 #include "StreamProcessor/StreamProcessor.h"
 #include "MessageTransmitter/MessageTransmitter.h"
 #include "MessageAggregator/MessageAggregator.h"
@@ -19,6 +20,9 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
     SerialReceiver* serialReceiver = new SerialReceiver();
+
+    //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
+    TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
 
     //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
     StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
