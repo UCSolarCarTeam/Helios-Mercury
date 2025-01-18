@@ -3,23 +3,24 @@
 #include <QDebug>
 
 PiPacket::PiPacket() {
-    wiegandData_ = 0;
+    setRfidData(QByteArray());
 }
 
 void PiPacket::populatePacket(const QByteArray& data) {
     if(!data.isEmpty() && data.toLongLong() != 0) {
-        wiegandData_ = data;  // Use the setter to store Wiegand data
+        setRfidData(data);
     }
 }
 
 QJsonObject PiPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::RFID] = getData().toLongLong();
+    json[JsonDefinitions::RFID] = getRfidData().toLongLong();
 
     return json;
 }
 
-QByteArray PiPacket::getData() const {
-    return wiegandData_;
+// Getter for RfidData
+QByteArray PiPacket::getRfidData() const {
+    return rfidData_;
 }
