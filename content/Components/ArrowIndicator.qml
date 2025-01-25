@@ -24,8 +24,6 @@ Item {
         anchors.fill: parent
         id: effectItem
         source: "../Images/Arrow.png"
-        visible: false
-        opacity: 0.5
     }
 
 
@@ -60,6 +58,8 @@ Item {
         property variant source: effectItem
         fragmentShader: "qrc:/content/shader.frag.qsb"
         property real u_time: 0.0
+        property color baseColor: "blue"
+        property color underlyingColor: "red"
 
         Timer {
             interval: 16 // roughly 60 FPS
