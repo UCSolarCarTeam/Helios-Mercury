@@ -13,7 +13,10 @@ configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort)
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio)
+add_custom_target(pigpio_build ALL
+    COMMAND make -C ${CMAKE_SOURCE_DIR}/imports/pigpio
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/imports/pigpio
+)
 include_directories(${CMAKE_SOURCE_DIR}/imports/pigpio)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
