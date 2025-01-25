@@ -1,3 +1,1 @@
-[submodule "imports/pigpio"]
-	path = imports/pigpio
-	url = https://github.com/joan2937/pigpio.git
+
