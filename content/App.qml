@@ -15,8 +15,9 @@ Window {
 
     Loader {
         id: dashLoader
-        anchors.fill: parent
-        source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/DebugCluster.qml")
+        //anchors.fill: parent
+        //source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/DebugCluster.qml")
+        source: "Clusters/RaceCluster.qml"
     }
 
     // Screen Background to black
@@ -26,4 +27,3 @@ Window {
         z: -6969
     }
 }
-
