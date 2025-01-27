@@ -15,19 +15,31 @@ Item {
     }
 
     Image {
-        id: raceClusterFrameBackground
+        id: raceClusterFrame
         x: 0
         y: 0
-        source: "../Images/raceClusterFrameBackground.png"
+        source: "../Images/RaceClusterFrame.png"
         fillMode: Image.PreserveAspectFit
-    }
 
-    Image {
-        id: raceClusterFrameOutline
-        x: 0
-        y: 0
-        source: "../Images/raceClusterFrameOutline.png"
-        fillMode: Image.PreserveAspectFit
+        Text {
+            id: _text1
+            x: 711
+            y: 12
+            width: 157
+            height: 16
+            text: qsTr("Motor R Current: XXX A")
+            font.pixelSize: 12
+        }
+
+        Text {
+            id: _text2
+            x: 711
+            y: 29
+            width: 157
+            height: 16
+            text: qsTr("Motor L Current: XXX A")
+            font.pixelSize: 12
+        }
     }
 
 }
