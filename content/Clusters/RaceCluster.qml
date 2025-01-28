@@ -44,10 +44,21 @@ Item {
         }
 
         ArrowIndicator {
-            id: arrowIndicator
-            x: 1292
+            id: leftArrowIndicator
+            x: 608
             y: 15
             z:1000
+            isRight: false
+            isOn: b3.LeftSignalIn || b3.HazardLightsIn
+        }
+
+        ArrowIndicator {
+            id: rightArrowIndicator
+            x: 1278
+            y: 15
+            z:1000
+            isRight: true
+            isOn: b3.RightSignalIn || b3.HazardLightsIn
         }
     }
 

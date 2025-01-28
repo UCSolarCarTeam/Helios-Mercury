@@ -2,71 +2,41 @@ import QtQuick 2.0
 import QtQuick.Studio.Effects
 
 Item {
-    id: _item
-    width: 128
-    height: 64
+    id: arrowIndicator
+    width: 32
+    height: 32
+    rotation: isRight ? 0 : 180
 
-    // Rectangle {
-    //     id: effectItem
-    //     layer.enabled: true
-    //     // visible: false
-    //     anchors.fill: parent
-    //     color: "lightgrey"
-    //     radius: 16
-    //     Text {
-    //         text: "Hello world"
-    //         font.pointSize: 16
-    //         anchors.centerIn: parent
-    //     }
-    // }
+    property bool isOn: true
+    property bool isRight: true
+
+    //Reset animation position whenever toggled
+    onIsOnChanged: {
+        movingColorEffect.u_time = 0.0;
+    }
 
     Image {
         anchors.fill: parent
-        id: effectItem
+        id: arrowImg
         source: "../Images/Arrow.png"
     }
 
-
-
-    // Image {
-    //     width: 128
-    //     height: 128
-    //     id: sourceItem
-    //     source: "../Images/Arrow.png"
-    //     visible: false
-    //     rotation: 90
-    // }
-
-    // Rectangle{
-    //     id: rect12
-    //     width: 128
-    //     height: 128
-    //     visible: false
-    //     //color: "red"
-    // }
-
-    // OpacityMaskEffect {
-    //     anchors.fill: rect12
-    //     id: opacityMas
-    //     source: rect12
-    //     maskSource: sourceItem
-    //     //invert: true
-    // }
-
+    //Moving color effect on indicator arrow image
     ShaderEffect {
+        id: movingColorEffect
         anchors.fill: parent
-        property variant source: effectItem
-        fragmentShader: "qrc:/content/shader.frag.qsb"
+        property variant source: arrowImg
+        fragmentShader: "qrc:/content/Shaders/MovingColor.frag.qsb"
         property real u_time: 0.0
-        property color baseColor: "blue"
-        property color underlyingColor: "red"
+        property color baseColor: "#d3d3d3"
+        property color movingColor: "#A2180F"
 
         Timer {
-            interval: 16 // roughly 60 FPS
-            running: true
+            interval: 16
+            running: arrowIndicator.isOn
             repeat: true
             onTriggered: {
-                parent.u_time += interval / 1000.0; // increment time in seconds
+                parent.u_time += interval / 1000.0;
             }
         }
     }
