@@ -4,7 +4,6 @@
 #include <QDebug>
 
 namespace {
-    const int EMBEDDED_ACTIVITY_TIMEOUT = 3000; // Timeout in milliseconds (3 seconds)
 }
 
 SerialReceiver::SerialReceiver() {
@@ -26,9 +25,6 @@ SerialReceiver::SerialReceiver() {
         qWarning() << "EXITING - Failed to open serial port (" << config.getPortName() << "): " << serialPort_->errorString();
         exit(1);
     }
-
-    connect(&embeddedActivityTimer_, &QTimer::timeout, this, &SerialReceiver::resetEmbeddedActive);
-
 }
 
 SerialReceiver::~SerialReceiver() {
@@ -44,17 +40,11 @@ void SerialReceiver::handleReadyRead() {
 
     if (!data.isEmpty()) {
         embeddedActive_ = true; // Mark the embedded system as active
-        embeddedActivityTimer_.start(EMBEDDED_ACTIVITY_TIMEOUT); // Reset timer for activity
 
         emit dataReceived(data); // Emit signal with the received data
     } else {
         qDebug() << "Incoming data is empty";
     }
-}
-
-void SerialReceiver::resetEmbeddedActive() {
-    embeddedActive_ = false; // Reset the activity flag
-    embeddedActivityTimer_.stop(); // Stop the timer
 }
 
 bool SerialReceiver::isEmbeddedActive() const {

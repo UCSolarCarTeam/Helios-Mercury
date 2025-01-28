@@ -18,12 +18,10 @@ signals:
 
 private slots:
     void handleReadyRead();
-    void resetEmbeddedActive(); // Slot to reset activity status
 
 private:
     QSerialPort *serialPort_;
     bool embeddedActive_ = false;
-    QTimer embeddedActivityTimer_;
 };
 
 #endif // SERIALRECEIVER_H

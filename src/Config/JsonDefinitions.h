@@ -304,6 +304,7 @@ namespace JsonDefinitions {
     /**
      * Status keys
      */
+    constexpr const char* CONNECTION_STATUS = "ConnectionStatus";
     constexpr const char* EMBEDDED_STATUS = "EmbeddedStatus";
     constexpr const char* AWS_STATUS = "AWSStatus";
 }

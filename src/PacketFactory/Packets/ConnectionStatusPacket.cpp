@@ -1,25 +1,34 @@
 #include "ConnectionStatusPacket.h"
 #include "../../Config/JsonDefinitions.h"
-#include "../../MessageTransmitter/MessageTransmitter.h"
 #include <QMqttClient>
 
-ConnectionStatusPacket::ConnectionStatusPacket() {
+ConnectionStatusPacket::ConnectionStatusPacket(MessageTransmitter* transmitter, SerialReceiver* receiver)
+    : messageTransmitter_(transmitter), serialReceiver_(receiver) {
     setAWSState(false);
     setEmbeddedState(false);
 }
 
+
 void ConnectionStatusPacket::populatePacket(const QByteArray& data) {
     Q_UNUSED(data);
 
-    // Access MessageTransmitter's MQTT client state
-    MessageTransmitter messageTransmitter;
-    setAWSState(messageTransmitter.getTelemetryClient()->state() == QMqttClient::Connected);
+    if (messageTransmitter_) {
+        qDebug() << "MessageTransmitter is valid.";
+        setAWSState(true);
+    } else {
+        qDebug() << "MessageTransmitter is null.";
+        setAWSState(false);
+    }
 
-
-    // Example: Update EmbeddedState (requires SerialReceiver integration)
-    // SerialReceiver& serialReceiver = SerialReceiver::instance(); // Assuming singleton pattern
-    // setEmbeddedState(serialReceiver.isEmbeddedActive());
+    if (serialReceiver_) {
+        qDebug() << "SerialReceiver is valid and port is open.";
+        setEmbeddedState(true);
+    } else {
+        qDebug() << "SerialReceiver is null or port is not open.";
+        setEmbeddedState(false);
+    }
 }
+
 
 QJsonObject ConnectionStatusPacket::toJson() {
     QJsonObject json;
