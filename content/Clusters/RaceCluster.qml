@@ -21,7 +21,7 @@ Item {
         id: raceClusterFrameBackground
         x: 0
         y: 0
-        source: "../Images/raceClusterFrameBackground.png"
+        source: "../Images/RaceClusterFrameBackground.png"
         fillMode: Image.PreserveAspectFit
     }
 
@@ -29,7 +29,7 @@ Item {
         id: raceClusterFrameOutline
         x: 0
         y: 0
-        source: "../Images/raceClusterFrameOutline.png"
+        source: "../Images/RaceClusterFrameOutline.png"
         fillMode: Image.PreserveAspectFit
 
                 Text {

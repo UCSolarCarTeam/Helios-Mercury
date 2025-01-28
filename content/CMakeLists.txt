@@ -13,8 +13,8 @@ qt6_add_qml_module(content
         QML_FILES Clusters/RaceCluster.qml
         QML_FILES Clusters/DebugCluster.qml
         QML_FILES Clusters/Screen01.ui.qml
-        RESOURCES Images/raceClusterFrameBackground.png
-        RESOURCES Images/raceClusterFrameOutline.png
+        RESOURCES Images/RaceClusterFrameBackground.png
+        RESOURCES Images/RaceClusterFrameOutline.png
         RESOURCES Images/Arrow.png
         QML_FILES Components/ArrowIndicator.qml
 )
