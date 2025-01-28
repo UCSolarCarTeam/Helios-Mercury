@@ -14,6 +14,7 @@ Item {
         height: 53
         text: qsTr("TODO: RACE CLUSTER")
         font.pixelSize: 24
+        color: "white"
     }
 
     Image {
@@ -30,6 +31,28 @@ Item {
         y: 0
         source: "../Images/raceClusterFrameOutline.png"
         fillMode: Image.PreserveAspectFit
+
+                Text {
+            id: _text1
+            x: 711
+            y: 12
+            width: 157
+            height: 16
+            text: qsTr("Motor R Current: XXX A")
+            font.pixelSize: 12
+            color: "white"
+        }
+
+        Text {
+            id: _text2
+            x: 711
+            y: 29
+            width: 157
+            height: 16
+            text: qsTr("Motor L Current: XXX A")
+            font.pixelSize: 12
+            color: "white"
+        }
 
         ArrowIndicator {
             id: leftArrowIndicator
