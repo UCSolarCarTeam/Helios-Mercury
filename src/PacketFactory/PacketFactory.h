@@ -46,7 +46,6 @@ private:
     QVector<MotorDetailsPacket*> motorDetailsPackets_;
     QVector<MpptPacket*> mpptPackets_;
 
-    std::unique_ptr<SerialReceiver> serialReceiver_;
     std::unique_ptr<MessageTransmitter> messageTransmitter_;
 };
 

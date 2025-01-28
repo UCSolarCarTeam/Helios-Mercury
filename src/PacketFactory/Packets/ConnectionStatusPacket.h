@@ -12,10 +12,9 @@ class ConnectionStatusPacket : public IPacket {
     DEFINE_PROPERTY(bool, AWSState)
 
 public:
-    ConnectionStatusPacket(MessageTransmitter* transmitter, SerialReceiver* receiver);
+    ConnectionStatusPacket(MessageTransmitter* transmitter);
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
-    SerialReceiver* serialReceiver_ = nullptr;
     MessageTransmitter* messageTransmitter_ = nullptr;
 };
 

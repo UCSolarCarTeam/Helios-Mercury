@@ -14,9 +14,8 @@ PacketFactory::PacketFactory() {
     batteryFaultsPacket_.reset(new BatteryFaultsPacket());
     b3Packet_.reset(new B3Packet());
 
-    // serialReceiver_ = std::make_unique<SerialReceiver>();
     messageTransmitter_ = std::make_unique<MessageTransmitter>();
-    connectionStatusPacket_.reset(new ConnectionStatusPacket(messageTransmitter_.get(), nullptr));
+    connectionStatusPacket_.reset(new ConnectionStatusPacket(messageTransmitter_.get()));
 
     for (int i = 0; i < config.getNumberOfMotors(); i++) {
         motorDetailsPackets_.append(new MotorDetailsPacket());

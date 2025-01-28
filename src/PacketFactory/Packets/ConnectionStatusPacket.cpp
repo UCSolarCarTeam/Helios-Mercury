@@ -2,16 +2,15 @@
 #include "../../Config/JsonDefinitions.h"
 #include <QMqttClient>
 
-ConnectionStatusPacket::ConnectionStatusPacket(MessageTransmitter* transmitter, SerialReceiver* receiver)
-    : messageTransmitter_(transmitter), serialReceiver_(receiver) {
+ConnectionStatusPacket::ConnectionStatusPacket(MessageTransmitter* transmitter)
+    : messageTransmitter_(transmitter) {
     setAWSState(false);
     setEmbeddedState(false);
 }
 
 
 void ConnectionStatusPacket::populatePacket(const QByteArray& data) {
-    Q_UNUSED(data);
-
+    qDebug() << "Data size in populatePacket:" << data.size();
     if (messageTransmitter_) {
         qDebug() << "MessageTransmitter is valid.";
         setAWSState(true);
@@ -20,19 +19,19 @@ void ConnectionStatusPacket::populatePacket(const QByteArray& data) {
         setAWSState(false);
     }
 
-    if (serialReceiver_) {
-        qDebug() << "SerialReceiver is valid and port is open.";
+    if (data.size() != 0) {
         setEmbeddedState(true);
+        EmbeddedState_ = true;
     } else {
-        qDebug() << "SerialReceiver is null or port is not open.";
         setEmbeddedState(false);
+        EmbeddedState_ = false;
     }
 }
 
 
 QJsonObject ConnectionStatusPacket::toJson() {
     QJsonObject json;
-    json[JsonDefinitions::AWS_STATUS] = AWSState_;
-    json[JsonDefinitions::EMBEDDED_STATUS] = EmbeddedState_;
+    json[JsonDefinitions::AWS_STATUS] = AWSState();
+    json[JsonDefinitions::EMBEDDED_STATUS] = EmbeddedState();
     return json;
 }
