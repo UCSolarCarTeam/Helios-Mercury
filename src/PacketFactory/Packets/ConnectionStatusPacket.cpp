@@ -26,6 +26,7 @@ void ConnectionStatusPacket::populatePacket(const QByteArray& data) {
         setEmbeddedState(false);
         EmbeddedState_ = false;
     }
+    qDebug() << EmbeddedState_;
 }
 
 
