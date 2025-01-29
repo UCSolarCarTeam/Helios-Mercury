@@ -10,23 +10,19 @@ ConnectionStatusPacket::ConnectionStatusPacket(MessageTransmitter* transmitter)
 
 
 void ConnectionStatusPacket::populatePacket(const QByteArray& data) {
-    qDebug() << "Data size in populatePacket:" << data.size();
     if (messageTransmitter_) {
-        qDebug() << "MessageTransmitter is valid.";
         setAWSState(true);
     } else {
-        qDebug() << "MessageTransmitter is null.";
         setAWSState(false);
     }
+    // qDebug() << "MESSAGE TRANSMITTER: " << messageTransmitter_;
+    // qDebug() << "IS CONNECTED: " << messageTransmitter_->isTelemetryConnected();
 
     if (data.size() != 0) {
         setEmbeddedState(true);
-        EmbeddedState_ = true;
     } else {
         setEmbeddedState(false);
-        EmbeddedState_ = false;
     }
-    qDebug() << EmbeddedState_;
 }
 
 

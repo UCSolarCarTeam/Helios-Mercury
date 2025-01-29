@@ -11,8 +11,6 @@ public:
     SerialReceiver();
     ~SerialReceiver();
 
-    bool isEmbeddedActive() const;
-
 signals:
     void dataReceived(const QByteArray& data);
 
@@ -21,7 +19,6 @@ private slots:
 
 private:
     QSerialPort *serialPort_;
-    bool embeddedActive_ = false;
 };
 
 #endif // SERIALRECEIVER_H

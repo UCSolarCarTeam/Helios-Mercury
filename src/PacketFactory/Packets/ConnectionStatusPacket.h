@@ -4,7 +4,6 @@
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
 #include "../../MessageTransmitter/MessageTransmitter.h"
-#include "../../Receivers/SerialReceiver.h"
 
 class ConnectionStatusPacket : public IPacket {
     Q_OBJECT

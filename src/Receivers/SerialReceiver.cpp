@@ -39,14 +39,8 @@ void SerialReceiver::handleReadyRead() {
     qDebug() << "Data Received: " << data;
 
     if (!data.isEmpty()) {
-        embeddedActive_ = true; // Mark the embedded system as active
-
         emit dataReceived(data); // Emit signal with the received data
     } else {
         qDebug() << "Incoming data is empty";
     }
-}
-
-bool SerialReceiver::isEmbeddedActive() const {
-    return embeddedActive_;
 }

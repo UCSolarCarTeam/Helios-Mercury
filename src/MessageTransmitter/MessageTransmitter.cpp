@@ -20,6 +20,10 @@ void MessageTransmitter::transmitMessage(const QByteArray& message) {
     }
 }
 
+bool MessageTransmitter::isTelemetryConnected() {
+    return telemetryConnected_;
+}
+
 /** 
  * Setup Telemetry MQTT client
  * requires hostname, port, username, password, and topic
@@ -34,20 +38,18 @@ void MessageTransmitter::setupTelemetryClient() {
     telemetryClient_->setPassword(config.getTelemetryPassword());
     telemetryTopic_ = config.getTelemetryTopic();
 
-    QObject::connect(telemetryClient_, &QMqttClient::connected, []() {
+    QObject::connect(telemetryClient_, &QMqttClient::connected, [this]() {
         qDebug() << "Connection to TELEMETRY MQTT Service Established";
+        telemetryConnected_ = true;
     });
 
     QObject::connect(telemetryClient_, &QMqttClient::disconnected, [this]() {
         qDebug() << "Connection to TELEMETRY MQTT Service Failed - retrying in 5s...";
+        telemetryConnected_ = false;
         QTimer::singleShot(RETRY_PERIOD, [this]() {
             telemetryClient_->connectToHost();
         });
     });
 
     telemetryClient_->connectToHost();
-}
-
-QMqttClient* MessageTransmitter::getTelemetryClient() const {
-    return telemetryClient_;
 }
