@@ -1,5 +1,6 @@
 build/
 .vscode/
+imports/pigpio
 
 # C++ objects and libs
 *.slo

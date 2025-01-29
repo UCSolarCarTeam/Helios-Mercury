@@ -300,13 +300,6 @@ namespace JsonDefinitions {
     constexpr const char* PROXIMITY_SENSOR_2 = "ProximitySensor2";
     constexpr const char* PROXIMITY_SENSOR_3 = "ProximitySensor3";
     constexpr const char* PROXIMITY_SENSOR_4 = "ProximitySensor4";
-
-    /**
-     * Status keys
-     */
-    constexpr const char* CONNECTION_STATUS = "ConnectionStatus";
-    constexpr const char* EMBEDDED_STATUS = "EmbeddedStatus";
-    constexpr const char* AWS_STATUS = "AWSStatus";
 }
 
 #endif // JSONDEFINITIONS_H
