@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSerialPort>
+#include <QTimer>
 
 class SerialReceiver : public QObject {
     Q_OBJECT

@@ -11,6 +11,7 @@ public:
     MessageTransmitter();
 
     void setupTelemetryClient();
+    bool isTelemetryConnected();
 
 public slots:
     void transmitMessage(const QByteArray& message);
@@ -18,6 +19,7 @@ public slots:
 private:
     QMqttClient* telemetryClient_;
     QString telemetryTopic_;
+    bool telemetryConnected_ = false;
 };
 
 #endif // MESSAGETRANSMITTER_H
