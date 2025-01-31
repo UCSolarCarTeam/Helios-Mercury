@@ -51,3 +51,6 @@ now ready to build and run.
 ### Running the Application
 `./Helios-Mercury`
 
+
+## Architecture Diagram
+![Diagram](MercuryArchitectureDiagram.png)
