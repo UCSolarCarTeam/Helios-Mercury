@@ -7,6 +7,8 @@
 #include <QDir>
 #include <QDebug>
 
+#include "src/Tests/TestManager.h"
+
 #include "Mercury.h"
 
 #include "app_environment.h"
@@ -32,6 +34,12 @@ int main(int argc, char *argv[])
     }
     
     Mercury app(argc, argv);
+
+    TestManager(argc, argv);
+    //remember
+    /*if (testRes != 0) {
+        qWarning() << "Config no work";
+    }*/
 
     return app.exec();
 }

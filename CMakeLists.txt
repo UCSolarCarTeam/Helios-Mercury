@@ -11,7 +11,7 @@ set(CMAKE_AUTOUIC ON)
 
 configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config.ini COPYONLY)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Test Quick Mqtt SerialPort)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_policy(SET QTP0001 NEW)
@@ -40,7 +40,13 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Mercury.h src/Mercury.cpp
     src/Config/PropertyDefinitions.h
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
+    src/Tests/ConfigManagerTest.cpp
+    src/Tests/ConfigManagerTest.h
+    src/Tests/TestManager.h src/Tests/TestManager.cpp
+
 )
+
+add_test(NAME Helios-Mercury COMMAND Helios-Mercury)
 
 qt_add_resources(Helios-Mercury "configuration"
     PREFIX "/"
@@ -54,6 +60,7 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::Mqtt
+    Qt6::Test
     Qt6::SerialPort
 )
 

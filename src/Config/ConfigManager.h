@@ -50,6 +50,9 @@ private:
     QString telemetryPassword_;
     int logLevel_;
     bool loggingEnabled_;
+
+    // To allow test class access to private fields
+    friend class ConfigManagerTest;
 };
 
 #endif // CONFIGMANAGER_H
