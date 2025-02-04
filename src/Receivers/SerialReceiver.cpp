@@ -3,9 +3,6 @@
 
 #include <QDebug>
 
-namespace {
-}
-
 SerialReceiver::SerialReceiver() {
     serialPort_ = new QSerialPort(this);
 
@@ -38,9 +35,10 @@ void SerialReceiver::handleReadyRead() {
 
     qDebug() << "Data Received: " << data;
 
-    if (!data.isEmpty()) {
-        emit dataReceived(data); // Emit signal with the received data
-    } else {
+    if (data.isEmpty()) {
         qDebug() << "Incoming data is empty";
     }
+
+    emit dataReceived(data); // Emit signal with the received data
+
 }
