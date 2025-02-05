@@ -3,6 +3,7 @@
 #include "PacketFactory/PacketFactory.h"
 #include "Receivers/SerialReceiver.h"
 #include "Receivers/TelemetryReceiver.h"
+#include "Receivers/GpioReader.h"
 #include "StreamProcessor/StreamProcessor.h"
 #include "MessageTransmitter/MessageTransmitter.h"
 #include "MessageAggregator/MessageAggregator.h"
@@ -23,6 +24,9 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
+
+    //initialize GPIOReader which will read GPIO data and forward directly to the PiPacket
+    GpioReader* gpioReader = new GpioReader(nullptr, packetFactory);
 
     //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
     StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);

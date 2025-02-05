@@ -20,6 +20,8 @@ PacketFactory::PacketFactory() {
         mpptPackets_.append(new MpptPacket());
     }
 
+    piPacket_.reset(new PiPacket());
+
 }
 
 PacketFactory::~PacketFactory() {
@@ -62,4 +64,8 @@ MotorDetailsPacket& PacketFactory::getMotorDetailsPacket(int index) {
 
 MpptPacket& PacketFactory::getMpptPacket(int index) {
     return *mpptPackets_[index];
+}
+
+PiPacket& PacketFactory::getPiPacket() {
+    return *piPacket_;
 }

@@ -13,6 +13,12 @@ configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort ShaderTools)
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio)
+add_custom_target(build_pigpio ALL
+    COMMAND make
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/imports/pigpio
+)
+
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_policy(SET QTP0001 NEW)
     qt_standard_project_setup()
@@ -20,6 +26,7 @@ endif()
 
 qt_add_executable(Helios-Mercury src/main.cpp
     src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
+    src/Receivers/GpioReader.cpp src/Receivers/GpioReader.h
     src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
     src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
@@ -32,6 +39,7 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/PacketFactory/Packets/MpptPacket.h src/PacketFactory/Packets/MpptPacket.cpp
     src/PacketFactory/Packets/ProximitySensorsPacket.h src/PacketFactory/Packets/ProximitySensorsPacket.cpp
     src/PacketFactory/Packets/TelemetryPacket.h src/PacketFactory/Packets/TelemetryPacket.cpp
+    src/PacketFactory/Packets/PiPacket.h src/PacketFactory/Packets/PiPacket.cpp
     src/MessageAggregator/MessageAggregator.h src/MessageAggregator/MessageAggregator.cpp
     src/MessageTransmitter/MessageTransmitter.h src/MessageTransmitter/MessageTransmitter.cpp
     src/Config/ConfigManager.h src/Config/ConfigManager.cpp
@@ -57,6 +65,7 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Mqtt
     Qt6::SerialPort
     Qt6::ShaderTools
+    pigpio
 )
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
