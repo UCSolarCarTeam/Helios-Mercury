@@ -5,10 +5,10 @@ import QtQuick 6.2
 import Mercury
 
 Window {
-    minimumWidth: 1920
-    minimumHeight: 550
-    maximumWidth: 1920
-    maximumHeight: 550
+    minimumWidth: Config.windowWidth
+    minimumHeight: Config.windowHeight
+    maximumWidth: Config.windowWidth
+    maximumHeight: Config.windowHeight
 
     visible: true
     title: "Mercury"
@@ -18,7 +18,7 @@ Window {
     Loader {
         id: dashLoader
         anchors.fill: parent
-        source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/DebugCluster.qml")
+        source: rawMode ? "Clusters/Screen01.ui.qml" : (!b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/DebugCluster.qml")
     }
 
     // Screen Background to black

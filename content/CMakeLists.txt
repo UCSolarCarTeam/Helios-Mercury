@@ -17,4 +17,5 @@ qt6_add_qml_module(content
         RESOURCES Images/RaceClusterFrameOutline.png
         RESOURCES Images/Arrow.png
         QML_FILES Components/ArrowIndicator.qml
+        QML_FILES Config/Config.qml
 )
