@@ -315,7 +315,7 @@ Rectangle {
                         text: "Channel Number: " + mppt0.ChannelNumber
                     }
                     Text {
-                        text: "MPPT Status: " + mppt0.MpptStatus
+                        text: "MPPT Status: " + (mppt0.MpptStatus === 128 ? "true" : "false")
                     }
                     Text {
                         text: "Array Voltage: " + mppt0.ArrayVoltage
@@ -339,7 +339,7 @@ Rectangle {
                         text: "Channel Number: " + mppt1.ChannelNumber
                     }
                     Text {
-                        text: "MPPT Status: " + mppt1.MpptStatus
+                        text: "MPPT Status: " + (mppt1.MpptStatus === 128 ? "true" : "false")
                     }
                     Text {
                         text: "Array Voltage: " + mppt1.ArrayVoltage
@@ -363,7 +363,7 @@ Rectangle {
                         text: "Channel Number: " + mppt2.ChannelNumber
                     }
                     Text {
-                        text: "MPPT Status: " + mppt2.MpptStatus
+                        text: "MPPT Status: " + (mppt2.MpptStatus === 128 ? "true" : "false")
                     }
                     Text {
                         text: "Array Voltage: " + mppt2.ArrayVoltage
@@ -387,7 +387,7 @@ Rectangle {
                         text: "Channel Number: " + mppt3.ChannelNumber
                     }
                     Text {
-                        text: "MPPT Status: " + mppt3.MpptStatus
+                        text: "MPPT Status: " + (mppt3.MpptStatus === 128 ? "true" : "false")
                     }
                     Text {
                         text: "Array Voltage: " + mppt3.ArrayVoltage
