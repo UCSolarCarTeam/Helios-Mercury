@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Studio.Effects
+import Mercury
 
 Item {
     id: arrowIndicator
@@ -28,8 +29,8 @@ Item {
         property variant source: arrowImg
         fragmentShader: "qrc:/content/Shaders/MovingColor.frag.qsb"
         property real u_time: 0.0
-        property color baseColor: "#d3d3d3"
-        property color movingColor: "#A2180F"
+        property color baseColor: Config.btnDisabled
+        property color movingColor: Config.primary
 
         Timer {
             interval: 16
