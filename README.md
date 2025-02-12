@@ -7,10 +7,11 @@
 - Qt Gui
 - Qt Qml
 - Qt Quick
+- Qt ShaderTools
 - Qt Serial Port: Used to receive data from Sentinel
 - Qt MQTT: Used to transmit JSON data to the Telemetry site
     - Both of the above libraries can be installed through Maintenance Tool if they were not originally installed with Qt
-- Socat: Used to set up virtual serial ports
+- Socat: Used to set up virtual serial ports (COM2COM is a Windows alternative)
     - In a terminal, run the following command:
         - sudo apt install socat (for Linux)
         - brew install socat (for Mac)
@@ -49,7 +50,14 @@ serial ports from the terminal. Note: It cannot be the same port used for Sentin
 now ready to build and run.
 
 ### Running the Application
+To run Mercury, run the following command:
+
 `./Helios-Mercury`
+
+To switch between the race and debug clusters, set the Race Mode field within the B^3 packet to true or false, respectively.
+To run the raw text version of Mercury, run the following command:
+
+`./Helios-Mercury -raw`
 
 
 ## Architecture Diagram
