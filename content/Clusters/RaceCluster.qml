@@ -22,8 +22,8 @@ Item {
         id: raceClusterFrameBackground
         x: 1
         y: 2
-        height: parent.height - 5
-        width: parent.width - 2
+        height: parent.height
+        width: parent.width
         source: "../Images/RaceClusterFrameBackground.png"
     }
 
