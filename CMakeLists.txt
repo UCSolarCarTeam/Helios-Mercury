@@ -11,14 +11,18 @@ set(CMAKE_AUTOUIC ON)
 
 configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config.ini COPYONLY)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Test Quick Mqtt SerialPort)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_policy(SET QTP0001 NEW)
     qt_standard_project_setup()
 endif()
 
-qt_add_executable(Helios-Mercury src/main.cpp
+enable_testing()
+
+
+# Create a library (HeliosLib) containing all your Mercury code EXCEPT main.cpp
+qt_add_library(HeliosLib STATIC
     src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
     src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
@@ -40,28 +44,40 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Mercury.h src/Mercury.cpp
     src/Config/PropertyDefinitions.h
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
-    src/Tests/ConfigManagerTest.cpp
-    src/Tests/ConfigManagerTest.h
-    src/Tests/TestManager.h src/Tests/TestManager.cpp
-
+    # Omit main.cpp here - it belongs in the executable
 )
 
-add_test(NAME Helios-Mercury COMMAND Helios-Mercury)
-
-qt_add_resources(Helios-Mercury "configuration"
-    PREFIX "/"
-    FILES
-        qtquickcontrols2.conf
-)
-
-target_link_libraries(Helios-Mercury PRIVATE
+target_link_libraries(HeliosLib PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
     Qt6::Mqtt
-    Qt6::Test
     Qt6::SerialPort
+)
+
+
+# Create the Helios-Mercury executable that links HeliosLib + main.cpp
+qt_add_executable(Helios-Mercury
+    src/main.cpp
+)
+
+target_link_libraries(Helios-Mercury PRIVATE
+    HeliosLib
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Qml
+    Qt6::Quick
+    Qt6::Mqtt
+    Qt6::SerialPort
+)
+
+add_subdirectory(MercuryTests)
+
+qt_add_resources(Helios-Mercury "configuration"
+    PREFIX "/"
+    FILES
+        qtquickcontrols2.conf
 )
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
@@ -87,6 +103,6 @@ install(TARGETS Helios-Mercury
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# make IDEs aware of the QML import path
+# Make IDEs aware of the QML import path
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")

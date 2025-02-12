@@ -6,11 +6,7 @@
 #include <QLockFile>
 #include <QDir>
 #include <QDebug>
-
-#include "src/Tests/TestManager.h"
-
 #include "Mercury.h"
-
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
@@ -24,8 +20,8 @@ int main(int argc, char *argv[])
     {
         qDebug() << "An instance of Hermes is already running";
         qDebug() << "If you are sure you only have one instance of Hermes running, please delete the file /tmp/heliosHermes.lock.";
-        qDebug() << "Exiting - Get it right next time...";
-        return 1;
+        //qDebug() << "Exiting - Get it right next time...";
+        //return 1;
     }
     else
     {
@@ -34,12 +30,6 @@ int main(int argc, char *argv[])
     }
     
     Mercury app(argc, argv);
-
-    TestManager(argc, argv);
-    //remember
-    /*if (testRes != 0) {
-        qWarning() << "Config no work";
-    }*/
 
     return app.exec();
 }
