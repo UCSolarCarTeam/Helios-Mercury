@@ -5,8 +5,16 @@ import QtQuick.Shapes 1.0
 
 Item {
     id: root
-    width: 200
-    height: 200
+    width: 178
+    height: 178
+
+    property int minValue: 0
+    property int maxValue: 100
+    property string units: "units"
+    property string gaugeTitle: "title"
+    property int value: 50
+
+
 
     // Background Gauge Frame
     Rectangle {
@@ -54,6 +62,16 @@ Item {
                 arcWidth: 16.87532
                 antialiasing: true
             }
+
+            Rectangle {
+                id: rectangle_37
+                width: 5
+                height: 17
+                color: "#ffffff"
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
         }
     }
 
@@ -65,8 +83,8 @@ Item {
         color: "transparent"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: small_gauge_frame.bottom
-        anchors.topMargin: -147
-        anchors.horizontalCenterOffset: 2
+        anchors.topMargin: -148
+        anchors.horizontalCenterOffset: 1
 
         property alias elementText: element.text
         property alias vText: v.text
@@ -78,7 +96,7 @@ Item {
             width: 80
             height: 30
             color: "#898989"
-            text: qsTr("Charge Voltage")
+            text: gaugeTitle
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 15
@@ -96,7 +114,7 @@ Item {
             width: 19
             height: 24
             color: "#d4d4d4"
-            text: qsTr("0")
+            text: minValue
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 5
@@ -111,10 +129,10 @@ Item {
 
         Text {
             id: element1
-            width: 47
+            width: 38
             height: 24
             color: "#d4d4d4"
-            text: qsTr("100")
+            text: maxValue
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 70
@@ -144,13 +162,14 @@ Item {
                 anchors.top: parent.top
                 anchors.leftMargin: 42
 
-                Image {
+                Image{
+                    id: boltIcon
                     anchors.fill: parent
-                    id: boltImg
-                    width: 13.5
                     height: 20
-                    source: "../Images/bolt_icon.png"
+                    width:13.5
+                    source: "../Image/bolt_icon.png"
                 }
+
                 clip: true
             }
 
@@ -159,7 +178,7 @@ Item {
                 width: 62
                 height: 29
                 color: "#ffffff"
-                text: qsTr("58 v ")
+                text: value + " " + units
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.leftMargin: 24
@@ -174,15 +193,4 @@ Item {
         }
     }
 
-    // Fluent Icon
-    Rectangle {
-        id: fluent_fast_acceleration_20_regular
-        width: 61
-        height: 61
-        color: "transparent"
-        anchors.left: smallGuageData.left
-        anchors.top: smallGuageData.top
-        anchors.leftMargin: 21
-        anchors.topMargin: 18
-    }
 }
