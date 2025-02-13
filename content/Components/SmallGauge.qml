@@ -8,15 +8,15 @@ Item {
     width: 178
     height: 178
 
+
     property int minValue: 0
     property int maxValue: 100
     property string units: "units"
     property string gaugeTitle: "title"
     property int value: 50
+    property string iconPath: "../Images/bot_icon.png"
 
 
-
-    // Background Gauge Frame
     Rectangle {
         id: small_gauge_frame
         width: 178
@@ -162,14 +162,11 @@ Item {
                 anchors.top: parent.top
                 anchors.leftMargin: 42
 
-                Image{
-                    id: boltIcon
+                Image {
                     anchors.fill: parent
-                    height: 20
-                    width:13.5
-                    source: "../Image/bolt_icon.png"
+                    id: gaugeIcon
+                    source: iconPath
                 }
-
                 clip: true
             }
 
