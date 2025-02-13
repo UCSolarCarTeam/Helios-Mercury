@@ -54,22 +54,6 @@ Item {
                 arcWidth: 16.87532
                 antialiasing: true
             }
-
-            SvgPathItem {
-                id: rectangle_37
-                width: 5
-                height: 17
-                anchors.top: parent.top
-                anchors.topMargin: 5
-                strokeWidth: 1
-                strokeStyle: 1
-                strokeColor: "transparent"
-                path: "M 0 0 L 5 0 L 5 17 L 0 17 L 0 0 Z"
-                joinStyle: 0
-                fillColor: "#ffffff"
-                antialiasing: true
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
         }
     }
 
