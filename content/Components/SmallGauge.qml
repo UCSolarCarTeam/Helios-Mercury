@@ -14,7 +14,7 @@ Item {
     property string units: "units"
     property string gaugeTitle: "title"
     property int value: 50
-    property string iconPath: "../Images/bot_icon.png"
+    property string iconPath: "../Images/BoltIcon.png"
 
 
     Rectangle {
@@ -63,8 +63,9 @@ Item {
                 antialiasing: true
             }
 
+            // Needle
             Rectangle {
-                id: rectangle_37
+                id: needle
                 width: 5
                 height: 17
                 color: "#ffffff"
@@ -86,84 +87,44 @@ Item {
         anchors.topMargin: -148
         anchors.horizontalCenterOffset: 1
 
-        property alias elementText: element.text
-        property alias vText: v.text
-        property alias charge_VoltageText: charge_Voltage.text
-        property alias element1Text: element1.text
+        // property alias vText: v.text
+        // property alias charge_VoltageText: charge_Voltage.text
 
         Text {
-            id: charge_Voltage
-            width: 80
-            height: 30
+            id: title
+            width: parent.width
             color: "#898989"
             text: gaugeTitle
-            anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 15
             anchors.topMargin: 90
             font.pixelSize: 14
             horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignTop
+            anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.Wrap
-            font.weight: Font.Medium
-            font.family: "SF Pro"
-        }
-
-        Text {
-            id: element
-            width: 19
-            height: 24
-            color: "#d4d4d4"
-            text: minValue
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 5
-            anchors.topMargin: 120
-            font.pixelSize: 20
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignTop
-            wrapMode: Text.NoWrap
-            font.weight: Font.Medium
-            font.family: "SF Pro"
-        }
-
-        Text {
-            id: element1
-            width: 38
-            height: 24
-            color: "#d4d4d4"
-            text: maxValue
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 70
-            anchors.topMargin: 120
-            font.pixelSize: 20
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignTop
-            wrapMode: Text.NoWrap
             font.weight: Font.Medium
             font.family: "SF Pro"
         }
 
         Rectangle {
             id: frame_80
-            width: 108
             height: 81
+            width: parent.width
             color: "transparent"
-            anchors.left: parent.left
-            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
                 id: ix_electrical_energy_filled
                 width: 24
                 height: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+
                 color: "transparent"
-                anchors.left: parent.left
                 anchors.top: parent.top
-                anchors.leftMargin: 42
 
                 Image {
                     anchors.fill: parent
+                    height: 20
+                    width:13.5
                     id: gaugeIcon
                     source: iconPath
                 }
@@ -171,23 +132,67 @@ Item {
             }
 
             Text {
-                id: v
-                width: 62
+                id: incomingValue
+                width: parent.width
                 height: 29
                 color: "#ffffff"
-                text: value + " " + units
-                anchors.left: parent.left
+                text: value.toString() + " " + units
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
                 anchors.top: parent.top
-                anchors.leftMargin: 24
                 anchors.topMargin: 40
                 font.pixelSize: 24
+                wrapMode: Text.NoWrap
+                font.weight: Font.Medium
+                font.family: "SF Pro"
+            }
+
+            Rectangle{
+                id: minMaxContainer
+                width: parent.width
+
+                Text {
+                id: minVal
+                width: 12
+                height: 24
+                color: "#d4d4d4"
+                text: minValue
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: -10
+                anchors.topMargin: 120
+                font.pixelSize: 20
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignTop
                 wrapMode: Text.NoWrap
                 font.weight: Font.Medium
                 font.family: "SF Pro"
+                }
+
+                Text {
+                id: maxVal
+                width: 38
+                height: 24
+                color: "#d4d4d4"
+                text: maxValue
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: 104
+                anchors.topMargin: 120
+                font.pixelSize: 20
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignTop
+                wrapMode: Text.NoWrap
+                font.weight: Font.Medium
+                font.family: "SF Pro"
+                }
             }
         }
     }
-
 }
+
+/*##^##
+Designer {
+    D{i:0}D{i:2;locked:true}
+}
+##^##*/
