@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.21.1)
 option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
 option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
 
+# Mercury Tests excluded from build by default
+option(BUILD_MERCURY_TESTS "Build Mercury Tests" OFF)
+
 project(Helios-Mercury LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
@@ -18,11 +21,8 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
-enable_testing()
-
-
-# Create a library (HeliosLib) containing all your Mercury code EXCEPT main.cpp
-qt_add_library(HeliosLib STATIC
+# Create a library (MercuryLib) containing all your Mercury code EXCEPT main.cpp
+qt_add_library(MercuryLib STATIC
     src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
     src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
@@ -47,7 +47,7 @@ qt_add_library(HeliosLib STATIC
     # Omit main.cpp here - it belongs in the executable
 )
 
-target_link_libraries(HeliosLib PRIVATE
+target_link_libraries(MercuryLib PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
@@ -57,13 +57,13 @@ target_link_libraries(HeliosLib PRIVATE
 )
 
 
-# Create the Helios-Mercury executable that links HeliosLib + main.cpp
+# Create the Helios-Mercury executable that links MercuryLib + main.cpp
 qt_add_executable(Helios-Mercury
     src/main.cpp
 )
 
 target_link_libraries(Helios-Mercury PRIVATE
-    HeliosLib
+    MercuryLib
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
@@ -72,7 +72,9 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::SerialPort
 )
 
-add_subdirectory(MercuryTests)
+if (BUILD_MERCURY_TESTS)
+    add_subdirectory(MercuryTests)
+endif()
 
 qt_add_resources(Helios-Mercury "configuration"
     PREFIX "/"

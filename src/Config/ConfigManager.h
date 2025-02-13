@@ -51,7 +51,7 @@ private:
     int logLevel_;
     bool loggingEnabled_;
 
-    // To allow test class access to private fields
+    // To allow test case to access private fields
     friend class ConfigManagerTest;
 };
 

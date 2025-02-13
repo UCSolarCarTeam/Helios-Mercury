@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(MercuryTests LANGUAGES CXX)
 
-include_directories(../BEFORE)
-
 enable_testing()
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Test)
@@ -21,6 +19,6 @@ add_test(NAME ConfigManagerTest COMMAND ConfigManagerTest)
 
 target_link_libraries(MercuryTests PRIVATE
     Qt${QT_VERSION_MAJOR}::Test
-    HeliosLib
+    MercuryLib
 )
 
