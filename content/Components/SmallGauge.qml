@@ -16,6 +16,13 @@ Item {
     property int value: 50
     property string iconPath: "../Images/BoltIcon.png"
 
+    function mapValueToAngle(val) {
+        let minAngle = -135; // Adjust based on your arc
+        let maxAngle = 135;  // Adjust based on your arc
+        let normalizedValue = (val - minValue) / (maxValue - minValue);
+        return minAngle + normalizedValue * (maxAngle - minAngle);
+    }
+
 
     Rectangle {
         id: small_gauge_frame
@@ -67,11 +74,26 @@ Item {
             Rectangle {
                 id: needle
                 width: 5
-                height: 17
+                height: 50   // Adjust height to extend from center outward
                 color: "#ffffff"
-                anchors.top: parent.top
-                anchors.topMargin: 5
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                antialiasing: true
+
+                transform: Rotation {
+                    id: needleRotation
+                    origin.x: needle.width / 2
+                    origin.y: needle.height // Rotate from the bottom center
+                    angle: mapValueToAngle(value)
+                }
+
+                Behavior on transform {
+                    NumberAnimation {
+                        properties: "angle"
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+                }
             }
         }
     }
@@ -193,6 +215,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0}D{i:2;locked:true}
+    D{i:0}D{i:9;locked:true}
 }
 ##^##*/
