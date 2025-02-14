@@ -121,8 +121,8 @@ Item {
 
             Rectangle {
                 id: ix_electrical_energy_filled
-                width: 24
-                height: 24
+                width: 13.5
+                height: 20
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 color: "transparent"
