@@ -74,26 +74,11 @@ Item {
             Rectangle {
                 id: needle
                 width: 5
-                height: 50   // Adjust height to extend from center outward
+                height: 17
                 color: "#ffffff"
+                anchors.top: parent.top
+                anchors.topMargin: 5
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                antialiasing: true
-
-                transform: Rotation {
-                    id: needleRotation
-                    origin.x: needle.width / 2
-                    origin.y: needle.height // Rotate from the bottom center
-                    angle: mapValueToAngle(value)
-                }
-
-                Behavior on transform {
-                    NumberAnimation {
-                        properties: "angle"
-                        duration: 500
-                        easing.type: Easing.InOutQuad
-                    }
-                }
             }
         }
     }
@@ -213,8 +198,4 @@ Item {
     }
 }
 
-/*##^##
-Designer {
-    D{i:0}D{i:9;locked:true}
-}
-##^##*/
+
