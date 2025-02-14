@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QThread>
-#include <pigpio.h>
+// #include <pigpio.h>
+#include "../../imports/pigpio/pigpio.h"
 #include "../PacketFactory/PacketFactory.h"
 
 class GpioReader : public QThread {
