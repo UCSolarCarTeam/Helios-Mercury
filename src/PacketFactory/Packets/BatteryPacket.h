@@ -3,6 +3,7 @@
 
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
+#include <cmath>
 
 class BatteryPacket : public IPacket {
     Q_OBJECT

@@ -1,6 +1,10 @@
 #include "BatteryPacket.h"
 #include "../../Config/JsonDefinitions.h"
 
+inline float roundToThreeDecimalPlaces(float value) {
+    return std::round(value * 1000.0f) / 1000.0f;
+}
+
 namespace {
     const int BMU_ALIVE_OFFSET = 1;
 
@@ -86,13 +90,13 @@ void BatteryPacket::populatePacket(const QByteArray& data) {
     setIsChargingSignalStatus(bmsRelayStatus & IS_CHARGING_SIGNAL_STATUS_MASK);
 
     setPopulatedCells(getValue<unsigned char>(data, POPULATED_CELLS_OFFSET));
-    setInput12V(getValue<float>(data, INPUT_12V_OFFSET));
-    setFanVoltage(getValue<float>(data, FAN_VOLTAGE_OFFSET));
-    setPackCurrent(getValue<float>(data, PACK_CURRENT_OFFSET));
-    setPackVoltage(getValue<float>(data, PACK_VOLTAGE_OFFSET));
-    setPackStateOfCharge(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET));
-    setPackAmphours(getValue<float>(data, PACK_AMPHOURS_OFFSET));
-    setPackDepthOfDischarge(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET));
+    setInput12V(roundToThreeDecimalPlaces(getValue<float>(data, INPUT_12V_OFFSET)));
+    setFanVoltage(roundToThreeDecimalPlaces(getValue<float>(data, FAN_VOLTAGE_OFFSET)));
+    setPackCurrent(roundToThreeDecimalPlaces(getValue<float>(data, PACK_CURRENT_OFFSET)));
+    setPackVoltage(roundToThreeDecimalPlaces(getValue<float>(data, PACK_VOLTAGE_OFFSET)));
+    setPackStateOfCharge(roundToThreeDecimalPlaces(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET)));
+    setPackAmphours(roundToThreeDecimalPlaces(getValue<float>(data, PACK_AMPHOURS_OFFSET)));
+    setPackDepthOfDischarge(roundToThreeDecimalPlaces(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET)));
     setHighTemperature(getValue<unsigned char>(data, HIGH_TEMPERATURE_OFFSET));
     setHighThermistorId(getValue<unsigned char>(data, HIGH_THERMISTOR_ID_OFFSET));
     setLowTemperature(getValue<unsigned char>(data, LOW_TEMPERATURE_OFFSET));
