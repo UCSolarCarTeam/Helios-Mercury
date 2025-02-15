@@ -65,8 +65,7 @@ Item {
     }
 
     CameraView{
-        x: 747
+        anchors.horizontalCenter: parent.horizontalCenter
         y: 169
-
     }
 }

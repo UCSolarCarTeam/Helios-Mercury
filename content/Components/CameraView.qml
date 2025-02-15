@@ -2,7 +2,7 @@ import QtQuick
 import QtMultimedia
 
 Item {
-    id: root
+    id: cameraView
     width: 426
     height: 213
 
@@ -13,7 +13,7 @@ Item {
     }
 
     Rectangle{
-        id: cameraView
+        id: cameraFrame
         x: 0
         y: 0
         width: 426
@@ -21,33 +21,30 @@ Item {
         radius: 16
         color: "#d9d9d9"
 
-
         MediaDevices {
-                id: mediaDevices
-                onVideoInputsChanged: {
-                            if (mediaDevices.videoInputs.length > 0) {
-                                // Optionally handle changes to the available video inputs here
-                                console.log("Webcam is available");
-                            } else {
-                                console.log("No webcam found");
-                                currentCamera.cameraDevice = mediaDevices.defaultVideoInput
-                            }
-                        }
-            }
-            CaptureSession {
-                id: captureSession
-                recorder: recorder
-                camera: Camera {
-                    id: currentCamera
-                    active: true
-                    //cameraDevice: mediaDevices.defaultVideoInput
+            id: mediaDevices
+            onVideoInputsChanged: {
+                if (mediaDevices.videoInputs.length > 0) {
+                    console.log("Webcam is available");
+                } else {
+                    console.log("No webcam found");
+                        currentCamera.cameraDevice = mediaDevices.defaultVideoInput
                 }
-                videoOutput: videoOutput
-            }
-            VideoOutput {
-                id: videoOutput
-                anchors.fill: parent
-                visible: true
             }
         }
+
+        CaptureSession {
+            id: captureSession
+            recorder: recorder
+            camera: Camera {
+                id: currentCamera
+                active: true
+            }
+            videoOutput: videoOutput
+        }
+        VideoOutput {
+            id: videoOutput
+            anchors.fill: parent
+        }
+    }
 }
