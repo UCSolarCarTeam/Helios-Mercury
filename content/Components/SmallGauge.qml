@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
+import "../util/util.js"
 
 Item {
     id: root
@@ -15,14 +16,6 @@ Item {
     property string gaugeTitle: "title"
     property int value: 50
     property string iconPath: "../Images/BoltIcon.png"
-
-    function mapValueToAngle(val) {
-        let minAngle = -135; // Adjust based on your arc
-        let maxAngle = 135;  // Adjust based on your arc
-        let normalizedValue = (val - minValue) / (maxValue - minValue);
-        return minAngle + normalizedValue * (maxAngle - minAngle);
-    }
-
 
     Rectangle {
         id: small_gauge_frame
