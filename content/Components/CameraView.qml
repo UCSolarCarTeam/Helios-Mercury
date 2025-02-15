@@ -6,6 +6,8 @@ Item {
     width: 426
     height: 213
 
+    property bool isRecording: false
+
     Camera{
         id: camera
     }
@@ -19,18 +21,33 @@ Item {
         radius: 16
         color: "#d9d9d9"
 
-        VideoOutput {
-            id: videoOutput
-            anchors.fill: parent
-            source: camera
-            autoOrientation: true
-            fillMode: VideoOutput.PreserveAspectCrop
+
+        MediaDevices {
+                id: mediaDevices
+                onVideoInputsChanged: {
+                            if (mediaDevices.videoInputs.length > 0) {
+                                // Optionally handle changes to the available video inputs here
+                                console.log("Webcam is available");
+                            } else {
+                                console.log("No webcam found");
+                                currentCamera.cameraDevice = mediaDevices.defaultVideoInput
+                            }
+                        }
+            }
+            CaptureSession {
+                id: captureSession
+                recorder: recorder
+                camera: Camera {
+                    id: currentCamera
+                    active: true
+                    //cameraDevice: mediaDevices.defaultVideoInput
+                }
+                videoOutput: videoOutput
+            }
+            VideoOutput {
+                id: videoOutput
+                anchors.fill: parent
+                visible: true
+            }
         }
-    }
-
-    Component.onCompleted: {
-        camera.start()
-    }
-
-
 }
