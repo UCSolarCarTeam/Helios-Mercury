@@ -16,8 +16,7 @@ Item {
         id: cameraFrame
         x: 0
         y: 0
-        width: 426
-        height: 213
+        anchors.fill: parent
         radius: 16
         color: "#d9d9d9"
 
@@ -28,7 +27,7 @@ Item {
                     console.log("Webcam is available");
                 } else {
                     console.log("No webcam found");
-                        currentCamera.cameraDevice = mediaDevices.defaultVideoInput
+                    currentCamera.cameraDevice = mediaDevices.defaultVideoInput
                 }
             }
         }
