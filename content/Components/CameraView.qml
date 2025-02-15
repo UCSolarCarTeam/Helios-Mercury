@@ -3,8 +3,8 @@ import QtMultimedia
 
 Item {
     id: cameraView
-    width: 426
-    height: 213
+    width: 425
+    height: 215
 
     property bool isRecording: false
 
