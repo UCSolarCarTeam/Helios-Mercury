@@ -20,19 +20,13 @@ Item {
 
     Image {
         id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         source: "../Images/RaceClusterFrameBackground.png"
     }
 
     Image {
         id: raceClusterFrameOutline
-        x: 0
-        y: 0
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
