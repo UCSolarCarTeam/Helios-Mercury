@@ -20,8 +20,8 @@ Item {
 
     Image {
         id: raceClusterFrameBackground
-        anchors.fill: parent
-        anchors.margins: 2
+        x: 1
+        y: 2
         source: "../Images/RaceClusterFrameBackground.png"
     }
 
