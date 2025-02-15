@@ -14,8 +14,6 @@ Item {
 
     Rectangle{
         id: cameraFrame
-        x: 0
-        y: 0
         anchors.fill: parent
         radius: 16
         color: "#d9d9d9"
