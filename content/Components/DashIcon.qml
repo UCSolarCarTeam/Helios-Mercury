@@ -3,15 +3,17 @@ import QtQuick.Controls 2.15
 import Mercury
 
 Item {
-    id: root
-    width: 64
-    height: 64
+    id: dashIcon
+    width: 32
+    height: 32
 
-    // property bool isOn: true
+    property string imageSource: ""
+    property bool isOn: false
 
     Image {
         id: iconImg
-        source: "../Images/Headlights.png"
+        source: parent.imageSource
+        anchors.fill: parent
     }
 
     ShaderEffect {
@@ -19,6 +21,6 @@ Item {
         anchors.fill: parent
         property variant source: iconImg
         fragmentShader: "qrc:/content/Shaders/ColorOverlay.frag.qsb"
-        property color overlayColor: b3.HeadlightSignalIn ? Config.primary : Config.btnDisabled
+        property color overlayColor: parent.isOn ? Config.primary : Config.btnDisabled
     }
 }
