@@ -8,14 +8,17 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
+        Clusters/RaceCluster.qml
+        Clusters/DebugCluster.qml
+        Clusters/Screen01.ui.qml
+        Components/ArrowIndicator.qml
+        Components/DashIcon.qml
+        Config/Config.qml
     RESOURCES
         fonts/fonts.txt
-        QML_FILES Clusters/RaceCluster.qml
-        QML_FILES Clusters/DebugCluster.qml
-        QML_FILES Clusters/Screen01.ui.qml
-        RESOURCES Images/RaceClusterFrameBackground.png
-        RESOURCES Images/RaceClusterFrameOutline.png
-        RESOURCES Images/Arrow.png
-        QML_FILES Components/ArrowIndicator.qml
-        QML_FILES Config/Config.qml
+        Images/RaceClusterFrameBackground.png
+        Images/RaceClusterFrameOutline.png
+        Images/Arrow.png
+        Images/Headlights.png
+        Images/DaytimeRunningLights.png
 )

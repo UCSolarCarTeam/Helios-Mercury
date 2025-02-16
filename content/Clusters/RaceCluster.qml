@@ -34,6 +34,12 @@ Item {
         height: parent.height
         width: parent.width
         source: "../Images/RaceClusterFrameOutline.png"
+
+        DashIcon {
+            id: dashIcon
+            x: 885
+            y: 404
+        }
     }
 
     Text {
