@@ -19,6 +19,22 @@ Item {
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
+    DashIcon {
+        id: dashIcon
+        x: 1173
+        y: 13
+        isOn: b3.HeadlightsSwitchIn
+        imageSource: "../Images/Headlights.png"
+    }
+
+    DashIcon {
+        id: dashIcon2
+        x: 1116
+        y: 13
+        isOn: b3.DaytimeRunningLightSignalOut
+        imageSource: "../Images/DaytimeRunningLights.png"
+    }
+
     Text {
         id: text1
         x: 711
