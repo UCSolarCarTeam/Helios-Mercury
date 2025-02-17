@@ -49,9 +49,9 @@ Item {
 
         Grid {
             id: arrayCurrentGrid
-            columns: 2  // Two columns (2x2 layout)
+            columns: 2
             rows: 2
-            spacing: 5  // Adjust spacing as needed
+            spacing: 5
 
             Text {
                 id: totalArrayCurrent0s
