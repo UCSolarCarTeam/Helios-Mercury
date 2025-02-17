@@ -4,42 +4,44 @@ import Mercury
 
 Item {
     id: raceClusterHeader
-    width: 438
+    width: 440
     height: 40
 
     Text {
         id: motor0
-        x: 0
-        y: 0
-        width: 122
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: 120
         height: 16
-        text: "Motor 0 current: " + motorDetails0.InverterPeakCurrent + "A"
+        text: "Motor 0 current: " + motorDetails0.InverterPeakCurrent + " A"
         font.pixelSize: 12
         color: "white"
     }
 
     Text {
         id: motor1
-        x: 0
-        y: 24
-        width: 122
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        width: 120
         height: 16
-        text: "Motor 1 current: " + motorDetails1.InverterPeakCurrent + "A"
+        text: "Motor 1 current: " + motorDetails1.InverterPeakCurrent + " A"
         font.pixelSize: 12
         color: "white"
     }
 
     Row {
         id: arrayCurrentRow
+        x: 182
+        width: 255
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 5  // Adjust as needed
 
         Text {
             id: totalArrayCurrentLabel
-            width: 122
+            width: 120
             height: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 120
             text: "Array Current:"
             font.pixelSize: 12
             color: "white"
@@ -53,36 +55,36 @@ Item {
 
             Text {
                 id: totalArrayCurrent0s
-                width: 60
+                width: 90
                 height: 16
-                text: "0: " + mppt0.ArrayCurrent + " A"
+                text: "0: " + mppt0.ArrayCurrent + " mA"
                 font.pixelSize: 12
                 color: "white"
             }
 
             Text {
                 id: totalArrayCurrent1
-                width: 60
+                width: 90
                 height: 16
-                text: "1: " + mppt1.ArrayCurrent + " A"
+                text: "1: " + mppt1.ArrayCurrent + " mA"
                 font.pixelSize: 12
                 color: "white"
             }
 
             Text {
                 id: totalArrayCurrent2
-                width: 60
+                width: 90
                 height: 16
-                text: "2: " + mppt2.ArrayCurrent + " A"
+                text: "2: " + mppt2.ArrayCurrent + " mA"
                 font.pixelSize: 12
                 color: "white"
             }
 
             Text {
                 id: totalArrayCurrent3
-                width: 60
+                width: 90
                 height: 16
-                text: "3: " + mppt3.ArrayCurrent + " A"
+                text: "3: " + mppt3.ArrayCurrent + " mA"
                 font.pixelSize: 12
                 color: "white"
             }
