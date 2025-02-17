@@ -1,39 +1,53 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
 Item {
     id: raceDashboardIcons
     width: 425
     height: 35
 
-    DashIcon {
-        id: hornMuteIcon
-        imageSource: "../Images/HornMutedIcon.png"
-    }
+    RowLayout {
+        id: iconRow
+        anchors.fill: parent
+        spacing: 20  // Adjust this value as needed
 
-    DashIcon {
-        id: parkingBrakeIcon
-        x: 162
-        y: 3
-        height: 27
-        width: 37
-        imageSource: "../Images/ParkingBrake.png"
-    }
+        Item { Layout.fillWidth: true } // Left spacer
 
-    DashIcon {
-        id: headlightsIcon
-        x: 385
-        y: 0
-        isOn: b3.HeadlightsSwitchIn
-        imageSource: "../Images/Headlights.png"
-    }
+        // Find the required packet
+        DashIcon {
+            id: hornMuteIcon
+            isOn: true
+            imageSource: "../Images/HornMutedIcon.png"
+        }
 
-    DashIcon {
-        id: drlIcon
-        x: 260
-        y: 0
-        isOn: b3.DaytimeRunningLightSignalOut
-        imageSource: "../Images/DaytimeRunningLights.png"
-    }
+        Item { Layout.fillWidth: true } // Middle spacer
 
+        //find the required packet
+        DashIcon {
+            id: parkingBrakeIcon
+            height: 27
+            width: 37
+            isOn: true
+            imageSource: "../Images/ParkingBrake.png"
+        }
+
+        Item { Layout.fillWidth: true } // Middle spacer
+
+        DashIcon {
+            id: drlIcon
+            isOn: b3.DaytimeRunningLightSignalOut
+            imageSource: "../Images/DaytimeRunningLights.png"
+        }
+
+        Item { Layout.fillWidth: true } // Middle spacer
+
+        DashIcon {
+            id: headlightsIcon
+            isOn: b3.HeadlightsSwitchIn
+            imageSource: "../Images/Headlights.png"
+        }
+
+        Item { Layout.fillWidth: true } // Right spacer
+    }
 }
