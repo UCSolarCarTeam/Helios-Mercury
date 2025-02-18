@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
-import "../util/util.js"
+//import "../util/util.js"
 
 Item {
     id: root
@@ -21,7 +21,7 @@ Item {
         id: small_gauge_frame
         width: 178
         height: 178
-        color: "transparent"
+        color: "black"
 
         Item {
             id: accessory_Guage
@@ -69,9 +69,21 @@ Item {
                 width: 5
                 height: 17
                 color: "#ffffff"
-                anchors.top: parent.top
-                anchors.topMargin: 5
-                anchors.horizontalCenter: parent.horizontalCenter
+
+                property real startAngle: 131.56227
+                property real endAngle: -134.72317
+                property real angle: (startAngle + (root.value / 100) * 270)
+                property real needleRadius: ellipse_16.width / 2.35
+
+                x: (ellipse_16.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
+                y: (ellipse_16.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
+
+                function degreesToRadians(degrees) {
+                    return degrees * (Math.PI / 180);
+                }
+
+                transformOrigin: Item.Center
+                rotation: valueSlider.value / 100 * 275 + 45
             }
         }
     }
@@ -189,6 +201,19 @@ Item {
             }
         }
     }
+
+    Slider {
+            id: valueSlider
+            width: parent.width * 0.8
+            from: minValue
+            to: maxValue
+            value: value
+            stepSize: 1
+            anchors.top: smallGuageData.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 20
+            onValueChanged: {
+                root.value = value;
+            }
+        }
 }
-
-
