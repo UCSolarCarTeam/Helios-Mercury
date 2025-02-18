@@ -1,11 +1,17 @@
 #include "GpioReader.h"
+#include "../Config/ConfigManager.h"
 #include <QDebug>
 #include <unistd.h>
 #include <algorithm>
 
 // Constructor
 GpioReader::GpioReader(QObject* parent, PacketFactory* packetFactory) : QThread(parent), packetFactory_(packetFactory), gpioInitialized(false) {
-    begin(20, 21);
+    ConfigManager& config = ConfigManager::instance();
+
+    pin0_ = config.getPin0();
+    pin1_ = config.getPin1();
+    begin(pin0_, pin1_);
+
 }
 
 // Destructor

@@ -13,11 +13,13 @@ configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort ShaderTools)
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio)
-add_custom_target(build_pigpio ALL
-    COMMAND make
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/imports/pigpio
-)
+if(NOT EXISTS ${CMAKE_SOURCE_DIR}/imports/pigpio/libpigpio.so)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio)
+    add_custom_target(build_pigpio ALL
+        COMMAND make
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/imports/pigpio
+    )
+endif()
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_policy(SET QTP0001 NEW)

@@ -26,7 +26,10 @@ protected:
 private:
     bool running = false;
     bool gpioInitialized = false;
-    int pinData0_, pinData1_;
+    int pin0_;
+    int pin1_;
+    int pinData0_;
+    int pinData1_;
     int bitCnt_ = 0;
     static const int MAX_BITS = 26;
     bool bitData_[MAX_BITS] = {false};
