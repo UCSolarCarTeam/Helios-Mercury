@@ -2,39 +2,39 @@
 #include "../../Config/JsonDefinitions.h"
 
 namespace {
-const int BMU_ALIVE_OFFSET = 1;
+    const int BMU_ALIVE_OFFSET = 1;
 
-const int BMS_RELAY_STATUS_OFFSET = 2;
-const unsigned char DISCHARGE_RELAY_ENABLED_MASK = 0x01;
-const unsigned char CHARGE_RELAY_ENABLED_MASK = 0x02;
-const unsigned char CHARGER_SAFETY_RELAY_ENABLED_MASK = 0x04;
-const unsigned char MALFUNCTION_INDICATOR_ACTIVE_MASK = 0x08;
-const unsigned char MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK = 0x10;
-const unsigned char ALWAYS_ON_SIGNAL_STATUS_MASK = 0x20;
-const unsigned char IS_READY_SIGNAL_STATUS_MASK = 0x40;
-const unsigned char IS_CHARGING_SIGNAL_STATUS_MASK = 0x80;
+    const int BMS_RELAY_STATUS_OFFSET = 2;
+    const unsigned char DISCHARGE_RELAY_ENABLED_MASK = 0x01;
+    const unsigned char CHARGE_RELAY_ENABLED_MASK = 0x02;
+    const unsigned char CHARGER_SAFETY_RELAY_ENABLED_MASK = 0x04;
+    const unsigned char MALFUNCTION_INDICATOR_ACTIVE_MASK = 0x08;
+    const unsigned char MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK = 0x10;
+    const unsigned char ALWAYS_ON_SIGNAL_STATUS_MASK = 0x20;
+    const unsigned char IS_READY_SIGNAL_STATUS_MASK = 0x40;
+    const unsigned char IS_CHARGING_SIGNAL_STATUS_MASK = 0x80;
 
-const int POPULATED_CELLS_OFFSET = 3;
-const int INPUT_12V_OFFSET = 4;
-const int FAN_VOLTAGE_OFFSET = 8;
-const int PACK_CURRENT_OFFSET = 12;
-const int PACK_VOLTAGE_OFFSET = 16;
-const int PACK_STATE_OF_CHARGE_OFFSET = 20;
-const int PACK_AMPHOURS_OFFSET = 24;
-const int PACK_DEPTH_OF_DISCHARGE_OFFSET = 28;
-const int HIGH_TEMPERATURE_OFFSET = 32;
-const int HIGH_THERMISTOR_ID_OFFSET = 33;
-const int LOW_TEMPERATURE_OFFSET = 34;
-const int LOW_THERMISTOR_ID_OFFSET = 35;
-const int AVERAGE_TEMPERATURE_OFFSET = 36;
-const int INTERNAL_TEMPERATURE_OFFSET = 37;
-const int FAN_SPEED_OFFSET = 38;
-const int REQUESTED_FAN_SPEED_OFFSET = 39;
-const int LOW_CELL_VOLTAGE_OFFSET = 40;
-const int LOW_CELL_VOLTAGE_ID_OFFSET = 42;
-const int HIGH_CELL_VOLTAGE_OFFSET = 43;
-const int HIGH_CELL_VOLTAGE_ID_OFFSET = 45;
-const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;
+    const int POPULATED_CELLS_OFFSET = 3;
+    const int INPUT_12V_OFFSET = 4;
+    const int FAN_VOLTAGE_OFFSET = 8;
+    const int PACK_CURRENT_OFFSET = 12;
+    const int PACK_VOLTAGE_OFFSET = 16;
+    const int PACK_STATE_OF_CHARGE_OFFSET = 20;
+    const int PACK_AMPHOURS_OFFSET = 24;
+    const int PACK_DEPTH_OF_DISCHARGE_OFFSET = 28;
+    const int HIGH_TEMPERATURE_OFFSET = 32;
+    const int HIGH_THERMISTOR_ID_OFFSET = 33;
+    const int LOW_TEMPERATURE_OFFSET = 34;
+    const int LOW_THERMISTOR_ID_OFFSET = 35;
+    const int AVERAGE_TEMPERATURE_OFFSET = 36;
+    const int INTERNAL_TEMPERATURE_OFFSET = 37;
+    const int FAN_SPEED_OFFSET = 38;
+    const int REQUESTED_FAN_SPEED_OFFSET = 39;
+    const int LOW_CELL_VOLTAGE_OFFSET = 40;
+    const int LOW_CELL_VOLTAGE_ID_OFFSET = 42;
+    const int HIGH_CELL_VOLTAGE_OFFSET = 43;
+    const int HIGH_CELL_VOLTAGE_ID_OFFSET = 45;
+    const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;
 }
 
 BatteryPacket::BatteryPacket() {
