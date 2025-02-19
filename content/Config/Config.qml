@@ -9,5 +9,5 @@ QtObject {
     property color btnDisabled: "#111111"
 
     property color fontColor: "#fff"
-    property int fontSize: 14
+    property int fontSize: 16
 }
