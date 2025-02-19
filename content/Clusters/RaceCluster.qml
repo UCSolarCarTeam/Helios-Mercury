@@ -39,7 +39,7 @@ Item {
         id: raceScreenHeader
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 8
+        anchors.topMargin: 7
     }
 
     ArrowIndicator {
