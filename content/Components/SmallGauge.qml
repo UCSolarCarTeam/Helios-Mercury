@@ -23,7 +23,7 @@ Item {
         color: "black"
 
         Item {
-            id: accessoryGuage
+            id: smallGuageFrame
             anchors.fill: parent
 
             ArcItem {
@@ -62,7 +62,6 @@ Item {
                 antialiasing: true
             }
 
-            // Needle
             Rectangle {
                 id: needle
                 width: 5
@@ -96,9 +95,6 @@ Item {
         anchors.top: smallGauge.bottom
         anchors.topMargin: -148
         anchors.horizontalCenterOffset: 1
-
-        // property alias vText: v.text
-        // property alias charge_VoltageText: charge_Voltage.text
 
         Text {
             id: title
