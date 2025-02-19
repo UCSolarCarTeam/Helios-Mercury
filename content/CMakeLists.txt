@@ -14,6 +14,8 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/ContactorStatus.qml
+        Components/ConnectionStatus.qml
         Config/Config.qml
     RESOURCES
         fonts/fonts.txt
@@ -22,4 +24,10 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+        Images/ContactorConnected.png
+        Images/ContactorDisconnected.png
+        Images/RadioBoardConnected.png
+        Images/RadioBoardDisconnected.png
+        Images/TelemetryConnected.png
+        Images/TelemetryDisconnected.png
 )

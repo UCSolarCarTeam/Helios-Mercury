@@ -80,4 +80,66 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    Rectangle {
+        id: contactorStatusComponent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
+        width: 475
+        height: 35
+        color: "transparent"
+
+        Row {
+            anchors.centerIn: parent
+            spacing: 10
+
+            Text {
+                id: sectionTitle
+                text: qsTr("Contactor\n Status")
+                color: "white"
+            }
+
+            ContactorStatus {
+                id: cmnContactor
+                contactor: "cmn"
+                isConnected: mbms.CommonContactorState
+            }
+
+            ContactorStatus {
+                id: hvContactor
+                contactor: "Motor"
+                isConnected: mbms.MotorContactorState
+            }
+
+            ContactorStatus {
+                id: lvnContactor
+                contactor: "LV"
+                isConnected: mbms.LvContactorState
+            }
+
+            ContactorStatus {
+                id: arrayContactor
+                contactor: "Array"
+                isConnected: mbms.ArrayContactorState
+            }
+
+            ContactorStatus {
+                id: chargeContactor
+                contactor: "Charge"
+                isConnected: mbms.ChargeContactorState
+            }
+
+            ConnectionStatus{
+                id: telemetryStatus
+                anchors.topMargin:2
+            }
+
+            ConnectionStatus{
+                id: radioBoardStatus
+                anchors.topMargin: 2
+                isRadioBoard: true
+            }
+        }
+    }
 }
