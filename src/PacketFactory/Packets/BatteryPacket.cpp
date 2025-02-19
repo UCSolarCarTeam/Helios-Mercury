@@ -1,44 +1,40 @@
 #include "BatteryPacket.h"
 #include "../../Config/JsonDefinitions.h"
 
-inline float roundToThreeDecimalPlaces(float value) {
-    return std::round(value * 1000.0f) / 1000.0f;
-}
-
 namespace {
-    const int BMU_ALIVE_OFFSET = 1;
+const int BMU_ALIVE_OFFSET = 1;
 
-    const int BMS_RELAY_STATUS_OFFSET = 2;
-    const unsigned char DISCHARGE_RELAY_ENABLED_MASK = 0x01;
-    const unsigned char CHARGE_RELAY_ENABLED_MASK = 0x02;
-    const unsigned char CHARGER_SAFETY_RELAY_ENABLED_MASK = 0x04;
-    const unsigned char MALFUNCTION_INDICATOR_ACTIVE_MASK = 0x08;
-    const unsigned char MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK = 0x10;
-    const unsigned char ALWAYS_ON_SIGNAL_STATUS_MASK = 0x20;
-    const unsigned char IS_READY_SIGNAL_STATUS_MASK = 0x40;
-    const unsigned char IS_CHARGING_SIGNAL_STATUS_MASK = 0x80;
+const int BMS_RELAY_STATUS_OFFSET = 2;
+const unsigned char DISCHARGE_RELAY_ENABLED_MASK = 0x01;
+const unsigned char CHARGE_RELAY_ENABLED_MASK = 0x02;
+const unsigned char CHARGER_SAFETY_RELAY_ENABLED_MASK = 0x04;
+const unsigned char MALFUNCTION_INDICATOR_ACTIVE_MASK = 0x08;
+const unsigned char MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK = 0x10;
+const unsigned char ALWAYS_ON_SIGNAL_STATUS_MASK = 0x20;
+const unsigned char IS_READY_SIGNAL_STATUS_MASK = 0x40;
+const unsigned char IS_CHARGING_SIGNAL_STATUS_MASK = 0x80;
 
-    const int POPULATED_CELLS_OFFSET = 3;
-    const int INPUT_12V_OFFSET = 4;
-    const int FAN_VOLTAGE_OFFSET = 8;
-    const int PACK_CURRENT_OFFSET = 12;
-    const int PACK_VOLTAGE_OFFSET = 16;
-    const int PACK_STATE_OF_CHARGE_OFFSET = 20;
-    const int PACK_AMPHOURS_OFFSET = 24;
-    const int PACK_DEPTH_OF_DISCHARGE_OFFSET = 28;
-    const int HIGH_TEMPERATURE_OFFSET = 32;
-    const int HIGH_THERMISTOR_ID_OFFSET = 33;
-    const int LOW_TEMPERATURE_OFFSET = 34;
-    const int LOW_THERMISTOR_ID_OFFSET = 35;
-    const int AVERAGE_TEMPERATURE_OFFSET = 36;
-    const int INTERNAL_TEMPERATURE_OFFSET = 37;
-    const int FAN_SPEED_OFFSET = 38;
-    const int REQUESTED_FAN_SPEED_OFFSET = 39;
-    const int LOW_CELL_VOLTAGE_OFFSET = 40;
-    const int LOW_CELL_VOLTAGE_ID_OFFSET = 42;
-    const int HIGH_CELL_VOLTAGE_OFFSET = 43;
-    const int HIGH_CELL_VOLTAGE_ID_OFFSET = 45;
-    const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;   
+const int POPULATED_CELLS_OFFSET = 3;
+const int INPUT_12V_OFFSET = 4;
+const int FAN_VOLTAGE_OFFSET = 8;
+const int PACK_CURRENT_OFFSET = 12;
+const int PACK_VOLTAGE_OFFSET = 16;
+const int PACK_STATE_OF_CHARGE_OFFSET = 20;
+const int PACK_AMPHOURS_OFFSET = 24;
+const int PACK_DEPTH_OF_DISCHARGE_OFFSET = 28;
+const int HIGH_TEMPERATURE_OFFSET = 32;
+const int HIGH_THERMISTOR_ID_OFFSET = 33;
+const int LOW_TEMPERATURE_OFFSET = 34;
+const int LOW_THERMISTOR_ID_OFFSET = 35;
+const int AVERAGE_TEMPERATURE_OFFSET = 36;
+const int INTERNAL_TEMPERATURE_OFFSET = 37;
+const int FAN_SPEED_OFFSET = 38;
+const int REQUESTED_FAN_SPEED_OFFSET = 39;
+const int LOW_CELL_VOLTAGE_OFFSET = 40;
+const int LOW_CELL_VOLTAGE_ID_OFFSET = 42;
+const int HIGH_CELL_VOLTAGE_OFFSET = 43;
+const int HIGH_CELL_VOLTAGE_ID_OFFSET = 45;
+const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;
 }
 
 BatteryPacket::BatteryPacket() {
@@ -90,13 +86,13 @@ void BatteryPacket::populatePacket(const QByteArray& data) {
     setIsChargingSignalStatus(bmsRelayStatus & IS_CHARGING_SIGNAL_STATUS_MASK);
 
     setPopulatedCells(getValue<unsigned char>(data, POPULATED_CELLS_OFFSET));
-    setInput12V(roundToThreeDecimalPlaces(getValue<float>(data, INPUT_12V_OFFSET)));
-    setFanVoltage(roundToThreeDecimalPlaces(getValue<float>(data, FAN_VOLTAGE_OFFSET)));
-    setPackCurrent(roundToThreeDecimalPlaces(getValue<float>(data, PACK_CURRENT_OFFSET)));
-    setPackVoltage(roundToThreeDecimalPlaces(getValue<float>(data, PACK_VOLTAGE_OFFSET)));
-    setPackStateOfCharge(roundToThreeDecimalPlaces(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET)));
-    setPackAmphours(roundToThreeDecimalPlaces(getValue<float>(data, PACK_AMPHOURS_OFFSET)));
-    setPackDepthOfDischarge(roundToThreeDecimalPlaces(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET)));
+    setInput12V(getValue<float>(data, INPUT_12V_OFFSET));
+    setFanVoltage(getValue<float>(data, FAN_VOLTAGE_OFFSET));
+    setPackCurrent(getValue<float>(data, PACK_CURRENT_OFFSET));
+    setPackVoltage(getValue<float>(data, PACK_VOLTAGE_OFFSET));
+    setPackStateOfCharge(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET));
+    setPackAmphours(getValue<float>(data, PACK_AMPHOURS_OFFSET));
+    setPackDepthOfDischarge(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET));
     setHighTemperature(getValue<unsigned char>(data, HIGH_TEMPERATURE_OFFSET));
     setHighThermistorId(getValue<unsigned char>(data, HIGH_THERMISTOR_ID_OFFSET));
     setLowTemperature(getValue<unsigned char>(data, LOW_TEMPERATURE_OFFSET));
@@ -116,7 +112,7 @@ void BatteryPacket::populatePacket(const QByteArray& data) {
 QJsonObject BatteryPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::BMU_ALIVE] = BmuAlive_; 
+    json[JsonDefinitions::BMU_ALIVE] = BmuAlive_;
     json[JsonDefinitions::DISCHARGE_RELAY_ENABLED] = DischargeRelayEnabled_;
     json[JsonDefinitions::CHARGE_RELAY_ENABLED] = ChargeRelayEnabled_;
     json[JsonDefinitions::CHARGER_SAFETY_ENABLED] = ChargerSafetyRelayEnabled_;
@@ -142,7 +138,7 @@ QJsonObject BatteryPacket::toJson() {
 
     //Battery Fan
     QJsonObject batteryFan;
-    
+
     batteryFan[JsonDefinitions::FAN_VOLTAGE] = FanVoltage_;
     batteryFan[JsonDefinitions::FAN_SPEED] = FanSpeed_;
     batteryFan[JsonDefinitions::REQUESTED_FAN_SPEED] = RequestedFanSpeed_;
@@ -152,12 +148,12 @@ QJsonObject BatteryPacket::toJson() {
     //Battery Pack
     QJsonObject batteryPack;
 
-    batteryPack[JsonDefinitions::INPUT_12V] = roundToThreeDecimalPlaces(Input12V_);
-    batteryPack[JsonDefinitions::PACK_CURRENT] = roundToThreeDecimalPlaces(PackCurrent_);
-    batteryPack[JsonDefinitions::PACK_VOLTAGE] = roundToThreeDecimalPlaces(PackVoltage_);
-    batteryPack[JsonDefinitions::PACK_STATE_OF_CHARGE] = roundToThreeDecimalPlaces(PackStateOfCharge_);
-    batteryPack[JsonDefinitions::PACK_AMPHOURS] = roundToThreeDecimalPlaces(PackAmphours_);
-    batteryPack[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = roundToThreeDecimalPlaces(PackDepthOfDischarge_);
+    batteryPack[JsonDefinitions::INPUT_12V] = Input12V_;
+    batteryPack[JsonDefinitions::PACK_CURRENT] = PackCurrent_;
+    batteryPack[JsonDefinitions::PACK_VOLTAGE] = PackVoltage_;
+    batteryPack[JsonDefinitions::PACK_STATE_OF_CHARGE] = PackStateOfCharge_;
+    batteryPack[JsonDefinitions::PACK_AMPHOURS] = PackAmphours_;
+    batteryPack[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = PackDepthOfDischarge_;
 
     json[JsonDefinitions::BATTERY_PACK] = batteryPack;
 
