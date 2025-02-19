@@ -91,15 +91,16 @@ Item {
         height: 35
         color: "transparent"
 
-        RowLayout {  // Use RowLayout instead of Row
+        RowLayout {
             id: layout
-            anchors.fill: parent  // Make it span the entire rectangle
-            spacing: 10  // Space between elements
+            anchors.fill: parent
+            spacing: 10
 
             Text {
                 id: contactorSectionTitle
                 text: qsTr("Contactor\n Status")
                 color: "white"
+                font.pixelSize: 14
                 verticalAlignment: Text.AlignVCenter
                 Layout.alignment: Qt.AlignVCenter
             }
@@ -108,7 +109,7 @@ Item {
                 id: cmnContactor
                 contactor: "cmn"
                 isConnected: mbms.CommonContactorState
-                Layout.fillWidth: true  // Distributes space evenly
+                Layout.fillWidth: true
             }
 
             ContactorStatus {

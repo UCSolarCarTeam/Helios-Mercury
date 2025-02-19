@@ -13,8 +13,10 @@ Item {
     Text{
         id: contactorTitle
         text: contactor
-        font.pixelSize: 12
+        font.pixelSize: Config.smallFontSize
         color: "white"
+        anchors.bottom: contactorIcon.top
+        anchors.bottomMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
