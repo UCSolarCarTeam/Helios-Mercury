@@ -152,12 +152,12 @@ QJsonObject BatteryPacket::toJson() {
     //Battery Pack
     QJsonObject batteryPack;
 
-    batteryPack[JsonDefinitions::INPUT_12V] = Input12V_;
-    batteryPack[JsonDefinitions::PACK_CURRENT] = PackCurrent_;
-    batteryPack[JsonDefinitions::PACK_VOLTAGE] = PackVoltage_;
-    batteryPack[JsonDefinitions::PACK_STATE_OF_CHARGE] = PackStateOfCharge_;
-    batteryPack[JsonDefinitions::PACK_AMPHOURS] = PackAmphours_;
-    batteryPack[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = PackDepthOfDischarge_;
+    batteryPack[JsonDefinitions::INPUT_12V] = roundToThreeDecimalPlaces(Input12V_);
+    batteryPack[JsonDefinitions::PACK_CURRENT] = roundToThreeDecimalPlaces(PackCurrent_);
+    batteryPack[JsonDefinitions::PACK_VOLTAGE] = roundToThreeDecimalPlaces(PackVoltage_);
+    batteryPack[JsonDefinitions::PACK_STATE_OF_CHARGE] = roundToThreeDecimalPlaces(PackStateOfCharge_);
+    batteryPack[JsonDefinitions::PACK_AMPHOURS] = roundToThreeDecimalPlaces(PackAmphours_);
+    batteryPack[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = roundToThreeDecimalPlaces(PackDepthOfDischarge_);
 
     json[JsonDefinitions::BATTERY_PACK] = batteryPack;
 
