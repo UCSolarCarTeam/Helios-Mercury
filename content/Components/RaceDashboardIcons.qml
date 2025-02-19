@@ -17,7 +17,8 @@ Item {
 
         DashIcon {
             id: dashMuteIcon
-            isOn: true
+            // To be implemented, after proximity sensors
+            isOn: false
             imageSource: "../Images/DashMutedIcon.png"
         }
 
