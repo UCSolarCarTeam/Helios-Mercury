@@ -6,7 +6,7 @@ Item {
     width: 45
     height: 40
 
-    property string contactor: name
+    property string contactor
     property bool isConnected: false
 
 

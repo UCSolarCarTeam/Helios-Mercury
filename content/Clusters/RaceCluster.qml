@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Layouts
 import "../Components"
 
 Item {
@@ -85,59 +86,64 @@ Item {
         id: contactorStatusComponent
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
+        anchors.bottomMargin:12
         width: 475
         height: 35
         color: "transparent"
 
-        Row {
-            anchors.centerIn: parent
-            spacing: 10
+        RowLayout {  // Use RowLayout instead of Row
+            id: layout
+            anchors.fill: parent  // Make it span the entire rectangle
+            spacing: 10  // Space between elements
 
             Text {
-                id: sectionTitle
+                id: contactorSectionTitle
                 text: qsTr("Contactor\n Status")
                 color: "white"
+                verticalAlignment: Text.AlignVCenter
+                Layout.alignment: Qt.AlignVCenter
             }
 
             ContactorStatus {
                 id: cmnContactor
                 contactor: "cmn"
                 isConnected: mbms.CommonContactorState
+                Layout.fillWidth: true  // Distributes space evenly
             }
 
             ContactorStatus {
                 id: hvContactor
                 contactor: "Motor"
                 isConnected: mbms.MotorContactorState
+                Layout.fillWidth: true
             }
 
             ContactorStatus {
                 id: lvnContactor
                 contactor: "LV"
                 isConnected: mbms.LvContactorState
+                Layout.fillWidth: true
             }
 
             ContactorStatus {
                 id: arrayContactor
                 contactor: "Array"
                 isConnected: mbms.ArrayContactorState
+                Layout.fillWidth: true
             }
 
             ContactorStatus {
                 id: chargeContactor
                 contactor: "Charge"
                 isConnected: mbms.ChargeContactorState
+                Layout.fillWidth: true
             }
 
-            ConnectionStatus{
+            ConnectionStatus {
                 id: telemetryStatus
-                anchors.topMargin:2
             }
-
-            ConnectionStatus{
+            ConnectionStatus {
                 id: radioBoardStatus
-                anchors.topMargin: 2
                 isRadioBoard: true
             }
         }

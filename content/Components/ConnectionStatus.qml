@@ -12,7 +12,6 @@ Item {
 
     Image {
         id: connectionIcon
-        anchors.fill: parent
         source: isRadioBoard
             ? (isConnected ? "../Images/RadioBoardConnected.png" : "../Images/RadioBoardDisconnected.png")
             : (isConnected ? "../Images/TelemetryConnected.png" : "../Images/TelemetryDisconnected.png")
