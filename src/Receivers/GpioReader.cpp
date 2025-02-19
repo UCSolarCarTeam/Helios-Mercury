@@ -5,9 +5,8 @@
 #include <algorithm>
 
 // Constructor
-GpioReader::GpioReader(QObject* parent, PacketFactory* packetFactory) : QThread(parent), packetFactory_(packetFactory), gpioInitialized(false) {
+GpioReader::GpioReader(QObject* parent, PacketFactory* packetFactory) : QObject(parent), packetFactory_(packetFactory), gpioInitialized(false) {
     ConfigManager& config = ConfigManager::instance();
-
     pin0_ = config.getPin0();
     pin1_ = config.getPin1();
     begin(pin0_, pin1_);
@@ -52,13 +51,11 @@ void GpioReader::begin(int pinData0, int pinData1) {
 
     reset();
     running = true;
-    start();
 }
 
 // Stop function to clean up
 void GpioReader::stop() {
     running = false;
-    wait();
     if (gpioInitialized) {
         gpioSetAlertFunc(pinData0_, nullptr);
         gpioSetAlertFunc(pinData1_, nullptr);
@@ -81,7 +78,7 @@ void GpioReader::emitData() {
         }
     }
     QByteArray dataArray = QByteArray::number(data_);
-    packetFactory_->getPiPacket().populatePacket(dataArray);
+    packetFactory_->getPiPacket().populateRfid(dataArray);
     reset();
 }
 
@@ -112,12 +109,5 @@ void GpioReader::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
                 instance->emitData();
             }
         }
-    }
-}
-
-// Main run loop (can be used for additional logic)
-void GpioReader::run() {
-    while (running) {
-        usleep(10000); // Polling interval (10ms)
     }
 }

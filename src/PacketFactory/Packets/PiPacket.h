@@ -12,11 +12,8 @@ class PiPacket : public IPacket {
 public:
     PiPacket();
     void populatePacket(const QByteArray& data) override;
+    void populateRfid(const QByteArray& data);
     QJsonObject toJson() override;
-    QByteArray getRfidData() const;
-
-private:
-    QByteArray rfidData_;  // Member variable for RFID data
 };
 
 #endif // PIPACKET_H

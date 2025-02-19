@@ -2,12 +2,11 @@
 #define GPIOREADER_H
 
 #include <QObject>
-#include <QThread>
 // #include <pigpio.h>
 #include "../../imports/pigpio/pigpio.h"
 #include "../PacketFactory/PacketFactory.h"
 
-class GpioReader : public QThread {
+class GpioReader : public QObject {
     Q_OBJECT
 
 public:
@@ -19,9 +18,6 @@ public:
 
 signals:
     void onData(unsigned long data);
-
-protected:
-    void run() override;
 
 private:
     bool running = false;

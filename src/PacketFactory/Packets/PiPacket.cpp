@@ -7,6 +7,9 @@ PiPacket::PiPacket() {
 }
 
 void PiPacket::populatePacket(const QByteArray& data) {
+}
+
+void PiPacket::populateRfid(const QByteArray& data) {
     if(!data.isEmpty() && data.toLongLong() != 0) {
         setRfidData(data);
     }
@@ -15,12 +18,7 @@ void PiPacket::populatePacket(const QByteArray& data) {
 QJsonObject PiPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::RFID] = getRfidData().toLongLong();
+    json[JsonDefinitions::RFID] = RfidData().toLongLong();
 
     return json;
-}
-
-// Getter for RfidData
-QByteArray PiPacket::getRfidData() const {
-    return rfidData_;
 }
