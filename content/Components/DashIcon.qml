@@ -9,6 +9,7 @@ Item {
 
     property string imageSource: ""
     property bool isOn: false
+    property bool isHighContrast: false
 
     Image {
         id: iconImg
@@ -21,6 +22,5 @@ Item {
         anchors.fill: parent
         property variant source: iconImg
         fragmentShader: "qrc:/content/Shaders/ColorOverlay.frag.qsb"
-        property color overlayColor: parent.isOn ? Config.primary : Config.btnDisabled
-    }
+        property color overlayColor: parent.isOn ? (parent.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled    }
 }

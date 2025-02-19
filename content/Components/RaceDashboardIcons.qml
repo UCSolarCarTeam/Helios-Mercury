@@ -10,29 +10,28 @@ Item {
     RowLayout {
         id: iconRow
         anchors.fill: parent
-        spacing: 20  // Adjust this value as needed
+        spacing: 20
 
-        Item { Layout.fillWidth: true } // Left spacer
+        Item { Layout.fillWidth: true }
 
-        // Find the required packet
         DashIcon {
-            id: hornMuteIcon
+            id: dashMuteIcon
             isOn: true
-            imageSource: "../Images/HornMutedIcon.png"
+            imageSource: "../Images/DashMutedIcon.png"
         }
 
-        Item { Layout.fillWidth: true } // Middle spacer
+        Item { Layout.fillWidth: true }
 
-        //find the required packet
         DashIcon {
             id: parkingBrakeIcon
-            height: 27
-            width: 37
-            isOn: true
+            height: 25
+            width: 35
+            isOn: b3.BrakeSwitch
+            isHighContrast: true
             imageSource: "../Images/ParkingBrake.png"
         }
 
-        Item { Layout.fillWidth: true } // Middle spacer
+        Item { Layout.fillWidth: true }
 
         DashIcon {
             id: drlIcon
@@ -40,7 +39,7 @@ Item {
             imageSource: "../Images/DaytimeRunningLights.png"
         }
 
-        Item { Layout.fillWidth: true } // Middle spacer
+        Item { Layout.fillWidth: true }
 
         DashIcon {
             id: headlightsIcon
@@ -48,6 +47,6 @@ Item {
             imageSource: "../Images/Headlights.png"
         }
 
-        Item { Layout.fillWidth: true } // Right spacer
+        Item { Layout.fillWidth: true }
     }
 }
