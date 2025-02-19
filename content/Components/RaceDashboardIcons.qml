@@ -8,26 +8,6 @@ Item {
     width: 425
     height: 35
 
-    AudioDevice {
-        id: audioDevice
-        mode: AudioDevice.Output
-    }
-
-    // Timer to periodically check mute status
-    Timer {
-        id: muteCheckTimer
-        interval: 500 // Check every 500ms
-        running: true
-        repeat: true
-        onTriggered: {
-            // Check if system is muted or volume is 0
-            if (audioDevice.volume <= 0 || audioDevice.muted) {
-                dashMuteIcon.isOn = true
-            } else {
-                dashMuteIcon.isOn = false
-            }
-        }
-    }
     RowLayout {
         id: iconRow
         anchors.fill: parent
@@ -37,6 +17,7 @@ Item {
 
         DashIcon {
             id: dashMuteIcon
+            isOn: true
             imageSource: "../Images/DashMutedIcon.png"
         }
 
