@@ -61,8 +61,9 @@ Item {
 
     RaceDashboardIcons{
         id: raceDashboardIcons
-        x: 747
-        y: 60
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 55
+        anchors.horizontalCenterOffset: 0
     }
 
     CameraView{
