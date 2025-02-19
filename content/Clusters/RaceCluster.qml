@@ -75,10 +75,4 @@ Item {
         isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
-
-    SmallGauge{
-        x: 863
-        y: 278
-
-    }
 }

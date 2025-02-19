@@ -81,7 +81,7 @@ Item {
                 }
 
                 transformOrigin: Item.Center
-                rotation: valueSlider.value / maxValue * arcAngle + 45
+                rotation: smallGaugeRoot.value / maxValue * arcAngle + 45
             }
         }
     }
