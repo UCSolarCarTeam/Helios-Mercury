@@ -14,8 +14,8 @@ Item {
         width: 120
         height: 16
         text: "Motor 0 current: " + motorDetails0.InverterPeakCurrent + " A"
-        font.pixelSize: 12
-        color: "white"
+        font.pixelSize: Config.fontSize
+        color: Config.fontColor
     }
 
     Text {
@@ -25,8 +25,8 @@ Item {
         width: 120
         height: 16
         text: "Motor 1 current: " + motorDetails1.InverterPeakCurrent + " A"
-        font.pixelSize: 12
-        color: "white"
+        font.pixelSize: Config.fontSize
+        color: Config.fontColor
     }
 
     Row {
@@ -43,8 +43,8 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 120
             text: "Array Current:"
-            font.pixelSize: 12
-            color: "white"
+            font.pixelSize: Config.fontSize
+            color: Config.fontColor
         }
 
         Grid {
@@ -57,36 +57,36 @@ Item {
                 id: totalArrayCurrent0s
                 width: 90
                 height: 16
-                text: "0: " + mppt0.ArrayCurrent + " mA"
-                font.pixelSize: 12
-                color: "white"
+                text: "0: " + mppt0.ArrayCurrent + " A"
+                font.pixelSize: Config.fontSize
+                color: Config.fontColor
             }
 
             Text {
                 id: totalArrayCurrent1
                 width: 90
                 height: 16
-                text: "1: " + mppt1.ArrayCurrent + " mA"
-                font.pixelSize: 12
-                color: "white"
+                text: "1: " + mppt1.ArrayCurrent + " A"
+                font.pixelSize: Config.fontSize
+                color: Config.fontColor
             }
 
             Text {
                 id: totalArrayCurrent2
                 width: 90
                 height: 16
-                text: "2: " + mppt2.ArrayCurrent + " mA"
-                font.pixelSize: 12
-                color: "white"
+                text: "2: " + mppt2.ArrayCurrent + " A"
+                font.pixelSize: Config.fontSize
+                color: Config.fontColor
             }
 
             Text {
                 id: totalArrayCurrent3
                 width: 90
                 height: 16
-                text: "3: " + mppt3.ArrayCurrent + " mA"
-                font.pixelSize: 12
-                color: "white"
+                text: "3: " + mppt3.ArrayCurrent + " A"
+                font.pixelSize: Config.fontSize
+                color: Config.fontColor
             }
         }
     }

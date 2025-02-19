@@ -14,6 +14,7 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/RaceScreenHeader.qml
         Config/Config.qml
     RESOURCES
         fonts/fonts.txt
@@ -21,6 +22,5 @@ qt6_add_qml_module(content
         Images/RaceClusterFrameOutline.png
         Images/Arrow.png
         Images/Headlights.png
-        QML_FILES Components/RaceScreenHeader.qml
         Images/DaytimeRunningLights.png
 )
