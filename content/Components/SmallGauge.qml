@@ -5,10 +5,9 @@ import QtQuick.Shapes 1.0
 //import "../util/util.js"
 
 Item {
-    id: root
+    id: smallGaugeRoot
     width: 178
     height: 178
-
 
     property int minValue: 0
     property int maxValue: 100
@@ -18,17 +17,17 @@ Item {
     property string iconPath: "../Images/BoltIcon.png"
 
     Rectangle {
-        id: small_gauge_frame
+        id: smallGauge
         width: 178
         height: 178
         color: "black"
 
         Item {
-            id: accessory_Guage
+            id: accessoryGuage
             anchors.fill: parent
 
             ArcItem {
-                id: ellipse_16
+                id: outerArc
                 width: 178
                 height: 178
                 anchors.left: parent.left
@@ -45,7 +44,7 @@ Item {
             }
 
             ArcItem {
-                id: ellipse_17
+                id: innerArc
                 width: 169
                 height: 169
                 anchors.left: parent.left
@@ -70,20 +69,19 @@ Item {
                 height: 17
                 color: "#ffffff"
 
-                property real startAngle: 131.56227
-                property real endAngle: -134.72317
-                property real angle: (startAngle + (root.value / 100) * 270)
-                property real needleRadius: ellipse_16.width / 2.35
+                property real arcAngle: innerArc.begin - innerArc.end
+                property real angle: (innerArc.begin + needle.width + (smallGaugeRoot.value / maxValue) * arcAngle)
+                property real needleRadius: (innerArc.width - innerArc.arcWidth) / 2
 
-                x: (ellipse_16.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
-                y: (ellipse_16.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
+                x: (outerArc.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
+                y: (outerArc.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
 
                 function degreesToRadians(degrees) {
                     return degrees * (Math.PI / 180);
                 }
 
                 transformOrigin: Item.Center
-                rotation: valueSlider.value / 100 * 275 + 45
+                rotation: valueSlider.value / maxValue * arcAngle + 45
             }
         }
     }
@@ -95,7 +93,7 @@ Item {
         height: 148
         color: "transparent"
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: small_gauge_frame.bottom
+        anchors.top: smallGauge.bottom
         anchors.topMargin: -148
         anchors.horizontalCenterOffset: 1
 
@@ -118,14 +116,14 @@ Item {
         }
 
         Rectangle {
-            id: frame_80
+            id: textFrame
             height: 81
             width: parent.width
             color: "transparent"
             anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
-                id: ix_electrical_energy_filled
+                id: boltSymbol
                 width: 13.5
                 height: 20
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -213,7 +211,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 20
             onValueChanged: {
-                root.value = value;
+                smallGaugeRoot.value = value;
             }
         }
 }
