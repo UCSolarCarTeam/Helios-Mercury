@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(MercuryTests LANGUAGES CXX)
+project(ConfigManagerTests LANGUAGES CXX)
 
 enable_testing()
 
@@ -14,10 +14,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(MercuryTests ConfigManagerTest.cpp)
+add_executable(ConfigManagerTests ConfigManagerTest.cpp)
 add_test(NAME ConfigManagerTest COMMAND ConfigManagerTest)
 
-target_link_libraries(MercuryTests PRIVATE
+target_link_libraries(ConfigManagerTests PRIVATE
     Qt${QT_VERSION_MAJOR}::Test
     MercuryLib
 )

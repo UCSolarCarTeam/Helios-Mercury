@@ -109,7 +109,7 @@ void ConfigManagerTest::testNoConfigFile()
     QCOMPARE(manager.getNumberOfMotors(), 2);
     QCOMPARE(manager.getNumberOfMppts(), 4);
     QCOMPARE(manager.getPacketTitle(), QString("Helios"));
-    QCOMPARE(manager.getPortName(), QString("/dev/pts/2"));
+    QCOMPARE(manager.getPortName(), QString("/dev/pts/5"));
     QCOMPARE(manager.getBaudrate(), 115200);
     QCOMPARE(manager.getTelemetryTopic(), QString("packet"));
     QCOMPARE(manager.getPingTopic(), QString("ping"));
