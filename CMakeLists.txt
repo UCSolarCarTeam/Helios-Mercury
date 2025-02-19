@@ -74,7 +74,7 @@ target_link_libraries(Helios-Mercury PRIVATE
 
 if (BUILD_MERCURY_TESTS)
     add_subdirectory(ConfigManagerTests)
-    add_subdirectory(MessageAggregatorTests)
+    add_subdirectory(MessageTransmitterTests)
 endif()
 
 qt_add_resources(Helios-Mercury "configuration"
