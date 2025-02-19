@@ -13,7 +13,7 @@ Item {
     Text{
         id: contactorTitle
         text: contactor
-        font.pixelSize: 10
+        font.pixelSize: 12
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter
     }

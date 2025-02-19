@@ -43,7 +43,7 @@ Item {
         width: 157
         height: 16
         text: qsTr("Motor R Current: XXX A")
-        font.pixelSize: 12
+        font.pixelSize: 14
         color: "white"
     }
 
