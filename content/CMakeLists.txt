@@ -14,14 +14,14 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/SmallGauge.qml
         Config/Config.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
         Images/RaceClusterFrameOutline.png
-        RESOURCES Images/BoltIcon.png
+        Images/BoltIcon.png
         Images/Arrow.png
         Images/Headlights.png
-        QML_FILES Components/SmallGauge.qml
         Images/DaytimeRunningLights.png
 )
