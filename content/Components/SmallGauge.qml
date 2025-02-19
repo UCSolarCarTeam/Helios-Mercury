@@ -199,19 +199,4 @@ Item {
             }
         }
     }
-
-    Slider {
-            id: valueSlider
-            width: parent.width * 0.8
-            from: minValue
-            to: maxValue
-            value: value
-            stepSize: 1
-            anchors.top: smallGuageData.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 20
-            onValueChanged: {
-                smallGaugeRoot.value = value;
-            }
-        }
 }
