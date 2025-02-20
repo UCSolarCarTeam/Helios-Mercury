@@ -19,4 +19,7 @@ qt6_add_qml_module(content
         QML_FILES Components/ArrowIndicator.qml
         QML_FILES Config/Config.qml
         QML_FILES Components/FaultsMessage.qml
+        RESOURCES Images/MotorFault.png
+        RESOURCES Images/SensorFault.png
+        RESOURCES Images/BatteryFault.png
 )
