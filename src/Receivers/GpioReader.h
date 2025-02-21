@@ -10,7 +10,7 @@ class GpioReader : public QObject {
     Q_OBJECT
 
 public:
-    explicit GpioReader(QObject* parent = nullptr, PacketFactory* packetFactory = nullptr);
+    explicit GpioReader(PacketFactory* packetFactory = nullptr);
     ~GpioReader();
 
     void begin(int pinData0, int pinData1);

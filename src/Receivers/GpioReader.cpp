@@ -5,12 +5,11 @@
 #include <algorithm>
 
 // Constructor
-GpioReader::GpioReader(QObject* parent, PacketFactory* packetFactory) : QObject(parent), packetFactory_(packetFactory), gpioInitialized(false) {
+GpioReader::GpioReader(PacketFactory* packetFactory) : packetFactory_(packetFactory), gpioInitialized(false) {
     ConfigManager& config = ConfigManager::instance();
     pin0_ = config.getPin0();
     pin1_ = config.getPin1();
     begin(pin0_, pin1_);
-
 }
 
 // Destructor
