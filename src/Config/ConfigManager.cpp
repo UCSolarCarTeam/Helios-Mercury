@@ -63,6 +63,10 @@ ConfigManager::ConfigManager(const QString& path){
     logLevel_ = settings.value("logLevel", 3).toInt();
     loggingEnabled_ = settings.value("loggingEnabled", true).toBool();
     settings.endGroup();
+
+    settings.beginGroup("PiPins");
+    pin0_ = settings.value ("pin0", 20).toInt();
+    pin1_ = settings.value ("pin1", 21).toInt();
 }
 
 //Getters
@@ -95,3 +99,7 @@ QString ConfigManager::getTelemetryPassword() const { return telemetryPassword_;
 int ConfigManager::getLogLevel() const { return logLevel_; }
 
 bool ConfigManager::getLoggingEnabled() const { return loggingEnabled_; }
+
+int ConfigManager::getPin0() const { return pin0_; }
+
+int ConfigManager::getPin1() const { return pin1_; }

@@ -25,3 +25,7 @@ telemetryPassword=NiceTryBud
 [Logging]
 logLevel=3
 loggingEnabled=true
+
+[PiPin]
+pin0=20
+pin1=21
