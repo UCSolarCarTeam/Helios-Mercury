@@ -16,15 +16,6 @@ Item {
         Item { Layout.fillWidth: true }
 
         DashIcon {
-            id: dashMuteIcon
-            // To be implemented, after proximity sensors
-            isOn: false
-            imageSource: "../Images/DashMutedIcon.png"
-        }
-
-        Item { Layout.fillWidth: true }
-
-        DashIcon {
             id: parkingBrakeIcon
             height: 25
             width: 35

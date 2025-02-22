@@ -22,5 +22,6 @@ Item {
         anchors.fill: parent
         property variant source: iconImg
         fragmentShader: "qrc:/content/Shaders/ColorOverlay.frag.qsb"
-        property color overlayColor: parent.isOn ? (parent.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled    }
+        property color overlayColor: parent.isOn ? (parent.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
+    }
 }

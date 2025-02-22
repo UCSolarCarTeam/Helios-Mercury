@@ -59,7 +59,7 @@ Item {
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
-    RaceDashboardIcons{
+    RaceClusterIcons{
         id: raceDashboardIcons
         anchors.horizontalCenter: parent.horizontalCenter
         y: 55
