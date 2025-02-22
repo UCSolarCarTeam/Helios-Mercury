@@ -17,9 +17,7 @@ Item {
 
         DashIcon {
             id: parkingBrakeIcon
-            height: 25
-            width: 35
-            isOn: b3.BrakeSwitch
+            isOn: b3.HandbrakeSwitch
             isHighContrast: true
             imageSource: "../Images/ParkingBrake.png"
         }

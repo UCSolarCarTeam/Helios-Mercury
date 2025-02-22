@@ -62,7 +62,8 @@ Item {
     RaceClusterIcons{
         id: raceDashboardIcons
         anchors.horizontalCenter: parent.horizontalCenter
-        y: 55
+        anchors.top: parent.top
+        anchors.topMargin: 55
         anchors.horizontalCenterOffset: 0
     }
 
