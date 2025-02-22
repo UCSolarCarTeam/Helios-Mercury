@@ -1,11 +1,16 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts
 import Mercury
 
 Item {
     id: dashIcon
     width: 32
     height: 32
+
+    Layout.preferredWidth: 32
+    Layout.alignment: Qt.AlignHCenter
+
 
     property string imageSource: ""
     property bool isOn: false
