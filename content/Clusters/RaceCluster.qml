@@ -52,10 +52,6 @@ Item {
         font.pixelSize: 12
         color: "white"
     }
-    FaultsMessage{
-        x:500
-        y:500
-    }
 
     ArrowIndicator {
         id: leftArrowIndicator
