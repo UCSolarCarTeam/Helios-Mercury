@@ -80,4 +80,13 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    SmallGauge{
+        x: 105
+        y: 92
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "RPM"
+        value: motorDetails0.CurrentRpmValue
+    }
 }
