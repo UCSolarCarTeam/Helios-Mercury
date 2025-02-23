@@ -22,4 +22,6 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+        QML_FILES Components/Temperature.qml
+        QML_FILES cool/COOL.ui.qml temperature/Temperture_Scale.ui.qml
 )
