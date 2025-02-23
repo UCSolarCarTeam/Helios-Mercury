@@ -24,12 +24,10 @@ Rectangle {
     Row {
         id:row
         anchors.centerIn: mainContainer
-        anchors.verticalCenter: mainContainer.verticalCenter
         Image {
             id: iconImage
             width:25
             height:25
-            anchors.verticalCenter: text.Center
             source: icon
         }
         Text {

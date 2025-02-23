@@ -14,22 +14,14 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/FaultsDisplayContainer.qml
+        Components/FaultsMessage.qml
         Config/Config.qml
     RESOURCES
         fonts/fonts.txt
-        QML_FILES Clusters/RaceCluster.qml
-        QML_FILES Clusters/DebugCluster.qml
-        QML_FILES Clusters/Screen01.ui.qml
-        RESOURCES Images/RaceClusterFrameBackground.png
-        RESOURCES Images/RaceClusterFrameOutline.png
-        RESOURCES Images/Arrow.png
-        QML_FILES Components/ArrowIndicator.qml
-        QML_FILES Config/Config.qml
-        QML_FILES Components/FaultsMessage.qml
-        RESOURCES Images/MotorFault.png
-        RESOURCES Images/SensorFault.png
-        RESOURCES Images/BatteryFault.png
-        QML_FILES Components/FaultsDisplayContainer.qml
+        Images/MotorFault.png
+        Images/SensorFault.png
+        Images/BatteryFault.png
         Images/RaceClusterFrameBackground.png
         Images/RaceClusterFrameOutline.png
         Images/Arrow.png

@@ -5,7 +5,7 @@ Rectangle {
     id:mainContainer
     width: 426
     height: 150
-
+    color:'transparent'
     property QtObject batteryObject
     property QtObject motor0Object
     property QtObject motor1Object
