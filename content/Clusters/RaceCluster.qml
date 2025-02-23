@@ -6,18 +6,6 @@ Item {
     width: 1920
     height: 550
 
-    Text {
-        id: text0
-        x: 816
-        y: 219
-        z: 100
-        width: 247
-        height: 53
-        text: qsTr("TODO: RACE CLUSTER")
-        font.pixelSize: 24
-        color: "white"
-    }
-
     Image {
         id: raceClusterFrameBackground
         x: 1
@@ -29,6 +17,22 @@ Item {
         id: raceClusterFrameOutline
         anchors.fill: parent
         source: "../Images/RaceClusterFrameOutline.png"
+    }
+
+    DashIcon {
+        id: dashIcon
+        x: 1173
+        y: 13
+        isOn: b3.HeadlightsSwitchIn
+        imageSource: "../Images/Headlights.png"
+    }
+
+    DashIcon {
+        id: dashIcon2
+        x: 1116
+        y: 13
+        isOn: b3.DaytimeRunningLightSignalOut
+        imageSource: "../Images/DaytimeRunningLights.png"
     }
 
     Text {
@@ -69,5 +73,11 @@ Item {
         z:1000
         isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
+    }
+
+    CameraView{
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -75
     }
 }

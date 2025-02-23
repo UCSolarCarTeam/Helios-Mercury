@@ -8,6 +8,13 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
+        Clusters/RaceCluster.qml
+        Clusters/DebugCluster.qml
+        Clusters/Screen01.ui.qml
+        Components/ArrowIndicator.qml
+        Components/DashIcon.qml
+        Components/CameraView.qml
+        Config/Config.qml
     RESOURCES
         fonts/fonts.txt
         QML_FILES Clusters/RaceCluster.qml
@@ -23,4 +30,9 @@ qt6_add_qml_module(content
         RESOURCES Images/SensorFault.png
         RESOURCES Images/BatteryFault.png
         QML_FILES Components/FaultsDisplayContainer.qml
+        Images/RaceClusterFrameBackground.png
+        Images/RaceClusterFrameOutline.png
+        Images/Arrow.png
+        Images/Headlights.png
+        Images/DaytimeRunningLights.png
 )
