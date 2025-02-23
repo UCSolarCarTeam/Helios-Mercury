@@ -22,4 +22,5 @@ qt6_add_qml_module(content
         RESOURCES Images/MotorFault.png
         RESOURCES Images/SensorFault.png
         RESOURCES Images/BatteryFault.png
+        QML_FILES Components/FaultsDisplayContainer.qml
 )
