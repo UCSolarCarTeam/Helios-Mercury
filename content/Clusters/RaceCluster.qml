@@ -89,7 +89,7 @@ Item {
         maxValue: 100
         gaugeTitle: "Motor Temp"
         units: "°C"
-        value: motorDetails.MotorTemperature
+        value: motorDetails0.MotorTemperature
     }
 
     ThreeQuarterGauge {
