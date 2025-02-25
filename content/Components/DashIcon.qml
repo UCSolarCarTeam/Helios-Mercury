@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts
 import Mercury
 
 Item {
@@ -7,8 +8,13 @@ Item {
     width: 32
     height: 32
 
+    Layout.preferredWidth: 32
+    Layout.alignment: Qt.AlignHCenter
+
+
     property string imageSource: ""
     property bool isOn: false
+    property bool isHighContrast: false
 
     Image {
         id: iconImg
@@ -21,6 +27,6 @@ Item {
         anchors.fill: parent
         property variant source: iconImg
         fragmentShader: "qrc:/content/Shaders/ColorOverlay.frag.qsb"
-        property color overlayColor: parent.isOn ? Config.primary : Config.btnDisabled
+        property color overlayColor: parent.isOn ? (parent.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
     }
 }
