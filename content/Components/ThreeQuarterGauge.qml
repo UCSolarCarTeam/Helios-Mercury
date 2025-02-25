@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
 
@@ -62,6 +61,9 @@ Item {
 
         x: (outerArc.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
         y: (outerArc.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
+
+        Behavior on angle { NumberAnimation { duration: 300 } }
+        Behavior on rotation { NumberAnimation { duration: 300 } }
 
         function degreesToRadians(degrees) {
             return degrees * (Math.PI / 180);
