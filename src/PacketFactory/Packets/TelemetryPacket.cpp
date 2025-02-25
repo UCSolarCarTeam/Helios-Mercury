@@ -53,8 +53,8 @@ void TelemetryPacket::populatePacket(const QByteArray& data) {
     setGpsValidityFlags(getValue<unsigned char>(data, GPS_VALIDITY_FLAGS_OFFSET));
     setGpsFixStatusFlags(getValue<unsigned char>(data, GPS_FIX_STATUS_FLAGS_OFFSET));
     setGpsAdditionalFlags(getValue<unsigned char>(data, GPS_ADDITIONAL_FLAGS_OFFSET));
-    setGpsLongitude(getValue<int>(data, GPS_LONGITUDE_OFFSET));
-    setGpsLatitude(getValue<int>(data, GPS_LATITUDE_OFFSET));
+    setGpsLongitude(getValue<float>(data, GPS_LONGITUDE_OFFSET));
+    setGpsLatitude(getValue<float>(data, GPS_LATITUDE_OFFSET));
     setMpuAccelerationX(getValue<unsigned short>(data, MPU_ACCELERATION_X_OFFSET));
     setMpuAccelerationY(getValue<unsigned short>(data, MPU_ACCELERATION_Y_OFFSET));
     setMpuAccelerationZ(getValue<unsigned short>(data, MPU_ACCELERATION_Z_OFFSET));
