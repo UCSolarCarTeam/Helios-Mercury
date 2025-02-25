@@ -15,6 +15,7 @@ qt6_add_qml_module(content
         Components/DashIcon.qml
         Components/CameraView.qml
         Config/Config.qml
+	Components/ThreeQuarterGauge.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
