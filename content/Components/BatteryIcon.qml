@@ -8,7 +8,6 @@ Item {
 
     property int minValue: 0
     property int maxValue: 100
-    property string units: "%"
     property int value
 
     Image {
@@ -19,7 +18,7 @@ Item {
         anchors.top: parent.top
         anchors.leftMargin: 18
         anchors.topMargin: 6
-        source: "../Images/battery.png"
+        source: "../Images/Battery.png"
     }
 
     Item {
@@ -57,7 +56,7 @@ Item {
         anchors.leftMargin: 70
         anchors.topMargin: 20
         color: "#ffffff"
-        text: root.value.toString() + root.units
+        text: root.value.toString() + "%"
         font.pixelSize: 26
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
