@@ -7,24 +7,24 @@ namespace {
     const char LEFT_SIGNAL_IN_MASK = 0x02;
     const char HAZARD_LIGHTS_IN_MASK = 0x04;
     const char HEADLIGHTS_SWITCH_IN_MASK = 0x08;
-    const char FORWARD_SWITCH_IN_MASK = 0x10;
-    const char HORN_SWITCH_IN_MASK = 0x20;
-    const char FORWARD_IN_MASK = 0x40;
 
     const int DRIVER_INPUTS_OFFSET = 2;
-    const char NEUTRAL_MASK = 0x01;
-    const char REVERSE_MASK = 0x02;
-    const char BRAKE_SWITCH_MASK = 0x04;
-    const char HANDBRAKE_SWITCH_MASK = 0x08;
-    const char MOTOR_RESET_MASK = 0x10;
-    const char RACE_MODE_MASK = 0x20;
-    const char LAP_MASK = 0x40;
-    const char ZOOM_ZOOM_MASK = 0x80;
+    const unsigned short FORWARD_SWITCH_IN_MASK = 0x0001;
+    const unsigned short HORN_SWITCH_IN_MASK = 0x0002;
+    const unsigned short FORWARD_IN_MASK = 0x0004;
+    const unsigned short NEUTRAL_MASK = 0x0008;
+    const unsigned short REVERSE_MASK = 0x0010;
+    const unsigned short BRAKE_SWITCH_MASK = 0x0020;
+    const unsigned short HANDBRAKE_SWITCH_MASK = 0x0040;
+    const unsigned short MOTOR_RESET_MASK = 0x0080;
+    const unsigned short RACE_MODE_MASK = 0x0100;
+    const unsigned short LAP_MASK = 0x0200;
+    const unsigned short ZOOM_ZOOM_MASK = 0x0400;
 
-    const int ACCELERATION_OFFSET = 3;
-    const int REGEN_BRAKING_OFFSET = 5;
+    const int ACCELERATION_OFFSET = 4;
+    const int REGEN_BRAKING_OFFSET = 6;
 
-    const int LIGHT_OUTPUTS_OFFSET = 7;
+    const int LIGHT_OUTPUTS_OFFSET = 8;
     const char RIGHT_SIGNAL_OUT_MASK = 0x01;
     const char LEFT_SIGNAL_OUT_MASK = 0x02;
     const char DAYTIME_RUNNING_LIGHT_SIGNAL_OUT_MASK = 0x04;
@@ -63,16 +63,18 @@ B3Packet::B3Packet() {
 }
 
 void B3Packet::populatePacket(const QByteArray& data) {
+    qDebug() << "populatePacket";
+    qDebug() << data;
     unsigned char lightInputs = getValue<unsigned char>(data, LIGHT_INPUTS_OFFSET);
     setRightSignalIn(lightInputs & RIGHT_SIGNAL_IN_MASK);
     setLeftSignalIn(lightInputs & LEFT_SIGNAL_IN_MASK);
     setHazardLightsIn(lightInputs & HAZARD_LIGHTS_IN_MASK);
     setHeadlightsSwitchIn(lightInputs & HEADLIGHTS_SWITCH_IN_MASK);
-    setForwardSwitchIn(lightInputs & FORWARD_SWITCH_IN_MASK);
-    setHornSwitchIn(lightInputs & HORN_SWITCH_IN_MASK);
-    setForwardIn(lightInputs & FORWARD_IN_MASK);
 
-    unsigned char driverInputs = getValue<unsigned char>(data, DRIVER_INPUTS_OFFSET);
+    unsigned short driverInputs = getValue<unsigned short>(data, DRIVER_INPUTS_OFFSET);
+    setForwardSwitchIn(driverInputs & FORWARD_SWITCH_IN_MASK);
+    setHornSwitchIn(driverInputs & HORN_SWITCH_IN_MASK);
+    setForwardIn(driverInputs & FORWARD_IN_MASK);
     setNeutral(driverInputs & NEUTRAL_MASK);
     setReverse(driverInputs & REVERSE_MASK);
     setBrakeSwitch(driverInputs & BRAKE_SWITCH_MASK);
