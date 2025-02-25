@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import Qt5Compat.GraphicalEffects
 
 Item {
     id: root
@@ -8,7 +9,7 @@ Item {
     property int minValue: 0
     property int maxValue: 100
     property string units: "%"
-    property int value: 50
+    property int value
 
     Image {
         id: batteryImage
@@ -18,7 +19,33 @@ Item {
         anchors.top: parent.top
         anchors.leftMargin: 18
         anchors.topMargin: 6
-        source: "../Images/Battery.png"
+        source: "../Images/battery.png"
+    }
+
+    Item {
+        id: batteryFillContainer
+        width: batteryImage.width
+        height: batteryImage.height
+        anchors.left: batteryImage.left
+        anchors.top: batteryImage.top
+
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: batteryImage
+        }
+
+        Rectangle {
+            id: batteryFill
+            width: parent.width
+            height: parent.height * ((root.value - root.minValue) / (root.maxValue - root.minValue))
+            anchors.bottom: parent.bottom
+            color: "#20d426"
+            opacity: 1.0
+
+            Behavior on height {
+                NumberAnimation { duration: 300 }
+            }
+        }
     }
 
     Text {
@@ -29,8 +56,7 @@ Item {
         anchors.top: parent.top
         anchors.leftMargin: 70
         anchors.topMargin: 20
-        //color: "#ffffff"
-        color: "#000000"
+        color: "#ffffff"
         text: root.value.toString() + root.units
         font.pixelSize: 26
         horizontalAlignment: Text.AlignHCenter
