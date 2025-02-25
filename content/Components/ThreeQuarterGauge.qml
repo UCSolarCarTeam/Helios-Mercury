@@ -3,17 +3,16 @@ import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
 
-Rectangle {
+Item {
     id: root
     width: 269
     height: 219
-    color: "transparent"
 
-    property int minValue: 0
-    property int maxValue: 100
-    property string units: "units"
-    property int value: 50
-    property string gaugeTitle: "title"
+    property int minValue
+    property int maxValue
+    property string units
+    property int value
+    property string gaugeTitle
 
     ArcItem {
         id: outerArc
@@ -77,7 +76,7 @@ Rectangle {
         width: 16
         height: 19
         color: "#ffffff"
-        text: minValue
+        text: root.minValue
         anchors.left: parent.left
         anchors.top: parent.top
         font.pixelSize: 24
@@ -95,7 +94,7 @@ Rectangle {
         width: 57
         height: 31
         color: "#ffffff"
-        text: maxValue
+        text: root.maxValue
         anchors.left: parent.left
         anchors.top: parent.top
         font.pixelSize: 24
@@ -113,7 +112,7 @@ Rectangle {
         width: 147
         height: 43
         color: "#ffffff"
-        text: value.toString() + units
+        text: root.value.toString() + root.units
         anchors.left: parent.left
         anchors.top: parent.top
         font.pixelSize: 36
@@ -131,7 +130,7 @@ Rectangle {
         width: 147
         height: 17
         color: "#ffffff"
-        text: gaugeTitle
+        text: root.gaugeTitle
         anchors.left: parent.left
         anchors.top: parent.top
         font.pixelSize: 14
