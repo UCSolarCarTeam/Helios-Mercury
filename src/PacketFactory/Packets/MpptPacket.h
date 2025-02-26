@@ -7,7 +7,7 @@
 class MpptPacket : public IPacket {
     Q_OBJECT
     DEFINE_PROPERTY(unsigned char, ChannelNumber)
-    DEFINE_PROPERTY(unsigned char, MpptStatus)
+    DEFINE_PROPERTY(bool, MpptStatus)
 
     DEFINE_PROPERTY(unsigned short, ArrayVoltage)
     DEFINE_PROPERTY(unsigned short, ArrayCurrent)
