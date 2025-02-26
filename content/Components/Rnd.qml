@@ -11,22 +11,6 @@ Item {
     property var gears: ["R", "N", "D"]
     property int currentGear: b3.Reverse ? 0 : (b3.Neutral ? 1 : 2)
 
-    // // Poll B3 for gear updates
-    // Timer {
-    //     interval: 100  // Poll every 100ms
-    //     running: true
-    //     repeat: true
-    //     onTriggered: {
-    //         if (b3.Reverse) {
-    //             currentGear = 0;
-    //         } else if (b3.Neutral) {
-    //             currentGear = 1;
-    //         } else if (b3.ForwardIn) {
-    //             currentGear = 2;
-    //         }
-    //     }
-    // }
-
     // Faint Horizontal Line
     Rectangle {
         id: baseLine
@@ -48,18 +32,21 @@ Item {
 
         // Marker aligns with selected gear safely
         x: {
-                    if (currentGear === 0) {
-                        // Position far left (R)
-                        return Math.max(gearRow.children[0].x + gearRow.x - width / 2, baseLine.x);
-                    } else if (currentGear === 1) {
-                        // Position in the middle (N)
-                        return gearRow.children[1].x + gearRow.x + (gearRow.children[1].width - width) / 2;
-                    } else if (currentGear === 2) {
-                        // Position far right (D)
-                        return Math.min(gearRow.children[2].x + gearRow.x + gearRow.children[2].width - width / 2, baseLine.x + baseLine.width - width);
-                    }
+            if (gearRow.children.length < gears.length) {
+                return 0;
+            }
+
+            switch (currentGear) {
+                case 0:
+                    return Math.max(gearRow.children[0].x + gearRow.x - width / 2, baseLine.x);
+                case 1:
+                    return gearRow.children[1].x + gearRow.x + (gearRow.children[1].width - width) / 2;
+                case 2:
+                    return Math.min(gearRow.children[2].x + gearRow.x + gearRow.children[2].width - width / 2, baseLine.x + baseLine.width - width);
+                default:
                     return 0;
-                }
+            }
+        }
 
         Behavior on x {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
