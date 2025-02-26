@@ -14,7 +14,7 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
-        Components/Prndl.qml
+        Components/Rnd.qml
         Config/Config.qml
     RESOURCES
         fonts/fonts.txt

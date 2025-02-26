@@ -1,37 +1,38 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import "../Config"
 
 Item {
-    id: prndComponent
-    width: parent.width
-    height: parent.height
+    id: rndComponent
+    width: 163
+    height: 35
 
     // Property to track selected gear (0: R, 1: N, 2: D)
-    property int currentGear: 1
     property var gears: ["R", "N", "D"]
+    property int currentGear: b3.Reverse ? 0 : (b3.Neutral ? 1 : 2)
 
-    // Poll B3 for gear updates
-    Timer {
-        interval: 100  // Poll every 100ms
-        running: true
-        repeat: true
-        onTriggered: {
-            if (b3.Reverse) {
-                currentGear = 0;
-            } else if (b3.Neutral) {
-                currentGear = 1;
-            } else if (b3.ForwardIn) {
-                currentGear = 2;
-            }
-        }
-    }
+    // // Poll B3 for gear updates
+    // Timer {
+    //     interval: 100  // Poll every 100ms
+    //     running: true
+    //     repeat: true
+    //     onTriggered: {
+    //         if (b3.Reverse) {
+    //             currentGear = 0;
+    //         } else if (b3.Neutral) {
+    //             currentGear = 1;
+    //         } else if (b3.ForwardIn) {
+    //             currentGear = 2;
+    //         }
+    //     }
+    // }
 
     // Faint Horizontal Line
     Rectangle {
         id: baseLine
         width: gearRow.width + 10
         height: 2
-        color: "#aaa"
+        color: Config.faintGrey
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 10
@@ -42,7 +43,7 @@ Item {
         id: gearMarker
         width: 20
         height: 4
-        color: "#00A8FF"
+        color: Config.tronBlue
         y: baseLine.y + (baseLine.height - height) / 2
 
         // Marker aligns with selected gear safely
@@ -78,9 +79,8 @@ Item {
 
             Text {
                 text: gears[index]
-                font.pixelSize: 20
-                color: index === currentGear ? "#00A8FF" : "white"
-                opacity: 1.0
+                font.pixelSize: Config.fontSize
+                color: index === currentGear ? Config.tronBlue : "white"
             }
         }
     }

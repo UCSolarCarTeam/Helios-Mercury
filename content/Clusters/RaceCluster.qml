@@ -81,11 +81,9 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
-    Prndl {
-        id: prndl
+    Rnd {
+        id: rnd
         x: 1518
         y: 449
-        width: 163
-        height: 35
     }
 }
