@@ -63,8 +63,6 @@ B3Packet::B3Packet() {
 }
 
 void B3Packet::populatePacket(const QByteArray& data) {
-    qDebug() << "populatePacket";
-    qDebug() << data;
     unsigned char lightInputs = getValue<unsigned char>(data, LIGHT_INPUTS_OFFSET);
     setRightSignalIn(lightInputs & RIGHT_SIGNAL_IN_MASK);
     setLeftSignalIn(lightInputs & LEFT_SIGNAL_IN_MASK);
