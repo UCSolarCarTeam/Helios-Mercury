@@ -8,11 +8,24 @@ Item {
     width: 269
     height: 235
 
+    // gauge properties
     property int minValue
     property int maxValue
     property string units
     property int value
     property string gaugeTitle
+
+    // animation properties
+    property int animationDuration: 300
+
+    // canvas arc properties
+    property real arcEnd: 360
+    property real arcBegin: 90
+    property real arcWidth: 20
+
+    // colors
+    property color needleColor: "#ff0000"
+    property color outerArcColor: "#242627"
 
     function degreesToRadians(degrees) {
         return degrees * (Math.PI / 180);
@@ -28,8 +41,8 @@ Item {
         strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: "#242627"
-        end: -179.28547
+        fillColor: outerArcColor
+        end: -180
         begin: 90
         arcWidth: 1.78
         antialiasing: true
@@ -48,7 +61,7 @@ Item {
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.btnDisabled
-        end: -179.28547
+        end: -180
         begin: 90
         arcWidth: 20
         antialiasing: true
@@ -60,7 +73,7 @@ Item {
         property real animatedValue: root.value
         property real clampedValue: Math.max(root.minValue, Math.min(root.maxValue, animatedValue))
 
-        Behavior on animatedValue { NumberAnimation { duration: 300 } }
+        Behavior on animatedValue { NumberAnimation { duration: animationDuration } }
 
         Canvas {
             id: activeArc
@@ -70,9 +83,6 @@ Item {
                 var ctx = getContext("2d");
                 ctx.reset();
 
-                var arcEnd = 360;
-                var arcBegin = 90;
-                var arcWidth = 20;
                 var arcRadius = width / 2;
                 var valueRange = root.maxValue - root.minValue;
 
@@ -106,7 +116,7 @@ Item {
         id: needle
         width: 5
         height: 20
-        color: "#ff0000"
+        color: needleColor
 
         property real arcAngle: inactiveArc.begin - inactiveArc.end
         property real angle: getAngleForValue(root.value)
@@ -123,12 +133,7 @@ Item {
             }
         }
 
-        Connections {
-            target: activeArcContainer
-            function onAnimatedValueChanged() {
-                needle.angle = needle.getAngleForValue(activeArcContainer.animatedValue);
-            }
-        }
+        onAnimatedValueChanged: needle.angle = getAngleForValue(activeArcContainer.animatedValue);
 
         x: (outerArc.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
         y: (outerArc.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
