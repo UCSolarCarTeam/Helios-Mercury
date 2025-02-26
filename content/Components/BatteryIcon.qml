@@ -5,18 +5,20 @@ Item {
     id: root
     width: 170
     height: 70
-    property real minValue: 0.0
-    property real maxValue: 100.0
+    property real minValue: 0
+    property real maxValue: 100
     property real value
 
     Image {
         id: batteryImage
         width: 35
         height: 58
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 18
-        anchors.topMargin: 6
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 18
+            topMargin: 6
+        }
         source: "../Images/Battery.png"
         visible: true
     }
@@ -25,8 +27,10 @@ Item {
         id: batteryFillContainer
         width: batteryImage.width
         height: batteryImage.height
-        anchors.left: batteryImage.left
-        anchors.top: batteryImage.top
+        anchors {
+            left: batteryImage.left
+            top: batteryImage.top
+        }
         visible: false
 
         Rectangle {
@@ -55,8 +59,10 @@ Item {
     }
 
     MultiEffect {
-        anchors.left: batteryImage.left
-        anchors.top: batteryImage.top
+        anchors {
+            left: batteryImage.left
+            top: batteryImage.top
+        }
         width: batteryImage.width
         height: batteryImage.height
         source: batteryFillSource
@@ -73,10 +79,12 @@ Item {
         id: batteryPercentage
         width: 100
         height: 26
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 70
-        anchors.topMargin: 20
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 70
+            topMargin: 20
+        }
         color: "#ffffff"
         text: {
             if (Math.floor(root.value) === root.value) {
