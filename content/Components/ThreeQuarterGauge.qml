@@ -6,7 +6,7 @@ import Mercury
 Item {
     id: root
     width: 269
-    height: 219
+    height: 235
 
     property int minValue
     property int maxValue
@@ -150,71 +150,72 @@ Item {
     Text {
         id: minVal
         width: 16
-        height: 19
+        height: 24
         color: "#ffffff"
         text: root.minValue
-        anchors.left: parent.left
-        anchors.top: parent.top
         font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.leftMargin: 86
-        anchors.topMargin: 214
+        anchors {
+            right: outerArc.horizontalCenter
+            top: outerArc.bottom
+        }
         font.weight: Font.Medium
         font.family: "SF Pro"
     }
 
     Text {
         id: maxVal
-        width: 57
-        height: 31
+        width: 50
+        height: 24
         color: "#ffffff"
         text: root.maxValue
-        anchors.left: parent.left
-        anchors.top: parent.top
         font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.leftMargin: 213
-        anchors.topMargin: 69
+        anchors {
+            bottom: outerArc.verticalCenter
+            left: outerArc.right
+        }
+
         font.weight: Font.Medium
         font.family: "SF Pro"
     }
 
     Text {
-        id: dataValue
+        id: gaugeValue
         width: 147
         height: 43
         color: "#ffffff"
         text: root.value.toString() + root.units
-        anchors.left: parent.left
-        anchors.top: parent.top
         font.pixelSize: 36
         horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignTop
+        verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.leftMargin: 33
-        anchors.topMargin: 63
+        anchors {
+            bottom: inactiveArc.verticalCenter
+            horizontalCenter: inactiveArc.horizontalCenter
+        }
         font.weight: Font.Medium
         font.family: "SF Pro"
     }
 
     Text {
-        id: textLabel
+        id: gaugeLabel
         width: 147
         height: 17
         color: "#ffffff"
         text: root.gaugeTitle
-        anchors.left: parent.left
-        anchors.top: parent.top
-        font.pixelSize: 14
+        font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignTop
+        verticalAlignment: Text.AlignVCenter
         wrapMode: Text.Wrap
-        anchors.leftMargin: 33
-        anchors.topMargin: 108
+        anchors {
+            top: gaugeValue.bottom
+            horizontalCenter: inactiveArc.horizontalCenter
+        }
         font.weight: Font.Medium
         font.family: "SF Pro"
     }
