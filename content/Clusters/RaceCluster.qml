@@ -83,8 +83,8 @@ Item {
 
     ThreeQuarterGauge {
         id: motorTempGauge
-        x: 192
-        y: 15
+        x: 208
+        y: 18
         minValue: 0
         maxValue: 100
         gaugeTitle: "Motor Temp"
@@ -94,8 +94,8 @@ Item {
 
     ThreeQuarterGauge {
         id: netConsumptionGauge
-        x: 70
-        y: 185
+        x: 60
+        y: 180
         minValue: 0
         maxValue: 100
         gaugeTitle: "Net Consumption"
@@ -105,8 +105,8 @@ Item {
 
     ThreeQuarterGauge {
         id: averageCellTempGauge
-        x: 179
-        y: 293
+        x: 175
+        y: 292
         minValue: 0
         maxValue: 100
         gaugeTitle: "AVG Cell Temp"
