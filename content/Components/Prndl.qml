@@ -3,8 +3,8 @@ import QtQuick.Controls 2.15
 
 Item {
     id: prndComponent
-    width: 150
-    height: 80
+    width: parent.width
+    height: parent.height
 
     // Property to track selected gear (0: R, 1: N, 2: D)
     property int currentGear: 1
