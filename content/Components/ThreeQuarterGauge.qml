@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
+import Mercury
 
 Item {
     id: root
@@ -12,6 +13,10 @@ Item {
     property string units
     property int value
     property string gaugeTitle
+
+    function degreesToRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
 
     ArcItem {
         id: outerArc
@@ -31,7 +36,7 @@ Item {
     }
 
     ArcItem {
-        id: innerArc
+        id: inactiveArc
         width: 202
         height: 202
         anchors.left: parent.left
@@ -42,35 +47,104 @@ Item {
         strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: "#00a8ff"
+        fillColor: Config.btnDisabled
         end: -179.28547
         begin: 90
-        arcWidth: 20.21227
+        arcWidth: 20
         antialiasing: true
+    }
+
+    Item {
+        id: activeArcContainer
+        anchors.fill: inactiveArc
+        property real animatedValue: root.value
+        property real clampedValue: Math.max(root.minValue, Math.min(root.maxValue, animatedValue))
+
+        Behavior on animatedValue { NumberAnimation { duration: 300 } }
+
+        Canvas {
+            id: activeArc
+            anchors.fill: parent
+
+            onPaint: {
+                var ctx = getContext("2d");
+                ctx.reset();
+
+                var arcEnd = 360;
+                var arcBegin = 90;
+                var arcWidth = 20;
+                var arcRadius = width / 2;
+                var valueRange = root.maxValue - root.minValue;
+
+                var valueAngle = arcBegin - ((activeArcContainer.clampedValue - root.minValue) / valueRange) * (arcBegin - arcEnd);
+
+                ctx.beginPath();
+                ctx.lineWidth = arcWidth;
+                ctx.strokeStyle = Config.primary;
+                ctx.arc(
+                    arcRadius,
+                    arcRadius,
+                    arcRadius - arcWidth/2,
+                    degreesToRadians(arcBegin),
+                    degreesToRadians(valueAngle),
+                    false
+                );
+
+                ctx.stroke();
+            }
+
+            Connections {
+                target: activeArcContainer
+                function onClampedValueChanged() {
+                    activeArc.requestPaint();
+                }
+            }
+        }
     }
 
     Rectangle {
         id: needle
         width: 5
-        height: 19
-        color: "#ffffff"
+        height: 20
+        color: "#ff0000"
 
-        property real arcAngle: innerArc.begin - innerArc.end
-        property real angle: (innerArc.begin + (root.value / maxValue) * arcAngle)
-        property real needleRadius: (innerArc.width - innerArc.arcWidth) / 2
+        property real arcAngle: inactiveArc.begin - inactiveArc.end
+        property real angle: getAngleForValue(root.value)
+        property real needleRadius: (inactiveArc.width - inactiveArc.arcWidth) / 2
+        property real animatedValue: activeArcContainer.animatedValue
+
+        function getAngleForValue(val) {
+            if (val < root.minValue) {
+                return inactiveArc.begin;
+            } else if (val > root.maxValue) {
+                return inactiveArc.begin + arcAngle;
+            } else {
+                return inactiveArc.begin + (val / root.maxValue) * arcAngle;
+            }
+        }
+
+        Connections {
+            target: activeArcContainer
+            function onAnimatedValueChanged() {
+                needle.angle = needle.getAngleForValue(activeArcContainer.animatedValue);
+            }
+        }
 
         x: (outerArc.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
         y: (outerArc.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
 
-        Behavior on angle { NumberAnimation { duration: 300 } }
-        Behavior on rotation { NumberAnimation { duration: 300 } }
-
-        function degreesToRadians(degrees) {
-            return degrees * (Math.PI / 180);
-        }
-
         transformOrigin: Item.Center
-        rotation: root.value / maxValue * arcAngle
+
+        rotation: {
+            var val = activeArcContainer.animatedValue;
+            if (val < root.minValue) {
+                return 0;
+            } else if (val > root.maxValue) {
+                return arcAngle;
+            } else {
+                return (val / root.maxValue) * arcAngle;
+            }
+        }
     }
 
     Text {
