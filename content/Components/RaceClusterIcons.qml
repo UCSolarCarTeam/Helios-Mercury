@@ -13,6 +13,10 @@ Item {
         anchors.fill: parent
         spacing: 20
 
+        Item {
+            Layout.fillWidth: true
+        }
+
         DashIcon {
             id: parkingBrakeIcon
             isOn: b3.HandbrakeSwitch
@@ -20,10 +24,18 @@ Item {
             imageSource: "../Images/ParkingBrake.png"
         }
 
+        Item {
+            Layout.fillWidth: true
+        }
+
         DashIcon {
             id: drlIcon
             isOn: b3.DaytimeRunningLightSignalOut
             imageSource: "../Images/DaytimeRunningLights.png"
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         DashIcon {
