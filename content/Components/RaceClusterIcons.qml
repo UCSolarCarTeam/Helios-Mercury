@@ -13,35 +13,26 @@ Item {
         anchors.fill: parent
         spacing: 20
 
-        Item {
-            Layout.fillWidth: true
-        }
-
         DashIcon {
             id: parkingBrakeIcon
             isOn: b3.HandbrakeSwitch
             isHighContrast: true
             imageSource: "../Images/ParkingBrake.png"
-        }
-
-        Item {
-            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
         }
 
         DashIcon {
             id: drlIcon
             isOn: b3.DaytimeRunningLightSignalOut
             imageSource: "../Images/DaytimeRunningLights.png"
-        }
-
-        Item {
-            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
         }
 
         DashIcon {
             id: headlightsIcon
             isOn: b3.HeadlightsSwitchIn
             imageSource: "../Images/Headlights.png"
+            Layout.alignment: Qt.AlignCenter
         }
     }
 }
