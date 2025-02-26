@@ -80,4 +80,37 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    ThreeQuarterGauge {
+        id: motorTempGauge
+        x: 192
+        y: 15
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Motor Temp"
+        units: "°C"
+        value: motorDetails0.MotorTemperature
+    }
+
+    ThreeQuarterGauge {
+        id: netConsumptionGauge
+        x: 70
+        y: 185
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Net Consumption"
+        units: "V"
+        value: battery.AvgCellVoltage
+    }
+
+    ThreeQuarterGauge {
+        id: averageCellTempGauge
+        x: 179
+        y: 293
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "AVG Cell Temp"
+        units: "°C"
+        value: battery.AvgTemp
+    }
 }
