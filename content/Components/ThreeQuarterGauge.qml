@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
 import Mercury
+import "../Util"
 
 Item {
     id: root
@@ -27,9 +28,7 @@ Item {
     property color needleColor: "#ff0000"
     property color outerArcColor: "#242627"
 
-    function degreesToRadians(degrees) {
-        return degrees * (Math.PI / 180);
-    }
+    Util { id: util }
 
     ArcItem {
         id: outerArc
@@ -70,58 +69,24 @@ Item {
     Item {
         id: activeArcContainer
         anchors.fill: inactiveArc
-        property real animatedValue: root.value
-        property real clampedValue: Math.max(root.minValue, Math.min(root.maxValue, animatedValue))
+        property real animatedValue: root.minValue
 
-        Behavior on animatedValue { NumberAnimation { duration: animationDuration } }
+        Behavior on animatedValue { NumberAnimation { duration: root.animationDuration } }
+
+        Connections {
+            target: root
+            function onValueChanged() { activeArcContainer.animatedValue = util.clamp(root.value, root.minValue, root.maxValue); }
+        }
+
+        Component.onCompleted: { animatedValue = util.clamp(root.value, root.minValue, root.maxValue); }
 
         Canvas {
             id: activeArc
             anchors.fill: parent
-
-            onPaint: {
-                var ctx = getContext("2d");
-                ctx.reset();
-
-                var arcRadius = width / 2;
-                var valueRange = root.maxValue - root.minValue;
-
-                var valueAngle = arcBegin - ((activeArcContainer.clampedValue - root.minValue) / valueRange) * (arcBegin - arcEnd);
-
-                ctx.beginPath();
-                ctx.lineWidth = arcWidth;
-                ctx.strokeStyle = Config.primary;
-                ctx.arc(
-                    arcRadius,
-                    arcRadius,
-                    arcRadius - arcWidth / 2,
-                    degreesToRadians(arcBegin),
-                    degreesToRadians(valueAngle),
-                    false
-                );
-
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.lineWidth = arcWidth;
-                ctx.strokeStyle = needleColor;
-                ctx.arc(
-                    arcRadius,
-                    arcRadius,
-                    arcRadius - arcWidth / 2,
-                    degreesToRadians(valueAngle - 3),
-                    degreesToRadians(valueAngle),
-                    false
-                );
-
-                ctx.stroke();
-            }
-
+            onPaint: { util.drawGauge(activeArc, root, activeArcContainer.animatedValue); }
             Connections {
                 target: activeArcContainer
-                function onClampedValueChanged() {
-                    activeArc.requestPaint();
-                }
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
             }
         }
     }
