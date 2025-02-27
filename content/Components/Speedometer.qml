@@ -460,7 +460,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.leftMargin: 68
         anchors.topMargin: 340
-        color: "#ffffff"
+        color: "aa3333"
         rotation: 136.456
     }
 
