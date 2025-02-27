@@ -453,7 +453,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: line_21_Stroke_
+        id: needle
         width: 83
         height: 8
         anchors.left: parent.left
@@ -463,7 +463,44 @@ Rectangle {
         color: "#ffffff"
         rotation: 136.456
     }
+
+    Rectangle {
+        id: speedometerValueContainer
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        height:115
+        width: 70
+        color: "transparent"
+
+        Text {
+            id: speedometerValue
+            color: "#ffffff"
+            text: qsTr("0")
+            font.pixelSize: 86
+            font.weight: Font.Medium
+            font.family: "SF Pro"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.NoWrap
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+        }
+
+        Text {
+            id: kMH
+            color: "#ffffff"
+            text: qsTr("KMH")
+            font.pixelSize: 24
+            font.weight: Font.Medium
+            font.family: "SF Pro"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            lineHeight: 18
+            lineHeightMode: Text.FixedHeight
+            wrapMode: Text.NoWrap
+            anchors.horizontalCenterOffset: 1
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+        }
+    }
 }
-
-
-
