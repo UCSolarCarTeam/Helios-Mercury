@@ -80,4 +80,10 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    Speedometer{
+        x: 1357
+        y: 46
+
+    }
 }
