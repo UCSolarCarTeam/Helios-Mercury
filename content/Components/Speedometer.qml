@@ -454,14 +454,12 @@ Rectangle {
 
     Rectangle {
         id: needle
+        x: 67
+        y: 340
         width: 83
         height: 8
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 68
-        anchors.topMargin: 340
-        color: "aa3333"
-        rotation: 136.456
+        color: "#aa3333"
+        rotation: 135.04
     }
 
     Rectangle {
