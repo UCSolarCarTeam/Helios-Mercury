@@ -22,6 +22,12 @@ if (NOT EXISTS ${CMAKE_SOURCE_DIR}/imports/pigpio/libpigpio.so)
     )
 endif()
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(GPIOREADER_SOURCES src/Receivers/GpioReader.cpp src/Receivers/GpioReader.h)
+else()
+    set(GPIOREADER_SOURCES "") # Exclude GpioReader if not Linux
+endif()
+
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_policy(SET QTP0001 NEW)
     qt_standard_project_setup()
@@ -29,7 +35,7 @@ endif()
 
 qt_add_executable(Helios-Mercury src/main.cpp
     src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
-    src/Receivers/GpioReader.cpp src/Receivers/GpioReader.h
+    ${GPIOREADER_SOURCES}
     src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
     src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
