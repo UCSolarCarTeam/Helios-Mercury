@@ -11,8 +11,19 @@ layout(std140, binding=0) uniform buf {
 
 layout(binding = 1) uniform sampler2D source;
 
-void main(){
+void main() {
+    // Sample the texture
     vec4 texColor = texture(source, qt_TexCoord0);
-    vec3 blendedColor = mix(texColor.rgb, ubuf.overlayColor, texColor.a);
-    fragColor = vec4(blendedColor, texColor.a);
-} 
+    
+    // Lower threshold for color replacement (more aggressive)
+    float alphaThreshold = 0.05;
+    
+    // More aggressive replacement factor - considers alpha threshold
+    float replaceFactor = step(alphaThreshold, texColor.a);
+    
+    // Completely replace colors instead of blending when alpha is above threshold
+    vec3 resultColor = ubuf.overlayColor * replaceFactor;
+    
+    // Maintain original alpha for proper transparency blending
+    fragColor = vec4(resultColor, texColor.a);
+}
