@@ -20,7 +20,6 @@ qt6_add_qml_module(content
     RESOURCES
         fonts/fonts.txt
         Images/MotorFault.png
-        Images/SensorFault.png
         Images/BatteryFault.png
         Images/RaceClusterFrameBackground.png
         Images/RaceClusterFrameOutline.png
