@@ -12,18 +12,20 @@ layout(std140, binding=0) uniform buf {
 layout(binding = 1) uniform sampler2D source;
 
 void main() {
-    // Sample the texture
     vec4 texColor = texture(source, qt_TexCoord0);
     
-    // Lower threshold for color replacement (more aggressive)
-    float alphaThreshold = 0.05;
+    // Calculate luminance to preserve detail structure
+    float luminance = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
     
-    // More aggressive replacement factor - considers alpha threshold
-    float replaceFactor = step(alphaThreshold, texColor.a);
+    // Use a smooth transition based on alpha
+    // This preserves anti-aliasing at the edges
+    vec3 originalWithLuminance = texColor.rgb * luminance;
     
-    // Completely replace colors instead of blending when alpha is above threshold
-    vec3 resultColor = ubuf.overlayColor * replaceFactor;
+    // Apply mix with progressive blending factor based on alpha
+    // Higher alpha values get more overlay color
+    float blendFactor = 0.9 * smoothstep(0.0, 0.2, texColor.a);
+    vec3 resultColor = mix(originalWithLuminance, ubuf.overlayColor, blendFactor);
     
-    // Maintain original alpha for proper transparency blending
+    // Output with original alpha
     fragColor = vec4(resultColor, texColor.a);
 }
