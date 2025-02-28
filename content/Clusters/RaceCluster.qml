@@ -113,15 +113,4 @@ Item {
         units: "°C"
         value: battery.AvgTemp
     }
-
-    SmallGauge {
-        id: smallGauge
-        x: 462
-        y: 168
-        minValue: 0
-        maxValue: 100
-        gaugeTitle: "Small Gauge"
-        units: "units"
-        value: motorDetails0.MotorTemperature
-    }
 }

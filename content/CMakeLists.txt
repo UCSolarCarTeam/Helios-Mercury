@@ -16,7 +16,6 @@ qt6_add_qml_module(content
         Components/CameraView.qml
         Config/Config.qml
 	    Components/ThreeQuarterGauge.qml
-	    Components/SmallGauge.qml
 	    Util/Util.qml
 
     RESOURCES
@@ -26,5 +25,4 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
-	    Images/BoltIcon.png
 )
