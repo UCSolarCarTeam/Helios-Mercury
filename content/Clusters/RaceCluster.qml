@@ -35,7 +35,7 @@ Item {
         imageSource: "../Images/DaytimeRunningLights.png"
     }
 
-    RaceScreenHeader{
+    RaceClusterHeader{
         id: raceScreenHeader
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
