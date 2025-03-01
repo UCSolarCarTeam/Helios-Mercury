@@ -24,9 +24,6 @@ Item {
     property real arcBegin: 90
     property real arcWidth: 20
 
-    // colors
-    property color outerArcColor: "#242627"
-
     GaugeAnimation { id: gaugeAnimation } 
 
     ArcItem {
@@ -39,7 +36,7 @@ Item {
         strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: outerArcColor
+        fillColor: Config.outerArcColor
         end: -180
         begin: 90
         arcWidth: 1.78
@@ -105,7 +102,7 @@ Item {
             top: outerArc.bottom
         }
         font.weight: Font.Medium
-        font.family: "SF Pro"
+        font.family: Config.fontStye
     }
 
     Text {
@@ -124,7 +121,7 @@ Item {
         }
 
         font.weight: Font.Medium
-        font.family: "SF Pro"
+        font.family: Config.fontStye
     }
 
     Text {
@@ -148,7 +145,7 @@ Item {
             horizontalCenter: inactiveArc.horizontalCenter
         }
         font.weight: Font.Medium
-        font.family: "SF Pro"
+        font.family: Config.fontStye
     }
 
     Text {
@@ -166,6 +163,6 @@ Item {
             horizontalCenter: inactiveArc.horizontalCenter
         }
         font.weight: Font.Medium
-        font.family: "SF Pro"
+        font.family: Config.fontStye
     }
 }
