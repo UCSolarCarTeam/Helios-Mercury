@@ -46,7 +46,7 @@ QtObject {
 
         ctx.beginPath();
         ctx.lineWidth = needleWidth;
-        ctx.strokeStyle = gauge.needleColor;
+        ctx.strokeStyle = Config.needleColor;
         ctx.arc(
             arcRadius,
             arcRadius,

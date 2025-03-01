@@ -7,4 +7,5 @@ QtObject {
 
     property color primary: "#3498db"
     property color btnDisabled: "#111111"
+    property color needleColor: "#ff0000"
 }

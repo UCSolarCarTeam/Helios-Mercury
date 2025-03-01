@@ -25,7 +25,6 @@ Item {
     property real arcWidth: 20
 
     // colors
-    property color needleColor: "#ff0000"
     property color outerArcColor: "#242627"
 
     GaugeAnimation { id: gaugeAnimation } 
