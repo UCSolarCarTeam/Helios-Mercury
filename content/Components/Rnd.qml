@@ -6,7 +6,7 @@ import Qt5Compat.GraphicalEffects
 
 Item {
     id: rndComponent
-    width: 163
+    width: 165
     height: 35
 
     // Property to track selected gear (0: R, 1: N, 2: D)
@@ -28,7 +28,7 @@ Item {
     Rectangle {
         id: gearMarker
         width: 20
-        height: 4
+        height: 5
         color: Config.tronBlue
         y: baseLine.y + (baseLine.height - height) / 2
 
@@ -83,7 +83,7 @@ Item {
                     id: gearText
                     text: gears[index]
                     font.pixelSize: Config.fontSize
-                    color: index === currentGear ? Config.tronBlue : "white"
+                    color: index === currentGear ? Config.tronBlue : Config.txtDisabled
                     anchors.centerIn: parent
                 }
 
