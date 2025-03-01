@@ -10,10 +10,10 @@ Item {
     height: 235
 
     // gauge properties
-    property int minValue
-    property int maxValue
+    property real minValue
+    property real maxValue
     property string units
-    property int value
+    property real value
     property string gaugeTitle
 
     // animation properties
@@ -28,7 +28,7 @@ Item {
     property color needleColor: "#ff0000"
     property color outerArcColor: "#242627"
 
-    GaugeAnimation { id: gaugeAnimation } // Changed object name
+    GaugeAnimation { id: gaugeAnimation } 
 
     ArcItem {
         id: outerArc
@@ -75,15 +75,15 @@ Item {
 
         Connections {
             target: root
-            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); } // changed method call
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); }
         }
 
-        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); } // changed method call
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); } 
 
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue); } // changed method call
+            onPaint: { gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue); } 
             Connections {
                 target: activeArcContainer
                 function onAnimatedValueChanged() { activeArc.requestPaint(); }
@@ -133,7 +133,13 @@ Item {
         width: 147
         height: 43
         color: "#ffffff"
-        text: root.value.toString() + root.units
+        text: {
+            if (Math.floor(root.value) === root.value) {
+                return Math.floor(root.value) + root.units;
+            } else {
+                    return root.value.toFixed(1) + root.units;
+            }
+        }
         font.pixelSize: 36
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

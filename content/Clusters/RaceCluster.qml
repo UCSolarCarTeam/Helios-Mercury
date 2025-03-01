@@ -99,7 +99,7 @@ Item {
         minValue: 0
         maxValue: 100
         gaugeTitle: "Net Consumption"
-        units: "V"
+        units: "mV"
         value: battery.AvgCellVoltage
     }
 
