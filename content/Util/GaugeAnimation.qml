@@ -18,7 +18,7 @@ QtObject {
         return arcBegin - ((clampedValue - minValue) / valueRange) * (arcBegin - arcEnd);
     }
 
-    function drawGauge(canvas, gauge, activeValue) {
+    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth) {
         var ctx = canvas.getContext("2d");
         ctx.reset();
 
@@ -45,7 +45,7 @@ QtObject {
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.lineWidth = gauge.arcWidth;
+        ctx.lineWidth = needleWidth;
         ctx.strokeStyle = gauge.needleColor;
         ctx.arc(
             arcRadius,
@@ -57,7 +57,6 @@ QtObject {
         );
         ctx.stroke();
     }
-
     function requestRepaint(canvas) {
         if (canvas) {
             canvas.requestPaint();
