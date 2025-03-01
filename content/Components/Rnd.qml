@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Mercury
 import "../Config"
+import Qt5Compat.GraphicalEffects
 
 Item {
     id: rndComponent
@@ -10,7 +11,7 @@ Item {
 
     // Property to track selected gear (0: R, 1: N, 2: D)
     property var gears: ["R", "N", "D"]
-    property int currentGear: b3.Reverse ? 0 : (b3.Neutral ? 1 : 2)
+    property int currentGear: b3.Reverse ? 0 : (b3.ForwardIn ? 2 : 1)
 
     // Faint Horizontal Line
     Rectangle {
@@ -54,6 +55,15 @@ Item {
         }
     }
 
+    DropShadow {
+            anchors.fill: gearMarker
+            source: gearMarker
+            color: Config.tronBlue
+            radius: 10
+            samples: 16
+            spread: 0.3
+        }
+
     // Gear Letters Row
     Row {
         id: gearRow
@@ -65,10 +75,27 @@ Item {
         Repeater {
             model: gears.length
 
-            Text {
-                text: gears[index]
-                font.pixelSize: Config.fontSize
-                color: index === currentGear ? Config.tronBlue : "white"
+            Item {
+                width: gearText.width
+                height: gearText.height
+
+                Text {
+                    id: gearText
+                    text: gears[index]
+                    font.pixelSize: Config.fontSize
+                    color: index === currentGear ? Config.tronBlue : "white"
+                    anchors.centerIn: parent
+                }
+
+                DropShadow {
+                    anchors.fill: gearText
+                    source: gearText
+                    color: Config.tronBlue
+                    radius: 10
+                    samples: 16
+                    spread: 0.3
+                    visible: index === currentGear
+                }
             }
         }
     }
