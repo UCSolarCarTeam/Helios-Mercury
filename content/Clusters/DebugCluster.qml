@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import "../Components"
 
 Item {
     Text {
@@ -9,5 +10,16 @@ Item {
         height: 53
         text: qsTr("TODO: DEBUG CLUSTER")
         font.pixelSize: 24
+    }
+
+    XSGaugeCluster {
+        id: speedGauge
+        x: 50
+        y: 50
+        minValue: 0
+        maxValue: 200
+        value: 75
+        units: "km/h"
+        gaugeTitle: "Speed"
     }
 }

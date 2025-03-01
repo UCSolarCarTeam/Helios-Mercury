@@ -14,7 +14,9 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/XSGaugeCluster.qml
         Config/Config.qml
+        Util/GaugeAnimation.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
