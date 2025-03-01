@@ -80,4 +80,10 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    TemperatureComponent {
+        id: temperatureDisplay
+        x: 50
+        y: 50
+    }
 }
