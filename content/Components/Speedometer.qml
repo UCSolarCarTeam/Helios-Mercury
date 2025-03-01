@@ -3,23 +3,22 @@ import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
 
+
 Rectangle {
     id: speedometer
     width: 458
     height: 458
     color: "transparent"
-    property alias element1Text: element1.text
-    property alias element8Text: element8.text
-    property alias element5Text: element5.text
-    property alias element3Text: element3.text
-    property alias elementText: element.text
-    property alias element6Text: element6.text
-    property alias element4Text: element4.text
-    property alias element2Text: element2.text
-    property alias element7Text: element7.text
+
+    property int animationDuration: 300
+
+    property real arcEnd: 360
+    property real arcBegin: 90
+    property real arcWidth: 20
+
 
     ArcItem {
-        id: outerRing
+        id: outerArc
         width: 458
         height: 458
         anchors.left: parent.left
@@ -37,7 +36,7 @@ Rectangle {
     }
 
     ArcItem {
-        id: innerRing
+        id: inactiveRing
         width: 423
         height: 423
         anchors.left: parent.left
@@ -49,11 +48,36 @@ Rectangle {
         strokeColor: "transparent"
         rotation: -90
         outlineArc: true
-        fillColor: "#00a8ff"
+        fillColor: "#242627"
         end: 584.99998
         begin: 315
         arcWidth: 16.14588
         antialiasing: true
+    }
+
+    Item {
+        id: activeArcContainer
+        anchors.fill: inactiveArc
+        property real animatedValue: root.minValue
+
+        Behavior on animatedValue { NumberAnimation { duration: root.animationDuration } }
+
+        Connections {
+            target: root
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); }
+        }
+
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); }
+
+        Canvas {
+            id: activeArc
+            anchors.fill: parent
+            onPaint: { gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue); }
+            Connections {
+                target: activeArcContainer
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
+            }
+        }
     }
 
     Item {
