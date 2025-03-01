@@ -80,4 +80,10 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    Rnd {
+        id: rnd
+        x: 1518
+        y: 449
+    }
 }
