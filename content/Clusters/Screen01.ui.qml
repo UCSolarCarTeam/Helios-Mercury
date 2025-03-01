@@ -82,10 +82,10 @@ Rectangle {
                         text: "GPS Additional Flags: " + telemetry.GpsAdditionalFlags
                     }
                     Text {
-                        text: "GPS Longitude: " + telemetry.GpsLongitude
+                        text: "GPS Longitude: " + telemetry.GpsLongitude.toFixed(6)
                     }
                     Text {
-                        text: "GPS Latitude: " + telemetry.GpsLatitude
+                        text: "GPS Latitude: " + telemetry.GpsLatitude.toFixed(6)
                     }
                     Text {
                         text: "MPU Acceleration X: " + telemetry.MpuAccelerationX
