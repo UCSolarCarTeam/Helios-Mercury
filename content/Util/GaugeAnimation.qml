@@ -2,7 +2,7 @@ import QtQuick 2.15
 import Mercury
 
 QtObject {
-    id: util
+    id: gaugeAnimation
 
     function degreesToRadians(degrees) {
         return degrees * (Math.PI / 180);

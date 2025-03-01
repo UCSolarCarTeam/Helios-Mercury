@@ -28,7 +28,7 @@ Item {
     property color needleColor: "#ff0000"
     property color outerArcColor: "#242627"
 
-    Util { id: util }
+    GaugeAnimation { id: gaugeAnimation } // Changed object name
 
     ArcItem {
         id: outerArc
@@ -75,15 +75,15 @@ Item {
 
         Connections {
             target: root
-            function onValueChanged() { activeArcContainer.animatedValue = util.clamp(root.value, root.minValue, root.maxValue); }
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); } // changed method call
         }
 
-        Component.onCompleted: { animatedValue = util.clamp(root.value, root.minValue, root.maxValue); }
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); } // changed method call
 
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: { util.drawGauge(activeArc, root, activeArcContainer.animatedValue); }
+            onPaint: { gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue); } // changed method call
             Connections {
                 target: activeArcContainer
                 function onAnimatedValueChanged() { activeArc.requestPaint(); }
