@@ -80,4 +80,11 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    BatteryIcon {
+        id: batteryIcon
+        x: 16
+        y: 89
+        rawValue: battery.PackStateOfCharge
+    }
 }

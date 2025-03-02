@@ -15,6 +15,7 @@ qt6_add_qml_module(content
         Components/DashIcon.qml
         Components/CameraView.qml
         Config/Config.qml
+	Components/BatteryIcon.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
@@ -22,4 +23,5 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+	Images/Battery.png
 )
