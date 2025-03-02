@@ -85,6 +85,6 @@ Item {
         id: batteryIcon
         x: 16
         y: 89
-        value: battery.PackStateOfCharge
+        rawValue: battery.PackStateOfCharge
     }
 }

@@ -1,44 +1,35 @@
 import QtQuick 2.15
 import QtQuick.Effects
+import Mercury
 
 Item {
-    id: root
+    id: batteryIcon
     width: 170
-    height: 70
-    property real minValue: 0
-    property real maxValue: 100
-    property real value
+    height: 60
+    property real rawValue
+    property real value: rawValue / 2
 
     Image {
         id: batteryImage
         width: 35
-        height: 58
+        height: 60
         anchors {
             left: parent.left
-            top: parent.top
-            leftMargin: 18
-            topMargin: 6
         }
         source: "../Images/Battery.png"
-        visible: true
     }
 
     Item {
         id: batteryFillContainer
-        width: batteryImage.width
-        height: batteryImage.height
-        anchors {
-            left: batteryImage.left
-            top: batteryImage.top
-        }
+        anchors.fill: batteryImage
         visible: false
 
         Rectangle {
             id: batteryFill
             width: parent.width
-            height: parent.height * Math.max(0, Math.min(1, (root.value - root.minValue) / (root.maxValue - root.minValue)))
+            height: parent.height * Math.max(0, Math.min(1, (batteryIcon.value - 0) / 100))
             anchors.bottom: parent.bottom
-            color: "#20d426"
+            color: Config.batteryFill
 
             Behavior on height {
                 NumberAnimation { duration: 300 }
@@ -59,12 +50,7 @@ Item {
     }
 
     MultiEffect {
-        anchors {
-            left: batteryImage.left
-            top: batteryImage.top
-        }
-        width: batteryImage.width
-        height: batteryImage.height
+        anchors.fill: batteryImage
         source: batteryFillSource
         maskSource: batteryMask
         maskEnabled: true
@@ -80,24 +66,22 @@ Item {
         width: 100
         height: 26
         anchors {
-            left: parent.left
-            top: parent.top
-            leftMargin: 70
-            topMargin: 20
+            left: batteryImage.right
+            verticalCenter: batteryIcon.verticalCenter
+            leftMargin: 20
         }
-        color: "#ffffff"
+        color: "white"
         text: {
-            if (Math.floor(root.value) === root.value) {
-                return Math.floor(root.value) + "%";
+            if (Math.floor(batteryIcon.value) === batteryIcon.value) {
+                return Math.floor(batteryIcon.value) + " %";
             } else {
-                    return root.value.toFixed(1) + "%";
+                    return batteryIcon.value.toFixed(1) + " %";
             }
         }
         font.pixelSize: 26
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         font.weight: Font.Medium
-        font.family: "SF Pro"
+        font.family: Config.fontStye
     }
 }
