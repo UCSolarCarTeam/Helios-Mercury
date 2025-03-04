@@ -83,34 +83,34 @@ Item {
 
     ThreeQuarterGauge {
         id: motorTempGauge
-        x: 208
-        y: 18
+        x: 212
+        y: 21
         minValue: 0
         maxValue: 100
         gaugeTitle: "Motor Temp"
         units: "°C"
-        value: motorDetails0.MotorTemperature
+        value: ( motorDetails0.MotorTemperature + motorDetails1.MotorTemperature ) / 2
     }
 
     ThreeQuarterGauge {
         id: netConsumptionGauge
-        x: 60
+        x: 68
         y: 180
         minValue: 0
         maxValue: 100
         gaugeTitle: "Net Consumption"
         units: "mV"
-        value: battery.AvgCellVoltage
+        value: battery.AverageCellVoltage / 10 
     }
 
     ThreeQuarterGauge {
         id: averageCellTempGauge
         x: 175
-        y: 292
+        y: 287
         minValue: 0
         maxValue: 100
         gaugeTitle: "AVG Cell Temp"
         units: "°C"
-        value: battery.AvgTemp
+        value: battery.AverageTemperature
     }
 }
