@@ -47,16 +47,23 @@ QtObject {
         ctx.beginPath();
         ctx.lineWidth = needleWidth;
         ctx.strokeStyle = Config.needleColor;
+
+        var needleStartAngle = valueAngle;
+        var needleEndAngle = valueAngle - 3;
+
+        var needleRadius = arcRadius - (needleWidth / 2); 
+
         ctx.arc(
             arcRadius,
             arcRadius,
-            arcRadius - gauge.arcWidth / 2,
-            degreesToRadians(valueAngle - 3),
-            degreesToRadians(valueAngle),
-            false
+            needleRadius,
+            degreesToRadians(needleStartAngle),
+            degreesToRadians(needleEndAngle),
+            true
         );
         ctx.stroke();
     }
+
     function requestRepaint(canvas) {
         if (canvas) {
             canvas.requestPaint();
