@@ -5,7 +5,7 @@ import Mercury
 import "../Util"
 
 Item {
-    id: root
+    id: threeQuarterGauge
     width: 269
     height: 235
 
@@ -30,16 +30,13 @@ Item {
         id: outerArc
         width: 213
         height: 213
-        anchors.left: parent.left
-        anchors.top: parent.top
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.outerArcColor
         end: -180
         begin: 90
-        arcWidth: 1.78
+        arcWidth: 2
         antialiasing: true
     }
 
@@ -47,12 +44,13 @@ Item {
         id: inactiveArc
         width: 202
         height: 202
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 5
-        anchors.topMargin: 5
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 5
+            topMargin: 5
+        }
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.btnDisabled
@@ -65,21 +63,21 @@ Item {
     Item {
         id: activeArcContainer
         anchors.fill: inactiveArc
-        property real animatedValue: root.minValue
+        property real animatedValue: threeQuarterGauge.minValue
 
-        Behavior on animatedValue { NumberAnimation { duration: root.animationDuration } }
+        Behavior on animatedValue { NumberAnimation { duration: threeQuarterGauge.animationDuration } }
 
         Connections {
-            target: root
-            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); }
+            target: threeQuarterGauge
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(threeQuarterGauge.value, threeQuarterGauge.minValue, threeQuarterGauge.maxValue); }
         }
 
-        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); } 
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(threeQuarterGauge.value, threeQuarterGauge.minValue, threeQuarterGauge.maxValue); }
 
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue); } 
+            onPaint: { gaugeAnimation.drawGauge(activeArc, threeQuarterGauge, activeArcContainer.animatedValue); }
             Connections {
                 target: activeArcContainer
                 function onAnimatedValueChanged() { activeArc.requestPaint(); }
@@ -89,14 +87,13 @@ Item {
 
     Text {
         id: minVal
-        width: 16
+        width: 15
         height: 24
         color: "#ffffff"
-        text: root.minValue
+        text: threeQuarterGauge.minValue
         font.pixelSize: 24
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         anchors {
             right: outerArc.horizontalCenter
             top: outerArc.bottom
@@ -110,39 +107,37 @@ Item {
         width: 50
         height: 24
         color: "#ffffff"
-        text: root.maxValue
+        text: threeQuarterGauge.maxValue
         font.pixelSize: 24
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         anchors {
             bottom: outerArc.verticalCenter
             left: outerArc.right
         }
-
         font.weight: Font.Medium
         font.family: Config.fontStye
     }
 
     Text {
         id: gaugeValue
-        width: 147
-        height: 43
+        width: 150
+        height: 36
         color: "#ffffff"
         text: {
-            if (Math.floor(root.value) === root.value) {
-                return Math.floor(root.value) + root.units;
+            if (Math.floor(threeQuarterGauge.value) === threeQuarterGauge.value) {
+                return Math.floor(threeQuarterGauge.value) + threeQuarterGauge.units;
             } else {
-                    return root.value.toFixed(1) + root.units;
+                    return threeQuarterGauge.value.toFixed(1) + threeQuarterGauge.units;
             }
         }
         font.pixelSize: 36
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         anchors {
             bottom: inactiveArc.verticalCenter
             horizontalCenter: inactiveArc.horizontalCenter
+            bottomMargin: 10
         }
         font.weight: Font.Medium
         font.family: Config.fontStye
@@ -150,14 +145,13 @@ Item {
 
     Text {
         id: gaugeLabel
-        width: 147
-        height: 17
+        width: 150
+        height: 18
         color: "#ffffff"
-        text: root.gaugeTitle
+        text: threeQuarterGauge.gaugeTitle
         font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         anchors {
             top: gaugeValue.bottom
             horizontalCenter: inactiveArc.horizontalCenter
