@@ -105,7 +105,7 @@ Item {
 
     ThreeQuarterGauge {
         id: averageCellTempGauge
-        x: 175
+        x: 181
         y: 287
         minValue: 0
         maxValue: 100
