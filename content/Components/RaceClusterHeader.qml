@@ -7,15 +7,33 @@ Item {
     width: 440
     height: 40
 
+    function convertCurrent(value) {
+        return Math.round(value / 1000);
+    }
+
+    function getValueColor(current) {
+        if (current > 65)
+            return "#FF5252";
+        if (current > 40)
+            return "#FFC107";
+        return "#4CAF50";
+    }
+
+    function formatCurrentWithColor(value, label) {
+        const currentValue = convertCurrent(value);
+        return label + ": <font color=\"" + getValueColor(currentValue) + "\">" + currentValue + "</font> A";
+    }
+
     Text {
         id: motor0
         anchors.left: parent.left
         anchors.top: parent.top
         width: 120
         height: 16
-        text: "Motor 0 current: " + motorDetails0.InverterPeakCurrent + " A"
         font.pixelSize: Config.fontSize
         color: Config.fontColor
+        text: "Motor 0 Current: <font color=\"" + getValueColor(motorDetails0.InverterPeakCurrent) + "\">" + motorDetails0.InverterPeakCurrent + "</font> A"
+        textFormat: Text.RichText
     }
 
     Text {
@@ -24,9 +42,10 @@ Item {
         anchors.bottom: parent.bottom
         width: 120
         height: 16
-        text: "Motor 1 current: " + motorDetails1.InverterPeakCurrent + " A"
         font.pixelSize: Config.fontSize
         color: Config.fontColor
+        text: "Motor 1 Current: <font color=\"" + getValueColor(motorDetails1.InverterPeakCurrent) + "\">" + motorDetails1.InverterPeakCurrent + "</font> A"
+        textFormat: Text.RichText
     }
 
     Row {
@@ -51,42 +70,46 @@ Item {
             id: arrayCurrentGrid
             columns: 2
             rows: 2
-            spacing: 5
+            spacing: 10
 
             Text {
                 id: totalArrayCurrent0s
                 width: 90
                 height: 16
-                text: "0: " + mppt0.ArrayCurrent + " A"
                 font.pixelSize: Config.fontSize
                 color: Config.fontColor
+                textFormat: Text.RichText
+                text: formatCurrentWithColor(mppt0.ArrayCurrent, "0")
             }
 
             Text {
                 id: totalArrayCurrent1
                 width: 90
                 height: 16
-                text: "1: " + mppt1.ArrayCurrent + " A"
                 font.pixelSize: Config.fontSize
                 color: Config.fontColor
+                text: formatCurrentWithColor(mppt1.ArrayCurrent, "1")
+                textFormat: Text.RichText
             }
 
             Text {
                 id: totalArrayCurrent2
                 width: 90
                 height: 16
-                text: "2: " + mppt2.ArrayCurrent + " A"
                 font.pixelSize: Config.fontSize
                 color: Config.fontColor
+                text: formatCurrentWithColor(mppt2.ArrayCurrent, "2")
+                textFormat: Text.RichText
             }
 
             Text {
                 id: totalArrayCurrent3
                 width: 90
                 height: 16
-                text: "3: " + mppt3.ArrayCurrent + " A"
                 font.pixelSize: Config.fontSize
                 color: Config.fontColor
+                text: formatCurrentWithColor(mppt3.ArrayCurrent, "3")
+                textFormat: Text.RichText
             }
         }
     }
