@@ -9,10 +9,10 @@ Item {
 
     function getValueColor(current) {
         if (current > 60)
-            return "#FF5252";
+            return Config.valueHigh;
         if (current > 40)
-            return "#FFC107";
-        return "#4CAF50";
+            return Config.valueModerate;
+        return Config.valueLow;
     }
 
     function formatCurrentWithColor(value, label) {
