@@ -7,12 +7,8 @@ Item {
     width: 440
     height: 40
 
-    function convertCurrent(value) {
-        return Math.round(value / 1000);
-    }
-
     function getValueColor(current) {
-        if (current > 65)
+        if (current > 60)
             return "#FF5252";
         if (current > 40)
             return "#FFC107";
@@ -20,7 +16,7 @@ Item {
     }
 
     function formatCurrentWithColor(value, label) {
-        const currentValue = convertCurrent(value);
+        const currentValue = Math.floor(value / 1000);
         return label + ": <font color=\"" + getValueColor(currentValue) + "\">" + currentValue + "</font> A";
     }
 
