@@ -5,12 +5,13 @@ import QtQuick.Shapes 1.0
 
 
 Rectangle {
-    id: speedometer
+    id: root
     width: 458
     height: 458
     color: "transparent"
 
     property int animationDuration: 300
+    property int value: 100
 
     property real arcEnd: 360
     property real arcBegin: 90
@@ -46,11 +47,11 @@ Rectangle {
         strokeWidth: 0
         strokeStyle: 0
         strokeColor: "transparent"
-        rotation: -90
+        // rotation: -90
         outlineArc: true
         fillColor: "#242627"
-        end: 584.99998
-        begin: 315
+        end: -135
+        begin: 135
         arcWidth: 16.14588
         antialiasing: true
     }
@@ -482,7 +483,7 @@ Rectangle {
         y: 340
         width: 83
         height: 8
-        color: "#aa3333"
+        color: Config.needleColor
         rotation: 135.04
     }
 
@@ -497,7 +498,7 @@ Rectangle {
         Text {
             id: speedometerValue
             color: "#ffffff"
-            text: qsTr("0")
+            text: root.value
             font.pixelSize: 86
             font.weight: Font.Medium
             font.family: "SF Pro"
