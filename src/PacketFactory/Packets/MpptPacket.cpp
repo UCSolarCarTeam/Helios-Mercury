@@ -31,7 +31,7 @@ void MpptPacket::populatePacket(const QByteArray& data) {
     setChannelNumber(statusAndChannelNumber & CHANNEL_NUMBER_MASK);
 
     setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET) / CENTI_TO_ONES);
-    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET) / MILLI_TO_ONES);
+    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
     setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET) / CENTI_TO_ONES);
     setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET) / CENTI_TO_ONES);
 }

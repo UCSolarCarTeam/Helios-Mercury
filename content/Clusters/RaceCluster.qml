@@ -21,40 +21,25 @@ Item {
 
     DashIcon {
         id: dashIcon
-        x: 1173
-        y: 13
+        x: 1025
+        y: 54
         isOn: b3.HeadlightsSwitchIn
         imageSource: "../Images/Headlights.png"
     }
 
     DashIcon {
         id: dashIcon2
-        x: 1116
-        y: 13
+        x: 875
+        y: 54
         isOn: b3.DaytimeRunningLightSignalOut
         imageSource: "../Images/DaytimeRunningLights.png"
     }
 
-    Text {
-        id: text1
-        x: 711
-        y: 12
-        width: 157
-        height: 16
-        text: qsTr("Motor R Current: XXX A")
-        font.pixelSize: 12
-        color: "white"
-    }
-
-    Text {
-        id: text2
-        x: 711
-        y: 29
-        width: 157
-        height: 16
-        text: qsTr("Motor L Current: XXX A")
-        font.pixelSize: 12
-        color: "white"
+    RaceClusterHeader{
+        id: raceScreenHeader
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 7
     }
 
     ArrowIndicator {
