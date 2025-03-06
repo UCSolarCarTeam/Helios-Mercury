@@ -1,12 +1,19 @@
 #include "Logger.h"
 
-QFile Logger::logFile("Mercury.log");
+QFile Logger::logFile;
 QMutex Logger::mutex;
 
-void Logger::installMessageHandler() {
+/** Initialize Logger, takes in log file and will write logs to the given path */
+void Logger::installMessageHandler(const QString &logFile) {
+    Logger::logFile.setFileName(logFile);
     qInstallMessageHandler(customMessageHandler);
 }
 
+/** 
+ * Handles logging Qt messages
+ * Handles messages of types: Debug, Info, Warning, Critical, and Fatal
+ * Writes log messages to the log file
+ */
 void Logger::customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     QMutexLocker locker(&mutex);
 

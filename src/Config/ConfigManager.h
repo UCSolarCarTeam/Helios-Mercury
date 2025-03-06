@@ -29,8 +29,8 @@ public:
     QString getTelemetryUsername() const;
     QString getTelemetryPassword() const;
 
-    int getLogLevel() const;
     bool getLoggingEnabled() const;
+    QString getLogPath() const;
 
 private:
     ConfigManager(const QString& path);
@@ -48,8 +48,8 @@ private:
     int telemetryPort_;
     QString telemetryUsername_;
     QString telemetryPassword_;
-    int logLevel_;
     bool loggingEnabled_;
+    QString logPath_;
 };
 
 #endif // CONFIGMANAGER_H
