@@ -2,12 +2,12 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Mercury
 import "../Config"
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
 Item {
     id: rndComponent
-    width: 165
-    height: 35
+    width: 180
+    height: 50
 
     // Property to track selected gear (0: R, 1: N, 2: D)
     property var gears: ["R", "N", "D"]
@@ -53,16 +53,15 @@ Item {
         Behavior on x {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
         }
-    }
 
-    DropShadow {
-            anchors.fill: gearMarker
+        MultiEffect {
             source: gearMarker
-            color: Config.tronBlue
-            radius: 10
-            samples: 16
-            spread: 0.3
+            anchors.fill: gearMarker
+            shadowColor: Config.tronBlue
+            shadowBlur: 1.0
+            shadowOpacity: 0.6
         }
+    }
 
     // Gear Letters Row
     Row {
@@ -87,14 +86,12 @@ Item {
                     anchors.centerIn: parent
                 }
 
-                DropShadow {
-                    anchors.fill: gearText
+                MultiEffect {
                     source: gearText
-                    color: Config.tronBlue
-                    radius: 10
-                    samples: 16
-                    spread: 0.3
-                    visible: index === currentGear
+                    anchors.fill: gearText
+                    shadowEnabled: index === currentGear
+                    shadowBlur: 1.0
+                    shadowOpacity: 0.6
                 }
             }
         }
