@@ -29,8 +29,8 @@ public:
     QString getTelemetryUsername() const;
     QString getTelemetryPassword() const;
 
-    int getLogLevel() const;
     bool getLoggingEnabled() const;
+    QString getLogPath() const;
 
     int getPin0() const;
     int getPin1() const;
@@ -51,10 +51,10 @@ private:
     int telemetryPort_;
     QString telemetryUsername_;
     QString telemetryPassword_;
-    int logLevel_;
     bool loggingEnabled_;
     int pin0_;
     int pin1_;
+    QString logPath_;
 };
 
 #endif // CONFIGMANAGER_H

@@ -52,6 +52,7 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Mercury.h src/Mercury.cpp
     src/Config/PropertyDefinitions.h
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
+    src/Config/Logger.h src/Config/Logger.cpp
 )
 
 qt_add_resources(Helios-Mercury "configuration"
@@ -106,4 +107,5 @@ qt6_add_shaders(Helios-Mercury "Helios-Mercury_shaders"
         "/"
     FILES
         "content/Shaders/MovingColor.frag"
+        "content/Shaders/ColorOverlay.frag"
 )

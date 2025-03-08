@@ -73,6 +73,8 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("mbms", &mbmsPacket);
     engine_.rootContext()->setContextProperty("proximitySensors", &proximitySensorsPacket);
 
+    qmlRegisterSingletonType(QUrl("qrc:/qt/qml/content/Config/Config.qml"), "Mercury", 1, 0, "Config");
+
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
     QObject::connect(
         &engine_,
