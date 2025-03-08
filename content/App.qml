@@ -5,8 +5,10 @@ import QtQuick 6.2
 import Mercury
 
 Window {
-    width: 1920
-    height: 550
+    minimumWidth: Config.windowWidth
+    minimumHeight: Config.windowHeight
+    maximumWidth: Config.windowWidth
+    maximumHeight: Config.windowHeight
 
     visible: true
     title: "Mercury"
@@ -26,4 +28,3 @@ Window {
         z: -6969
     }
 }
-

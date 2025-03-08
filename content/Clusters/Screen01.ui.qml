@@ -553,25 +553,25 @@ Rectangle {
                         text: "Populated Cells: " + battery.PopulatedCells
                     }
                     Text {
-                        text: "Input 12V: " + battery.Input12V
+                        text: "Input 12V: " + battery.Input12V.toFixed(3)
                     }
                     Text {
-                        text: "Fan Voltage: " + battery.FanVoltage
+                        text: "Fan Voltage: " + battery.FanVoltage.toFixed(3)
                     }
                     Text {
-                        text: "Pack Current: " + battery.PackCurrent
+                        text: "Pack Current: " + battery.PackCurrent.toFixed(3)
                     }
                     Text {
-                        text: "Pack Voltage: " + battery.PackVoltage
+                        text: "Pack Voltage: " + battery.PackVoltage.toFixed(3)
                     }
                     Text {
-                        text: "Pack State Of Charge: " + battery.PackStateOfCharge
+                        text: "Pack State Of Charge: " + battery.PackStateOfCharge.toFixed(3)
                     }
                     Text {
-                        text: "Pack Amphours: " + battery.PackAmphours
+                        text: "Pack Amphours: " + battery.PackAmphours.toFixed(3)
                     }
                     Text {
-                        text: "Pack Depth Of Discharge: " + battery.PackDepthOfDischarge
+                        text: "Pack Depth Of Discharge: " + battery.PackDepthOfDischarge.toFixed(3)
                     }
                     Text {
                         text: "High Temperature: " + battery.HighTemperature
