@@ -7,6 +7,7 @@ Item {
     width: 440
     height: 40
 
+    // Function Changes the Color on the current value
     function getValueColor(current) {
         if (current > 60)
             return Config.valueHigh;
@@ -15,6 +16,7 @@ Item {
         return Config.valueLow;
     }
 
+    //  Function Formats the current value with color in the correct unit
     function formatCurrentWithColor(value, label) {
         const currentValue = Math.floor(value / 1000);
         return label + ": <font color=\"" + getValueColor(currentValue) + "\">" + currentValue + "</font> A";
