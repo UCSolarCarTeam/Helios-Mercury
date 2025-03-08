@@ -7,6 +7,10 @@
 #include "MessageTransmitter/MessageTransmitter.h"
 #include "MessageAggregator/MessageAggregator.h"
 
+#ifdef __linux__
+#include "Receivers/GpioReader.h"  // Only include on Linux
+#endif
+
 #include <QQmlContext>
 
 
@@ -23,6 +27,11 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
+
+#ifdef __linux__
+    // Initialize GPIOReader only on Linux
+    GpioReader* gpioReader = new GpioReader(packetFactory);
+#endif
 
     //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
     StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);

@@ -63,6 +63,10 @@ ConfigManager::ConfigManager(const QString& path){
     loggingEnabled_ = settings.value("loggingEnabled", true).toBool();
     logPath_ = settings.value("logPath", "Mercury.log").toString();
     settings.endGroup();
+
+    settings.beginGroup("PiPins");
+    pin0_ = settings.value ("pin0", 20).toInt();
+    pin1_ = settings.value ("pin1", 21).toInt();
 }
 
 //Getters
@@ -95,3 +99,7 @@ QString ConfigManager::getTelemetryPassword() const { return telemetryPassword_;
 bool ConfigManager::getLoggingEnabled() const { return loggingEnabled_; }
 
 QString ConfigManager::getLogPath() const { return logPath_; }
+
+int ConfigManager::getPin0() const { return pin0_; }
+
+int ConfigManager::getPin1() const { return pin1_; }

@@ -32,6 +32,9 @@ public:
     bool getLoggingEnabled() const;
     QString getLogPath() const;
 
+    int getPin0() const;
+    int getPin1() const;
+
 private:
     ConfigManager(const QString& path);
 
@@ -50,6 +53,8 @@ private:
     QString telemetryPassword_;
     bool loggingEnabled_;
     QString logPath_;
+    int pin0_;
+    int pin1_;
 };
 
 #endif // CONFIGMANAGER_H

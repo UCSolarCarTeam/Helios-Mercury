@@ -25,3 +25,7 @@ telemetryPassword=NiceTryBud
 [Logging]
 loggingEnabled=true
 logPath=Mercury.log
+
+[PiPin]
+pin0=20
+pin1=21

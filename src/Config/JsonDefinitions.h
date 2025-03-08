@@ -300,6 +300,12 @@ namespace JsonDefinitions {
     constexpr const char* PROXIMITY_SENSOR_2 = "ProximitySensor2";
     constexpr const char* PROXIMITY_SENSOR_3 = "ProximitySensor3";
     constexpr const char* PROXIMITY_SENSOR_4 = "ProximitySensor4";
+
+    /**
+     * Pi keys
+     */
+    constexpr const char* PI = "Pi";
+    constexpr const char* RFID = "Rfid";
 }
 
 #endif // JSONDEFINITIONS_H
