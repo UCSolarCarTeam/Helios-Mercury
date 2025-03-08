@@ -2,7 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
-
+import "../Util"
+import Mercury
+import "../Config"
 
 Rectangle {
     id: root
@@ -10,13 +12,20 @@ Rectangle {
     height: 458
     color: "transparent"
 
-    property int animationDuration: 300
+    property int minValue: 0
+    property int maxValue: 160
+    property string units: "Km/h"
     property int value: 100
 
-    property real arcEnd: 360
-    property real arcBegin: 90
-    property real arcWidth: 20
+    property int animationDuration: 300
 
+    property real arcEnd: -135
+    property real arcBegin: 135
+    property real arcWidth: 16
+
+    GaugeAnimation {
+        id: gaugeAnimation
+    }
 
     ArcItem {
         id: outerArc
@@ -27,17 +36,16 @@ Rectangle {
         strokeWidth: 0
         strokeStyle: 0
         strokeColor: "transparent"
-        rotation: -90
         outlineArc: true
         fillColor: "#1b1a1d"
-        end: 584.99998
-        begin: 315
-        arcWidth: 17.48182
+        end: -135
+        begin: 135
+        arcWidth: 16
         antialiasing: true
     }
 
     ArcItem {
-        id: inactiveRing
+        id: inactiveArc
         width: 423
         height: 423
         anchors.left: parent.left
@@ -47,12 +55,11 @@ Rectangle {
         strokeWidth: 0
         strokeStyle: 0
         strokeColor: "transparent"
-        // rotation: -90
         outlineArc: true
         fillColor: "#242627"
         end: -135
         begin: 135
-        arcWidth: 16.14588
+        arcWidth: 16
         antialiasing: true
     }
 
@@ -61,22 +68,34 @@ Rectangle {
         anchors.fill: inactiveArc
         property real animatedValue: root.minValue
 
-        Behavior on animatedValue { NumberAnimation { duration: root.animationDuration } }
+        Behavior on animatedValue {
+            NumberAnimation {
+                duration: root.animationDuration
+            }
+        }
 
         Connections {
             target: root
-            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); }
+            function onValueChanged() {
+                activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue);
+            }
         }
 
-        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue); }
+        Component.onCompleted: {
+            animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue);
+        }
 
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue); }
+            onPaint: {
+                gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue);
+            }
             Connections {
                 target: activeArcContainer
-                function onAnimatedValueChanged() { activeArc.requestPaint(); }
+                function onAnimatedValueChanged() {
+                    activeArc.requestPaint();
+                }
             }
         }
     }
@@ -478,20 +497,10 @@ Rectangle {
     }
 
     Rectangle {
-        id: needle
-        x: 67
-        y: 340
-        width: 83
-        height: 8
-        color: Config.needleColor
-        rotation: 135.04
-    }
-
-    Rectangle {
         id: speedometerValueContainer
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        height:115
+        height: 115
         width: 70
         color: "transparent"
 

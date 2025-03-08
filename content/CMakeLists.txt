@@ -16,6 +16,7 @@ qt6_add_qml_module(content
         Components/CameraView.qml
         Components/Speedometer.qml
         Config/Config.qml
+        Util/GaugeAnimation.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
