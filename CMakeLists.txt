@@ -82,8 +82,11 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Mqtt
     Qt6::SerialPort
     Qt6::ShaderTools
-    pigpio
 )
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_link_libraries(Helios-Mercury PRIVATE pigpio)
+endif()
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
 set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
