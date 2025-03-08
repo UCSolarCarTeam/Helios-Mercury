@@ -15,13 +15,6 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort Shad
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio ${CMAKE_BINARY_DIR}/imports/pigpio)
-
-    if (NOT EXISTS ${CMAKE_SOURCE_DIR}/imports/pigpio/libpigpio.so)
-        add_custom_target(build_pigpio ALL
-            COMMAND make
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/imports/pigpio
-        )
-    endif()
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
