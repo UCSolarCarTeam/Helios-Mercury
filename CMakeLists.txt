@@ -14,7 +14,7 @@ configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort ShaderTools)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/imports/pigpio ${CMAKE_BINARY_DIR}/imports/pigpio)
 
     if (NOT EXISTS ${CMAKE_SOURCE_DIR}/imports/pigpio/libpigpio.so)
         add_custom_target(build_pigpio ALL
@@ -28,12 +28,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(GPIOREADER_SOURCES src/Receivers/GpioReader.cpp src/Receivers/GpioReader.h)
 else()
     set(GPIOREADER_SOURCES "")
-endif()
-
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(GPIOREADER_SOURCES src/Receivers/GpioReader.cpp src/Receivers/GpioReader.h)
-else()
-    set(GPIOREADER_SOURCES "") # Exclude GpioReader if not Linux
 endif()
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
@@ -65,7 +59,6 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Mercury.h src/Mercury.cpp
     src/Config/PropertyDefinitions.h
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
-
 )
 
 qt_add_resources(Helios-Mercury "configuration"
