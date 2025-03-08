@@ -1,96 +1,133 @@
 import QtQuick
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
+import Mercury
+import "../Util"
 
-Rectangle {
+Item  {
     id: rpmGauge
     width: 188
     height: 499
-    color: "transparent"
-    property alias element4Text: element4.text
-    property alias element2Text: element2.text
-    property alias element1Text: element1.text
-    property alias element6Text: element6.text
-    property alias element3Text: element3.text
-    property alias elementText: element.text
-    property alias element5Text: element5.text
-    rotation: -1.294
 
-    Rectangle {
-        id: rectangle
-        x: -34
-        y: -34
-        width: 283
-        height: 599
-        color: "#000000"
+    // gauge properties
+    property real minValue
+    property real maxValue
+    property real value
+
+    // animation properties
+    property int animationDuration: 300
+
+    // canvas arc properties
+    property real arcBegin: 135
+    property real arcEnd: 235
+    property real arcWidth: 20
+
+    GaugeAnimation { id: gaugeAnimation }
+
+    ArcItem {
+        id: outerArc
+        x: 51
+        y: -38
+        width: 589
+        height: 589
+        strokeWidth: 0
+        strokeColor: "transparent"
+        outlineArc: true
+        fillColor: Config.outerArcColor
+        end: -30
+        begin: -140
+        arcWidth: 2
+        antialiasing: true
+    }
+
+    ArcItem {
+        id: inactiveArc
+        width: 580
+        height: 580
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 56
+            topMargin: -33
+        }
+        strokeWidth: 0
+        strokeColor: "transparent"
+        outlineArc: true
+        fillColor: Config.btnDisabled
+        end: -30
+        begin: -140
+        arcWidth: 20
+        antialiasing: true
+    }
+
+
+    Item {
+        id: activeArcContainer
+        anchors.fill: inactiveArc
+        property real animatedValue: rpmGauge.minValue
+
+        Behavior on animatedValue { NumberAnimation { duration: rpmGauge.animationDuration } }
+
+        Connections {
+            target: rpmGauge
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(rpmGauge.value, rpmGauge.minValue, rpmGauge.maxValue); }
+        }
+
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(rpmGauge.value, rpmGauge.minValue, rpmGauge.maxValue); }
+
+        Canvas {
+            id: activeArc
+            anchors.fill: parent
+            onPaint: { gaugeAnimation.drawGauge(activeArc, rpmGauge, activeArcContainer.animatedValue); }
+            Connections {
+                target: activeArcContainer
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
+            }
+        }
     }
 
     Text {
         id: element
-        width: 34
-        height: 48
         color: "#ffffff"
         text: qsTr("6")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: 27
+        anchors.horizontalCenterOffset: 35
         anchors.centerIn: parent
         font.family: "SF Pro"
-        anchors.verticalCenterOffset: -234
+        anchors.verticalCenterOffset: -235
         font.weight: Font.Medium
     }
 
     Text {
         id: element1
-        width: 32
-        height: 48
         color: "#ffffff"
         text: qsTr("5")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: -28
+        anchors.horizontalCenterOffset: -22
         anchors.centerIn: parent
         font.family: "SF Pro"
-        anchors.verticalCenterOffset: -172
+        anchors.verticalCenterOffset: -173
         font.weight: Font.Medium
     }
 
     Text {
         id: element2
-        width: 33
-        height: 48
         color: "#ffffff"
         text: qsTr("4")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: -66
+        anchors.horizontalCenterOffset: -57
         anchors.centerIn: parent
         font.family: "SF Pro"
-        anchors.verticalCenterOffset: -95
+        anchors.verticalCenterOffset: -96
         font.weight: Font.Medium
     }
 
     Text {
         id: element3
-        width: 33
-        height: 48
         color: "#ffffff"
         text: qsTr("3")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: -79
+        anchors.horizontalCenterOffset: -73
         anchors.centerIn: parent
         font.family: "SF Pro"
         anchors.verticalCenterOffset: -14
@@ -99,96 +136,38 @@ Rectangle {
 
     Text {
         id: element4
-        width: 32
-        height: 48
         color: "#ffffff"
         text: qsTr("2")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: -73
+        anchors.horizontalCenterOffset: -70
         anchors.centerIn: parent
         font.family: "SF Pro"
-        anchors.verticalCenterOffset: 69
+        anchors.verticalCenterOffset: 68
         font.weight: Font.Medium
     }
 
     Text {
         id: element5
-        width: 22
-        height: 48
         color: "#ffffff"
         text: qsTr("1")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: -51
+        anchors.horizontalCenterOffset: -39
         anchors.centerIn: parent
         font.family: "SF Pro"
-        anchors.verticalCenterOffset: 154
+        anchors.verticalCenterOffset: 155
         font.weight: Font.Medium
     }
 
     Text {
         id: element6
-        width: 35
-        height: 48
         color: "#ffffff"
         text: qsTr("0")
         font.pixelSize: 40
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.NoWrap
-        rotation: 0.987
-        anchors.horizontalCenterOffset: -6
+        anchors.horizontalCenterOffset: 13
         anchors.centerIn: parent
         font.family: "SF Pro"
-        anchors.verticalCenterOffset: 225
+        anchors.verticalCenterOffset: 224
         font.weight: Font.Medium
-    }
-
-    ArcItem {
-        id: arc
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        begin: 328.24295
-        anchors.rightMargin: -364
-        fillColor: "#00a8ff"
-        rotation: 1.294
-        outlineArc: true
-        strokeStyle: 0
-        strokeColor: "transparent"
-        arcWidth: 16.19966
-        antialiasing: true
-        anchors.leftMargin: 49
-        anchors.topMargin: -26
-        anchors.bottomMargin: -61
-        strokeWidth: 0
-        end: 223.80682
-    }
-
-    SvgPathItem {
-        id: needle_Stroke_
-        width: 51
-        height: 8
-        anchors.left: parent.left
-        anchors.top: parent.top
-        fillColor: "#ffffff"
-        rotation: 140.429
-        strokeStyle: 1
-        strokeColor: "transparent"
-        path: "M 50.772056579589844 8 L 0 8 L 0 0 L 50.772056579589844 0 L 50.772056579589844 8 Z"
-        joinStyle: 0
-        antialiasing: true
-        anchors.leftMargin: 112
-        anchors.topMargin: 454
-        strokeWidth: 8
     }
 }
 
