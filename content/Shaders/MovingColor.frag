@@ -11,6 +11,7 @@ layout(std140, binding=0) uniform buf {
     vec3 movingColor;
 } ubuf;
 
+// sampler for the source texture
 layout(binding = 1) uniform sampler2D source;
 
 /** 
@@ -19,30 +20,29 @@ layout(binding = 1) uniform sampler2D source;
  *  position and speed change over time.
  */
 void main() {
-    // Sample the texture
+    // Sample the texture at the current coorindates 
     vec4 texColor = texture(source, qt_TexCoord0);
     vec2 uv = qt_TexCoord0;
 
-    // Time-varying horizontal position of the bar (wraps around)
+    // Calculating the horizontal position of the moving bar 
     float time = fract(ubuf.u_time); // Wrap time to range [0, 1)
     float speed = mix(0.2, 0.3, time); // Interpolate speed from 0.2 to 0.3 for slow acceleration effect
     float barPosition = fract(time * speed * 3.5); // Calculate bar position with varying speed
 
     float barWidth = 0.1;
 
-    // Calculate bar opacity with sharper transition
+    // Creating smooth transition of the shader at the edges 
     float barMask = smoothstep(barPosition - barWidth * 0.3, barPosition + barWidth * 0.3, uv.x);
     
-    // Lower threshold for color replacement (more aggressive)
+    //alpha threshold for the replacement colors 
     float alphaThreshold = 0.05;
     
-    // Calculate luminance of the original texture (to detect light areas)
+    // detecting luminance for the brighter pixes of the png 
     float luminance = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
     
-    // More aggressive replacement factor - considers both alpha and brightness
     float replaceFactor = step(alphaThreshold, texColor.a);
     
-    // Completely replace colors instead of blending when alpha is above threshold
+    // Determining the output color based on the position of the bar
     vec3 resultColor;
     if (uv.x < barPosition) {
         // Left side of bar uses moving color
@@ -52,9 +52,9 @@ void main() {
         resultColor = ubuf.baseColor * replaceFactor;
     }
     
-    // Only keep original color where alpha is below threshold
+    // applying color of the main shader with alpha value
     resultColor = mix(vec3(0.0), resultColor, replaceFactor);
     
-    // Output the final color, preserving original alpha
+    // Output the final color fo shader
     fragColor = vec4(resultColor, texColor.a);
 }
