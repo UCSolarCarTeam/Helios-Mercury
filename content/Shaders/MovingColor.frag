@@ -11,6 +11,7 @@ layout(std140, binding=0) uniform buf {
     vec3 movingColor;
 } ubuf;
 
+// sampler for the source texture
 layout(binding = 1) uniform sampler2D source;
 
 /** 
@@ -19,28 +20,41 @@ layout(binding = 1) uniform sampler2D source;
  *  position and speed change over time.
  */
 void main() {
-    // Sample the texture
+    // Sample the texture at the current coorindates 
     vec4 texColor = texture(source, qt_TexCoord0);
     vec2 uv = qt_TexCoord0;
 
-    // Time-varying horizontal position of the bar (wraps around)
+    // Calculating the horizontal position of the moving bar 
     float time = fract(ubuf.u_time); // Wrap time to range [0, 1)
     float speed = mix(0.2, 0.3, time); // Interpolate speed from 0.2 to 0.3 for slow acceleration effect
     float barPosition = fract(time * speed * 3.5); // Calculate bar position with varying speed
 
     float barWidth = 0.1;
 
-    // Calculate bar opacity
-    float barMask = smoothstep(barPosition - barWidth * 0.5, barPosition + barWidth * 0.5, uv.x);
-
-    // Blend base color with the texture color based on the bar mask, only filling non-transparent parts
-    vec3 blendedColor = mix(texColor.rgb, ubuf.baseColor, barMask * texColor.a);
-
-    // Blend the underlying color on the left side of the bar, only affecting non-transparent parts
-    if (uv.x < barPosition && texColor.a > 0.0) {
-        blendedColor = mix(ubuf.movingColor, blendedColor, barMask);
+    // Creating smooth transition of the shader at the edges 
+    float barMask = smoothstep(barPosition - barWidth * 0.3, barPosition + barWidth * 0.3, uv.x);
+    
+    //alpha threshold for the replacement colors 
+    float alphaThreshold = 0.05;
+    
+    // detecting luminance for the brighter pixes of the png 
+    float luminance = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
+    
+    float replaceFactor = step(alphaThreshold, texColor.a);
+    
+    // Determining the output color based on the position of the bar
+    vec3 resultColor;
+    if (uv.x < barPosition) {
+        // Left side of bar uses moving color
+        resultColor = ubuf.movingColor * replaceFactor;
+    } else {
+        // Right side uses base color
+        resultColor = ubuf.baseColor * replaceFactor;
     }
-
-    // Output the final color with the original texture alpha
-    fragColor = vec4(blendedColor, texColor.a);
+    
+    // applying color of the main shader with alpha value
+    resultColor = mix(vec3(0.0), resultColor, replaceFactor);
+    
+    // Output the final color fo shader
+    fragColor = vec4(resultColor, texColor.a);
 }
