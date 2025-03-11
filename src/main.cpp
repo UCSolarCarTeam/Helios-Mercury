@@ -8,6 +8,8 @@
 #include <QDebug>
 
 #include "Mercury.h"
+#include "Config/Logger.h"
+#include "Config/ConfigManager.h"
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
@@ -15,6 +17,12 @@
 
 int main(int argc, char *argv[])
 {
+    ConfigManager& config = ConfigManager::instance();
+
+    if(config.getLoggingEnabled()){
+        Logger::installMessageHandler(config.getLogPath());
+    }
+
     QString tmpDir = QDir::tempPath();
     QLockFile lockFile(tmpDir + "/heliosHermes.lock");
 
