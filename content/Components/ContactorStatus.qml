@@ -4,7 +4,7 @@ import QtQuick.Controls
 Item {
     id: contactorStatusFrame
     width: 45
-    height: 40
+    height: 35
 
     property string contactor
     property bool isConnected: false
