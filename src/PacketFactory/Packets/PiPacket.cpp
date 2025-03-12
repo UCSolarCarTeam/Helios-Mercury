@@ -18,7 +18,7 @@ void PiPacket::populateRfid(const QByteArray& data) {
 }
 
 void PiPacket::populateTelemetry(const bool state) {
-        setAWSState(true);
+    setAWSState(true);
 }
 
 void PiPacket::populateEmbedded(const bool state) {

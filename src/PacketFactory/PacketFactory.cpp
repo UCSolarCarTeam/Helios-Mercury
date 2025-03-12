@@ -1,6 +1,5 @@
 #include "PacketFactory.h"
 #include "../Config/ConfigManager.h"
-#include "../MessageTransmitter/MessageTransmitter.h"
 #include "../Receivers/SerialReceiver.h"
 
 PacketFactory::PacketFactory() {
@@ -13,9 +12,6 @@ PacketFactory::PacketFactory() {
     mbmsPacket_.reset(new MbmsPacket());
     batteryFaultsPacket_.reset(new BatteryFaultsPacket());
     b3Packet_.reset(new B3Packet());
-
-    messageTransmitter_ = std::make_unique<MessageTransmitter>();
-    connectionStatusPacket_.reset(new ConnectionStatusPacket(messageTransmitter_.get()));
 
     for (int i = 0; i < config.getNumberOfMotors(); i++) {
         motorDetailsPackets_.append(new MotorDetailsPacket());
@@ -61,10 +57,6 @@ BatteryFaultsPacket& PacketFactory::getBatteryFaultsPacket() {
 
 B3Packet& PacketFactory::getB3Packet() {
     return *b3Packet_;
-}
-
-ConnectionStatusPacket& PacketFactory::getConnectionStatusPacket() {
-    return *connectionStatusPacket_;
 }
 
 MotorDetailsPacket& PacketFactory::getMotorDetailsPacket(int index) {

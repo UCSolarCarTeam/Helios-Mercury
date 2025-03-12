@@ -37,7 +37,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
 
     //initialize MessageTransmitter which will transmit data every period of time deinifed in config.ini
-    MessageTransmitter* messageTransmitter = new MessageTransmitter();
+    MessageTransmitter* messageTransmitter = new MessageTransmitter(packetFactory);
 
     //initialize MessageAggregator which will aggregate all packets into one json message and transmit
     MessageAggregator* messageAggregator = new MessageAggregator(messageTransmitter, packetFactory);
@@ -57,6 +57,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     MpptPacket &mppt3Packet = packetFactory->getMpptPacket(3);
     MbmsPacket &mbmsPacket = packetFactory->getMbmsPacket();
     ProximitySensorsPacket &proximitySensorsPacket = packetFactory->getProximitySensorsPacket();
+    PiPacket &pipacket = packetFactory->getPiPacket();
 
 
     engine_.rootContext()->setContextProperty("keyMotor", &keyMotorPacket);
@@ -72,6 +73,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("mppt3", &mppt3Packet);
     engine_.rootContext()->setContextProperty("mbms", &mbmsPacket);
     engine_.rootContext()->setContextProperty("proximitySensors", &proximitySensorsPacket);
+    engine_.rootContext()->setContextProperty("pi", &pipacket);
 
     qmlRegisterSingletonType(QUrl("qrc:/qt/qml/content/Config/Config.qml"), "Mercury", 1, 0, "Config");
 

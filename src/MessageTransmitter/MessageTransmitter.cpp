@@ -7,7 +7,7 @@ namespace {
     const int RETRY_PERIOD = 5000; // milliseconds
 }
 
-MessageTransmitter::MessageTransmitter() {
+    MessageTransmitter::MessageTransmitter(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
     telemetryClient_ = new QMqttClient();
     setupTelemetryClient();
 }
@@ -18,10 +18,6 @@ void MessageTransmitter::transmitMessage(const QByteArray& message) {
         qDebug() << "Publishing to TELEMETRY MQTT Service";
         telemetryClient_->publish(telemetryTopic_, message);
     }
-}
-
-bool MessageTransmitter::isTelemetryConnected() {
-    return telemetryConnected_;
 }
 
 /** 
@@ -40,12 +36,12 @@ void MessageTransmitter::setupTelemetryClient() {
 
     QObject::connect(telemetryClient_, &QMqttClient::connected, [this]() {
         qDebug() << "Connection to TELEMETRY MQTT Service Established";
-        telemetryConnected_ = true;
+        packetFactory_->getPiPacket().setAWSState(true);
     });
 
     QObject::connect(telemetryClient_, &QMqttClient::disconnected, [this]() {
         qDebug() << "Connection to TELEMETRY MQTT Service Failed - retrying in 5s...";
-        telemetryConnected_ = false;
+        packetFactory_->getPiPacket().setAWSState(false);
         QTimer::singleShot(RETRY_PERIOD, [this]() {
             telemetryClient_->connectToHost();
         });

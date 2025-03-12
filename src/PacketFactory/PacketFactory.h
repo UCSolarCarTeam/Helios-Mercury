@@ -10,7 +10,6 @@
 #include "Packets/MbmsPacket.h"
 #include "Packets/BatteryFaultsPacket.h"
 #include "Packets/B3Packet.h"
-#include "Packets/ConnectionStatusPacket.h"
 #include "Packets/PiPacket.h"
 
 #include <QScopedPointer>
@@ -28,7 +27,6 @@ public:
     MbmsPacket& getMbmsPacket();
     BatteryFaultsPacket& getBatteryFaultsPacket();
     B3Packet& getB3Packet();
-    ConnectionStatusPacket& getConnectionStatusPacket();
 
     MotorDetailsPacket& getMotorDetailsPacket(int index);
     MpptPacket& getMpptPacket(int index);
@@ -43,14 +41,11 @@ private:
     QScopedPointer<MbmsPacket> mbmsPacket_;
     QScopedPointer<BatteryFaultsPacket> batteryFaultsPacket_;
     QScopedPointer<B3Packet> b3Packet_;
-    QScopedPointer<ConnectionStatusPacket> connectionStatusPacket_;
     QScopedPointer<PiPacket> piPacket_;
 
     //amounts defined in config.ini
     QVector<MotorDetailsPacket*> motorDetailsPackets_;
     QVector<MpptPacket*> mpptPackets_;
-
-    std::unique_ptr<MessageTransmitter> messageTransmitter_;
 };
 
 #endif // PACKETFACTORY_H

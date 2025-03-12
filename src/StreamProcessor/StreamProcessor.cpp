@@ -153,9 +153,6 @@ bool StreamProcessor::isValidChecksum(QByteArray& decodedPacket){
 void StreamProcessor::validateAndForwardPacket(QByteArray& packetBody) {
     const int id = packetBody.at(PacketDefinitions::ID_INDEX);
 
-    packetFactory_->getConnectionStatusPacket().populatePacket(packetBody);
-
-
     if(PacketDefinitions::packetLength[id] != packetBody.size()) {
         qDebug() << "Packet length is incorrect for ID: " << id;
         qDebug() << "Got: " << packetBody.size() << " Expected: " << PacketDefinitions::packetLength[id];

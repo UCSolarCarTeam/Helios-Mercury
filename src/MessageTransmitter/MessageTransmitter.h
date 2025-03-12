@@ -4,11 +4,12 @@
 #include <QByteArray>
 #include <QMqttClient>
 #include <QObject>
+#include "../PacketFactory/PacketFactory.h"
 
 class MessageTransmitter : public QObject {
     Q_OBJECT
 public:
-    MessageTransmitter();
+    MessageTransmitter(PacketFactory* packetFactory);
 
     void setupTelemetryClient();
     bool isTelemetryConnected();
@@ -19,7 +20,9 @@ public slots:
 private:
     QMqttClient* telemetryClient_;
     QString telemetryTopic_;
-    bool telemetryConnected_ = false;
+
+    PacketFactory* packetFactory_;
+
 };
 
 #endif // MESSAGETRANSMITTER_H
