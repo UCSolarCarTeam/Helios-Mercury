@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import Mercury
 
 Item {
     id: contactorStatusFrame
@@ -14,7 +15,7 @@ Item {
         id: contactorTitle
         text: contactor
         font.pixelSize: Config.smallFontSize
-        color: "white"
+        color: Config.textColor
         anchors.bottom: contactorIcon.top
         anchors.bottomMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
