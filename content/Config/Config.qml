@@ -11,4 +11,5 @@ QtObject {
     property color outerArcColor: "#242627"
 
     property string fontStye: "SF Pro"
+    property color highContrast: "#A2180F"
 }

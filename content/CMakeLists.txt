@@ -14,6 +14,7 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/RaceClusterIcons.qml
         Config/Config.qml
         Components/ThreeQuarterGauge.qml
         Util/GaugeAnimation.qml
@@ -25,4 +26,6 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+)
+        Images/ParkingBrake.png
 )
