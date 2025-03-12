@@ -26,6 +26,5 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
-)
         Images/ParkingBrake.png
 )
