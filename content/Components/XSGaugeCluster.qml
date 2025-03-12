@@ -2,9 +2,10 @@ import QtQuick
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
 import Mercury
+import "../Util"
 
 Item {
-    id: root
+    id: xsGaugeCluster
     width: 269
     height: 235
 
@@ -15,28 +16,27 @@ Item {
     property real value
     property string gaugeTitle
 
+    // animation properties
+    property int animationDuration: 300
+
     // canvas arc properties
-    property real arcEnd: 90   // Adjusted for bottom quarter
-    property real arcBegin: -90
+    property real arcEnd: 135
+    property real arcBegin: -135
     property real arcWidth: 20
 
-    // colors
-    property color outerArcColor: "#242627"
+    GaugeAnimation { id: gaugeAnimation }
 
     ArcItem {
         id: outerArc
         width: 213
         height: 213
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom  // Positioning the arc at the bottom
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: outerArcColor
-        end: -90
-        begin: 90
-        arcWidth: 1.78
+        fillColor: Config.outerArcColor
+        end: 135 // Changed end to 180
+        begin: -135 // Changed begin to -90
+        arcWidth: 2
         antialiasing: true
     }
 
@@ -44,80 +44,119 @@ Item {
         id: inactiveArc
         width: 202
         height: 202
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 5
+            topMargin: 5
+        }
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: "#8A8D8F"  // Disabled arc color
-        end: -90
-        begin: 90
+        fillColor: Config.btnDisabled
+        end: 135 // Changed end to 180
+        begin: -135 // Changed begin to -90
         arcWidth: 20
         antialiasing: true
     }
 
-    Canvas {
-        id: activeArc
+    Item {
+        id: activeArcContainer
         anchors.fill: inactiveArc
-        onPaint: {
-            var ctx = activeArc.getContext("2d");
-            ctx.clearRect(0, 0, activeArc.width, activeArc.height);
-            ctx.beginPath();
-            var startAngle = Math.PI; // -90 degrees
-            var endAngle = Math.PI * 2; // 90 degrees
-            ctx.arc(outerArc.width / 2, outerArc.height, outerArc.width / 2, startAngle, endAngle);
-            ctx.lineWidth = arcWidth;
-            ctx.strokeStyle = "#FF0000";  // Needle color
-            ctx.stroke();
+        property real animatedValue: xsGaugeCluster.minValue
+
+        Behavior on animatedValue { NumberAnimation { duration: xsGaugeCluster.animationDuration } }
+
+        Connections {
+            target: xsGaugeCluster
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(xsGaugeCluster.value, xsGaugeCluster.minValue, xsGaugeCluster.maxValue); }
+        }
+
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(xsGaugeCluster.value, xsGaugeCluster.minValue, xsGaugeCluster.maxValue); }
+
+        Canvas {
+            id: activeArc
+            anchors.fill: parent
+            onPaint: { gaugeAnimation.drawGauge(activeArc, xsGaugeCluster, activeArcContainer.animatedValue, -90, 180); } // Pass new begin and end
+            Connections {
+                target: activeArcContainer
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
+            }
         }
     }
 
     Text {
+        id: minVal
+        width: 15
+        height: 24
+        color: "#ffffff"
+        text: xsGaugeCluster.minValue
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            left: outerArc.left
+            bottom: outerArc.top // Changed anchor
+        }
+        font.weight: Font.Medium
+        font.family: Config.fontStye
+    }
+
+    Text {
+        id: maxVal
+        width: 50
+        height: 24
+        color: "#ffffff"
+        text: xsGaugeCluster.maxValue
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            top: outerArc.verticalCenter // Changed anchor
+            right: outerArc.right // Changed anchor
+        }
+        font.weight: Font.Medium
+        font.family: Config.fontStye
+    }
+
+    Text {
         id: gaugeValue
-        width: 147
-        height: 43
+        width: 150
+        height: 36
         color: "#ffffff"
         text: {
-            if (Math.floor(root.value) === root.value) {
-                return Math.floor(root.value) + root.units;
+            if (Math.floor(xsGaugeCluster.value) === xsGaugeCluster.value) {
+                return Math.floor(xsGaugeCluster.value) + xsGaugeCluster.units;
             } else {
-                return root.value.toFixed(1) + root.units;
+                return xsGaugeCluster.value.toFixed(1) + xsGaugeCluster.units;
             }
         }
         font.pixelSize: 36
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         anchors {
-            top: inactiveArc.bottom
+            top: inactiveArc.verticalCenter // Changed anchor
             horizontalCenter: inactiveArc.horizontalCenter
+            topMargin: 10 // Changed margin
         }
         font.weight: Font.Medium
-        font.family: "SF Pro"
+        font.family: Config.fontStye
     }
 
     Text {
         id: gaugeLabel
-        width: 147
-        height: 17
+        width: 150
+        height: 18
         color: "#ffffff"
-        text: root.gaugeTitle
+        text: xsGaugeCluster.gaugeTitle
         font.pixelSize: 18
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.Wrap
         anchors {
-            top: gaugeValue.bottom
+            bottom: gaugeValue.top // Changed anchor
             horizontalCenter: inactiveArc.horizontalCenter
         }
         font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    NumberAnimation on value {
-        id: valueAnimation
-        duration: 500
-        easing.type: Easing.OutQuad
+        font.family: Config.fontStye
     }
 }
