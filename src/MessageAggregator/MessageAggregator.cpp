@@ -38,7 +38,7 @@ void MessageAggregator::createJsonMessage() {
     }
 
     message[JsonDefinitions::PI] = packetFactory_->getPiPacket().toJson();
-
+    qDebug() << message;
     emit jsonPacketReady(QJsonDocument(message).toJson(QJsonDocument::Compact));
 }
 

@@ -306,6 +306,8 @@ namespace JsonDefinitions {
      */
     constexpr const char* PI = "Pi";
     constexpr const char* RFID = "Rfid";
+    constexpr const char* TELEMETRY_CONNECTION = "TelemetryConnection";
+    constexpr const char* EMBEDDED_CONNECTION = "EmbeddedConnection";
 }
 
 #endif // JSONDEFINITIONS_H

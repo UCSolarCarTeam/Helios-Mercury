@@ -29,6 +29,8 @@ QJsonObject PiPacket::toJson() {
     QJsonObject json;
 
     json[JsonDefinitions::RFID] = RfidData().toLongLong();
+    json[JsonDefinitions::TELEMETRY_CONNECTION] = AWSState();
+    json[JsonDefinitions::EMBEDDED_CONNECTION] = EmbeddedState();
 
     return json;
 }

@@ -3,7 +3,6 @@
 
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
-#include "../../MessageTransmitter/MessageTransmitter.h"
 #include <QByteArray>
 
 class PiPacket : public IPacket {
