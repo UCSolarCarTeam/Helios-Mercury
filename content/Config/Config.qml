@@ -9,6 +9,7 @@ QtObject {
     property color btnDisabled: "#111111"
     property color needleColor: "#ff0000"
     property color outerArcColor: "#242627"
+    property color textColor: "#ffffff"
 
     property string fontStye: "SF Pro"
     property color highContrast: "#A2180F"
