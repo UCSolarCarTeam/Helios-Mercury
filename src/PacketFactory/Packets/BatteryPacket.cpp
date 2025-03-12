@@ -34,7 +34,7 @@ namespace {
     const int LOW_CELL_VOLTAGE_ID_OFFSET = 42;
     const int HIGH_CELL_VOLTAGE_OFFSET = 43;
     const int HIGH_CELL_VOLTAGE_ID_OFFSET = 45;
-    const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;   
+    const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;
 }
 
 BatteryPacket::BatteryPacket() {
@@ -112,7 +112,7 @@ void BatteryPacket::populatePacket(const QByteArray& data) {
 QJsonObject BatteryPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::BMU_ALIVE] = BmuAlive_; 
+    json[JsonDefinitions::BMU_ALIVE] = BmuAlive_;
     json[JsonDefinitions::DISCHARGE_RELAY_ENABLED] = DischargeRelayEnabled_;
     json[JsonDefinitions::CHARGE_RELAY_ENABLED] = ChargeRelayEnabled_;
     json[JsonDefinitions::CHARGER_SAFETY_ENABLED] = ChargerSafetyRelayEnabled_;
@@ -138,7 +138,7 @@ QJsonObject BatteryPacket::toJson() {
 
     //Battery Fan
     QJsonObject batteryFan;
-    
+
     batteryFan[JsonDefinitions::FAN_VOLTAGE] = FanVoltage_;
     batteryFan[JsonDefinitions::FAN_SPEED] = FanSpeed_;
     batteryFan[JsonDefinitions::REQUESTED_FAN_SPEED] = RequestedFanSpeed_;
