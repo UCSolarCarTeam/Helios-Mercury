@@ -62,7 +62,7 @@ Item {
         id: leftArrowIndicator
         x: 608
         y: 15
-        z:1000
+        z: 1000
         isRight: false
         isOn: b3.LeftSignalIn || b3.HazardLightsIn
     }
@@ -71,12 +71,12 @@ Item {
         id: rightArrowIndicator
         x: 1278
         y: 15
-        z:1000
+        z: 1000
         isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
-    CameraView{
+    CameraView {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
@@ -86,7 +86,7 @@ Item {
         id: contactorStatusComponent
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin:12
+        anchors.bottomMargin: 12
         width: 475
         height: 35
         color: "transparent"
@@ -138,14 +138,6 @@ Item {
                 contactor: "Charge"
                 isConnected: mbms.ChargeContactorState
                 Layout.fillWidth: true
-            }
-
-            ConnectionStatus {
-                id: telemetryStatus
-            }
-            ConnectionStatus {
-                id: radioBoardStatus
-                isRadioBoard: true
             }
         }
     }

@@ -15,7 +15,6 @@ qt6_add_qml_module(content
         Components/DashIcon.qml
         Components/CameraView.qml
         Components/ContactorStatus.qml
-        Components/ConnectionStatus.qml
         Config/Config.qml
     RESOURCES
         fonts/fonts.txt
