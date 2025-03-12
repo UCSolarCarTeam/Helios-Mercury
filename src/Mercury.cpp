@@ -23,7 +23,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     PacketFactory* packetFactory = new PacketFactory();
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
-    SerialReceiver* serialReceiver = new SerialReceiver();
+    SerialReceiver* serialReceiver = new SerialReceiver(packetFactory);
 
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();

@@ -2,8 +2,13 @@
 #include "../Config/ConfigManager.h"
 
 #include <QDebug>
+#include <QTimer>
 
-SerialReceiver::SerialReceiver() {
+namespace {
+const int RETRY_PERIOD = 5000; // milliseconds
+}
+
+SerialReceiver::SerialReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory ){
     serialPort_ = new QSerialPort(this);
 
     ConfigManager& config = ConfigManager::instance();
@@ -15,18 +20,45 @@ SerialReceiver::SerialReceiver() {
     serialPort_->setStopBits(QSerialPort::OneStop);
 
     //TODO: add retry period/detection mechinism for serial device
+    // if (serialPort_->open(QIODevice::ReadOnly)) {
+    //     qDebug() << "Serial Port Opened: " << config.getPortName();
+    //     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
+    // } else {
+    //     qWarning() << "EXITING - Failed to open serial port (" << config.getPortName() << "): " << serialPort_->errorString();
+    //     exit(1);
+    // }
+
     if (serialPort_->open(QIODevice::ReadOnly)) {
         qDebug() << "Serial Port Opened: " << config.getPortName();
         connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
+        packetFactory_->getPiPacket().setEmbeddedState(true);
     } else {
         qWarning() << "EXITING - Failed to open serial port (" << config.getPortName() << "): " << serialPort_->errorString();
-        exit(1);
+        packetFactory_->getPiPacket().setEmbeddedState(false);
+        retryConnection();
     }
 }
 
 SerialReceiver::~SerialReceiver() {
     if(serialPort_->isOpen()) {
         serialPort_->close();
+    }
+}
+
+/** Retry the serial port connection after a delay */
+void SerialReceiver::retryConnection() {
+    qWarning() << "Retrying to open serial port in " << RETRY_PERIOD / 1000 << " seconds...";
+    QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::attemptReconnect);
+}
+
+/** Attempt to reconnect to the serial port */
+void SerialReceiver::attemptReconnect() {
+    if (!openSerialPort()) {
+        qWarning() << "Failed to open serial port on retry, trying again in " << RETRY_PERIOD / 1000 << " seconds...";
+        retryConnection();
+    } else {
+        qDebug() << "Successfully opened serial port on retry.";
+        connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
     }
 }
 
