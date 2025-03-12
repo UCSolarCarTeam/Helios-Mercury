@@ -99,7 +99,7 @@ Item {
             top: outerArc.bottom
         }
         font.weight: Font.Medium
-        font.family: Config.fontStye
+        font.family: Config.fontStyle
     }
 
     Text {
@@ -116,7 +116,7 @@ Item {
             left: outerArc.right
         }
         font.weight: Font.Medium
-        font.family: Config.fontStye
+        font.family: Config.fontStyle
     }
 
     Text {
@@ -140,7 +140,7 @@ Item {
             bottomMargin: 10
         }
         font.weight: Font.Medium
-        font.family: Config.fontStye
+        font.family: Config.fontStyle
     }
 
     Text {
@@ -157,6 +157,6 @@ Item {
             horizontalCenter: inactiveArc.horizontalCenter
         }
         font.weight: Font.Medium
-        font.family: Config.fontStye
+        font.family: Config.fontStyle
     }
 }
