@@ -70,7 +70,7 @@ Item {
             verticalCenter: batteryIcon.verticalCenter
             leftMargin: 20
         }
-        color: "white"
+        color: Config.fontColor
         text: {
             if (Math.floor(batteryIcon.value) === batteryIcon.value) {
                 return Math.floor(batteryIcon.value) + " %";
@@ -82,6 +82,6 @@ Item {
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         font.weight: Font.Medium
-        font.family: Config.fontStye
+        font.family: Config.fontStyle
     }
 }
