@@ -10,5 +10,8 @@ QtObject {
     property color needleColor: "#ff0000"
     property color outerArcColor: "#242627"
 
+    property color speedometerWhiteTicks: "#fff"
+    property color speedometerGrayTicks: "#515253"
+
     property string fontStye: "SF Pro"
 }

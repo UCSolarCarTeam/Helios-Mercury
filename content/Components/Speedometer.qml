@@ -15,11 +15,11 @@ Rectangle {
     property int minValue: 0
     property int maxValue: 160
     property string units: "Km/h"
-    property int value: 100
+    property int value: 0
 
     property int animationDuration: 300
 
-    property real arcEnd: -135
+    property real arcEnd: 405
     property real arcBegin: 135
     property real arcWidth: 16
 
@@ -114,22 +114,22 @@ Rectangle {
             id: rectangle_38
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 211
-            anchors.topMargin: 1
+            anchors.leftMargin: 213
+            anchors.topMargin: 0
         }
 
         Rectangle {
             id: rectangle_39
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 330
-            anchors.topMargin: 32
+            anchors.leftMargin: 334
+            anchors.topMargin: 34
             rotation: 33.432
         }
 
@@ -137,11 +137,11 @@ Rectangle {
             id: rectangle_43
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 101
-            anchors.topMargin: 35
+            anchors.leftMargin: 93
+            anchors.topMargin: 39
             rotation: -36.386
         }
 
@@ -149,11 +149,11 @@ Rectangle {
             id: rectangle_47
             width: 4
             height: 9
-            color: "#aa3333"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 152
-            anchors.topMargin: 11
+            anchors.leftMargin: 151
+            anchors.topMargin: 10
             rotation: -17.668
         }
 
@@ -161,11 +161,11 @@ Rectangle {
             id: rectangle_48
             width: 4
             height: 9
-            color: "#515253"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 55
-            anchors.topMargin: 75
+            anchors.leftMargin: 47
+            anchors.topMargin: 83
             rotation: 307.827
         }
 
@@ -173,35 +173,35 @@ Rectangle {
             id: rectangle_49
             width: 4
             height: 9
-            color: "#aa3333"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 3
-            anchors.topMargin: 191
-            rotation: 96.204
+            anchors.leftMargin: 1
+            anchors.topMargin: 201
+            rotation: 95.481
         }
 
         Rectangle {
             id: rectangle_50
             width: 4
             height: 9
-            color: "#515253"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 17
-            anchors.topMargin: 299
-            rotation: 66.598
+            anchors.leftMargin: 28
+            anchors.topMargin: 324
+            rotation: 60.016
         }
 
         Rectangle {
             id: rectangle_40
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 416
-            anchors.topMargin: 130
+            anchors.topMargin: 129
             rotation: 66.687
         }
 
@@ -209,43 +209,43 @@ Rectangle {
             id: rectangle_44
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 19
-            anchors.topMargin: 130
-            rotation: 118.443
+            anchors.leftMargin: 15
+            anchors.topMargin: 138
+            rotation: 112.538
         }
 
         Rectangle {
             id: rectangle_41
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 434
-            anchors.topMargin: 234
-            rotation: 93.892
+            anchors.leftMargin: 433
+            anchors.topMargin: 255
+            rotation: 98.656
         }
 
         Rectangle {
             id: rectangle_45
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 2
-            anchors.topMargin: 235
-            rotation: 87.445
+            anchors.leftMargin: 5
+            anchors.topMargin: 266
+            rotation: 75.419
         }
 
         Rectangle {
             id: rectangle_42
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 373
@@ -257,7 +257,7 @@ Rectangle {
             id: rectangle_46
             width: 5
             height: 9
-            color: "#ffffff"
+            color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 63
@@ -269,11 +269,11 @@ Rectangle {
             id: rectangle_51
             width: 4
             height: 9
-            color: "#515253"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 281
-            anchors.topMargin: 10
+            anchors.leftMargin: 279
+            anchors.topMargin: 8
             rotation: 200.581
         }
 
@@ -281,23 +281,23 @@ Rectangle {
             id: rectangle_52
             width: 4
             height: 9
-            color: "#515253"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 383
-            anchors.topMargin: 77
-            rotation: 43.593
+            anchors.topMargin: 75
+            rotation: 44.895
         }
 
         Rectangle {
             id: rectangle_53
             width: 4
             height: 9
-            color: "#515253"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 433
-            anchors.topMargin: 184
+            anchors.leftMargin: 434
+            anchors.topMargin: 188
             rotation: 84.018
         }
 
@@ -305,12 +305,12 @@ Rectangle {
             id: rectangle_54
             width: 4
             height: 9
-            color: "#515253"
+            color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 424
-            anchors.topMargin: 287
-            rotation: -254.263
+            anchors.leftMargin: 413
+            anchors.topMargin: 314
+            rotation: -244.773
         }
     }
 
@@ -360,8 +360,8 @@ Rectangle {
         text: qsTr("20")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 40
-        anchors.topMargin: 231
+        anchors.leftMargin: 42
+        anchors.topMargin: 253
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -378,8 +378,8 @@ Rectangle {
         text: qsTr("40")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 52
-        anchors.topMargin: 141
+        anchors.leftMargin: 50
+        anchors.topMargin: 149
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -396,8 +396,8 @@ Rectangle {
         text: qsTr("60")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 118
-        anchors.topMargin: 68
+        anchors.leftMargin: 110
+        anchors.topMargin: 70
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -414,8 +414,8 @@ Rectangle {
         text: qsTr("80")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 208
-        anchors.topMargin: 38
+        anchors.leftMargin: 210
+        anchors.topMargin: 37
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -432,8 +432,8 @@ Rectangle {
         text: qsTr("100")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 287
-        anchors.topMargin: 62
+        anchors.leftMargin: 291
+        anchors.topMargin: 66
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -450,8 +450,8 @@ Rectangle {
         text: qsTr("120")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 356
-        anchors.topMargin: 138
+        anchors.leftMargin: 358
+        anchors.topMargin: 141
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -468,8 +468,8 @@ Rectangle {
         text: qsTr("140")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 372
-        anchors.topMargin: 230
+        anchors.leftMargin: 373
+        anchors.topMargin: 244
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop

@@ -82,9 +82,10 @@ Item {
     }
 
     Speedometer {
+        id: speedometer
         x: 1357
         y: 46
-        value:20
+        // value: batterySlider.value
         minValue: 0
         maxValue: 160
     }
