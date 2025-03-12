@@ -48,16 +48,17 @@ QtObject {
         ctx.lineWidth = needleWidth;
         ctx.strokeStyle = Config.needleColor;
 
-        var needleStartAngle = valueAngle;
-        var needleEndAngle = valueAngle - 3;
+        var adjustedStartAngle = valueAngle + (needleWidth / (2 * Math.PI * arcRadius)) * 180;
 
-        var needleRadius = arcRadius - (needleWidth / 2); 
+        var needleEndAngle = valueAngle - 0.05;
+
+        var needleRadius = arcRadius - (needleWidth / 2);
 
         ctx.arc(
             arcRadius,
             arcRadius,
             needleRadius,
-            degreesToRadians(needleStartAngle),
+            degreesToRadians(adjustedStartAngle),
             degreesToRadians(needleEndAngle),
             true
         );
