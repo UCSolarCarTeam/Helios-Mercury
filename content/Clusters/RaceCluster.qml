@@ -73,6 +73,12 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    Rnd {
+        id: rnd
+        x: 1518
+        y: 449
+    }
+    
     BatteryIcon {
         id: batteryIcon
         x: 16
