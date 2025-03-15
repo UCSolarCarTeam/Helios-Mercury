@@ -44,6 +44,16 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/PacketFactory/Packets/PiPacket.h src/PacketFactory/Packets/PiPacket.cpp
 )
 
+message(STATUS "System: ${CMAKE_SYSTEM_NAME}")
+message(STATUS "Processor: ${CMAKE_SYSTEM_PROCESSOR}")
+
+if (CMAKE_SYSTEM_PROCESSOR STREQUAL "armv7l" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64") ##Verification on pi required
+    add_definitions(-DRUNNING_ON_PI)
+    qt_add_executable(Helios-Mercury
+        src/Receivers/GpioReceiver.h src/Receivers/GpioReceiver.cpp
+    )
+endif()
+
 qt_add_resources(Helios-Mercury "configuration"
     PREFIX "/"
     FILES

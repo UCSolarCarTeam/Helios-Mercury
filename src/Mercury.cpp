@@ -9,6 +9,10 @@
 
 #include <QQmlContext>
 
+#ifdef RUNNING_ON_PI
+#include "Receivers/GpioReceiver.h"
+#endif
+
 
 Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
@@ -17,6 +21,11 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //load in settings and initialize Packet factory
     ConfigManager& config = ConfigManager::instance();
     PacketFactory* packetFactory = new PacketFactory();
+
+    //Initialize GPIO Receiver if on Pi
+#ifdef RUNNING_ON_PI
+    GpioReceiver gpioReciever;
+#endif
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
     SerialReceiver* serialReceiver = new SerialReceiver();
