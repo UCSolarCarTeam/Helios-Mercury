@@ -119,13 +119,13 @@ Item {
     }
 
     SmallGauge {
-        id: averageCellTempGauge2
+        id: testingSmallGauge
         x: 456
         y: 209
         minValue: 0
         maxValue: 100
-        gaugeTitle: "AVG Cell Temp"
-        units: "°C"
+        gaugeTitle: "Small Gauge Test"
+        units: "u"
         value: battery.AverageTemperature
     }
 }
