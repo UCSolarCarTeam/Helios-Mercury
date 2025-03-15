@@ -15,6 +15,7 @@ private slots:
 
 private:
     void sendPong();
+    void handleTelemetryMessage(const QByteArray& message);
     void setup();
 
     QMqttClient* client_;
