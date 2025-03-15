@@ -1166,6 +1166,18 @@ Rectangle {
                         text: "Debug Mode: " + keyMotor.DebugMode
                     }
                 }
+
+                Column {
+                    Text {
+                        text: "Pi"
+                    }
+                    Text {
+                        text: "Rfid: " + pi.Rfid
+                    }
+                    Text {
+                        text: "Driver Name: " + pi.DriverName
+                    }
+                }
             }
         }
     }

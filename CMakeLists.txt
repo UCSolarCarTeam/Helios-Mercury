@@ -41,6 +41,7 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Config/PropertyDefinitions.h
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
     src/Config/Logger.h src/Config/Logger.cpp
+    src/PacketFactory/Packets/PiPacket.h src/PacketFactory/Packets/PiPacket.cpp
 )
 
 qt_add_resources(Helios-Mercury "configuration"
