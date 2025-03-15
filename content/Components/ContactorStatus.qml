@@ -5,7 +5,7 @@ import Mercury
 Item {
     id: contactorStatusFrame
     width: 45
-    height: 35
+    height: parent.height
 
     property string contactor: "Name"
     property bool isConnected: false
