@@ -174,6 +174,5 @@ Item {
             bottomMargin: 5
         }
         source: "../Images/BoltIcon.png"
-        visible: true
     }
 }
