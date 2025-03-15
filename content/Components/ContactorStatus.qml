@@ -15,7 +15,7 @@ Item {
         id: contactorTitle
         text: contactor
         font.pixelSize: Config.smallFontSize
-        color: Config.textColor
+        color: Config.fontColor
         anchors.bottom: contactorIcon.top
         anchors.bottomMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
