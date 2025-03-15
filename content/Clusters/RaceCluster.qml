@@ -117,4 +117,15 @@ Item {
         units: "°C"
         value: battery.AverageTemperature
     }
+
+    SmallGauge {
+        id: testingSmallGauge
+        x: 456
+        y: 209
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Small Gauge Test"
+        units: "u"
+        value: battery.AverageTemperature
+    }
 }
