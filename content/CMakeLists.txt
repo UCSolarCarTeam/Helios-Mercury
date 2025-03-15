@@ -31,5 +31,4 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
 	Images/Battery.png
         Images/ParkingBrake.png
-        Images/BoltIcon.png
 )
