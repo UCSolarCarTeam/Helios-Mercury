@@ -27,7 +27,7 @@ Item {
         Rectangle {
             id: batteryFill
             width: parent.width
-            height: parent.height * Math.max(0, Math.min(1, (batteryIcon.value - 0) / 100))
+            height: parent.height * Math.max(0, Math.min(1, (batteryIcon.value) / 100))
             anchors.bottom: parent.bottom
             color: Config.primary
 
