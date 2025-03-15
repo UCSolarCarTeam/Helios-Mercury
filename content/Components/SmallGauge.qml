@@ -1,198 +1,179 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
-//import "../util/util.js"
+import Mercury
+import "../Util"
 
 Item {
-    id: smallGaugeRoot
+    id: smallGauge
     width: 178
     height: 178
 
-    property int minValue: 0
-    property int maxValue: 100
-    property string units: "units"
-    property string gaugeTitle: "title"
-    property int value: 50
-    property string iconPath: "../Images/BoltIcon.png"
+    // gauge properties
+    property real minValue
+    property real maxValue
+    property string units
+    property real value
+    property string gaugeTitle
 
-    Rectangle {
-        id: smallGauge
+    // animation properties
+    property int animationDuration: 300
+
+    // canvas arc properties
+    property real arcEnd: 405
+    property real arcBegin: 135
+    property real arcWidth: 17
+
+    GaugeAnimation { id: gaugeAnimation }
+
+    ArcItem {
+        id: outerArc
         width: 178
         height: 178
-        color: "black"
+        strokeWidth: 0
+        strokeColor: "transparent"
+        outlineArc: true
+        fillColor: Config.outerArcColor
+        end: -135
+        begin: 135
+        arcWidth: 2
+        antialiasing: true
+    }
 
-        Item {
-            id: smallGuageFrame
+    ArcItem {
+        id: inactiveArc
+        width: 169
+        height: 169
+        anchors {
+            left: parent.left
+            top: parent.top
+            leftMargin: 5
+            topMargin: 5
+        }
+        strokeWidth: 0
+        strokeColor: "transparent"
+        outlineArc: true
+        fillColor: Config.btnDisabled
+        end: -135
+        begin: 135
+        arcWidth: 17
+        antialiasing: true
+    }
+
+    Item {
+        id: activeArcContainer
+        anchors.fill: inactiveArc
+        property real animatedValue: smallGauge.minValue
+
+        Behavior on animatedValue { NumberAnimation { duration: smallGauge.animationDuration } }
+
+        Connections {
+            target: smallGauge
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(smallGauge.value, smallGauge.minValue, smallGauge.maxValue); }
+        }
+
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(smallGauge.value, smallGauge.minValue, smallGauge.maxValue); }
+
+        Canvas {
+            id: activeArc
             anchors.fill: parent
-
-            ArcItem {
-                id: outerArc
-                width: 178
-                height: 178
-                anchors.left: parent.left
-                anchors.top: parent.top
-                strokeWidth: 0
-                strokeStyle: 0
-                strokeColor: "transparent"
-                outlineArc: true
-                fillColor: "#242627"
-                end: -134.72317
-                begin: 131.56227
-                arcWidth: 1.78
-                antialiasing: true
-            }
-
-            ArcItem {
-                id: innerArc
-                width: 169
-                height: 169
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.leftMargin: 5
-                anchors.topMargin: 5
-                strokeWidth: 0
-                strokeStyle: 0
-                strokeColor: "transparent"
-                outlineArc: true
-                fillColor: "#00a8ff"
-                end: -134.72317
-                begin: 131.56227
-                arcWidth: 16.87532
-                antialiasing: true
-            }
-
-            Rectangle {
-                id: needle
-                width: 5
-                height: 17
-                color: "#ffffff"
-
-                property real arcAngle: innerArc.begin - innerArc.end
-                property real angle: (innerArc.begin + needle.width + (smallGaugeRoot.value / maxValue) * arcAngle)
-                property real needleRadius: (innerArc.width - innerArc.arcWidth) / 2
-
-                x: (outerArc.width / 2) + Math.cos(degreesToRadians(angle)) * needleRadius - width / 2
-                y: (outerArc.height / 2) + Math.sin(degreesToRadians(angle)) * needleRadius - height / 2
-
-                function degreesToRadians(degrees) {
-                    return degrees * (Math.PI / 180);
-                }
-
-                transformOrigin: Item.Center
-                rotation: smallGaugeRoot.value / maxValue * arcAngle + 45
+            onPaint: { gaugeAnimation.drawGauge(activeArc, smallGauge, activeArcContainer.animatedValue); }
+            Connections {
+                target: activeArcContainer
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
             }
         }
     }
 
-    // Gauge Data Display
-    Rectangle {
-        id: smallGuageData
-        width: 123
-        height: 148
-        color: "transparent"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: smallGauge.bottom
-        anchors.topMargin: -148
-        anchors.horizontalCenterOffset: 1
-
-        Text {
-            id: title
-            width: parent.width
-            color: "#898989"
-            text: gaugeTitle
-            anchors.top: parent.top
-            anchors.topMargin: 90
-            font.pixelSize: 14
-            horizontalAlignment: Text.AlignHCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            wrapMode: Text.Wrap
-            font.weight: Font.Medium
-            font.family: "SF Pro"
+    Text {
+        id: minVal
+        width: 12
+        height: 24
+        color: Config.textColor
+        text: smallGauge.minValue
+        font.pixelSize: Config.gaugeFontSizeS
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            right: inactiveArc.horizontalCenter
+            rightMargin: 35
+            bottom: inactiveArc.bottom
+            bottomMargin: 10
         }
+        font.weight: Font.Medium
+        font.family: Config.fontStyle
+    }
 
-        Rectangle {
-            id: textFrame
-            height: 81
-            width: parent.width
-            color: "transparent"
-            anchors.horizontalCenter: parent.horizontalCenter
+    Text {
+        id: maxVal
+        width: 35
+        height: 24
+        color: Config.textColor
+        text: smallGauge.maxValue
+        font.pixelSize: Config.gaugeFontSizeS
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            left: inactiveArc.horizontalCenter
+            leftMargin: 10
+            bottom: inactiveArc.bottom
+            bottomMargin: 10
+        }
+        font.weight: Font.Medium
+        font.family: Config.fontStyle
+    }
 
-            Rectangle {
-                id: boltSymbol
-                width: 13.5
-                height: 20
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                color: "transparent"
-                anchors.top: parent.top
-
-                Image {
-                    anchors.fill: parent
-                    height: 20
-                    width:13.5
-                    id: gaugeIcon
-                    source: iconPath
-                }
-                clip: true
-            }
-
-            Text {
-                id: incomingValue
-                width: parent.width
-                height: 29
-                color: "#ffffff"
-                text: value.toString() + " " + units
-                anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-                anchors.top: parent.top
-                anchors.topMargin: 40
-                font.pixelSize: 24
-                wrapMode: Text.NoWrap
-                font.weight: Font.Medium
-                font.family: "SF Pro"
-            }
-
-            Rectangle{
-                id: minMaxContainer
-                width: parent.width
-
-                Text {
-                id: minVal
-                width: 12
-                height: 24
-                color: "#d4d4d4"
-                text: minValue
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.leftMargin: -10
-                anchors.topMargin: 120
-                font.pixelSize: 20
-                horizontalAlignment: Text.AlignLeft
-                verticalAlignment: Text.AlignTop
-                wrapMode: Text.NoWrap
-                font.weight: Font.Medium
-                font.family: "SF Pro"
-                }
-
-                Text {
-                id: maxVal
-                width: 38
-                height: 24
-                color: "#d4d4d4"
-                text: maxValue
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.leftMargin: 104
-                anchors.topMargin: 120
-                font.pixelSize: 20
-                horizontalAlignment: Text.AlignLeft
-                verticalAlignment: Text.AlignTop
-                wrapMode: Text.NoWrap
-                font.weight: Font.Medium
-                font.family: "SF Pro"
-                }
+    Text {
+        id: gaugeValue
+        width: 150
+        height: 36
+        color: Config.textColor
+        text: {
+            if (Math.floor(smallGauge.value) === smallGauge.value) {
+                return Math.floor(smallGauge.value) + smallGauge.units;
+            } else {
+                    return smallGauge.value.toFixed(1) + smallGauge.units;
             }
         }
+        font.pixelSize: Config.gaugeFontSizeM
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            bottom: inactiveArc.verticalCenter
+            horizontalCenter: inactiveArc.horizontalCenter
+            bottomMargin: -5
+        }
+        font.weight: Font.Medium
+        font.family: Config.fontStyle
+    }
+
+    Text {
+        id: gaugeLabel
+        width: 150
+        height: 18
+        color: Config.textColor
+        text: smallGauge.gaugeTitle
+        font.pixelSize: Config.gaugeFontSizeS
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            top: gaugeValue.bottom
+            horizontalCenter: inactiveArc.horizontalCenter
+        }
+        font.weight: Font.Medium
+        font.family: Config.fontStyle
+    }
+
+    Image {
+        id: boltIcon
+        width: 14
+        height: 20
+        anchors {
+            bottom: gaugeValue.top
+            horizontalCenter: inactiveArc.horizontalCenter
+            bottomMargin: 5
+        }
+        source: "../Images/BoltIcon.png"
+        visible: true
     }
 }
