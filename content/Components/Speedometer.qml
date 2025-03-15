@@ -64,6 +64,168 @@ Rectangle {
         antialiasing: true
     }
 
+    Text {
+        id: element
+        width: 23
+        height: 30
+        color: "#ffffff"
+        text: qsTr("0")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 91
+        anchors.topMargin: 340
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element1
+        width: 41
+        height: 30
+        color: "#ffffff"
+        text: qsTr("20")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 43
+        anchors.topMargin: 246
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element2
+        width: 42
+        height: 30
+        color: "#ffffff"
+        text: qsTr("40")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 56
+        anchors.topMargin: 143
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element3
+        width: 43
+        height: 30
+        color: "#ffffff"
+        text: qsTr("60")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 121
+        anchors.topMargin: 69
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element4
+        width: 43
+        height: 30
+        color: "#ffffff"
+        text: qsTr("80")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 220
+        anchors.topMargin: 37
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element5
+        width: 56
+        height: 30
+        color: "#ffffff"
+        text: qsTr("100")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 298
+        anchors.topMargin: 74
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element6
+        width: 55
+        height: 30
+        color: "#ffffff"
+        text: qsTr("120")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 361
+        anchors.topMargin: 150
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element7
+        width: 56
+        height: 30
+        color: "#ffffff"
+        text: qsTr("140")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 370
+        anchors.topMargin: 252
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
+    Text {
+        id: element8
+        width: 55
+        height: 30
+        color: "#ffffff"
+        text: qsTr("160")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 318
+        anchors.topMargin: 340
+        font.pixelSize: 24
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignTop
+        wrapMode: Text.Wrap
+        font.weight: Font.Medium
+        font.family: "SF Pro"
+    }
+
     Item {
         id: activeArcContainer
         anchors.fill: inactiveArc
@@ -332,168 +494,6 @@ Rectangle {
         anchors.verticalCenterOffset: 1
         anchors.horizontalCenterOffset: -1
         anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    Text {
-        id: element
-        width: 23
-        height: 30
-        color: "#ffffff"
-        text: qsTr("0")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 91
-        anchors.topMargin: 340
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element1
-        width: 41
-        height: 30
-        color: "#ffffff"
-        text: qsTr("20")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 43
-        anchors.topMargin: 246
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element2
-        width: 42
-        height: 30
-        color: "#ffffff"
-        text: qsTr("40")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 56
-        anchors.topMargin: 143
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element3
-        width: 43
-        height: 30
-        color: "#ffffff"
-        text: qsTr("60")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 121
-        anchors.topMargin: 69
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element4
-        width: 43
-        height: 30
-        color: "#ffffff"
-        text: qsTr("80")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 220
-        anchors.topMargin: 37
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element5
-        width: 56
-        height: 30
-        color: "#ffffff"
-        text: qsTr("100")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 298
-        anchors.topMargin: 74
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element6
-        width: 55
-        height: 30
-        color: "#ffffff"
-        text: qsTr("120")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 361
-        anchors.topMargin: 150
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element7
-        width: 56
-        height: 30
-        color: "#ffffff"
-        text: qsTr("140")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 370
-        anchors.topMargin: 252
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element8
-        width: 55
-        height: 30
-        color: "#ffffff"
-        text: qsTr("160")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 318
-        anchors.topMargin: 340
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
     }
 
     Rectangle {
