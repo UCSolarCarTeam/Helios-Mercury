@@ -17,11 +17,11 @@ baudrate=115200
 telemetryTopic=packet
 pingTopic=ping
 pongTopic=pong
-telemetryHostname=aedes.calgarysolarcar.ca
+telemetryHostname=aedes.IDontWantToKeepConnecting.ca
 telemetryPort=1883
 telemetryUsername=BEGONE
 telemetryPassword=NiceTryBud
 
 [Logging]
-logLevel=3
 loggingEnabled=true
+logPath=Mercury.log
