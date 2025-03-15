@@ -29,7 +29,7 @@ Item {
             width: parent.width
             height: parent.height * Math.max(0, Math.min(1, (batteryIcon.value - 0) / 100))
             anchors.bottom: parent.bottom
-            color: Config.batteryFill
+            color: Config.primary
 
             Behavior on height {
                 NumberAnimation { duration: 300 }
@@ -68,7 +68,7 @@ Item {
         anchors {
             left: batteryImage.right
             verticalCenter: batteryIcon.verticalCenter
-            leftMargin: 20
+            leftMargin: 10
         }
         color: Config.fontColor
         text: {
@@ -78,7 +78,7 @@ Item {
                     return batteryIcon.value.toFixed(1) + " %";
             }
         }
-        font.pixelSize: 26
+        font.pixelSize: Config.batteryFontSize
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         font.weight: Font.Medium
