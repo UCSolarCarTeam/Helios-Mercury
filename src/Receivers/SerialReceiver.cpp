@@ -51,7 +51,7 @@ void SerialReceiver::retryConnection() {
         qDebug() << "Serial port connected:" << portName_;
         packetFactory_->getPiPacket().setEmbeddedState(true);
     } else {
-        qWarning() << "⚠Failed to open serial port (" << portName_ << "). Retrying in " << RETRY_PERIOD / 1000 << " seconds...";
+        qWarning() << "Failed to open serial port (" << portName_ << "). Retrying in " << RETRY_PERIOD / 1000 << " seconds...";
         packetFactory_->getPiPacket().setEmbeddedState(false);
 
         // Use QTimer to schedule the next reconnection attempt
