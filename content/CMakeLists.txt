@@ -15,7 +15,12 @@ qt6_add_qml_module(content
         Components/DashIcon.qml
         Components/CameraView.qml
         Components/ConnectionStatus.qml
+        Components/Rnd.qml
+        Components/RaceClusterIcons.qml
         Config/Config.qml
+	Components/BatteryIcon.qml
+        Components/ThreeQuarterGauge.qml
+        Util/GaugeAnimation.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
@@ -27,4 +32,6 @@ qt6_add_qml_module(content
         Images/RadioBoardDisconnected.png
         Images/TelemetryConnected.png
         Images/TelemetryDisconnected.png
+	Images/Battery.png
+        Images/ParkingBrake.png
 )
