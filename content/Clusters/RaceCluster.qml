@@ -68,14 +68,6 @@ Item {
         anchors.horizontalCenterOffset: 0
     }
 
-    RaceClusterIcons{
-        id: raceDashboardIcons
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 55
-        anchors.horizontalCenterOffset: 0
-    }
-
     CameraView {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
