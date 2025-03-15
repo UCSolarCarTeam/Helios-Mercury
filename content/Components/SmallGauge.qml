@@ -89,7 +89,7 @@ Item {
         id: minVal
         width: 12
         height: 24
-        color: Config.textColor
+        color: Config.fontColor
         text: smallGauge.minValue
         font.pixelSize: Config.gaugeFontSizeS
         horizontalAlignment: Text.AlignHCenter
@@ -108,7 +108,7 @@ Item {
         id: maxVal
         width: 35
         height: 24
-        color: Config.textColor
+        color: Config.fontColor
         text: smallGauge.maxValue
         font.pixelSize: Config.gaugeFontSizeS
         horizontalAlignment: Text.AlignHCenter
@@ -127,7 +127,7 @@ Item {
         id: gaugeValue
         width: 150
         height: 36
-        color: Config.textColor
+        color: Config.fontColor
         text: {
             if (Math.floor(smallGauge.value) === smallGauge.value) {
                 return Math.floor(smallGauge.value) + smallGauge.units;
@@ -151,9 +151,9 @@ Item {
         id: gaugeLabel
         width: 150
         height: 18
-        color: Config.textColor
+        color: Config.fontColor
         text: smallGauge.gaugeTitle
-        font.pixelSize: Config.gaugeFontSizeS
+        font.pixelSize: Config.gaugeFontSizeXS
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
