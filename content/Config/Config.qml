@@ -13,4 +13,8 @@ QtObject {
 
     property string fontStyle: "SF Pro"
     property color highContrast: "#A2180F"
+
+    property int gaugeFontSizeS: 18
+    property int gaugeFontSizeM: 24
+    property int gaugeFontSizeL: 36
 }
