@@ -84,6 +84,16 @@ Item {
         x: 16
         y: 89
     }
+
+    TemperatureGauge {
+        id: testTempComponent
+        x: 1288
+        y: 230
+        temperatureValue: battery.InternalTemperature
+        minTemp: 0
+        maxTemp: 200
+        gaugeLabel: "Internal Temp"
+    }
     
     ThreeQuarterGauge {
         id: motorTempGauge
