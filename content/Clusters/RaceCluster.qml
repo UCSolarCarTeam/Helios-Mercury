@@ -80,4 +80,18 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
+    ConnectionStatus {
+        id: embeddedConnectionStatus
+        x: 1175
+        y: 507
+        isRadioBoard: true
+    }
+
+    ConnectionStatus {
+        id: awsConnectionStatus
+        x: 1125
+        y: 507
+        isRadioBoard: false
+    }
 }
