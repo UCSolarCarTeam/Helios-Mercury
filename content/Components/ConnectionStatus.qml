@@ -7,6 +7,8 @@ Item {
     width: 32
     height: 32
 
+    property string connection: name
+    property bool isConnected: false
     property bool isRadioBoard: false
 
     Image {
