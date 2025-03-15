@@ -73,6 +73,12 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    BatteryIcon {
+        id: batteryIcon
+        x: 16
+        y: 89
+    }
+    
     ThreeQuarterGauge {
         id: motorTempGauge
         x: 212

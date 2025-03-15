@@ -89,7 +89,7 @@ Item {
         id: minVal
         width: 15
         height: 24
-        color: Config.textColor
+        color: Config.fontColor
         text: threeQuarterGauge.minValue
         font.pixelSize: Config.gaugeFontSizeM
         horizontalAlignment: Text.AlignHCenter
@@ -106,7 +106,7 @@ Item {
         id: maxVal
         width: 50
         height: 24
-        color: Config.textColor
+        color: Config.fontColor
         text: threeQuarterGauge.maxValue
         font.pixelSize: Config.gaugeFontSizeM
         horizontalAlignment: Text.AlignHCenter
@@ -123,7 +123,7 @@ Item {
         id: gaugeValue
         width: 150
         height: 36
-        color: Config.textColor
+        color: Config.fontColor
         text: {
             if (Math.floor(threeQuarterGauge.value) === threeQuarterGauge.value) {
                 return Math.floor(threeQuarterGauge.value) + threeQuarterGauge.units;
@@ -147,7 +147,7 @@ Item {
         id: gaugeLabel
         width: 150
         height: 18
-        color: Config.textColor
+        color: Config.fontColor
         text: threeQuarterGauge.gaugeTitle
         font.pixelSize: Config.gaugeFontSizeS
         horizontalAlignment: Text.AlignHCenter
