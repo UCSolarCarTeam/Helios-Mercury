@@ -11,5 +11,5 @@ QtObject {
     property color tronBlue: "#00A8FF"
     property color txtDisabled: "#FFFFFF"
 
-    property int fontSize: 20
+    property int rndfontSize: 20
 }

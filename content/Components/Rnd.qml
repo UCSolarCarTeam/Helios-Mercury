@@ -27,9 +27,9 @@ Item {
     // Blue Marker for Selected Gear
     Rectangle {
         id: gearMarker
-        width: 20
+        width: 24
         height: 5
-        color: Config.tronBlue
+        color: Config.primary
         y: baseLine.y + (baseLine.height - height) / 2
 
         // Marker aligns with selected gear safely
@@ -56,10 +56,12 @@ Item {
 
         MultiEffect {
             source: gearMarker
+            shadowScale: 1.25
             anchors.fill: gearMarker
-            shadowColor: Config.tronBlue
-            shadowBlur: 1.0
-            shadowOpacity: 0.6
+            shadowColor: Config.primary
+            shadowEnabled: true
+            shadowBlur: 0.25
+            shadowOpacity: 0.75
         }
     }
 
@@ -81,8 +83,8 @@ Item {
                 Text {
                     id: gearText
                     text: gears[index]
-                    font.pixelSize: Config.fontSize
-                    color: index === currentGear ? Config.tronBlue : Config.txtDisabled
+                    font.pixelSize: Config.rndfontSize
+                    color: index === currentGear ? Config.primary : Config.txtDisabled
                     anchors.centerIn: parent
                 }
 
@@ -90,8 +92,10 @@ Item {
                     source: gearText
                     anchors.fill: gearText
                     shadowEnabled: index === currentGear
-                    shadowBlur: 1.0
-                    shadowOpacity: 0.6
+                    shadowBlur: 0.25
+                    shadowColor: Config.primary
+                    shadowOpacity: 0.75
+                    shadowScale: 1.25
                 }
             }
         }
