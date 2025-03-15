@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Controls
 import "../Components"
 
 Item {
@@ -59,14 +60,6 @@ Item {
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
-    RaceClusterIcons{
-        id: raceDashboardIcons
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 55
-        anchors.horizontalCenterOffset: 0
-    }
-
     RaceClusterIcons {
         id: raceDashboardIcons
         anchors.horizontalCenter: parent.horizontalCenter
@@ -90,18 +83,34 @@ Item {
         maxValue: 160
     }
 
+    Slider {
+        id: batterySlider
+        width: 229
+        height: 48
+        anchors.top: speedometer.bottom
+        anchors.horizontalCenterOffset: 637
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: -18
+        from: speedometer.minValue
+        to: speedometer.maxValue
+        value: 0  // Initial value
+        onValueChanged: {
+            speedometer.value = value;
+        }
+    }
+
     Rnd {
         id: rnd
         x: 1518
         y: 449
     }
-    
+
     BatteryIcon {
         id: batteryIcon
         x: 16
         y: 89
     }
-    
+
     ThreeQuarterGauge {
         id: motorTempGauge
         x: 212
@@ -110,7 +119,7 @@ Item {
         maxValue: 100
         gaugeTitle: "Motor Temp"
         units: "°C"
-        value: ( motorDetails0.MotorTemperature + motorDetails1.MotorTemperature ) / 2
+        value: (motorDetails0.MotorTemperature + motorDetails1.MotorTemperature) / 2
     }
 
     ThreeQuarterGauge {
@@ -121,7 +130,7 @@ Item {
         maxValue: 100
         gaugeTitle: "Net Consumption"
         units: "mV"
-        value: battery.AverageCellVoltage / 10 
+        value: battery.AverageCellVoltage / 10
     }
 
     ThreeQuarterGauge {
