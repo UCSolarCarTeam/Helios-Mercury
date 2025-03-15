@@ -3,29 +3,35 @@
 
 #include <QObject>
 #include <QSerialPort>
+#include <QTimer>
+#include "../Config/ConfigManager.h"
 #include "../PacketFactory/PacketFactory.h"
 
 class SerialReceiver : public QObject {
     Q_OBJECT
+
 public:
-    explicit SerialReceiver(PacketFactory* packetFactory);
+    explicit SerialReceiver(PacketFactory* packetFactory, QObject* parent = nullptr);
     ~SerialReceiver();
 
 signals:
     void dataReceived(const QByteArray& data);
+    void deviceConnected();
+    void deviceDisconnected();
 
 private slots:
     void handleReadyRead();
     void handleError(QSerialPort::SerialPortError error);
-    void attemptReconnect();
+    void checkConnection();
+    void tryConnect();
 
 private:
-    QSerialPort *serialPort_;
+    QSerialPort* serialPort_;
     PacketFactory* packetFactory_;
     QString portName_;
+    bool connected_;
 
-    void setupSerialPort();
-    void retryConnection();
+    QTimer* monitorTimer_; // Timer for continuous monitoring
 };
 
 #endif // SERIALRECEIVER_H
