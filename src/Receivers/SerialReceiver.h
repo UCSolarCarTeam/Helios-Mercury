@@ -3,13 +3,12 @@
 
 #include <QObject>
 #include <QSerialPort>
-#include <QTimer>
 #include "../PacketFactory/PacketFactory.h"
 
 class SerialReceiver : public QObject {
     Q_OBJECT
 public:
-    SerialReceiver(PacketFactory* packetFactory);
+    explicit SerialReceiver(PacketFactory* packetFactory);
     ~SerialReceiver();
 
 signals:
@@ -17,13 +16,16 @@ signals:
 
 private slots:
     void handleReadyRead();
+    void handleError(QSerialPort::SerialPortError error);
+    void attemptReconnect();
 
 private:
     QSerialPort *serialPort_;
     PacketFactory* packetFactory_;
+    QString portName_;
 
+    void setupSerialPort();
     void retryConnection();
-    void attemptReconnect();
 };
 
 #endif // SERIALRECEIVER_H

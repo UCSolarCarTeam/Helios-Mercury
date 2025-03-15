@@ -8,69 +8,85 @@ namespace {
 const int RETRY_PERIOD = 5000; // milliseconds
 }
 
-SerialReceiver::SerialReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory ){
-    serialPort_ = new QSerialPort(this);
+/** Constructor: Initializes SerialReceiver and sets up the serial port */
+SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
+    : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)) {
 
     ConfigManager& config = ConfigManager::instance();
+    portName_ = config.getPortName();
 
-    serialPort_->setPortName(config.getPortName());
+    setupSerialPort();
+}
+
+/** Destructor: Ensure serial port is closed on cleanup */
+SerialReceiver::~SerialReceiver() {
+    if (serialPort_->isOpen()) {
+        serialPort_->close();
+    }
+}
+
+/** Configure serial port settings */
+void SerialReceiver::setupSerialPort() {
+    ConfigManager& config = ConfigManager::instance();
+
+    serialPort_->setPortName(portName_);
     serialPort_->setBaudRate(config.getBaudrate());
     serialPort_->setDataBits(QSerialPort::Data8);
     serialPort_->setParity(QSerialPort::NoParity);
     serialPort_->setStopBits(QSerialPort::OneStop);
 
-    //TODO: add retry period/detection mechinism for serial device
-    // if (serialPort_->open(QIODevice::ReadOnly)) {
-    //     qDebug() << "Serial Port Opened: " << config.getPortName();
-    //     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
-    // } else {
-    //     qWarning() << "EXITING - Failed to open serial port (" << config.getPortName() << "): " << serialPort_->errorString();
-    //     exit(1);
-    // }
+    // Connect error handling and data reading slots
+    connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
+    connect(serialPort_, &QSerialPort::errorOccurred, this, &SerialReceiver::handleError);
+
+    // Start connection attempt
+    retryConnection();
+}
+
+/** Attempt to open the serial port, retry if it fails */
+void SerialReceiver::retryConnection() {
+    qDebug() << "Attempting to open serial port:" << portName_;
 
     if (serialPort_->open(QIODevice::ReadOnly)) {
-        qDebug() << "Serial Port Opened: " << config.getPortName();
-        connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
+        qDebug() << "Serial port connected:" << portName_;
         packetFactory_->getPiPacket().setEmbeddedState(true);
     } else {
-        qWarning() << "EXITING - Failed to open serial port (" << config.getPortName() << "): " << serialPort_->errorString();
+        qWarning() << "⚠Failed to open serial port (" << portName_ << "). Retrying in " << RETRY_PERIOD / 1000 << " seconds...";
         packetFactory_->getPiPacket().setEmbeddedState(false);
-        retryConnection();
+
+        // Use QTimer to schedule the next reconnection attempt
+        QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::attemptReconnect);
     }
 }
 
-SerialReceiver::~SerialReceiver() {
-    if(serialPort_->isOpen()) {
-        serialPort_->close();
-    }
-}
-
-/** Retry the serial port connection after a delay */
-void SerialReceiver::retryConnection() {
-    qWarning() << "Retrying to open serial port in " << RETRY_PERIOD / 1000 << " seconds...";
-    QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::attemptReconnect);
-}
-
-/** Attempt to reconnect to the serial port */
+/** Reconnection attempt slot */
 void SerialReceiver::attemptReconnect() {
-    if (serialPort_->open(QIODevice::ReadOnly)) {
-        qWarning() << "Failed to open serial port on retry, trying again in " << RETRY_PERIOD / 1000 << " seconds...";
-        retryConnection();
-    } else {
-        qDebug() << "Successfully opened serial port on retry.";
-        connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
+    qDebug() << "Retrying serial port connection...";
+    if (!serialPort_->isOpen()) {
+        retryConnection(); // Recursively retry until success
     }
 }
 
+/** Handle incoming data from the serial port */
 void SerialReceiver::handleReadyRead() {
     QByteArray data = serialPort_->readAll();
-
-    qDebug() << "Data Received: " << data;
+    qDebug() << "Data received:" << data;
 
     if (data.isEmpty()) {
-        qDebug() << "Incoming data is empty";
+        qDebug() << "⚠Incoming data is empty";
+        return;
     }
 
-    emit dataReceived(data); // Emit signal with the received data
+    emit dataReceived(data);
+}
 
+/** Handle serial port errors and trigger retry */
+void SerialReceiver::handleError(QSerialPort::SerialPortError error) {
+    if (error == QSerialPort::ResourceError || error == QSerialPort::DeviceNotFoundError) {
+        qWarning() << "Serial port error:" << serialPort_->errorString();
+        packetFactory_->getPiPacket().setEmbeddedState(false);
+
+        serialPort_->close();
+        QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::attemptReconnect);
+    }
 }

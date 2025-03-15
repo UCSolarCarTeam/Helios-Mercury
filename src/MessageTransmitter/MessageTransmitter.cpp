@@ -7,7 +7,7 @@ namespace {
     const int RETRY_PERIOD = 5000; // milliseconds
 }
 
-    MessageTransmitter::MessageTransmitter(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
+MessageTransmitter::MessageTransmitter(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
     telemetryClient_ = new QMqttClient();
     setupTelemetryClient();
 }
