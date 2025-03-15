@@ -73,15 +73,6 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
-<<<<<<< HEAD
-    SmallGauge{
-        x: 105
-        y: 92
-        minValue: 0
-        maxValue: 100
-        gaugeTitle: "RPM"
-        value: motorDetails0.CurrentRpmValue
-=======
     Rnd {
         id: rnd
         x: 1518
@@ -125,6 +116,16 @@ Item {
         gaugeTitle: "AVG Cell Temp"
         units: "°C"
         value: battery.AverageTemperature
->>>>>>> 454006a64d0c0708d7e89389e4be6f162c8bd659
+    }
+
+    SmallGauge {
+        id: averageCellTempGauge2
+        x: 456
+        y: 209
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "AVG Cell Temp"
+        units: "°C"
+        value: battery.AverageTemperature
     }
 }
