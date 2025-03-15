@@ -117,4 +117,16 @@ Item {
         units: "°C"
         value: battery.AverageTemperature
     }
+
+    MediumGauge {
+        id: mediumGaugeTest
+        x: 429
+        y: 172
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Medium Gauge Test"
+        units: "u"
+        //value: battery.AverageTemperature
+        value: 9999.9
+    }
 }
