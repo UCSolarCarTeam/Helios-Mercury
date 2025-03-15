@@ -7,7 +7,7 @@ Item {
     width: 45
     height: 35
 
-    property string contactor
+    property string contactor: "Name"
     property bool isConnected: false
 
 
@@ -23,8 +23,8 @@ Item {
 
     Image {
         id: contactorIcon
-        width: 24
-        height:24
+        width: 20
+        height:20
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 2

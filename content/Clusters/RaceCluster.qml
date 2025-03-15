@@ -84,10 +84,12 @@ Item {
 
     Rectangle {
         id: contactorStatusComponent
+        y: 505
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
-        width: 475
+        anchors.horizontalCenterOffset: 0
+        anchors.bottomMargin: 10
+        width: 480
         height: 35
         color: "transparent"
 
@@ -101,21 +103,25 @@ Item {
                 text: qsTr("Contactor\n Status")
                 color: "white"
                 font.pixelSize: 14
+                Layout.fillHeight: true
+                Layout.bottomMargin: 4
                 verticalAlignment: Text.AlignVCenter
-                Layout.alignment: Qt.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
             }
 
             ContactorStatus {
                 id: cmnContactor
-                contactor: "cmn"
+                contactor: "CMN"
                 isConnected: mbms.CommonContactorState
+                height: parent.height
                 Layout.fillWidth: true
             }
 
             ContactorStatus {
                 id: hvContactor
-                contactor: "Motor"
+                contactor: "MOTOR"
                 isConnected: mbms.MotorContactorState
+                height: parent.height
                 Layout.fillWidth: true
             }
 
@@ -123,20 +129,23 @@ Item {
                 id: lvnContactor
                 contactor: "LV"
                 isConnected: mbms.LvContactorState
+                height: parent.height
                 Layout.fillWidth: true
             }
 
             ContactorStatus {
                 id: arrayContactor
-                contactor: "Array"
+                contactor: "ARRAY"
                 isConnected: mbms.ArrayContactorState
+                height: parent.height
                 Layout.fillWidth: true
             }
 
             ContactorStatus {
                 id: chargeContactor
-                contactor: "Charge"
+                contactor: "CHARGE"
                 isConnected: mbms.ChargeContactorState
+                height: parent.height
                 Layout.fillWidth: true
             }
         }
