@@ -119,8 +119,8 @@ Item {
 
     ThreeQuarterGauge {
         id: averageCellTempGauge
-        x: 181
-        y: 287
+        x: 178
+        y: 290
         minValue: 0
         maxValue: 100
         gaugeTitle: "AVG Cell Temp"
