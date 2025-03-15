@@ -6,8 +6,8 @@ Item {
     id: batteryIcon
     width: 170
     height: 60
-    property real rawValue
-    property real value: rawValue / 2
+    property real rawValue: battery.PackStateOfCharge
+    property real value: rawValue / 2 //Unit Conversion from 0.5% to 1%
 
     Image {
         id: batteryImage

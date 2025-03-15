@@ -77,7 +77,6 @@ Item {
         id: batteryIcon
         x: 16
         y: 89
-        rawValue: battery.PackStateOfCharge
     }
     
     ThreeQuarterGauge {
