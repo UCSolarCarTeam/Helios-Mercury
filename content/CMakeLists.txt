@@ -14,12 +14,9 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
-<<<<<<< HEAD
         Components/SmallGauge.qml
-=======
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
->>>>>>> 454006a64d0c0708d7e89389e4be6f162c8bd659
         Config/Config.qml
 	Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
@@ -34,4 +31,5 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
 	Images/Battery.png
         Images/ParkingBrake.png
+        Images/BoltIcon.png
 )
