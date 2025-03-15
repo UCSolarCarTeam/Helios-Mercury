@@ -117,8 +117,8 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 213
-            anchors.topMargin: 0
+            anchors.leftMargin: 222
+            anchors.topMargin: -1
         }
 
         Rectangle {
@@ -128,8 +128,8 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 334
-            anchors.topMargin: 34
+            anchors.leftMargin: 343
+            anchors.topMargin: 39
             rotation: 33.432
         }
 
@@ -140,8 +140,8 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 93
-            anchors.topMargin: 39
+            anchors.leftMargin: 100
+            anchors.topMargin: 34
             rotation: -36.386
         }
 
@@ -152,8 +152,8 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 151
-            anchors.topMargin: 10
+            anchors.leftMargin: 158
+            anchors.topMargin: 8
             rotation: -17.668
         }
 
@@ -164,9 +164,9 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 47
-            anchors.topMargin: 83
-            rotation: 307.827
+            anchors.leftMargin: 53
+            anchors.topMargin: 75
+            rotation: 313.022
         }
 
         Rectangle {
@@ -177,8 +177,8 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 1
-            anchors.topMargin: 201
-            rotation: 95.481
+            anchors.topMargin: 192
+            rotation: 95.084
         }
 
         Rectangle {
@@ -188,9 +188,9 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 28
-            anchors.topMargin: 324
-            rotation: 60.016
+            anchors.leftMargin: 24
+            anchors.topMargin: 317
+            rotation: 64.041
         }
 
         Rectangle {
@@ -200,8 +200,8 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 416
-            anchors.topMargin: 129
+            anchors.leftMargin: 420
+            anchors.topMargin: 137
             rotation: 66.687
         }
 
@@ -212,9 +212,9 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 15
-            anchors.topMargin: 138
-            rotation: 112.538
+            anchors.leftMargin: 18
+            anchors.topMargin: 129
+            rotation: 112.451
         }
 
         Rectangle {
@@ -224,9 +224,9 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 433
-            anchors.topMargin: 255
-            rotation: 98.656
+            anchors.leftMargin: 431
+            anchors.topMargin: 264
+            rotation: 105.323
         }
 
         Rectangle {
@@ -236,9 +236,9 @@ Rectangle {
             color: Config.speedometerWhiteTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 5
-            anchors.topMargin: 266
-            rotation: 75.419
+            anchors.leftMargin: 3
+            anchors.topMargin: 256
+            rotation: 79.893
         }
 
         Rectangle {
@@ -272,8 +272,8 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 279
-            anchors.topMargin: 8
+            anchors.leftMargin: 287
+            anchors.topMargin: 11
             rotation: 200.581
         }
 
@@ -284,9 +284,9 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 383
-            anchors.topMargin: 75
-            rotation: 44.895
+            anchors.leftMargin: 389
+            anchors.topMargin: 83
+            rotation: 51.074
         }
 
         Rectangle {
@@ -296,9 +296,9 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 434
-            anchors.topMargin: 188
-            rotation: 84.018
+            anchors.leftMargin: 435
+            anchors.topMargin: 200
+            rotation: 85.254
         }
 
         Rectangle {
@@ -308,9 +308,9 @@ Rectangle {
             color: Config.speedometerGrayTicks
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.leftMargin: 413
-            anchors.topMargin: 314
-            rotation: -244.773
+            anchors.leftMargin: 409
+            anchors.topMargin: 322
+            rotation: -239.646
         }
     }
 
@@ -360,8 +360,8 @@ Rectangle {
         text: qsTr("20")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 42
-        anchors.topMargin: 253
+        anchors.leftMargin: 43
+        anchors.topMargin: 246
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -378,8 +378,8 @@ Rectangle {
         text: qsTr("40")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 50
-        anchors.topMargin: 149
+        anchors.leftMargin: 56
+        anchors.topMargin: 143
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -396,8 +396,8 @@ Rectangle {
         text: qsTr("60")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 110
-        anchors.topMargin: 70
+        anchors.leftMargin: 121
+        anchors.topMargin: 69
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -414,7 +414,7 @@ Rectangle {
         text: qsTr("80")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 210
+        anchors.leftMargin: 220
         anchors.topMargin: 37
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
@@ -432,8 +432,8 @@ Rectangle {
         text: qsTr("100")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 291
-        anchors.topMargin: 66
+        anchors.leftMargin: 298
+        anchors.topMargin: 74
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -450,8 +450,8 @@ Rectangle {
         text: qsTr("120")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 358
-        anchors.topMargin: 141
+        anchors.leftMargin: 361
+        anchors.topMargin: 150
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
@@ -468,8 +468,8 @@ Rectangle {
         text: qsTr("140")
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 373
-        anchors.topMargin: 244
+        anchors.leftMargin: 370
+        anchors.topMargin: 252
         font.pixelSize: 24
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
