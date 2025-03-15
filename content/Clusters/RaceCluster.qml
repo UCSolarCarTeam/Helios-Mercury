@@ -126,7 +126,6 @@ Item {
         maxValue: 100
         gaugeTitle: "Medium Gauge Test"
         units: "u"
-        //value: battery.AverageTemperature
-        value: 9999.9
+        value: motorDetails0.MotorTemperature
     }
 }
