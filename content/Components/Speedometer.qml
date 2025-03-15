@@ -15,7 +15,8 @@ Rectangle {
     property int minValue: 0
     property int maxValue: 160
     property string units: "Km/h"
-    property int value: 0
+
+    property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
 
     property int animationDuration: 300
 
@@ -89,7 +90,7 @@ Rectangle {
             id: activeArc
             anchors.fill: parent
             onPaint: {
-                gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue);
+                gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue, 88);
             }
             Connections {
                 target: activeArcContainer
@@ -315,18 +316,17 @@ Rectangle {
     }
 
     ArcItem {
-        id: outerRing1
+        id: innering1
         width: 247
         height: 247
         anchors.verticalCenter: parent.verticalCenter
         strokeWidth: 0
         strokeStyle: 0
         strokeColor: "transparent"
-        rotation: -90
         outlineArc: true
         fillColor: "#1b1a1d"
-        end: 584.28325
-        begin: 314.28326
+        end: -136.2
+        begin: 136.2
         arcWidth: 9.42797
         antialiasing: true
         anchors.verticalCenterOffset: 1

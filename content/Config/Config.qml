@@ -27,4 +27,8 @@ QtObject {
 
     property color speedometerWhiteTicks: "#fff"
     property color speedometerGrayTicks: "#515253"
+
+    // Wheel diameter in meters
+    property double wheelDiameter: 0.50419
+    property double rpmValue: (motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue) / 2
 }

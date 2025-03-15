@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Controls
 import "../Components"
 
 Item {
@@ -74,35 +73,28 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
-    Speedometer {
-        id: speedometer
-        x: 1357
-        y: 46
-        // value: batterySlider.value
-        minValue: 0
-        maxValue: 160
-    }
+    Item {
+        id: speedometerGearComponent
+        width: speedometer.width
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: 46
+        anchors.rightMargin: 72
 
-    Slider {
-        id: batterySlider
-        width: 229
-        height: 48
-        anchors.top: speedometer.bottom
-        anchors.horizontalCenterOffset: 637
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: -18
-        from: speedometer.minValue
-        to: speedometer.maxValue
-        value: 0  // Initial value
-        onValueChanged: {
-            speedometer.value = value;
+        Speedometer {
+            id: speedometer
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            minValue: 0
+            maxValue: 160
         }
-    }
 
-    Rnd {
-        id: rnd
-        x: 1518
-        y: 449
+        Rnd {
+            id: rnd
+            anchors.bottom: speedometer.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 72
+        }
     }
 
     BatteryIcon {
