@@ -53,7 +53,7 @@ void SerialReceiver::retryConnection() {
 
 /** Attempt to reconnect to the serial port */
 void SerialReceiver::attemptReconnect() {
-    if (!openSerialPort()) {
+    if (serialPort_->open(QIODevice::ReadOnly)) {
         qWarning() << "Failed to open serial port on retry, trying again in " << RETRY_PERIOD / 1000 << " seconds...";
         retryConnection();
     } else {
