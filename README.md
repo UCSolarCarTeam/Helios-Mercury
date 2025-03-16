@@ -18,8 +18,8 @@
         - sudo apt install socat (for Linux)
         - brew install socat (for Mac)
 
-#### Qt Versions
-- Currently, we are using version 6.7.2
+#### Qt Version
+- Qt 6.7.2
 
 ### Building From Terminal
 In a terminal, navigate to the Helios-Mercury repository. Run the following commands:
