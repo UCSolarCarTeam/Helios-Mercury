@@ -18,10 +18,8 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
-message(STATUS "System: ${CMAKE_SYSTEM_NAME}")
-message(STATUS "Processor: ${CMAKE_SYSTEM_PROCESSOR}")
-
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64") ##Verification on pi required
+# Pi Dependencies
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
     add_definitions(-DRUNNING_ON_PI)
     list(APPEND ADDITIONAL_SOURCES
         src/Receivers/GpioReceiver.h src/Receivers/GpioReceiver.cpp

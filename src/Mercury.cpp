@@ -9,6 +9,7 @@
 
 #include <QQmlContext>
 
+// Include the GpioReceiver header file only if the program is running on a Pi
 #ifdef RUNNING_ON_PI
 #include "Receivers/GpioReceiver.h"
 #endif
@@ -23,9 +24,9 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     PacketFactory* packetFactory = new PacketFactory();
 
     //Initialize GPIO Receiver if on Pi
-#ifdef RUNNING_ON_PI
-    GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
-#endif
+    #ifdef RUNNING_ON_PI
+        GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
+    #endif
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
     SerialReceiver* serialReceiver = new SerialReceiver();

@@ -31,9 +31,10 @@ private:
 
     void reset();
     void emitData();
+    
     static void data0ISR(int gpio, int level, uint32_t tick, void* userdata);
     static void data1ISR(int gpio, int level, uint32_t tick, void* userdata);
-    static void dataISR(int gpio, int level, uint32_t tick, void* userdata, bool isData1);
+    void dataISR(int gpio, int level, uint32_t tick, void* userdata, bool isData1);
 };
 
 #endif // GPIORECEIVER_H
