@@ -94,12 +94,14 @@ void GpioReceiver::emitData() {
 
 //** Wrapper for Data0 ISR */
 void GpioReceiver::data0ISR(int gpio, int level, uint32_t tick, void* context) {
-    dataISR(gpio, level, tick, context, false);
+    GpioReceiver* instance = static_cast<GpioReceiver*>(context);
+    instance->dataISR(gpio, level, tick, false);
 }
 
 /** Wrapper for Data1 ISR */
 void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* context) {
-    dataISR(gpio, level, tick, context, true);
+    GpioReceiver* instance = static_cast<GpioReceiver*>(context);
+    instance->dataISR(gpio, level, tick, true);
 }
 
 /**
@@ -109,11 +111,9 @@ void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* context) {
  * @param gpio pin number.
  * @param level level of the GPIO pin (0 for falling).
  * @param tick tick count at the time of the interrupt.
- * @param context A pointer to context - expected to be a GpioReceiver instance.
  * @param isData1 indicates whether the ISR is for Data1 (true) or Data0 (false).
  */
-void GpioReceiver::dataISR(int gpio, int level, uint32_t tick, void* context, bool isData1) {
-    GpioReceiver* instance = static_cast<GpioReceiver*>(context);
+void GpioReceiver::dataISR(int gpio, int level, uint32_t tick, bool isData1) {
     if (!instance->rfidInitialized_) return;
     if (level == 0) { // Falling edge
         usleep(10000);
