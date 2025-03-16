@@ -9,10 +9,11 @@
 
 
 // Constructor
-GpioReceiver::GpioReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
+GpioReceiver::GpioReceiver(PacketFactory* packetFactory) 
+    : packetFactory_(packetFactory), rfidData_{false} {
     rfidInitialized_ = false;
     bitCount_ = 0;
-    rfidData_{false};
+    
     qDebug() << "Setting up RFID GPIOs";
     startRfidReading();
 }
