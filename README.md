@@ -11,7 +11,9 @@
 - Qt Serial Port: Used to receive data from Sentinel
 - Qt MQTT: Used to transmit JSON data to the Telemetry site
     - Both of the above libraries can be installed through Maintenance Tool if they were not originally installed with Qt
-- Socat: Used to set up virtual serial ports (COM2COM is a Windows alternative)
+- pigpio (Pi only): Used to read GPIO pins on the pi
+    - sudo apt install pigpio
+- Socat (For Development Only): Used to set up virtual serial ports (COM2COM is a Windows alternative)
     - In a terminal, run the following command:
         - sudo apt install socat (for Linux)
         - brew install socat (for Mac)
