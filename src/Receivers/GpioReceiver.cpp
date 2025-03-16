@@ -2,10 +2,7 @@
 #include "../Config/ConfigManager.h"
 #include <QDebug>
 #include <unistd.h>
-#include <algorithm>
 #include <QCryptographicHash>
-#include <QByteArray>
-#include <QString>
 
 
 /** Initilizes Gpio pins defined in config.ini for rfid reading */
@@ -95,18 +92,28 @@ void GpioReceiver::emitData() {
     reset();
 }
 
-// // ISR for Data0 (logical 0)
-void GpioReceiver::data0ISR(int gpio, int level, uint32_t tick, void* userdata) {
-    dataISR(gpio, level, tick, userdata, false);
+//** Wrapper for Data0 ISR */
+void GpioReceiver::data0ISR(int gpio, int level, uint32_t tick, void* context) {
+    dataISR(gpio, level, tick, context, false);
 }
 
-// // ISR for Data1 (logical 1)
-void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
-    dataISR(gpio, level, tick, userdata, true);
+/** Wrapper for Data1 ISR */
+void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* context) {
+    dataISR(gpio, level, tick, context, true);
 }
 
-void GpioReceiver::dataISR(int gpio, int level, uint32_t tick, void* userdata, bool isData1) {
-    GpioReceiver* instance = static_cast<GpioReceiver*>(userdata);
+/**
+ * Generalized Interrupt Service Routine (ISR) for Data0 and Data1.
+ * Called when falling edge is detected on the Data0 (rfidPin0) or Data1 (rfidPin1) GPIO pin.
+ * 
+ * @param gpio pin number.
+ * @param level level of the GPIO pin (0 for falling).
+ * @param tick tick count at the time of the interrupt.
+ * @param context A pointer to context - expected to be a GpioReceiver instance.
+ * @param isData1 indicates whether the ISR is for Data1 (true) or Data0 (false).
+ */
+void GpioReceiver::dataISR(int gpio, int level, uint32_t tick, void* context, bool isData1) {
+    GpioReceiver* instance = static_cast<GpioReceiver*>(context);
     if (!instance->rfidInitialized_) return;
     if (level == 0) { // Falling edge
         usleep(10000);
