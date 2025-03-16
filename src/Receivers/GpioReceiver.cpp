@@ -11,7 +11,7 @@
 // Constructor
 GpioReceiver::GpioReceiver(PacketFactory* packetFactory) 
     : packetFactory_(packetFactory), rfidData_{false},
-      rfidInitialized_(false), bitCount_ = 0 {
+      rfidInitialized_(false), bitCount_ (0) {
     
     ConfigManager& config = ConfigManager::instance();
     rfidPin0_ = config.getRfidPin0();
