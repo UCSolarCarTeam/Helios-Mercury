@@ -7,15 +7,12 @@
 #include <QByteArray>
 #include <QString>
 
-namespace {
-    MAX_BITS = 26;
-}
 
 // Constructor
 GpioReceiver::GpioReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
     rfidInitialized_ = false;
     bitCount_ = 0;
-    rfidData_ = {false};
+    rfidData_{false};
     qDebug() << "Setting up RFID GPIOs";
     startRfidReading();
 }
@@ -63,8 +60,8 @@ void GpioReceiver::startRfidReading() {
 // Stop function to clean up
 void GpioReceiver::stopRfidReading() {
     if (rfidInitialized_) {
-        gpioSetAlertFunc(pinData0_, nullptr);
-        gpioSetAlertFunc(pinData1_, nullptr);
+        gpioSetAlertFunc(rfidPin0_, nullptr);
+        gpioSetAlertFunc(rfidPin1_, nullptr);
     }
 }
 
