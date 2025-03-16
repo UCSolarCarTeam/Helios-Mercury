@@ -31,7 +31,7 @@ private:
     //unsigned long timestamp_;
     PacketFactory* packetFactory_;
 
-    void startRfidReading(int pinData0, int pinData1);
+    void startRfidReading();
     void stopRfidReading();
 
     void reset();

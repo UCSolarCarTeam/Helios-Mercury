@@ -12,12 +12,12 @@ namespace {
 }
 
 // Constructor
-GpioReceiver::GpioReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory), gpioInitialized(false) {
+GpioReceiver::GpioReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
     rfidInitialized_ = false;
     bitCount_ = 0;
     rfidData_ = {false};
     qDebug() << "Setting up RFID GPIOs";
-    startRfidReading(config.getRfidPin0(), config.getRfidPin1());
+    startRfidReading();
 }
 
 // Destructor
@@ -47,22 +47,22 @@ void GpioReceiver::startRfidReading() {
         }
         return;
     }
-    
+
     qDebug() << "RFID GPIOs initlized";
     rfidInitialized_ = true;
 
-    gpioSetMode(pinData0_, PI_INPUT);
-    gpioSetMode(pinData1_, PI_INPUT);
+    gpioSetMode(rfidPin0_, PI_INPUT);
+    gpioSetMode(rfidPin1_, PI_INPUT);
 
-    gpioSetAlertFuncEx(pinData0_, data0ISR, this);
-    gpioSetAlertFuncEx(pinData1_, data1ISR, this);
+    gpioSetAlertFuncEx(rfidPin0_, data0ISR, this);
+    gpioSetAlertFuncEx(rfidPin1_, data1ISR, this);
 
     reset();
 }
 
 // Stop function to clean up
 void GpioReceiver::stopRfidReading() {
-    if (gpioInitialized) {
+    if (rfidInitialized_) {
         gpioSetAlertFunc(pinData0_, nullptr);
         gpioSetAlertFunc(pinData1_, nullptr);
     }
@@ -82,10 +82,10 @@ void GpioReceiver::emitData() {
 
     for (int i = 1; i < MAX_BITS - 1; ++i) {
         if (rfidData_[i]) {
-            data_ |= (1UL << (i - 1));
+            data |= (1UL << (i - 1));
         }
     }
-    QByteArray hashedRfid = QCryptographicHash::hash(QByteArray::number(data_), QCryptographicHash::Md5);
+    QByteArray hashedRfid = QCryptographicHash::hash(QByteArray::number(data), QCryptographicHash::Md5);
 
     QString hashedRfidStr = QString(hashedRfid.toHex());
 
@@ -99,7 +99,7 @@ void GpioReceiver::emitData() {
 // ISR for Data0 (logical 0)
 void GpioReceiver::data0ISR(int gpio, int level, uint32_t tick, void* userdata) {
     GpioReceiver* instance = static_cast<GpioReceiver*>(userdata);
-    if (!instance->gpioInitialized) return;
+    if (!instance->rfidInitialized_) return;
     if (level == 0) { // Falling edge
         usleep(10000);
         if (instance->bitCount_ < MAX_BITS) {
@@ -114,7 +114,7 @@ void GpioReceiver::data0ISR(int gpio, int level, uint32_t tick, void* userdata) 
 // ISR for Data1 (logical 1)
 void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* userdata) {
     GpioReceiver* instance = static_cast<GpioReceiver*>(userdata);
-    if (!instance->gpioInitialized) return;
+    if (!instance->rfidInitialized_) return;
     if (level == 0) { // Falling edge
         usleep(10000);
         if (instance->bitCount_ < MAX_BITS) {
