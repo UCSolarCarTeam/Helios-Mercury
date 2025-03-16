@@ -7,7 +7,7 @@
 
 class PiPacket : public QObject{
     Q_OBJECT
-    DEFINE_PROPERTY(int, Rfid);
+    DEFINE_PROPERTY(QString, Rfid);
     DEFINE_PROPERTY(QString, DriverName);
 public:
     PiPacket();

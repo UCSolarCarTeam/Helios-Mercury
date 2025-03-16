@@ -12,8 +12,6 @@ public:
     explicit GpioReceiver(PacketFactory* packetFactory = nullptr);
     ~GpioReceiver();
 
-
-
 signals:
     void onData(unsigned long data);
 
@@ -23,12 +21,9 @@ private:
     int rfidPin1_;
 
     int bitCount_;
-
     static const int MAX_BITS = 26;
     bool rfidData_[MAX_BITS];
 
-    //unsigned long data_ = 0;
-    //unsigned long timestamp_;
     PacketFactory* packetFactory_;
 
     void startRfidReading();

@@ -10,10 +10,13 @@
 
 // Constructor
 GpioReceiver::GpioReceiver(PacketFactory* packetFactory) 
-    : packetFactory_(packetFactory), rfidData_{false} {
-    rfidInitialized_ = false;
-    bitCount_ = 0;
+    : packetFactory_(packetFactory), rfidData_{false},
+      rfidInitialized_(false), bitCount_ = 0 {
     
+    ConfigManager& config = ConfigManager::instance();
+    rfidPin0_ = config.getRfidPin0();
+    rfidPin1_ = config.getRfidPin1();
+
     qDebug() << "Setting up RFID GPIOs";
     startRfidReading();
 }
@@ -28,10 +31,6 @@ GpioReceiver::~GpioReceiver() {
 
 // Begin function to initialize GPIO pins
 void GpioReceiver::startRfidReading() {
-    ConfigManager& config = ConfigManager::instance();
-    rfidPin0_ = config.getRfidPin0();
-    rfidPin1_ = config.getRfidPin1();
-
     int result = gpioInitialise();
 
     // Check if the initialization failed
@@ -70,8 +69,6 @@ void GpioReceiver::stopRfidReading() {
 void GpioReceiver::reset() {
     std::fill(std::begin(rfidData_), std::end(rfidData_), false);
     bitCount_ = 0;
-    //data_ = 0;
-    //timestamp_ = gpioTick();
 }
 
 // Emit data after receiving 26 bits
@@ -83,13 +80,10 @@ void GpioReceiver::emitData() {
             data |= (1UL << (i - 1));
         }
     }
+
     QByteArray hashedRfid = QCryptographicHash::hash(QByteArray::number(data), QCryptographicHash::Md5);
-
     QString hashedRfidStr = QString(hashedRfid.toHex());
-
-    qDebug() << "GOT3" << hashedRfidStr;
-
-    packetFactory_->getPiPacket().setRfid(1);
+    packetFactory_->getPiPacket().setRfid(hashedRfidStr);
    
     reset();
 }
