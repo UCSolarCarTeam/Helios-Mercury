@@ -114,13 +114,13 @@ void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* context) {
  * @param isData1 indicates whether the ISR is for Data1 (true) or Data0 (false).
  */
 void GpioReceiver::dataISR(int gpio, int level, uint32_t tick, bool isData1) {
-    if (!instance->rfidInitialized_) return;
+    if (!rfidInitialized_) return;
     if (level == 0) { // Falling edge
         usleep(10000);
-        if (instance->bitCount_ < MAX_BITS) {
-            instance->rfidData_[instance->bitCount_++] = isData1;
-            if (instance->bitCount_ == MAX_BITS) {
-                instance->emitData();
+        if (bitCount_ < MAX_BITS) {
+            rfidData_[bitCount_++] = isData1;
+            if (bitCount_ == MAX_BITS) {
+                emitData();
             }
         }
     }
