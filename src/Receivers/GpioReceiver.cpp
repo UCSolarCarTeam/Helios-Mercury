@@ -7,28 +7,32 @@
 #include <QByteArray>
 #include <QString>
 
+namespace {
+    MAX_BITS = 26;
+}
+
 // Constructor
 GpioReceiver::GpioReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory), gpioInitialized(false) {
-    // ConfigManager& config = ConfigManager::instance();
-    // pin0_ = config.getPin0();
-    // pin1_ = config.getPin1();
-    // begin(pin0_, pin1_);
-    qDebug() << "READER SETTING UP";
-    begin(20,21);
+    rfidInitialized_ = false;
+    bitCount_ = 0;
+    rfidData_ = {false};
+    qDebug() << "Setting up RFID GPIOs";
+    startRfidReading(config.getRfidPin0(), config.getRfidPin1());
 }
 
 // Destructor
 GpioReceiver::~GpioReceiver() {
-    stop();
-    if (gpioInitialized) {
+    stopRfidReading();
+    if (rfidInitialized_) {
         gpioTerminate();
     }
 }
 
 // Begin function to initialize GPIO pins
-void GpioReceiver::begin(int pinData0, int pinData1) {
-    pinData0_ = pinData0;
-    pinData1_ = pinData1;
+void GpioReceiver::startRfidReading() {
+    ConfigManager& config = ConfigManager::instance();
+    rfidPin0_ = config.getRfidPin0();
+    rfidPin1_ = config.getRfidPin1();
 
     int result = gpioInitialise();
 
@@ -41,11 +45,11 @@ void GpioReceiver::begin(int pinData0, int pinData1) {
         } else {
             qWarning() << "pigpio initialization failed with error code" << result;
         }
-        gpioInitialized = false;
-        return; // If initialization fails, skip GPIO setup
+        return;
     }
-    qDebug() << "SETUP GOOD";
-    gpioInitialized = true;
+    
+    qDebug() << "RFID GPIOs initlized";
+    rfidInitialized_ = true;
 
     gpioSetMode(pinData0_, PI_INPUT);
     gpioSetMode(pinData1_, PI_INPUT);
@@ -54,12 +58,10 @@ void GpioReceiver::begin(int pinData0, int pinData1) {
     gpioSetAlertFuncEx(pinData1_, data1ISR, this);
 
     reset();
-    running = true;
 }
 
 // Stop function to clean up
-void GpioReceiver::stop() {
-    running = false;
+void GpioReceiver::stopRfidReading() {
     if (gpioInitialized) {
         gpioSetAlertFunc(pinData0_, nullptr);
         gpioSetAlertFunc(pinData1_, nullptr);
@@ -68,16 +70,18 @@ void GpioReceiver::stop() {
 
 // Reset the internal state
 void GpioReceiver::reset() {
-    std::fill(std::begin(bitData_), std::end(bitData_), false);
-    bitCnt_ = 0;
-    data_ = 0;
-    timestamp_ = gpioTick();
+    std::fill(std::begin(rfidData_), std::end(rfidData_), false);
+    bitCount_ = 0;
+    //data_ = 0;
+    //timestamp_ = gpioTick();
 }
 
 // Emit data after receiving 26 bits
 void GpioReceiver::emitData() {
+    unsigned long data = 0;
+
     for (int i = 1; i < MAX_BITS - 1; ++i) {
-        if (bitData_[i]) {
+        if (rfidData_[i]) {
             data_ |= (1UL << (i - 1));
         }
     }
@@ -98,9 +102,9 @@ void GpioReceiver::data0ISR(int gpio, int level, uint32_t tick, void* userdata) 
     if (!instance->gpioInitialized) return;
     if (level == 0) { // Falling edge
         usleep(10000);
-        if (instance->bitCnt_ < MAX_BITS) {
-            instance->bitData_[instance->bitCnt_++] = false;
-            if (instance->bitCnt_ == MAX_BITS) {
+        if (instance->bitCount_ < MAX_BITS) {
+            instance->rfidData_[instance->bitCount_++] = false;
+            if (instance->bitCount_ == MAX_BITS) {
                 instance->emitData();
             }
         }
@@ -113,9 +117,9 @@ void GpioReceiver::data1ISR(int gpio, int level, uint32_t tick, void* userdata) 
     if (!instance->gpioInitialized) return;
     if (level == 0) { // Falling edge
         usleep(10000);
-        if (instance->bitCnt_ < MAX_BITS) {
-            instance->bitData_[instance->bitCnt_++] = true;
-            if (instance->bitCnt_ == MAX_BITS) {
+        if (instance->bitCount_ < MAX_BITS) {
+            instance->rfidData_[instance->bitCount_++] = true;
+            if (instance->bitCount_ == MAX_BITS) {
                 instance->emitData();
             }
         }
