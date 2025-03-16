@@ -24,7 +24,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
     //Initialize GPIO Receiver if on Pi
 #ifdef RUNNING_ON_PI
-    GpioReceiver gpioReciever;
+    GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
 #endif
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
