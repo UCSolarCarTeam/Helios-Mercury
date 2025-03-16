@@ -11,7 +11,5 @@ QJsonObject PiPacket::toJson() {
 
     json[JsonDefinitions::RFID] = Rfid_;
 
-    qDebug() << "JSON" << json;
-
     return json;
 }
