@@ -117,4 +117,15 @@ Item {
         units: "°C"
         value: battery.AverageTemperature
     }
+
+    LargeGauge {
+        id: largeGaugeTest
+        x: 425
+        y: 130
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Large Gauge Test"
+        units: "u"
+        value: battery.AverageTemperature
+    }
 }
