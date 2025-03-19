@@ -64,6 +64,11 @@ ConfigManager::ConfigManager(const QString& path){
     loggingEnabled_ = settings.value("loggingEnabled", true).toBool();
     logPath_ = settings.value("logPath", "Mercury.log").toString();
     settings.endGroup();
+
+    settings.beginGroup("Gpio");
+    rfidPin0_ = settings.value("rfidPin0", 20).toInt();
+    rfidPin1_ = settings.value("rfidPin1", 21).toInt();
+    settings.endGroup();
 }
 
 //Getters
@@ -98,3 +103,7 @@ QString ConfigManager::getTelemetryPassword() const { return telemetryPassword_;
 bool ConfigManager::getLoggingEnabled() const { return loggingEnabled_; }
 
 QString ConfigManager::getLogPath() const { return logPath_; }
+
+int ConfigManager::getRfidPin0() const { return rfidPin0_; }
+
+int ConfigManager::getRfidPin1() const { return rfidPin1_; }

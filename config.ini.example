@@ -1,4 +1,4 @@
-; Hermes Specification File
+; Mercury Specification File
 
 forwardPeriod=500
 
@@ -26,3 +26,7 @@ telemetryPassword=NiceTryBud
 [Logging]
 loggingEnabled=true
 logPath=Mercury.log
+
+[Gpio]
+rfidPin0=20
+rfidPin1=21

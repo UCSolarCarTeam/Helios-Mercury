@@ -33,6 +33,9 @@ public:
     bool getLoggingEnabled() const;
     QString getLogPath() const;
 
+    int getRfidPin0() const;
+    int getRfidPin1() const;
+
 private:
     ConfigManager(const QString& path);
 
@@ -40,8 +43,10 @@ private:
     int numberOfMotors_;
     int numberOfMppts_;
     QString packetTitle_;
+
     QString portName_;
     int baudrate_;
+
     QString telemetryTopic_;
     QString pingTopic_;
     QString pongTopic_;
@@ -50,8 +55,12 @@ private:
     int telemetryPort_;
     QString telemetryUsername_;
     QString telemetryPassword_;
+
     bool loggingEnabled_;
     QString logPath_;
+
+    int rfidPin0_;
+    int rfidPin1_;
 };
 
 #endif // CONFIGMANAGER_H
