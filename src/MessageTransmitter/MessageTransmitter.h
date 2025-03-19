@@ -12,7 +12,6 @@ public:
     MessageTransmitter(PacketFactory* packetFactory);
 
     void setupTelemetryClient();
-    bool isTelemetryConnected();
 
 public slots:
     void transmitMessage(const QByteArray& message);

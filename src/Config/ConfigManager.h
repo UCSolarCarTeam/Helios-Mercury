@@ -35,7 +35,6 @@ public:
     int getRfidPin0() const;
     int getRfidPin1() const;
 
-
 private:
     ConfigManager(const QString& path);
 

@@ -5,7 +5,7 @@
 #include <QJsonObject>
 
 
-class PiPacket : public IPacket {
+class PiPacket : public QObject {
     Q_OBJECT
     DEFINE_PROPERTY(bool, EmbeddedState)
     DEFINE_PROPERTY(bool, AWSState)
@@ -17,6 +17,6 @@ public:
     void populateTelemetry(const bool state);
     void populateEmbedded(const bool state);
     QJsonObject toJson();
-}
+};
 
 #endif // PIPACKET_H

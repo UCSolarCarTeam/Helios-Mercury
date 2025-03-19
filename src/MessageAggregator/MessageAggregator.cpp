@@ -38,8 +38,6 @@ void MessageAggregator::createJsonMessage() {
         message[JsonDefinitions::MPPT + QString::number(i)] = packetFactory_->getMpptPacket(i).toJson();
     }
 
-    message[JsonDefinitions::PI] = packetFactory_->getPiPacket().toJson();
-
     emit jsonPacketReady(QJsonDocument(message).toJson(QJsonDocument::Compact));
 }
 

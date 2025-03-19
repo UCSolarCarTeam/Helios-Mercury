@@ -32,8 +32,6 @@ public:
     MotorDetailsPacket& getMotorDetailsPacket(int index);
     MpptPacket& getMpptPacket(int index);
 
-    PiPacket& getPiPacket();
-
 private:
     QScopedPointer<KeyMotorPacket> keyMotorPacket_;
     QScopedPointer<TelemetryPacket> telemetryPacket_;

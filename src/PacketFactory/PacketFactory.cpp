@@ -1,6 +1,5 @@
 #include "PacketFactory.h"
 #include "../Config/ConfigManager.h"
-#include "../Receivers/SerialReceiver.h"
 
 PacketFactory::PacketFactory() {
     ConfigManager& config = ConfigManager::instance();

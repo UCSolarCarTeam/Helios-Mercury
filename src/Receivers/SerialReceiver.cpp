@@ -1,4 +1,5 @@
 #include "SerialReceiver.h"
+#include "../Config/ConfigManager.h"
 #include <QDebug>
 
 namespace {
@@ -42,6 +43,7 @@ void SerialReceiver::tryConnect() {
     serialPort_->setStopBits(QSerialPort::OneStop);
 
     if (serialPort_->open(QIODevice::ReadOnly)) {
+        qDebug() << "Serial Port Opened: " << config.getPortName();
         connected_ = true;
         packetFactory_->getPiPacket().setEmbeddedState(true);
     } else {

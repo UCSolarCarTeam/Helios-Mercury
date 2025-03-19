@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QSerialPort>
 #include <QTimer>
-#include "../Config/ConfigManager.h"
 #include "../PacketFactory/PacketFactory.h"
 
 class SerialReceiver : public QObject {

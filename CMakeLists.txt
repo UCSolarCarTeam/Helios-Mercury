@@ -43,7 +43,6 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/PacketFactory/Packets/MpptPacket.h src/PacketFactory/Packets/MpptPacket.cpp
     src/PacketFactory/Packets/ProximitySensorsPacket.h src/PacketFactory/Packets/ProximitySensorsPacket.cpp
     src/PacketFactory/Packets/TelemetryPacket.h src/PacketFactory/Packets/TelemetryPacket.cpp
-    src/PacketFactory/Packets/PiPacket.h src/PacketFactory/Packets/PiPacket.cpp
     src/MessageAggregator/MessageAggregator.h src/MessageAggregator/MessageAggregator.cpp
     src/MessageTransmitter/MessageTransmitter.h src/MessageTransmitter/MessageTransmitter.cpp
     src/Config/ConfigManager.h src/Config/ConfigManager.cpp
