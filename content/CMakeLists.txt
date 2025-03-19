@@ -30,8 +30,8 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
 	Images/Battery.png
         Images/ParkingBrake.png
-        Images/HOT.png
-        Images/COOL.png
+        Images/Hot.png
+        Images/Cool.png
         Images/TempBar.png
         Images/ThermometerIcon.png
 )

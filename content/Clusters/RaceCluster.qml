@@ -91,7 +91,9 @@ Item {
         y: 230
         temperatureValue: battery.InternalTemperature
         minTemp: 0
-        maxTemp: 200
+        maxTemp: 100
+        neutralLowerBound: 25
+        neutralUpperBound: 75
         gaugeLabel: "Internal Temp"
     }
     
