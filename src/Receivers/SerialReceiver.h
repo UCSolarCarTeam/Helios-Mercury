@@ -16,8 +16,6 @@ public:
 
 signals:
     void dataReceived(const QByteArray& data);
-    void deviceConnected();
-    void deviceDisconnected();
 
 private slots:
     void handleReadyRead();

@@ -41,15 +41,10 @@ void SerialReceiver::tryConnect() {
     serialPort_->setParity(QSerialPort::NoParity);
     serialPort_->setStopBits(QSerialPort::OneStop);
 
-    qDebug() << "Attempting to open serial port:" << portName_;
-
     if (serialPort_->open(QIODevice::ReadOnly)) {
-        qDebug() << "Serial port connected: " << portName_;
         connected_ = true;
         packetFactory_->getPiPacket().setEmbeddedState(true);
-        emit deviceConnected();
     } else {
-        qWarning() << "Failed to open serial port. Retrying in " << RETRY_PERIOD / 1000 << "s...";
         connected_ = false;
         packetFactory_->getPiPacket().setEmbeddedState(false);
         QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
@@ -73,7 +68,7 @@ void SerialReceiver::handleReadyRead() {
 /** Handle serial port errors */
 void SerialReceiver::handleError(QSerialPort::SerialPortError error) {
     if (error == QSerialPort::ResourceError || error == QSerialPort::DeviceNotFoundError) {
-        qWarning() << "Serial port error: " << serialPort_->errorString();
+        // qWarning() << "Serial port error: " << serialPort_->errorString();
         connected_ = false;
         serialPort_->close();
         QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
@@ -87,17 +82,16 @@ void SerialReceiver::checkConnection() {
 
         if (!(pinSignals & QSerialPort::DataCarrierDetectSignal) &&
             !(pinSignals & QSerialPort::DataSetReadySignal)) {
-            qWarning() << "Serial port lost signal (DCD/DSR down). Disconnect detected!";
+            // qWarning() << "Serial port lost signal (DCD/DSR down). Disconnect detected!";
             connected_ = false;
             serialPort_->close();
-            emit deviceDisconnected();
             QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
         }
         return;
     }
 
     if (!serialPort_->isOpen()) {
-        qWarning() << "Serial port disconnected. Reconnecting...";
+        // qWarning() << "Serial port disconnected. Reconnecting...";
         QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
     }
 }
