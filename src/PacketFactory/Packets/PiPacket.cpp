@@ -1,20 +1,11 @@
 #include "PiPacket.h"
 #include "../../Config/JsonDefinitions.h"
-#include <QDebug>
 
 PiPacket::PiPacket() {
-    setRfidData(QByteArray());
     setAWSState(false);
     setEmbeddedState(false);
-}
-
-void PiPacket::populatePacket(const QByteArray& data) {
-}
-
-void PiPacket::populateRfid(const QByteArray& data) {
-    if(!data.isEmpty() && data.toLongLong() != 0) {
-        setRfidData(data);
-    }
+    setRfid("Unscanned");
+    setDriverName("Unknown");
 }
 
 void PiPacket::populateTelemetry(const bool state) {
@@ -31,6 +22,7 @@ QJsonObject PiPacket::toJson() {
     json[JsonDefinitions::RFID] = RfidData().toLongLong();
     json[JsonDefinitions::TELEMETRY_CONNECTION] = AWSState();
     json[JsonDefinitions::EMBEDDED_CONNECTION] = EmbeddedState();
+    json[JsonDefinitions::RFID] = Rfid_;
 
     return json;
 }

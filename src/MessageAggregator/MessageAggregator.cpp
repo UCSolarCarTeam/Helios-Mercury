@@ -28,6 +28,7 @@ void MessageAggregator::createJsonMessage() {
     message[JsonDefinitions::BATTERY] = packetFactory_->getBatteryPacket().toJson();
     message[JsonDefinitions::MBMS] = packetFactory_->getMbmsPacket().toJson();
     message[JsonDefinitions::PROXIMITY_SENSORS] = packetFactory_->getProximitySensorsPacket().toJson();
+    message[JsonDefinitions::PI] = packetFactory_->getPiPacket().toJson();
 
     for(int i = 0; i < ConfigManager::instance().getNumberOfMotors(); i++) {
         message[JsonDefinitions::MOTOR_DETAILS + QString::number(i)] = packetFactory_->getMotorDetailsPacket(i).toJson();

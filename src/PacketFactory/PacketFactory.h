@@ -27,6 +27,7 @@ public:
     MbmsPacket& getMbmsPacket();
     BatteryFaultsPacket& getBatteryFaultsPacket();
     B3Packet& getB3Packet();
+    PiPacket& getPiPacket();
 
     MotorDetailsPacket& getMotorDetailsPacket(int index);
     MpptPacket& getMpptPacket(int index);
