@@ -10,11 +10,7 @@ const int RETRY_PERIOD = 5000; // Reconnect attempt interval (ms)
 SerialReceiver::SerialReceiver(PacketFactory* packetFactory, QObject* parent)
     : QObject(parent), packetFactory_(packetFactory), serialPort_(new QSerialPort(this)), connected_(false) {
 
-    ConfigManager& config = ConfigManager::instance();
-    portName_ = config.getPortName();
-
     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
-    connect(serialPort_, &QSerialPort::errorOccurred, this, &SerialReceiver::handleError);
 
     monitorTimer_ = new QTimer(this);
     connect(monitorTimer_, &QTimer::timeout, this, &SerialReceiver::checkConnection);
@@ -32,17 +28,21 @@ SerialReceiver::~SerialReceiver() {
 
 /** Attempt to connect */
 void SerialReceiver::tryConnect() {
+    // qDebug() << "[tryConnect] Entry. isOpen(): " << serialPort_->isOpen() << ", connected_: " << connected_;
     if (serialPort_->isOpen()) {
         serialPort_->close();
     }
 
-    serialPort_->setPortName(portName_);
-    serialPort_->setBaudRate(ConfigManager::instance().getBaudrate());
+    ConfigManager& config = ConfigManager::instance();
+
+    serialPort_->setPortName(config.getPortName());
+    serialPort_->setBaudRate(config.getBaudrate());
     serialPort_->setDataBits(QSerialPort::Data8);
     serialPort_->setParity(QSerialPort::NoParity);
     serialPort_->setStopBits(QSerialPort::OneStop);
 
     if (serialPort_->open(QIODevice::ReadOnly)) {
+        // qDebug() << "[tryConnect] closing existing port";
         qDebug() << "Serial Port Opened: " << config.getPortName();
         connected_ = true;
         packetFactory_->getPiPacket().setEmbeddedState(true);
@@ -67,18 +67,9 @@ void SerialReceiver::handleReadyRead() {
     emit dataReceived(data);
 }
 
-/** Handle serial port errors */
-void SerialReceiver::handleError(QSerialPort::SerialPortError error) {
-    if (error == QSerialPort::ResourceError || error == QSerialPort::DeviceNotFoundError) {
-        // qWarning() << "Serial port error: " << serialPort_->errorString();
-        connected_ = false;
-        serialPort_->close();
-        QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
-    }
-}
-
 /** Monitor connection status and detect disconnects */
 void SerialReceiver::checkConnection() {
+    // qDebug() << "[checkConnection] Entry. isOpen(): " << serialPort_->isOpen() << ", connected_: " << connected_;
     if (serialPort_->isOpen() && connected_) {
         auto pinSignals = serialPort_->pinoutSignals();
 
