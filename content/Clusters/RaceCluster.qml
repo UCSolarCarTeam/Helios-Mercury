@@ -118,14 +118,48 @@ Item {
         value: battery.AverageTemperature
     }
 
-    LargeGauge {
+    GaugeTemplate {
+        id: smallGaugeTest
+        x: 1290
+        y: 66
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Small Gauge Test"
+        units: "u"
+        value: battery.AverageTemperature
+        gaugeSize: 165
+        icon: "BoltIcon.png"
+        iconWidth: 15
+        iconHeight: 25
+    }
+
+    GaugeTemplate {
+        id: mediumGaugeTest
+        x: 1261
+        y: 265
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Medium Gauge Test"
+        units: "u"
+        value: battery.AverageTemperature
+        gaugeSize: 240
+        icon: "BoltIcon.png"
+        iconWidth: 20
+        iconHeight: 35
+    }
+
+    GaugeTemplate {
         id: largeGaugeTest
-        x: 425
-        y: 130
+        x: 1507
+        y: 42
         minValue: 0
         maxValue: 100
         gaugeTitle: "Large Gauge Test"
         units: "u"
         value: battery.AverageTemperature
+        gaugeSize: 300
+        icon: "AccelerationIcon.png"
+        iconWidth: 50
+        iconHeight: 45
     }
 }
