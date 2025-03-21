@@ -32,28 +32,6 @@ Item {
     width: gaugeSize
     height: gaugeSize
 
-    function getFontSizes() {
-        if (gaugeSize >= 250) {
-            return {
-                l: "gaugeFontSizeXL",
-                m: "gaugeFontSizeL",
-                s: "gaugeFontSizeS"
-            };
-        } else if (gaugeSize >= 175) {
-            return {
-                l: "gaugeFontSizeL",
-                m: "gaugeFontSizeM",
-                s: "gaugeFontSizeS"
-            };
-        } else {
-            return {
-                l: "gaugeFontSizeS",
-                m: "gaugeFontSizeS",
-                s: "gaugeFontSizeXS"
-            };
-        }
-    }
-
     GaugeAnimation { id: gaugeAnimation }
 
     ArcItem {
@@ -115,7 +93,7 @@ Item {
         width: 15
         color: Config.fontColor
         text: gaugeTemplate.minValue
-        font.pixelSize: Config[getFontSizes().m]
+        font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).m]
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -133,7 +111,7 @@ Item {
         width: 35
         color: Config.fontColor
         text: gaugeTemplate.maxValue
-        font.pixelSize: Config[getFontSizes().m]
+        font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).m]
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -154,7 +132,7 @@ Item {
         
         property bool hasIcon: gaugeTemplate.icon !== ""
 
-        property real contentHeight: iconHeight + Config[getFontSizes().l] + Config[getFontSizes().s]
+        property real contentHeight: iconHeight + Config[gaugeAnimation.getFontSizes(gaugeSize).l] + Config[gaugeAnimation.getFontSizes(gaugeSize).s]
         property int numberOfSpaces: hasIcon ? 4 : 3
         property real verticalSpacing: ( contentContainer.height - contentContainer.contentHeight - gaugeTemplate.arcWidth ) / contentContainer.numberOfSpaces
         
@@ -182,15 +160,15 @@ Item {
                     return gaugeTemplate.value.toFixed(1) + gaugeTemplate.units;
                 }
             }
-            font.pixelSize: Config[getFontSizes().l]
+            font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).l]
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors {
                 horizontalCenter: contentContainer.horizontalCenter
                 top: contentContainer.hasIcon ? iconLoader.bottom : contentContainer.top
                 topMargin: contentContainer.hasIcon 
-                    ? (contentContainer.verticalSpacing - Config[getFontSizes().l] / 2) 
-                    : (contentContainer.height - Config[getFontSizes().l] - Config[getFontSizes().s] - contentContainer.verticalSpacing / 2) / 2
+                    ? (contentContainer.verticalSpacing - Config[gaugeAnimation.getFontSizes(gaugeSize).l] / 2) 
+                    : (contentContainer.height - Config[gaugeAnimation.getFontSizes(gaugeSize).l] - Config[gaugeAnimation.getFontSizes(gaugeSize).s] - contentContainer.verticalSpacing / 2) / 2
             }
             font.weight: Font.Medium
             font.family: Config.fontStyle
@@ -201,13 +179,13 @@ Item {
             width: parent.width
             color: Config.fontColor
             text: gaugeTemplate.gaugeTitle
-            font.pixelSize: Config[getFontSizes().s]
+            font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).s]
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors {
                 horizontalCenter: contentContainer.horizontalCenter
                 bottom: contentContainer.hasIcon ? contentContainer.bottom : undefined
-                bottomMargin: contentContainer.hasIcon ? (contentContainer.verticalSpacing + Config[getFontSizes().l]) : 0
+                bottomMargin: contentContainer.hasIcon ? (contentContainer.verticalSpacing + Config[gaugeAnimation.getFontSizes(gaugeSize).l]) : 0
                 top: contentContainer.hasIcon ? undefined : gaugeValue.bottom
                 topMargin: contentContainer.hasIcon ? 0 : contentContainer.verticalSpacing / 2.3
             }

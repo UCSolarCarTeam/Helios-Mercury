@@ -91,4 +91,27 @@ QtObject {
             canvas.requestPaint();
         }
     }
+
+    /* defines font sizes to be used on the gauge depending on the gauge's size*/
+    function getFontSizes(gaugeSize) {
+        if (gaugeSize >= 250) {
+            return {
+                l: "gaugeFontSizeXL",
+                m: "gaugeFontSizeL",
+                s: "gaugeFontSizeS"
+            };
+        } else if (gaugeSize >= 175) {
+            return {
+                l: "gaugeFontSizeL",
+                m: "gaugeFontSizeM",
+                s: "gaugeFontSizeS"
+            };
+        } else {
+            return {
+                l: "gaugeFontSizeS",
+                m: "gaugeFontSizeS",
+                s: "gaugeFontSizeXS"
+            };
+        }
+    }
 }
