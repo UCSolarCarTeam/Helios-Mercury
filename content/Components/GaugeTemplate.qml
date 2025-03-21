@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
+import QtQuick.Effects
 import Mercury
 import "../Util"
 
@@ -19,6 +20,7 @@ Item {
 
     // icon properties
     property string icon
+    property color iconColor: Config.fontColor
     property int iconWidth
     property int iconHeight
 
@@ -193,13 +195,51 @@ Item {
             font.family: Config.fontStyle
         }
     }
-
+    
     Component {
         id: iconComponent
-        Image {
+        Item {
             width: gaugeTemplate.iconWidth
             height: gaugeTemplate.iconHeight
-            source: "../Images/" + gaugeTemplate.icon
+
+            Image {
+                id: staticImage
+                anchors.fill: parent
+                source: "../Images/" + gaugeTemplate.icon
+                smooth: true
+                visible: false 
+            }
+
+            Rectangle {
+                id: staticFill
+                width: parent.width
+                height: parent.height 
+                anchors.bottom: parent.bottom
+                color: gaugeTemplate.iconColor
+                visible: false 
+            }
+
+            ShaderEffectSource {
+                id: staticMask
+                sourceItem: staticImage
+            }
+
+            ShaderEffectSource {
+                id: staticFillSource
+                sourceItem: staticFill
+            }
+
+            MultiEffect {
+                anchors.fill: parent
+                source: staticFillSource
+                maskSource: staticMask
+                maskEnabled: true
+                maskThresholdMin: 0.0
+                maskThresholdMax: 1.0
+                maskSpreadAtMin: 0.0
+                maskSpreadAtMax: 0.0
+                maskInverted: false
+            }
         }
     }
 }

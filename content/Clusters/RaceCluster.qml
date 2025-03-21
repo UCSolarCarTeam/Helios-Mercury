@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import Mercury
 import "../Components"
 
 Item {
@@ -128,9 +129,10 @@ Item {
         units: "u"
         value: battery.AverageTemperature
         gaugeSize: 165
-        icon: "BoltIcon.png"
-        iconWidth: 15
-        iconHeight: 25
+        // icon: "BoltIcon.png"
+        // iconColor: Config.fontColor
+        // iconWidth: 15
+        // iconHeight: 25
     }
 
     GaugeTemplate {
@@ -144,6 +146,7 @@ Item {
         value: battery.AverageTemperature
         gaugeSize: 240
         icon: "BoltIcon.png"
+        //iconColor: Config.primary
         iconWidth: 20
         iconHeight: 35
     }
@@ -159,6 +162,7 @@ Item {
         value: battery.AverageTemperature
         gaugeSize: 300
         icon: "AccelerationIcon.png"
+        iconColor: Config.needleColor
         iconWidth: 50
         iconHeight: 45
     }
