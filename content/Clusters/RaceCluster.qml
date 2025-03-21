@@ -145,10 +145,10 @@ Item {
         units: "u"
         value: battery.AverageTemperature
         gaugeSize: Config.smallGaugeSize
-        icon: "BoltIcon.png"
-        iconColor: Config.primary
-        iconWidth: 15
-        iconHeight: 25
+        // icon: "BoltIcon.png"
+        // iconColor: Config.primary
+        // iconWidth: 15
+        // iconHeight: 25
     }
 
     GaugeTemplate {
