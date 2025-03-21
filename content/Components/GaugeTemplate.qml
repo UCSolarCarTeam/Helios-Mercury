@@ -15,7 +15,7 @@ Item {
     property string units
     property real value
     property string gaugeTitle
-    property real arcWidth: Math.round(gaugeSize / 10.5)
+    property int arcWidth: Math.round(gaugeSize / 10.5)
     property int gaugeInnerDiameter: Math.round(gaugeSize / 1.05) - ( 2 * arcWidth )
 
     // icon properties
@@ -28,8 +28,8 @@ Item {
     property int animationDuration: 300
 
     // canvas arc properties
-    property real arcEnd: 405
-    property real arcBegin: 135
+    property int arcEnd: 405
+    property int arcBegin: 135
 
     width: gaugeSize
     height: gaugeSize
