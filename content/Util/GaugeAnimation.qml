@@ -94,30 +94,32 @@ QtObject {
 
     /* defines font sizes to be used on the gauge depending on the gauge's size*/
     function getFontSizes(gaugeSize) {
-        if (gaugeSize >= Config.largeGaugeSize) {
+        if (gaugeSize === Config.largeGaugeSize) {
             return {
                 l: "gaugeFontSizeXL",
                 m: "gaugeFontSizeL",
                 s: "gaugeFontSizeS"
             };
-        } else if (gaugeSize >= Config.mediumGaugeSize) {
+        } else if (gaugeSize === Config.mediumGaugeSize) {
             return {
                 l: "gaugeFontSizeL",
                 m: "gaugeFontSizeM",
                 s: "gaugeFontSizeS"
             };
-        } else if (gaugeSize >= Config.smallGaugeSize) {
+        } else if (gaugeSize === Config.smallGaugeSize) {
             return {
-                l: "gaugeFontSizeS",
+                l: "gaugeFontSizeM",
                 m: "gaugeFontSizeS",
                 s: "gaugeFontSizeXS"
             };
-        } else {
+        } else if (gaugeSize === Config.extraSmallGaugeSize) {
             return {
-                l: "gaugeFontSizeXS",
+                l: "gaugeFontSizeS",
                 m: "gaugeFontSizeXS",
                 s: "gaugeFontSizeXXS"
             };
+        } else {
+            return null;
         }
     }
 }
