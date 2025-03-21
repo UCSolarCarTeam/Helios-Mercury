@@ -19,6 +19,7 @@ QtObject {
     property string fontStyle: "SF Pro"
     property color highContrast: "#A2180F"
 
+    property int gaugeFontSizeXXS: 8
     property int gaugeFontSizeXS: 12
     property int gaugeFontSizeS: 18
     property int gaugeFontSizeM: 24
@@ -26,5 +27,10 @@ QtObject {
     property int gaugeFontSizeXL: 34
 
     property int batteryFontSize: 18
+
+    property int extraSmallGaugeSize: 120
+    property int smallGaugeSize: 180
+    property int mediumGaugeSize: 240
+    property int largeGaugeSize: 300
 
 }

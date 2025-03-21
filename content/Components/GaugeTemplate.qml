@@ -92,7 +92,7 @@ Item {
 
     Text {
         id: minVal
-        width: 15
+        width: Config[gaugeAnimation.getFontSizes(gaugeSize).l] / 2
         color: Config.fontColor
         text: gaugeTemplate.minValue
         font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).m]
@@ -110,7 +110,7 @@ Item {
 
     Text {
         id: maxVal
-        width: 35
+        width: Config[gaugeAnimation.getFontSizes(gaugeSize).l] 
         color: Config.fontColor
         text: gaugeTemplate.maxValue
         font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).m]
@@ -195,7 +195,7 @@ Item {
             font.family: Config.fontStyle
         }
     }
-    
+
     Component {
         id: iconComponent
         Item {
