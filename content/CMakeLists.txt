@@ -20,6 +20,7 @@ qt6_add_qml_module(content
 	Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
         Util/GaugeAnimation.qml
+        Components/GaugeTemplate.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
@@ -29,4 +30,6 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
 	Images/Battery.png
         Images/ParkingBrake.png
+        Images/AccelerationIcon.png
+        Images/BoltIcon.png
 )
