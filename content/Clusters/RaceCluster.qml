@@ -120,31 +120,47 @@ Item {
     }
 
     GaugeTemplate {
+        id: extraSmallGaugeTest
+        x: 1459
+        y: 36
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "XSmall Gauge Test"
+        units: "u"
+        value: battery.AverageTemperature
+        gaugeSize: Config.extraSmallGaugeSize
+        icon: "BoltIcon.png"
+        iconColor: Config.fontColor
+        iconWidth: 10
+        iconHeight: 15
+    }
+
+    GaugeTemplate {
         id: smallGaugeTest
-        x: 1290
-        y: 66
+        x: 1257
+        y: 112
         minValue: 0
         maxValue: 100
         gaugeTitle: "Small Gauge Test"
         units: "u"
         value: battery.AverageTemperature
-        gaugeSize: 165
-        // icon: "BoltIcon.png"
-        // iconColor: Config.fontColor
-        // iconWidth: 15
-        // iconHeight: 25
+        gaugeSize: Config.smallGaugeSize
+        icon: "BoltIcon.png"
+        iconColor: Config.primary
+        iconWidth: 15
+        iconHeight: 25
     }
 
     GaugeTemplate {
         id: mediumGaugeTest
-        x: 1261
-        y: 265
+        x: 1265
+        y: 290
         minValue: 0
         maxValue: 100
         gaugeTitle: "Medium Gauge Test"
         units: "u"
         value: battery.AverageTemperature
-        gaugeSize: 240
+        gaugeSize: Config.mediumGaugeSize
         icon: "BoltIcon.png"
         //iconColor: Config.primary
         iconWidth: 20
@@ -153,14 +169,14 @@ Item {
 
     GaugeTemplate {
         id: largeGaugeTest
-        x: 1507
-        y: 42
+        x: 1545
+        y: 107
         minValue: 0
         maxValue: 100
         gaugeTitle: "Large Gauge Test"
         units: "u"
         value: battery.AverageTemperature
-        gaugeSize: 300
+        gaugeSize: Config.largeGaugeSize
         icon: "AccelerationIcon.png"
         iconColor: Config.needleColor
         iconWidth: 50
