@@ -8,21 +8,21 @@ import "../Util"
 Item {
     id: gaugeTemplate
 
-    // gauge properties
-    property int gaugeSize
-    property real minValue
-    property real maxValue
-    property string units
-    property real value
-    property string gaugeTitle
+    // user defined properties
+    property int gaugeSize // takes Config.extraSmallGaugeSize, Config.smallGaugeSize, Config.mediumGaugeSize, or Config.largeGaugeSize
+    property real minValue // gauge min value; if value is lower, needle stays at minValue but digital value shows actual value
+    property real maxValue // gauge max value; if value is higher, needle stays at maxValue but digital value shows actual value
+    property string units // units that show with value in the gauge, to one decimal place when not whole number
+    property real value // data value to be displayed
+    property string gaugeTitle // title of the gauge that shows under the digital value 
+    property string icon // takes name of icon file, must be in ../Images/, full file name must be passed (ie. BoltIcon.png not BoltIcon)
+    property color iconColor: Config.fontColor // determines color of icon, default is Config.fontColor (white) if nothing is passed 
+    property int iconWidth // width of icon
+    property int iconHeight // height of icon
+
+    // calculated gauge properties
     property int arcWidth: Math.round(gaugeSize / 10.5)
     property int gaugeInnerDiameter: Math.round(gaugeSize / 1.05) - ( 2 * arcWidth )
-
-    // icon properties
-    property string icon
-    property color iconColor: Config.fontColor
-    property int iconWidth
-    property int iconHeight
 
     // animation properties
     property int animationDuration: 300

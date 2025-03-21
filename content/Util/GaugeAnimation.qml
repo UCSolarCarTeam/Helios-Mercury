@@ -92,7 +92,7 @@ QtObject {
         }
     }
 
-    /* defines font sizes to be used on the gauge depending on the gauge's size*/
+    /* defines font sizes to be used on the gauge depending on the gauge's size */
     function getFontSizes(gaugeSize) {
         if (gaugeSize === Config.largeGaugeSize) {
             return {
