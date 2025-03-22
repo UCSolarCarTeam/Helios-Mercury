@@ -11,7 +11,7 @@ Item {
     property string imageSource: ""
     property bool isOn: false
     property bool isHighContrast: false
-    property color iconMaskColor: parent.isOn ? (parent.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
+    property color iconMaskColor: dashIcon.isOn ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
     
     Image {
         id: staticImage
