@@ -201,19 +201,45 @@ Item {
         Item {
             width: gaugeTemplate.iconWidth
             height: gaugeTemplate.iconHeight
+            antialiasing: true
 
-            Image { 
+            Image {
                 id: staticImage
                 anchors.fill: parent
                 source: "../Images/" + gaugeTemplate.icon
+                smooth: true
+                visible: false 
             }
 
-            ShaderEffect {
-                id: colorEffect
+            Rectangle {
+                id: staticFill
+                width: parent.width
+                height: parent.height 
+                anchors.bottom: parent.bottom
+                color: gaugeTemplate.iconColor
+                visible: false 
+            }
+
+            ShaderEffectSource {
+                id: staticMask
+                sourceItem: staticImage
+            }
+
+            ShaderEffectSource {
+                id: staticFillSource
+                sourceItem: staticFill
+            }
+
+            MultiEffect {
                 anchors.fill: parent
-                property variant source: staticImage
-                fragmentShader: "qrc:/content/Shaders/ColorOverlay.frag.qsb"
-                property color overlayColor: "#ff0000"
+                source: staticFillSource
+                maskSource: staticMask
+                maskEnabled: true
+                maskThresholdMin: 0.0
+                maskThresholdMax: 1.0
+                maskSpreadAtMin: 0.0
+                maskSpreadAtMax: 0.0
+                maskInverted: false
             }
         }
     }
