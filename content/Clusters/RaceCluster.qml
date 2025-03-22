@@ -75,8 +75,8 @@ Item {
 
     RpmGauge {
         id: rpmGauge
-        x: 1242
-        y: 43
+        x: 1236
+        y: 0
         minValue: 0
         maxValue: 6000
         value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2

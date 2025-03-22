@@ -4,38 +4,41 @@ import QtQuick.Shapes 1.0
 import Mercury
 import "../Util"
 
-Item  {
+Item {
     id: rpmGauge
-    width: 188
-    height: 499
+    width: 200
+    height: 550
 
-    // gauge properties
-    property real minValue
+    // gauge properties 
+    property real minValue 
     property real maxValue
-    property real value
+    property real value 
 
-    // animation properties
+    // animation properties 
     property int animationDuration: 300
 
-    // canvas arc properties
+    // canvas arc properties 
     property real arcBegin: 135
-    property real arcEnd: 235
+    property real arcEnd: 225
     property real arcWidth: 20
 
     GaugeAnimation { id: gaugeAnimation }
 
     ArcItem {
         id: outerArc
-        x: 51
-        y: -38
-        width: 589
-        height: 589
-        strokeWidth: 0
+        width: 590
+        height: 590
+        anchors {
+            verticalCenter: rpmGauge.verticalCenter
+            left: rpmGauge.left
+            leftMargin: 45
+        }
+        strokeWidth: 0 
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.outerArcColor
-        end: -30
-        begin: -140
+        end: -45
+        begin: -135
         arcWidth: 2
         antialiasing: true
     }
@@ -45,21 +48,19 @@ Item  {
         width: 580
         height: 580
         anchors {
-            left: parent.left
-            top: parent.top
-            leftMargin: 56
-            topMargin: -33
+            verticalCenter: rpmGauge.verticalCenter
+            left: outerArc.left
+            leftMargin: 5
         }
         strokeWidth: 0
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.btnDisabled
-        end: -30
-        begin: -140
+        end: -45
+        begin: -135
         arcWidth: 20
         antialiasing: true
     }
-
 
     Item {
         id: activeArcContainer
@@ -78,98 +79,146 @@ Item  {
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, rpmGauge, activeArcContainer.animatedValue); }
+            onPaint: { gaugeAnimation.drawGauge(activeArc, rpmGauge, activeArcContainer.animatedValue, 50, undefined); }
             Connections {
                 target: activeArcContainer
                 function onAnimatedValueChanged() { activeArc.requestPaint(); }
             }
         }
     }
-
+    
     Text {
-        id: element
-        color: "#ffffff"
+        id: label6
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("6")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: 35
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: -235
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            bottom: rpmGauge.verticalCenter
+            bottomMargin: 210
+            left: rpmGauge.left
+            leftMargin: 105
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 
     Text {
-        id: element1
-        color: "#ffffff"
+        id: label5
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("5")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: -22
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: -173
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            bottom: rpmGauge.verticalCenter
+            bottomMargin: 145
+            left: rpmGauge.left
+            leftMargin: 55
+
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 
     Text {
-        id: element2
-        color: "#ffffff"
+        id: label4
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("4")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: -57
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: -96
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            bottom: rpmGauge.verticalCenter
+            bottomMargin: 65
+            left: rpmGauge.left
+            leftMargin: 20
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 
     Text {
-        id: element3
-        color: "#ffffff"
+        id: label3
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("3")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: -73
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: -14
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            verticalCenter: rpmGauge.verticalCenter
+            left: rpmGauge.left
+            leftMargin: 10
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 
     Text {
-        id: element4
-        color: "#ffffff"
+        id: label2
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("2")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: -70
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: 68
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            top: rpmGauge.verticalCenter
+            topMargin: 65
+            left: rpmGauge.left
+            leftMargin: 25
+
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 
     Text {
-        id: element5
-        color: "#ffffff"
+        id: label1
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("1")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: -39
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: 155
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            top: rpmGauge.verticalCenter
+            topMargin: 145
+            left: rpmGauge.left
+            leftMargin: 65
+
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 
     Text {
-        id: element6
-        color: "#ffffff"
+        id: label0
+        height: Config.rpmGaugeFontSize
+        width: 15
+        color: Config.fontColor
         text: qsTr("0")
-        font.pixelSize: 40
-        anchors.horizontalCenterOffset: 13
-        anchors.centerIn: parent
-        font.family: "SF Pro"
-        anchors.verticalCenterOffset: 224
+        font.pixelSize: Config.rpmGaugeFontSize
+        anchors {
+            top: rpmGauge.verticalCenter
+            topMargin: 210
+            left: rpmGauge.left
+            leftMargin: 110
+        }
+        verticalAlignment: AlignVCenter
+        horizontalAlignment: AlignHCenter
+        font.family: Config.fontStyle
         font.weight: Font.Medium
     }
 }
-
-
-
