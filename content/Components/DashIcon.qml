@@ -18,10 +18,9 @@ Item {
         id: staticImage
         anchors.fill: parent
         source: parent.imageSource
+        sourceSize: Qt.size(128, 128)
         smooth: true
         visible: true
-        antialiasing: true
-        layer.smooth: true
     }
 
     MultiEffect {
@@ -29,6 +28,10 @@ Item {
         source: staticImage
         colorization: 1.0 
         colorizationColor: iconMaskColor 
+        antialiasing: true
+        layer.enabled: true
         layer.smooth: true
+        // blur: 0.2 
+        // blurMax: 10
     }
 }
