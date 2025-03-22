@@ -198,49 +198,9 @@ Item {
 
     Component {
         id: iconComponent
-        Item {
-            width: gaugeTemplate.iconWidth
-            height: gaugeTemplate.iconHeight
-            antialiasing: true
-
-            Image {
-                id: staticImage
-                anchors.fill: parent
-                source: "../Images/" + gaugeTemplate.icon
-                smooth: true
-                visible: false 
-            }
-
-            Rectangle {
-                id: staticFill
-                width: parent.width
-                height: parent.height 
-                anchors.bottom: parent.bottom
-                color: gaugeTemplate.iconColor
-                visible: false 
-            }
-
-            ShaderEffectSource {
-                id: staticMask
-                sourceItem: staticImage
-            }
-
-            ShaderEffectSource {
-                id: staticFillSource
-                sourceItem: staticFill
-            }
-
-            MultiEffect {
-                anchors.fill: parent
-                source: staticFillSource
-                maskSource: staticMask
-                maskEnabled: true
-                maskThresholdMin: 0.0
-                maskThresholdMax: 1.0
-                maskSpreadAtMin: 0.0
-                maskSpreadAtMax: 0.0
-                maskInverted: false
-            }
+        DashIcon {
+            imageSource: "../Images/" + gaugeTemplate.icon
+            iconMaskColor: gaugeTemplate.iconColor
         }
     }
 }
