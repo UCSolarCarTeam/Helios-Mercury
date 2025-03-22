@@ -131,7 +131,7 @@ Item {
         gaugeSize: Config.extraSmallGaugeSize
         icon: "BoltIcon.png"
         iconColor: Config.fontColor
-        iconWidth: 10
+        iconWidth: 13
         iconHeight: 15
     }
 
@@ -163,7 +163,7 @@ Item {
         gaugeSize: Config.mediumGaugeSize
         icon: "BoltIcon.png"
         //iconColor: Config.primary
-        iconWidth: 20
+        iconWidth: 30
         iconHeight: 35
     }
 
@@ -179,7 +179,7 @@ Item {
         gaugeSize: Config.largeGaugeSize
         icon: "AccelerationIcon.png"
         iconColor: Config.needleColor
-        iconWidth: 50
-        iconHeight: 45
+        iconWidth: 55
+        iconHeight: 55
     }
 }
