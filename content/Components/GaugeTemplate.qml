@@ -92,15 +92,15 @@ Item {
 
     Text {
         id: minVal
-        width: Config[gaugeAnimation.getFontSizes(gaugeSize).l] / 2
+        width: implicitWidth
         color: Config.fontColor
         text: gaugeTemplate.minValue
         font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).m]
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
-            right: inactiveArc.horizontalCenter
-            rightMargin: gaugeTemplate.gaugeSize / 4 - minVal.width
+            left: gaugeTemplate.left
+            leftMargin: gaugeTemplate.gaugeSize / 4.2
             bottom: inactiveArc.bottom
             bottomMargin: gaugeTemplate.arcWidth * 0.9
         }
@@ -110,15 +110,15 @@ Item {
 
     Text {
         id: maxVal
-        width: Config[gaugeAnimation.getFontSizes(gaugeSize).l] 
+        width: implicitWidth
         color: Config.fontColor
         text: gaugeTemplate.maxValue
         font.pixelSize: Config[gaugeAnimation.getFontSizes(gaugeSize).m]
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
-            left: inactiveArc.horizontalCenter
-            leftMargin: gaugeTemplate.gaugeSize / 4 - maxVal.width
+            right: gaugeTemplate.right
+            rightMargin: gaugeTemplate.gaugeSize / 4.2 
             bottom: inactiveArc.bottom
             bottomMargin: gaugeTemplate.arcWidth * 0.9
         }
