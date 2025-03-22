@@ -98,29 +98,6 @@ Item {
                 }
                 Behavior on x { NumberAnimation { duration: 200 } }
             }
-
-            // Thermometer icon inside TempBar (with a tint effect)
-            Item {
-                id: thermometerIconContainer
-                width: thermostatIconImage.implicitWidth
-                height: thermostatIconImage.implicitHeight
-                anchors.centerIn: parent
-                anchors.verticalCenterOffset: 21
-                anchors.horizontalCenterOffset: -10
-
-                Image {
-                    id: thermostatIconImage
-                    width: 20
-                    height: 20
-                    source: "../Images/ThermometerIcon.png"
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    anchors.fill: thermostatIconImage
-                    source: thermostatIconImage
-                    color: root.temperatureColor
-                }
-            }
         }
 
         // Hot bar
@@ -131,23 +108,47 @@ Item {
         }
     }
 
-    // Temperature reading text below the gauge row
-    Text {
-        id: temperatureText
-        width: parent.width
-        height: 18
-        text: root.temperatureValue + "°C"
-        color: root.temperatureColor
-        font.pixelSize: Config.tempGaugeFontSize
-        font.weight: Font.Medium
-        font.family: Config.fontStyle
-        anchors.horizontalCenter: gaugeRow.horizontalCenter
+    Row {
+        id: tempRow
+        spacing: 0
         anchors.top: gaugeRow.bottom
         anchors.topMargin: -5
-        wrapMode: Text.NoWrap
-        anchors.horizontalCenterOffset: 16
-        horizontalAlignment: Text.AlignHCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        // Thermometer icon (with a tint effect)
+        Item {
+            id: thermometerIconContainer
+            width: thermostatIconImage.width
+            height: thermostatIconImage.height
+
+            Image {
+                id: thermostatIconImage
+                width: 20
+                height: 20
+                source: "../Images/ThermometerIcon.png"
+                fillMode: Image.PreserveAspectFit
+            }
+            ColorOverlay {
+                anchors.fill: thermostatIconImage
+                source: thermostatIconImage
+                color: root.temperatureColor
+            }
+        }
+
+        // Temperature reading text
+        Text {
+            id: temperatureText
+            height: 18
+            text: root.temperatureValue + "°C"
+            color: root.temperatureColor
+            font.pixelSize: Config.tempGaugeFontSize
+            font.weight: Font.Medium
+            font.family: Config.fontStyle
+            wrapMode: Text.NoWrap
+            horizontalAlignment: Text.AlignHCenter
+        }
     }
+
 
     // Gauge label text at the top
     Text {
@@ -162,6 +163,5 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.NoWrap
-        z: 1
     }
 }
