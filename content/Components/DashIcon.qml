@@ -20,7 +20,7 @@ Item {
         source: parent.imageSource
         sourceSize: Qt.size(128, 128)
         smooth: true
-        visible: true
+        visible: false
     }
 
     MultiEffect {
@@ -31,7 +31,5 @@ Item {
         antialiasing: true
         layer.enabled: true
         layer.smooth: true
-        // blur: 0.2 
-        // blurMax: 10
     }
 }
