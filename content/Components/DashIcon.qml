@@ -5,8 +5,8 @@ import QtQuick.Effects
 
 Item {
     id: dashIcon
-    width: 32
-    height: 32
+    width: implicitWidth
+    height: implicitWidth
     smooth: true
 
     property string imageSource: ""
