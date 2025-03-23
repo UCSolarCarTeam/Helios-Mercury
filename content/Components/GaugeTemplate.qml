@@ -15,7 +15,7 @@ Item {
     property string units // units that show with value in the gauge, to one decimal place when not whole number
     property real value // data value to be displayed
     property string gaugeTitle // title of the gauge that shows under the digital value 
-    property string icon // takes name of icon file, must be in ../Images/, full file name must be passed (ie. BoltIcon.png not BoltIcon)
+    property string icon // takes path to icon file, full file name must be passed (ie. ../Images/BoltIcon.png)
     property color iconColor: Config.fontColor // determines color of icon, default is Config.fontColor (white) if nothing is passed 
     property int iconWidth // width of icon
     property int iconHeight // height of icon

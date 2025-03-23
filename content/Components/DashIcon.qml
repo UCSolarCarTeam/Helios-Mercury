@@ -5,11 +5,11 @@ import QtQuick.Effects
 
 Item {
     id: dashIcon
-    width: implicitWidth
-    height: implicitWidth
+    width: 32
+    height: 32
     smooth: true
 
-    property string imageSource: ""
+    property string imageSource: "" //IMPORTANT: Image must be solid white
     property bool isOn: false
     property bool isHighContrast: false
     property color iconMaskColor: dashIcon.isOn ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
@@ -18,7 +18,7 @@ Item {
         id: staticImage
         anchors.fill: parent
         source: parent.imageSource
-        sourceSize: Qt.size(128, 128)
+        sourceSize: Qt.size(64, 64)
         smooth: true
         visible: false
     }
