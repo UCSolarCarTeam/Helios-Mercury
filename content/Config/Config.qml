@@ -28,9 +28,11 @@ QtObject {
 
     property int batteryFontSize: 18
 
+    property int tempGaugeFontSize: 16
+    property int tempGaugeLabelFontSize: 20
+
     property int extraSmallGaugeSize: 120
     property int smallGaugeSize: 180
     property int mediumGaugeSize: 240
     property int largeGaugeSize: 300
-
 }
