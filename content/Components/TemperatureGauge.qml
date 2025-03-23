@@ -1,7 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Effects
-import Qt5Compat.GraphicalEffects
 import "../Config"
 
 Item {
@@ -121,17 +120,12 @@ Item {
             width: thermostatIconImage.width
             height: thermostatIconImage.height
 
-            Image {
+            DashIcon {
                 id: thermostatIconImage
-                width: 20
-                height: 20
-                source: "../Images/ThermometerIcon.png"
-                fillMode: Image.PreserveAspectFit
-            }
-            ColorOverlay {
-                anchors.fill: thermostatIconImage
-                source: thermostatIconImage
-                color: root.temperatureColor
+                imageSource: "../Images/ThermometerIcon.png"
+                iconMaskColor: root.temperatureColor
+                width: 24
+                height: 24
             }
         }
 
