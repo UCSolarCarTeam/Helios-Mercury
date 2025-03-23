@@ -4,41 +4,36 @@ import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
 import "../Util"
 import Mercury
-import "../Config"
 
-Rectangle {
-    id: root
-    width: 458
-    height: 458
-    color: "transparent"
+Item {
+    id: speedometer
+    width: 480
+    height: 460
 
+    // gauge properties
     property int minValue: 0
     property int maxValue: 160
-    property string units: "Km/h"
-
+    property string units: "KMH"
     property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
 
+    // animation properties 
     property int animationDuration: 300
 
-    property real arcEnd: 405
-    property real arcBegin: 135
-    property real arcWidth: 16
+    // canvas properties
+    property int arcEnd: 405
+    property int arcBegin: 135
+    property real arcWidth: 16 
 
-    GaugeAnimation {
-        id: gaugeAnimation
-    }
+    GaugeAnimation { id: gaugeAnimation }
 
-    ArcItem {
+    ArcItem { 
         id: outerArc
-        width: 458
-        height: 458
-        anchors.left: parent.left
-        anchors.top: parent.top
+        width: 460
+        height: 460
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: "#1b1a1d"
+        fillColor: Config.outerArcColor
         end: -135
         begin: 135
         arcWidth: 16
@@ -47,492 +42,195 @@ Rectangle {
 
     ArcItem {
         id: inactiveArc
-        width: 423
-        height: 423
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 18
-        anchors.topMargin: 17
+        width: 428
+        height: 428
+        anchors.centerIn: outerArc
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: "#242627"
+        fillColor: Config.btnDisabled
         end: -135
         begin: 135
         arcWidth: 16
         antialiasing: true
     }
 
-    Text {
-        id: element
-        width: 23
-        height: 30
-        color: "#ffffff"
-        text: qsTr("0")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 91
-        anchors.topMargin: 340
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
+    Component {
+        id: numberLabel
+        Text {
+            width: 50
+            height: Config.gaugeFontSizeM
+            color: Config.fontColor
+            font.pixelSize: Config.gaugeFontSizeM
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignTop
+            wrapMode: Text.Wrap
+            font.weight: Font.Medium
+            font.family: Config.fontStyle
+        }
     }
 
-    Text {
-        id: element1
-        width: 41
-        height: 30
-        color: "#ffffff"
-        text: qsTr("20")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 43
-        anchors.topMargin: 246
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
+    property var markerPositions: [
+        {x: 91, y: 340, value: "0"},
+        {x: 43, y: 246, value: "20"},
+        {x: 52, y: 150, value: "40"},
+        {x: 121, y: 69, value: "60"},
+        {x: 217, y: 37, value: "80"},
+        {x: 298, y: 74, value: "100"},
+        {x: 361, y: 150, value: "120"},
+        {x: 370, y: 252, value: "140"},
+        {x: 318, y: 340, value: "160"}
+    ]
+
+    Component.onCompleted: {
+        for (var i = 0; i < markerPositions.length; i++) {
+            var label = numberLabel.createObject(speedometer);
+            label.text = qsTr(markerPositions[i].value);
+            label.anchors.left = speedometer.left;
+            label.anchors.top = speedometer.top;
+            label.anchors.leftMargin = markerPositions[i].x;
+            label.anchors.topMargin = markerPositions[i].y;
+        }
     }
 
-    Text {
-        id: element2
-        width: 42
-        height: 30
-        color: "#ffffff"
-        text: qsTr("40")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 56
-        anchors.topMargin: 143
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element3
-        width: 43
-        height: 30
-        color: "#ffffff"
-        text: qsTr("60")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 121
-        anchors.topMargin: 69
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element4
-        width: 43
-        height: 30
-        color: "#ffffff"
-        text: qsTr("80")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 220
-        anchors.topMargin: 37
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element5
-        width: 56
-        height: 30
-        color: "#ffffff"
-        text: qsTr("100")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 298
-        anchors.topMargin: 74
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element6
-        width: 55
-        height: 30
-        color: "#ffffff"
-        text: qsTr("120")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 361
-        anchors.topMargin: 150
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element7
-        width: 56
-        height: 30
-        color: "#ffffff"
-        text: qsTr("140")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 370
-        anchors.topMargin: 252
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
-    }
-
-    Text {
-        id: element8
-        width: 55
-        height: 30
-        color: "#ffffff"
-        text: qsTr("160")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 318
-        anchors.topMargin: 340
-        font.pixelSize: 24
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignTop
-        wrapMode: Text.Wrap
-        font.weight: Font.Medium
-        font.family: "SF Pro"
+    Item {
+        id: incrementDashes
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+            leftMargin: 9
+            rightMargin: 8
+            topMargin: 7
+            bottomMargin: 74
+        }
+        
+        Component {
+            id: tickMark
+            Rectangle {
+                width: isWhite ? 5 : 4
+                height: 9
+                color: isWhite ? Config.speedometerWhiteTicks : Config.speedometerGrayTicks
+                
+                property bool isWhite: false
+                property int posX: 0
+                property int posY: 0
+                property real tickRotation: 0
+                
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: posX
+                anchors.topMargin: posY
+                rotation: tickRotation
+            }
+        }
+        
+        property var tickData: [
+            [62, 370, 45, true], // 0
+            [24, 317, 61.875, false], // 1
+            [3, 256, 78.75, true], // 2
+            [2, 192, 95.625, false], // 3
+            [19, 129, 112.5, true], // 4
+            [54, 75, 129.375, false], // 5
+            [101, 34, 146.25, true], // 6
+            [159, 9, 163.125, false], // 7
+            [222, 0, 0, true], // 8
+            [287, 11, 16.875, false], // 9
+            [343, 39, 33.75, true], // 10
+            [389, 83, 50.625, false], // 11
+            [420, 137, 67.5, true], // 12
+            [436, 200, 84.375, false], // 13
+            [431, 264, 101.25, true], // 14
+            [410, 322, 118.125, false], // 15
+            [375, 370, 135, true] // 16
+        ]
+        
+        Component.onCompleted: {
+            for (var i = 0; i < tickData.length; i++) {
+                var data = tickData[i];
+                var tick = tickMark.createObject(incrementDashes, {
+                    posX: data[0],
+                    posY: data[1],
+                    tickRotation: data[2],
+                    isWhite: data[3]
+                });
+            }
+        }
     }
 
     Item {
         id: activeArcContainer
         anchors.fill: inactiveArc
-        property real animatedValue: root.minValue
+        property real animatedValue: speedometer.minValue
 
-        Behavior on animatedValue {
-            NumberAnimation {
-                duration: root.animationDuration
-            }
-        }
+        Behavior on animatedValue { NumberAnimation { duration: speedometer.animationDuration } }
 
         Connections {
-            target: root
-            function onValueChanged() {
-                activeArcContainer.animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue);
-            }
+            target: speedometer
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
         }
 
-        Component.onCompleted: {
-            animatedValue = gaugeAnimation.clamp(root.value, root.minValue, root.maxValue);
-        }
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
 
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: {
-                gaugeAnimation.drawGauge(activeArc, root, activeArcContainer.animatedValue, 88);
-            }
+            onPaint: { gaugeAnimation.drawGauge(activeArc, speedometer, activeArcContainer.animatedValue, 92, undefined); }
             Connections {
                 target: activeArcContainer
-                function onAnimatedValueChanged() {
-                    activeArc.requestPaint();
-                }
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
             }
-        }
-    }
-
-    Item {
-        id: increments_dashes
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: 9
-        anchors.rightMargin: 8
-        anchors.topMargin: 7
-        anchors.bottomMargin: 74
-        Rectangle {
-            id: rectangle_38
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 222
-            anchors.topMargin: -1
-        }
-
-        Rectangle {
-            id: rectangle_39
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 343
-            anchors.topMargin: 39
-            rotation: 33.432
-        }
-
-        Rectangle {
-            id: rectangle_43
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 100
-            anchors.topMargin: 34
-            rotation: -36.386
-        }
-
-        Rectangle {
-            id: rectangle_47
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 158
-            anchors.topMargin: 8
-            rotation: -17.668
-        }
-
-        Rectangle {
-            id: rectangle_48
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 53
-            anchors.topMargin: 75
-            rotation: 313.022
-        }
-
-        Rectangle {
-            id: rectangle_49
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 1
-            anchors.topMargin: 192
-            rotation: 95.084
-        }
-
-        Rectangle {
-            id: rectangle_50
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 24
-            anchors.topMargin: 317
-            rotation: 64.041
-        }
-
-        Rectangle {
-            id: rectangle_40
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 420
-            anchors.topMargin: 137
-            rotation: 66.687
-        }
-
-        Rectangle {
-            id: rectangle_44
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 18
-            anchors.topMargin: 129
-            rotation: 112.451
-        }
-
-        Rectangle {
-            id: rectangle_41
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 431
-            anchors.topMargin: 264
-            rotation: 105.323
-        }
-
-        Rectangle {
-            id: rectangle_45
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 3
-            anchors.topMargin: 256
-            rotation: 79.893
-        }
-
-        Rectangle {
-            id: rectangle_42
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 373
-            anchors.topMargin: 368
-            rotation: 134.103
-        }
-
-        Rectangle {
-            id: rectangle_46
-            width: 5
-            height: 9
-            color: Config.speedometerWhiteTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 63
-            anchors.topMargin: 368
-            rotation: 227.358
-        }
-
-        Rectangle {
-            id: rectangle_51
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 287
-            anchors.topMargin: 11
-            rotation: 200.581
-        }
-
-        Rectangle {
-            id: rectangle_52
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 389
-            anchors.topMargin: 83
-            rotation: 51.074
-        }
-
-        Rectangle {
-            id: rectangle_53
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 435
-            anchors.topMargin: 200
-            rotation: 85.254
-        }
-
-        Rectangle {
-            id: rectangle_54
-            width: 4
-            height: 9
-            color: Config.speedometerGrayTicks
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 409
-            anchors.topMargin: 322
-            rotation: -239.646
         }
     }
 
     ArcItem {
-        id: innering1
-        width: 247
-        height: 247
-        anchors.verticalCenter: parent.verticalCenter
+        id: innerArc
+        width: 245
+        height: 245
+        anchors.centerIn: inactiveArc
         strokeWidth: 0
-        strokeStyle: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: "#1b1a1d"
-        end: -136.2
-        begin: 136.2
-        arcWidth: 9.42797
+        fillColor: Config.btnDisabled
+        end: -135
+        begin: 135
+        arcWidth: 9
         antialiasing: true
-        anchors.verticalCenterOffset: 1
-        anchors.horizontalCenterOffset: -1
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Rectangle {
-        id: speedometerValueContainer
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        height: 115
+    Text {
+        id: speedometerValue
         width: 70
-        color: "transparent"
-
-        Text {
-            id: speedometerValue
-            color: "#ffffff"
-            text: root.value
-            font.pixelSize: 86
-            font.weight: Font.Medium
-            font.family: "SF Pro"
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            wrapMode: Text.NoWrap
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
+        height: Config.gaugeFontSizeXXL
+        color: Config.fontColor
+        text: speedometer.value
+        font.pixelSize: Config.gaugeFontSizeXXL
+        font.family: Config.fontStyle
+        font.weight: Font.Medium
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            bottom: innerArc.verticalCenter
+            bottomMargin: -20
+            horizontalCenter: innerArc.horizontalCenter
         }
+    }
 
-        Text {
-            id: kMH
-            color: "#ffffff"
-            text: qsTr("KMH")
-            font.pixelSize: 24
-            font.weight: Font.Medium
-            font.family: "SF Pro"
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            lineHeight: 18
-            lineHeightMode: Text.FixedHeight
-            wrapMode: Text.NoWrap
-            anchors.horizontalCenterOffset: 1
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
+    Text {
+        id: speedometerUnits
+        width: 70
+        height: Config.gaugeFontSizeM
+        text: speedometer.units
+        color: Config.fontColor
+        font.pixelSize: Config.gaugeFontSizeM
+        font.family: Config.fontStyle
+        font.weight: Font.Medium
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors {
+            top: speedometerValue.bottom
+            horizontalCenter: innerArc.horizontalCenter
         }
     }
 }
