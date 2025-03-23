@@ -22,6 +22,7 @@ QtObject {
     property int gaugeFontSizeS: 18
     property int gaugeFontSizeM: 24
     property int gaugeFontSizeL: 28
+    property int gaugeFontSizeXXL: 86
 
     property int batteryFontSize: 18
 
