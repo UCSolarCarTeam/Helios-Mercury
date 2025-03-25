@@ -26,7 +26,6 @@ SerialReceiver::~SerialReceiver() {
 
 /** Attempt to connect */
 void SerialReceiver::tryConnect() {
-    // qDebug() << "[tryConnect] Entry. isOpen(): " << serialPort_->isOpen() << ", connected_: " << connected_;
     if (serialPort_->isOpen()) {
         serialPort_->close();
     }
@@ -40,7 +39,6 @@ void SerialReceiver::tryConnect() {
     serialPort_->setStopBits(QSerialPort::OneStop);
 
     if (serialPort_->open(QIODevice::ReadOnly)) {
-        // qDebug() << "[tryConnect] closing existing port";
         qDebug() << "Serial Port Opened: " << config.getPortName();
         connected_ = true;
         packetFactory_->getPiPacket().setEmbeddedState(true);
@@ -66,13 +64,11 @@ void SerialReceiver::handleReadyRead() {
 
 /** Monitor connection status and detect disconnects */
 void SerialReceiver::checkConnection() {
-    // qDebug() << "[checkConnection] Entry. isOpen(): " << serialPort_->isOpen() << ", connected_: " << connected_;
     if (serialPort_->isOpen() && connected_) {
         auto pinSignals = serialPort_->pinoutSignals();
 
         if (!(pinSignals & QSerialPort::DataCarrierDetectSignal) &&
             !(pinSignals & QSerialPort::DataSetReadySignal)) {
-            // qWarning() << "Serial port lost signal (DCD/DSR down). Disconnect detected!";
             connected_ = false;
             serialPort_->close();
             QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
@@ -81,7 +77,6 @@ void SerialReceiver::checkConnection() {
     }
 
     if (!serialPort_->isOpen()) {
-        // qWarning() << "Serial port disconnected. Reconnecting...";
         QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
     }
 }
