@@ -26,8 +26,10 @@ QtObject {
 
     /* draws the gauge's trailing blue arc and needle. Config.primary is the trailing 
     color and Config.btnDisabled is the unfilled gauge color. Needle witdh by default is 
-    equal to width of arc, but can passed to the function to make needle bigger/smaller. */
-    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth) {
+    equal to width of arc, but can passed to the function as the fourth argument to make needle 
+    longer/shorter. Needle length by default is 5 units, but can be passed as the fifth argument
+    to make needle thicker/thinner. */
+    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth, needleLength = 5) {
         var ctx = canvas.getContext("2d");
         ctx.reset();
 
@@ -56,12 +58,19 @@ QtObject {
         ctx.beginPath();
         ctx.lineWidth = needleWidth;
         ctx.strokeStyle = Config.needleColor;
-
-        var needleLength = 5;
-
-        var needleStartAngle = valueAngle + (needleLength / (2 * Math.PI * arcRadius)) * 180;
-
-        var needleEndAngle = valueAngle - (needleLength / (2 * Math.PI * arcRadius)) * 180;
+        
+        var needleStartAngle, needleEndAngle;
+        
+        if (Math.abs(valueAngle - gauge.arcBegin) < 1) {
+            needleStartAngle = gauge.arcBegin + needleLength / 5;
+            needleEndAngle = needleStartAngle - needleLength / 5; 
+        } else if (Math.abs(valueAngle - gauge.arcEnd) < 1) {
+            needleEndAngle = gauge.arcEnd - needleLength / 5;
+            needleStartAngle = needleEndAngle + needleLength / 5;
+        } else {
+            needleStartAngle = valueAngle + (needleLength / (2 * Math.PI * arcRadius)) * 180;
+            needleEndAngle = valueAngle - (needleLength / (2 * Math.PI * arcRadius)) * 180;
+        }
 
         var needleRadius = arcRadius - (needleWidth / 2);
 
@@ -80,6 +89,37 @@ QtObject {
     function requestRepaint(canvas) {
         if (canvas) {
             canvas.requestPaint();
+        }
+    }
+
+    /* defines font sizes to be used on the gauge depending on the gauge's size */
+    function getFontSizes(gaugeSize) {
+        if (gaugeSize === Config.largeGaugeSize) {
+            return {
+                l: "gaugeFontSizeXL",
+                m: "gaugeFontSizeL",
+                s: "gaugeFontSizeS"
+            };
+        } else if (gaugeSize === Config.mediumGaugeSize) {
+            return {
+                l: "gaugeFontSizeL",
+                m: "gaugeFontSizeM",
+                s: "gaugeFontSizeS"
+            };
+        } else if (gaugeSize === Config.smallGaugeSize) {
+            return {
+                l: "gaugeFontSizeM",
+                m: "gaugeFontSizeS",
+                s: "gaugeFontSizeXS"
+            };
+        } else if (gaugeSize === Config.extraSmallGaugeSize) {
+            return {
+                l: "gaugeFontSizeS",
+                m: "gaugeFontSizeXS",
+                s: "gaugeFontSizeXXS"
+            };
+        } else {
+            return null;
         }
     }
 }
