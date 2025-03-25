@@ -15,8 +15,6 @@ SerialReceiver::SerialReceiver(PacketFactory* packetFactory, QObject* parent)
     monitorTimer_ = new QTimer(this);
     connect(monitorTimer_, &QTimer::timeout, this, &SerialReceiver::checkConnection);
     monitorTimer_->start(RETRY_PERIOD); // Check connection every 1s
-
-    tryConnect(); // Attempt initial connection
 }
 
 /** Destructor */
@@ -49,7 +47,6 @@ void SerialReceiver::tryConnect() {
     } else {
         connected_ = false;
         packetFactory_->getPiPacket().setEmbeddedState(false);
-        QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
     }
 }
 
