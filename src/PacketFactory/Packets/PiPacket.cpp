@@ -19,8 +19,6 @@ void PiPacket::populateEmbedded(const bool state) {
 QJsonObject PiPacket::toJson() {
     QJsonObject json;
 
-    json[JsonDefinitions::TELEMETRY_CONNECTION] = AWSState();
-    json[JsonDefinitions::EMBEDDED_CONNECTION] = EmbeddedState();
     json[JsonDefinitions::RFID] = Rfid_;
 
     return json;
