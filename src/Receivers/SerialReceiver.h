@@ -10,7 +10,7 @@ class SerialReceiver : public QObject {
     Q_OBJECT
 
 public:
-    explicit SerialReceiver(PacketFactory* packetFactory, QObject* parent = nullptr);
+    explicit SerialReceiver(PacketFactory* packetFactory);
     ~SerialReceiver();
 
 signals:

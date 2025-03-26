@@ -7,8 +7,8 @@ const int RETRY_PERIOD = 5000; // Reconnect attempt interval (ms)
 }
 
 /** Constructor */
-SerialReceiver::SerialReceiver(PacketFactory* packetFactory, QObject* parent)
-    : QObject(parent), packetFactory_(packetFactory), serialPort_(new QSerialPort(this)), connected_(false) {
+SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
+    : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)), connected_(false) {
 
     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
 
