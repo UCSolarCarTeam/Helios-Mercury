@@ -7,7 +7,6 @@ Item {
     width: 32
     height: 32
 
-    property bool isConnected: false
     property bool isRadioBoard: false
 
     DashIcon {
