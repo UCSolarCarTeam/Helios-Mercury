@@ -9,7 +9,11 @@ qt6_add_qml_module(content
     QML_FILES
         App.qml
         Clusters/RaceCluster.qml
-        Clusters/DebugCluster.qml
+        Clusters/MotorDebugCluster.qml
+        Clusters/BatteryDebugCluster.qml
+        Clusters/DriverControlsDebugCluster.qml
+        Clusters/MpptMbbsDebugCluster.qml
+        Clusters/TelemetryDebugCluster.qml
         Clusters/Screen01.ui.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
@@ -28,5 +32,5 @@ qt6_add_qml_module(content
         Images/Headlights.png
         Images/DaytimeRunningLights.png
 	Images/Battery.png
-        Images/ParkingBrake.png
+        Images/ParkingBrake.png 
 )
