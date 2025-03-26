@@ -3,7 +3,7 @@
 #include <QDebug>
 
 namespace {
-const int RETRY_PERIOD = 5000; // Reconnect attempt interval (ms)
+    const int RETRY_PERIOD = 5000; // Reconnect attempt interval (ms)
 }
 
 /** Constructor */
