@@ -19,22 +19,6 @@ Item {
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
-    DashIcon {
-        id: dashIcon
-        x: 1173
-        y: 13
-        isOn: b3.HeadlightsSwitchIn
-        imageSource: "../Images/Headlights.png"
-    }
-
-    DashIcon {
-        id: dashIcon2
-        x: 1116
-        y: 13
-        isOn: b3.DaytimeRunningLightSignalOut
-        imageSource: "../Images/DaytimeRunningLights.png"
-    }
-
     Text {
         id: text1
         x: 711
@@ -75,9 +59,62 @@ Item {
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
+    RaceClusterIcons{
+        id: raceDashboardIcons
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 55
+        anchors.horizontalCenterOffset: 0
+    }
+
     CameraView{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
+    }
+
+    Rnd {
+        id: rnd
+        x: 1518
+        y: 449
+    }
+    
+    BatteryIcon {
+        id: batteryIcon
+        x: 16
+        y: 89
+    }
+    
+    ThreeQuarterGauge {
+        id: motorTempGauge
+        x: 212
+        y: 21
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Motor Temp"
+        units: "°C"
+        value: ( motorDetails0.MotorTemperature + motorDetails1.MotorTemperature ) / 2
+    }
+
+    ThreeQuarterGauge {
+        id: netConsumptionGauge
+        x: 68
+        y: 180
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Net Consumption"
+        units: "mV"
+        value: battery.AverageCellVoltage / 10 
+    }
+
+    ThreeQuarterGauge {
+        id: averageCellTempGauge
+        x: 178
+        y: 290
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "AVG Cell Temp"
+        units: "°C"
+        value: battery.AverageTemperature
     }
 }

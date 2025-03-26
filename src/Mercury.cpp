@@ -9,6 +9,11 @@
 
 #include <QQmlContext>
 
+// Include the GpioReceiver header file only if the program is running on a Pi
+#ifdef RUNNING_ON_PI
+#include "Receivers/GpioReceiver.h"
+#endif
+
 
 Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
@@ -17,6 +22,11 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //load in settings and initialize Packet factory
     ConfigManager& config = ConfigManager::instance();
     PacketFactory* packetFactory = new PacketFactory();
+
+    //Initialize GPIO Receiver if on Pi
+    #ifdef RUNNING_ON_PI
+        GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
+    #endif
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
     SerialReceiver* serialReceiver = new SerialReceiver();
@@ -48,6 +58,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     MpptPacket &mppt3Packet = packetFactory->getMpptPacket(3);
     MbmsPacket &mbmsPacket = packetFactory->getMbmsPacket();
     ProximitySensorsPacket &proximitySensorsPacket = packetFactory->getProximitySensorsPacket();
+    PiPacket &piPacket = packetFactory->getPiPacket();
 
 
     engine_.rootContext()->setContextProperty("keyMotor", &keyMotorPacket);
@@ -63,6 +74,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("mppt3", &mppt3Packet);
     engine_.rootContext()->setContextProperty("mbms", &mbmsPacket);
     engine_.rootContext()->setContextProperty("proximitySensors", &proximitySensorsPacket);
+    engine_.rootContext()->setContextProperty("pi", &piPacket);
 
     qmlRegisterSingletonType(QUrl("qrc:/qt/qml/content/Config/Config.qml"), "Mercury", 1, 0, "Config");
 
