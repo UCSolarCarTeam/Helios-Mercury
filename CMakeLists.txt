@@ -18,6 +18,17 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
+# Pi Dependencies
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    add_definitions(-DRUNNING_ON_PI)
+    list(APPEND ADDITIONAL_SOURCES
+        src/Receivers/GpioReceiver.h src/Receivers/GpioReceiver.cpp
+    )
+    set(PIGPIO_LIB pigpio)
+else()
+    set(PIGPIO_LIB "")
+endif()
+
 qt_add_executable(Helios-Mercury src/main.cpp
     src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
     src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
@@ -41,6 +52,8 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Config/PropertyDefinitions.h
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
     src/Config/Logger.h src/Config/Logger.cpp
+    src/PacketFactory/Packets/PiPacket.h src/PacketFactory/Packets/PiPacket.cpp
+    ${ADDITIONAL_SOURCES}
 )
 
 qt_add_resources(Helios-Mercury "configuration"
@@ -57,6 +70,7 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Mqtt
     Qt6::SerialPort
     Qt6::ShaderTools
+    ${PIGPIO_LIB}
 )
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
@@ -91,5 +105,4 @@ qt6_add_shaders(Helios-Mercury "Helios-Mercury_shaders"
         "/"
     FILES
         "content/Shaders/MovingColor.frag"
-        "content/Shaders/ColorOverlay.frag"
 )

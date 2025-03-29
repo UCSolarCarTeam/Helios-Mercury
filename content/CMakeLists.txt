@@ -20,7 +20,9 @@ qt6_add_qml_module(content
         Config/Config.qml
 	Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
+        Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
+        Components/GaugeTemplate.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
@@ -36,4 +38,10 @@ qt6_add_qml_module(content
         Images/TelemetryDisconnected.png
 	Images/Battery.png
         Images/ParkingBrake.png
+        Images/Hot.png
+        Images/Cool.png
+        Images/TempBar.png
+        Images/ThermometerIcon.png
+        Images/AccelerationIcon.png
+        Images/BoltIcon.png
 )
