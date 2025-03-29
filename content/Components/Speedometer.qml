@@ -14,8 +14,7 @@ Item {
     property int minValue: 0
     property int maxValue: 160
     property string units: "KMH"
-    //property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
-    property int value: battery.AverageTemperature
+    property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
 
     // animation properties 
     property int animationDuration: 300
