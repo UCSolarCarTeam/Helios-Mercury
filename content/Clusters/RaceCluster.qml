@@ -46,7 +46,7 @@ Item {
         id: leftArrowIndicator
         x: 608
         y: 15
-        z:1000
+        z: 1000
         isRight: false
         isOn: b3.LeftSignalIn || b3.HazardLightsIn
     }
@@ -55,12 +55,12 @@ Item {
         id: rightArrowIndicator
         x: 1278
         y: 15
-        z:1000
+        z: 1000
         isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
-    RaceClusterIcons{
+    RaceClusterIcons {
         id: raceDashboardIcons
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -68,24 +68,34 @@ Item {
         anchors.horizontalCenterOffset: 0
     }
 
-    CameraView{
+    CameraView {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
 
+    Speedometer {
+        id: speedometer
+        x: 1356
+        y: 46
+    }
+
     Rnd {
         id: rnd
-        x: 1518
-        y: 449
+        anchors {
+            top: speedometer.bottom
+            topMargin: -115
+            left: speedometer.left
+            leftMargin: 140
+        }
     }
-    
+
     BatteryIcon {
         id: batteryIcon
         x: 16
         y: 89
     }
-    
+
     ThreeQuarterGauge {
         id: motorTempGauge
         x: 212
@@ -94,7 +104,7 @@ Item {
         maxValue: 100
         gaugeTitle: "Motor Temp"
         units: "°C"
-        value: ( motorDetails0.MotorTemperature + motorDetails1.MotorTemperature ) / 2
+        value: (motorDetails0.MotorTemperature + motorDetails1.MotorTemperature) / 2
     }
 
     ThreeQuarterGauge {
@@ -105,7 +115,7 @@ Item {
         maxValue: 100
         gaugeTitle: "Net Consumption"
         units: "mV"
-        value: battery.AverageCellVoltage / 10 
+        value: battery.AverageCellVoltage / 10
     }
 
     ThreeQuarterGauge {

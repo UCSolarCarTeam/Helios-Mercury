@@ -62,11 +62,11 @@ QtObject {
         var needleStartAngle, needleEndAngle;
         
         if (Math.abs(valueAngle - gauge.arcBegin) < 1) {
-            needleStartAngle = gauge.arcBegin + needleLength / 5;
-            needleEndAngle = needleStartAngle - needleLength / 5; 
+            needleStartAngle = gauge.arcBegin + needleLength / 4;
+            needleEndAngle = needleStartAngle - needleLength / 4; 
         } else if (Math.abs(valueAngle - gauge.arcEnd) < 1) {
-            needleEndAngle = gauge.arcEnd - needleLength / 5;
-            needleStartAngle = needleEndAngle + needleLength / 5;
+            needleEndAngle = gauge.arcEnd - needleLength / 4;
+            needleStartAngle = needleEndAngle + needleLength / 4;
         } else {
             needleStartAngle = valueAngle + (needleLength / (2 * Math.PI * arcRadius)) * 180;
             needleEndAngle = valueAngle - (needleLength / (2 * Math.PI * arcRadius)) * 180;
