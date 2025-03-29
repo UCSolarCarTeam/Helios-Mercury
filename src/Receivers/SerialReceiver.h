@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QSerialPort>
-#include <QTimer>
+#include <QFileSystemWatcher>
 #include "../PacketFactory/PacketFactory.h"
 
 class SerialReceiver : public QObject {
@@ -18,16 +18,18 @@ signals:
 
 private slots:
     void handleReadyRead();
-    void checkConnection();
-    void tryConnect();
+    void onDevDirectoryChanged();
 
 private:
+    void tryConnect();
+    void checkPortAvailability();
+
     QSerialPort* serialPort_;
     PacketFactory* packetFactory_;
     QString portName_;
     bool connected_;
 
-    QTimer* monitorTimer_; // Timer for continuous monitoring
+    QFileSystemWatcher* devWatcher_;
 };
 
 #endif // SERIALRECEIVER_H

@@ -8,14 +8,6 @@ PiPacket::PiPacket() {
     setDriverName("Unknown");
 }
 
-void PiPacket::populateTelemetry(const bool state) {
-    setAWSState(true);
-}
-
-void PiPacket::populateEmbedded(const bool state) {
-    setEmbeddedState(true);
-}
-
 QJsonObject PiPacket::toJson() {
     QJsonObject json;
 

@@ -1,9 +1,12 @@
 #include "SerialReceiver.h"
 #include "../Config/ConfigManager.h"
 #include <QDebug>
+#include <QDir>
+#include <QFile>
 
 namespace {
-    const int RETRY_PERIOD = 5000; // Reconnect attempt interval (ms)
+    const QString DEV_PATH = "/dev/";
+    const QString DEV_PTS_PATH = "/dev/pts/";
 }
 
 /** Constructor */
@@ -12,15 +15,50 @@ SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
 
     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
 
-    monitorTimer_ = new QTimer(this);
-    connect(monitorTimer_, &QTimer::timeout, this, &SerialReceiver::checkConnection);
-    monitorTimer_->start(RETRY_PERIOD); // Check connection every 1s
+    ConfigManager& config = ConfigManager::instance();
+    portName_ = config.getPortName();
+
+    devWatcher_ = new QFileSystemWatcher(this);
+    connect(devWatcher_, &QFileSystemWatcher::directoryChanged, this, &SerialReceiver::onDevDirectoryChanged);
+
+    devWatcher_->addPath(DEV_PATH);
+    devWatcher_->addPath(DEV_PTS_PATH);
+
+    checkPortAvailability();
 }
 
 /** Destructor */
 SerialReceiver::~SerialReceiver() {
     if(serialPort_->isOpen()) {
         serialPort_->close();
+    }
+}
+
+/** Called when /dev/ directory changes */
+void SerialReceiver::onDevDirectoryChanged() {
+    // qDebug() << "SIGNAL RECIEVED, ENTERED DIRECTORY CHANGED";
+    checkPortAvailability();
+}
+
+/** Check if the port is available in /dev/ */
+void SerialReceiver::checkPortAvailability() {
+    ConfigManager& config = ConfigManager::instance();
+    portName_ = config.getPortName();
+
+    QFile portFile(portName_);
+
+    if (portFile.exists()) {
+        if (!connected_) {
+            qDebug() << "Detected port available:" << portName_;
+            tryConnect();
+        }
+    } else {
+        if (connected_) {
+            qDebug() << "Serial port disconnected: " << portName_;
+            connected_ = false;
+            serialPort_->close();
+            packetFactory_->getPiPacket().setEmbeddedState(false);
+        }
     }
 }
 
@@ -60,23 +98,4 @@ void SerialReceiver::handleReadyRead() {
     }
 
     emit dataReceived(data);
-}
-
-/** Monitor connection status and detect disconnects */
-void SerialReceiver::checkConnection() {
-    if (serialPort_->isOpen() && connected_) {
-        auto pinSignals = serialPort_->pinoutSignals();
-
-        if (!(pinSignals & QSerialPort::DataCarrierDetectSignal) &&
-            !(pinSignals & QSerialPort::DataSetReadySignal)) {
-            connected_ = false;
-            serialPort_->close();
-            QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
-        }
-        return;
-    }
-
-    if (!serialPort_->isOpen()) {
-        QTimer::singleShot(RETRY_PERIOD, this, &SerialReceiver::tryConnect);
-    }
 }

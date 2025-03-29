@@ -14,8 +14,6 @@ class PiPacket : public QObject {
 
 public:
     PiPacket();
-    void populateTelemetry(const bool state);
-    void populateEmbedded(const bool state);
     QJsonObject toJson();
 };
 
