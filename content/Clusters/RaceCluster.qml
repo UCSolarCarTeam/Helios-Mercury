@@ -74,6 +74,18 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    DashIcon {
+        id: embeddedconnectionIcon
+        imageSource: ("../Images/RadioBoardConnected")
+        isOn: pi.EmbeddedState
+    }
+
+    DashIcon {
+        id: telemetryconnectionIcon
+        imageSource: ("../Images/TelemetryConnected")
+        isOn: pi.AWSState
+    }
+
     ConnectionStatus {
         id: embeddedConnectionStatus
         x: 1175
