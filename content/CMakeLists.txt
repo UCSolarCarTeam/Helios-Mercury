@@ -11,11 +11,11 @@ qt6_add_qml_module(content
         Clusters/RaceCluster.qml
         Clusters/DebugCluster.qml
         Clusters/Screen01.ui.qml
-        Clusters/MPPTMBMSDebugScreen.qml
+        Clusters/MpptMbmsDebugCluster.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
-        Components/MBMSStatusIcon.qml
+        Components/StatusIcon.qml
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Config/Config.qml
@@ -31,4 +31,6 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+        Images/MpptMbmsStatusOff.png
+        Images/MpptMbmsStatusOn.png
 )

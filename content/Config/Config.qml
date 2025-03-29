@@ -35,4 +35,6 @@ QtObject {
     property int smallGaugeSize: 180
     property int mediumGaugeSize: 240
     property int largeGaugeSize: 300
+    property int mpptmbmsFontSizeS: 12
+
 }
