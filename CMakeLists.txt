@@ -105,5 +105,4 @@ qt6_add_shaders(Helios-Mercury "Helios-Mercury_shaders"
         "/"
     FILES
         "content/Shaders/MovingColor.frag"
-        "content/Shaders/ColorOverlay.frag"
 )
