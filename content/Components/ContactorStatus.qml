@@ -13,7 +13,7 @@ Item {
     Text{
         id: contactorTitle
         text: contactor
-        font.pixelSize: Config.smallFontSize
+        font.pixelSize: Config.gaugeFontSizeXS
         color: Config.fontColor
         anchors.bottom: contactorIcon.top
         anchors.bottomMargin: 2
