@@ -7,14 +7,13 @@ QtObject {
 
     property color primary: "#3498DB"
     property color btnDisabled: "#111111"
+    property color needleColor: "#ff0000"
+    property color outerArcColor: "#242627"
 
     property color faintGrey: "#AAAAAA"
     property int rndfontSize: 20
 
     property color fontColor: "#FFFFFF"
-
-    property color needleColor: "#FF0000"
-    property color outerArcColor: "#242627"
 
     property string fontStyle: "SF Pro"
     property color highContrast: "#A2180F"
@@ -26,8 +25,10 @@ QtObject {
     property int gaugeFontSizeL: 28
     property int gaugeFontSizeXL: 34
 
-    property int batteryFontSize: 18
+    property int rpmGaugeFontSize: 40
 
+    property int batteryFontSize: 18
+    
     property int tempGaugeFontSize: 16
     property int tempGaugeLabelFontSize: 20
 

@@ -14,6 +14,7 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/RpmGauge.qml
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Config/Config.qml

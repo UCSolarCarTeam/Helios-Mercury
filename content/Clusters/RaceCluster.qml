@@ -74,6 +74,15 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    RpmGauge {
+        id: rpmGauge
+        x: 1236
+        y: 0
+        minValue: 0
+        maxValue: 6000
+        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+    }
+    
     Rnd {
         id: rnd
         x: 1518
