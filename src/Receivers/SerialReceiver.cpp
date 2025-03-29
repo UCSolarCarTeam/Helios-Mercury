@@ -36,7 +36,6 @@ SerialReceiver::~SerialReceiver() {
 
 /** Called when /dev/ directory changes */
 void SerialReceiver::onDevDirectoryChanged() {
-    // qDebug() << "SIGNAL RECIEVED, ENTERED DIRECTORY CHANGED";
     checkPortAvailability();
 }
 
