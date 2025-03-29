@@ -18,7 +18,7 @@ Window {
     Loader {
         id: dashLoader
         anchors.fill: parent
-        source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/MPPTMBMSDebugScreen.qml")
+        source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/MpptMbmsDebugCluster.qml")
     }
 
     // Screen Background to black
