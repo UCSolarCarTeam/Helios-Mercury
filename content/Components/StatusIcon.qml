@@ -9,9 +9,7 @@ Item {
     height: 32 // Gets redefined when used
 
     property string label: ""
-    property bool isOn: false
-    property bool isHighContrast: false
-    property color iconMaskColor: statusIcon.isOn ? (statusIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled    
+    property bool isOn: false 
 
     Column {
         width: parent.width
@@ -28,8 +26,7 @@ Item {
             width: parent.width
         }
 
-        Image {
-            id: staticImage            
+        Image {  
             anchors.horizontalCenter: parent.horizontalCenter
             source: isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
             sourceSize: Qt.size(24, 24)
@@ -37,9 +34,6 @@ Item {
             visible: true
         }      
         MultiEffect {
-            source: staticImage
-            colorization: 1.0 
-            colorizationColor: iconMaskColor 
             antialiasing: true
             layer.enabled: true
             layer.smooth: true
