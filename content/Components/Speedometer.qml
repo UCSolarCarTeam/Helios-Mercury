@@ -70,26 +70,26 @@ Item {
         }
     }
 
-    property var markerPositions: [
-        {x: 91, y: 340, value: "0"},
-        {x: 43, y: 246, value: "20"},
-        {x: 52, y: 150, value: "40"},
-        {x: 121, y: 69, value: "60"},
-        {x: 217, y: 37, value: "80"},
-        {x: 298, y: 74, value: "100"},
-        {x: 361, y: 150, value: "120"},
-        {x: 370, y: 252, value: "140"},
-        {x: 318, y: 340, value: "160"}
+    property var numberPositions: [
+        {x: 95, y: 341, value: "0"},
+        {x: 47, y: 249, value: "20"},
+        {x: 56, y: 147, value: "40"},
+        {x: 122, y: 69, value: "60"},
+        {x: 216, y: 39, value: "80"},
+        {x: 302, y: 69, value: "100"},
+        {x: 363, y: 147, value: "120"},
+        {x: 372, y: 249, value: "140"},
+        {x: 322, y: 341, value: "160"}
     ]
 
     Component.onCompleted: {
-        for (var i = 0; i < markerPositions.length; i++) {
+        for (var i = 0; i < numberPositions.length; i++) {
             var label = numberLabel.createObject(speedometer);
-            label.text = qsTr(markerPositions[i].value);
+            label.text = qsTr(numberPositions[i].value);
             label.anchors.left = speedometer.left;
             label.anchors.top = speedometer.top;
-            label.anchors.leftMargin = markerPositions[i].x;
-            label.anchors.topMargin = markerPositions[i].y;
+            label.anchors.leftMargin = numberPositions[i].x;
+            label.anchors.topMargin = numberPositions[i].y;
         }
     }
 
@@ -126,29 +126,29 @@ Item {
             }
         }
         
-        property var tickData: [
-            [62, 370, 45, true], // 0
-            [24, 317, 61.875, false], // 1
-            [3, 256, 78.75, true], // 2
-            [2, 192, 95.625, false], // 3
-            [19, 129, 112.5, true], // 4
-            [54, 75, 129.375, false], // 5
-            [101, 34, 146.25, true], // 6
-            [159, 9, 163.125, false], // 7
-            [222, 0, 0, true], // 8
-            [287, 11, 16.875, false], // 9
-            [343, 39, 33.75, true], // 10
-            [389, 83, 50.625, false], // 11
-            [420, 137, 67.5, true], // 12
-            [436, 200, 84.375, false], // 13
-            [431, 264, 101.25, true], // 14
-            [410, 322, 118.125, false], // 15
-            [375, 370, 135, true] // 16
+        property var tickPositions: [
+            [62, 370, 45, true], // 1, 0
+            [26, 321, 61.875, false], // 2, 10
+            [4, 261, 78.75, true], // 3, 20
+            [1, 197, 95.625, false], // 4, 30
+            [17, 135, 112.5, true], // 5, 40
+            [50, 80, 129.375, false], // 6, 50
+            [97, 37, 146.25, true], // 7, 60
+            [155, 9, 163.125, false], // 8, 70
+            [218, 0, 0, true], // 9, 80
+            [282, 9, 16.875, false], // 10, 90
+            [340, 37, 33.75, true], // 11, 100
+            [388, 80, 50.625, false], // 12, 110
+            [420, 135, 67.5, true], // 13, 120
+            [437, 197, 84.375, false], // 14, 130
+            [433, 261, 101.25, true], // 15, 140
+            [412, 321, 118.125, false], // 16, 150
+            [375, 370, 135, true] // 17, 160
         ]
         
         Component.onCompleted: {
-            for (var i = 0; i < tickData.length; i++) {
-                var data = tickData[i];
+            for (var i = 0; i < tickPositions.length; i++) {
+                var data = tickPositions[i];
                 var tick = tickMark.createObject(incrementDashes, {
                     posX: data[0],
                     posY: data[1],
