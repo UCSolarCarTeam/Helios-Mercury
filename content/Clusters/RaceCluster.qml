@@ -73,27 +73,19 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
-    Item {
-        id: speedometerGearComponent
-        width: speedometer.width
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 46
-        anchors.rightMargin: 72
+    Speedometer {
+        id: speedometer
+        x: 1356
+        y: 46
+    }
 
-        Speedometer {
-            id: speedometer
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            minValue: 0
-            maxValue: 160
-        }
-
-        Rnd {
-            id: rnd
-            anchors.bottom: speedometer.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: 72
+    Rnd {
+        id: rnd
+        anchors {
+            top: speedometer.bottom
+            topMargin: -115
+            left: speedometer.left
+            leftMargin: 140
         }
     }
 
