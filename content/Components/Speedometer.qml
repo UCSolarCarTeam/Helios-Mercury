@@ -14,7 +14,8 @@ Item {
     property int minValue: 0
     property int maxValue: 160
     property string units: "KMH"
-    property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
+    //property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
+    property int value: battery.AverageTemperature
 
     // animation properties 
     property int animationDuration: 300
@@ -55,6 +56,32 @@ Item {
         antialiasing: true
     }
 
+    Item {
+        id: activeArcContainer
+        z: 2
+        anchors.fill: inactiveArc
+        property real animatedValue: speedometer.minValue
+
+        Behavior on animatedValue { NumberAnimation { duration: speedometer.animationDuration } }
+
+        Connections {
+            target: speedometer
+            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
+        }
+
+        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
+
+        Canvas {
+            id: activeArc
+            anchors.fill: parent
+            onPaint: { gaugeAnimation.drawGauge(activeArc, speedometer, activeArcContainer.animatedValue, 92, undefined); }
+            Connections {
+                target: activeArcContainer
+                function onAnimatedValueChanged() { activeArc.requestPaint(); }
+            }
+        }
+    }
+
     Component {
         id: numberLabel
         Text {
@@ -90,6 +117,7 @@ Item {
             label.anchors.top = speedometer.top;
             label.anchors.leftMargin = numberPositions[i].x;
             label.anchors.topMargin = numberPositions[i].y;
+            label.z = 1;
         }
     }
 
@@ -155,31 +183,6 @@ Item {
                     tickRotation: data[2],
                     isWhite: data[3]
                 });
-            }
-        }
-    }
-
-    Item {
-        id: activeArcContainer
-        anchors.fill: inactiveArc
-        property real animatedValue: speedometer.minValue
-
-        Behavior on animatedValue { NumberAnimation { duration: speedometer.animationDuration } }
-
-        Connections {
-            target: speedometer
-            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
-        }
-
-        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
-
-        Canvas {
-            id: activeArc
-            anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, speedometer, activeArcContainer.animatedValue, 92, undefined); }
-            Connections {
-                target: activeArcContainer
-                function onAnimatedValueChanged() { activeArc.requestPaint(); }
             }
         }
     }
