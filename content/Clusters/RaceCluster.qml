@@ -75,29 +75,19 @@ Item {
     }
 
     DashIcon {
-        id: embeddedconnectionIcon
-        imageSource: ("../Images/RadioBoardConnected")
+        id: embeddedConnectionStatus
+        x: 1175
+        y: 507
+        imageSource: "../Images/RadioBoardConnected.png"
         isOn: pi.EmbeddedState
     }
 
     DashIcon {
-        id: telemetryconnectionIcon
-        imageSource: ("../Images/TelemetryConnected")
-        isOn: pi.AWSState
-    }
-
-    ConnectionStatus {
-        id: embeddedConnectionStatus
-        x: 1175
-        y: 507
-        isRadioBoard: true
-    }
-
-    ConnectionStatus {
         id: awsConnectionStatus
         x: 1125
-        y: 507
-        isRadioBoard: false
+        y: 506
+        imageSource: "../Images/TelemetryConnected.png"
+        isOn: pi.AWSState
     }
 
     Rnd {
