@@ -34,6 +34,20 @@ SerialReceiver::~SerialReceiver() {
     }
 }
 
+/** Handle incoming serial data */
+void SerialReceiver::handleReadyRead() {
+    QByteArray data = serialPort_->readAll();
+
+    qDebug() << "Data Recieved: " << data;
+
+    if(data.isEmpty()) {
+        qDebug() << "Incoming data is empty";
+        return;
+    }
+
+    emit dataReceived(data);
+}
+
 /** Called when /dev/ directory changes */
 void SerialReceiver::onDevDirectoryChanged() {
     checkPortAvailability();
@@ -48,7 +62,6 @@ void SerialReceiver::checkPortAvailability() {
 
     if (portFile.exists()) {
         if (!connected_) {
-            qDebug() << "Detected port available:" << portName_;
             tryConnect();
         }
     } else {
@@ -83,18 +96,4 @@ void SerialReceiver::tryConnect() {
         connected_ = false;
         packetFactory_->getPiPacket().setEmbeddedState(false);
     }
-}
-
-/** Handle incoming serial data */
-void SerialReceiver::handleReadyRead() {
-    QByteArray data = serialPort_->readAll();
-
-    qDebug() << "Data Recieved: " << data;
-
-    if(data.isEmpty()) {
-        qDebug() << "Incoming data is empty";
-        return;
-    }
-
-    emit dataReceived(data);
 }
