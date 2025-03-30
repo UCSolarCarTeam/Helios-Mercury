@@ -54,15 +54,15 @@ Item {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
         }
 
-        MultiEffect {
-            source: gearMarker
-            shadowScale: 1.25
-            anchors.fill: gearMarker
-            shadowColor: Config.primary
-            shadowEnabled: true
-            shadowBlur: 0.25
-            shadowOpacity: 0.75
-        }
+        // MultiEffect {
+        //     source: gearMarker
+        //     shadowScale: 1.25
+        //     anchors.fill: gearMarker
+        //     shadowColor: Config.primary
+        //     shadowEnabled: true
+        //     shadowBlur: 0.25
+        //     shadowOpacity: 0.75
+        // }
     }
 
     // Gear Letters Row
