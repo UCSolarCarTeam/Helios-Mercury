@@ -27,7 +27,7 @@ Item {
         width: 157
         height: 16
         text: qsTr("Motor R Current: XXX A")
-        font.pixelSize: 14
+        font.pixelSize: 12
         color: "white"
     }
 
@@ -46,7 +46,7 @@ Item {
         id: leftArrowIndicator
         x: 608
         y: 15
-        z: 1000
+        z:1000
         isRight: false
         isOn: b3.LeftSignalIn || b3.HazardLightsIn
     }
@@ -55,7 +55,7 @@ Item {
         id: rightArrowIndicator
         x: 1278
         y: 15
-        z: 1000
+        z:1000
         isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
@@ -68,7 +68,7 @@ Item {
         anchors.horizontalCenterOffset: 0
     }
 
-    CameraView {
+    CameraView{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
