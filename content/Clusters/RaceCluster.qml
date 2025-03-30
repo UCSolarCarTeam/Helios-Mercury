@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Layouts
 import Mercury
 import "../Components"
 
@@ -120,72 +119,22 @@ Item {
         value: battery.AverageTemperature
     }
 
-    Rectangle {
-        id: contactorStatusComponent
-        y: 505
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenterOffset: 0
-        anchors.bottomMargin: 10
-        width: 480
+    ContactorStatus {
+        id: contactorsComponent
+        width: 350
         height: 35
-        color: "transparent"
-
-        RowLayout {
-            id: layout
-            anchors.fill: parent
-            spacing: 10
-
-            Text {
-                id: contactorSectionTitle
-                text: qsTr("Contactor\n Status")
-                color: "white"
-                font.pixelSize: 14
-                Layout.fillHeight: true
-                Layout.bottomMargin: 4
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            ContactorStatus {
-                id: cmnContactor
-                contactor: "CMN"
-                isConnected: mbms.CommonContactorState
-                height: parent.height
-                Layout.fillWidth: true
-            }
-
-            ContactorStatus {
-                id: hvContactor
-                contactor: "MOTOR"
-                isConnected: mbms.MotorContactorState
-                height: parent.height
-                Layout.fillWidth: true
-            }
-
-            ContactorStatus {
-                id: lvnContactor
-                contactor: "LV"
-                isConnected: mbms.LvContactorState
-                height: parent.height
-                Layout.fillWidth: true
-            }
-
-            ContactorStatus {
-                id: arrayContactor
-                contactor: "ARRAY"
-                isConnected: mbms.ArrayContactorState
-                height: parent.height
-                Layout.fillWidth: true
-            }
-
-            ContactorStatus {
-                id: chargeContactor
-                contactor: "CHARGE"
-                isConnected: mbms.ChargeContactorState
-                height: parent.height
-                Layout.fillWidth: true
-            }
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            horizontalCenterOffset: -80
+            bottomMargin: 10
         }
+        contactorData: [
+            { name: "CMN", isConnected: mbms.CommonContactorState },
+            { name: "MOTOR", isConnected: mbms.MotorContactorState },
+            { name: "ARRAY", isConnected: mbms.ArrayContactorState },
+            { name: "CHARGE", isConnected: mbms.ChargeContactorState }, 
+            { name: "LV", isConnected: mbms.LvContactorState }
+        ]
     }
 }
