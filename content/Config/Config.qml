@@ -26,6 +26,10 @@ QtObject {
     property int gaugeFontSizeL: 28
     property int gaugeFontSizeXL: 34
 
+    property int contactorFontSize: 14
+    property color contactorDisconnectedColor: "#ff0000"
+    property color contactorConnectedColor: "#00ff00"
+
     property int batteryFontSize: 18
     property int tempGaugeFontSize: 16
     property int tempGaugeLabelFontSize: 20
