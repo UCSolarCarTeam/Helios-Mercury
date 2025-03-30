@@ -35,7 +35,7 @@ Item {
                 Text {
                     id: contactorTitle
                     text: modelData.name
-                    font.pixelSize: Config.gaugeFontSizeXS
+                    font.pixelSize: Config.contactorLabelFontSize
                     font.family: Config.fontStyle
                     color: Config.fontColor
                     anchors.bottom: contactorIcon.top
