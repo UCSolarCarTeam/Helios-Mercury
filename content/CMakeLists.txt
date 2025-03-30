@@ -32,10 +32,6 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
         Images/ContactorConnected.png
         Images/ContactorDisconnected.png
-        Images/RadioBoardConnected.png
-        Images/RadioBoardDisconnected.png
-        Images/TelemetryConnected.png
-        Images/TelemetryDisconnected.png
 	Images/Battery.png
         Images/ParkingBrake.png
         Images/Hot.png
