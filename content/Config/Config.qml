@@ -28,8 +28,13 @@ QtObject {
     property int gaugeFontSizeL: 28
     property int gaugeFontSizeXXL: 86
 
-    property int batteryFontSize: 18
+    property int contactorFontSize: 14
+    property int contactorLabelFontSize: 12
+    property color contactorDisconnectedColor: "#ff0000"
+    property color contactorConnectedColor: "#00ff00"
 
+    property int batteryFontSize: 18
+    
     property color speedometerWhiteTicks: "#ffffff"
     property color speedometerGrayTicks: "#515253"
 

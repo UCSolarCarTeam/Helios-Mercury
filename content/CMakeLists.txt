@@ -22,6 +22,7 @@ qt6_add_qml_module(content
         Components/Speedometer.qml
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
+        Components/ContactorStatus.qml
         Config/Config.qml
         Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
@@ -35,9 +36,11 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+        Images/ContactorConnected.png
+        Images/ContactorDisconnected.png
+	Images/Battery.png
         Images/MpptMbmsStatusOff.png
         Images/MpptMbmsStatusOn.png
-        Images/Battery.png
         Images/ParkingBrake.png
         Images/Hot.png
         Images/Cool.png
