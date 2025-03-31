@@ -12,10 +12,9 @@ qt6_add_qml_module(content
         Clusters/MotorDebugCluster.qml
         Clusters/BatteryDebugCluster.qml
         Clusters/DriverControlsDebugCluster.qml
-        Clusters/MpptMbbsDebugCluster.qml
         Clusters/TelemetryDebugCluster.qml
-        Clusters/Screen01.ui.qml
         Clusters/MpptMbmsDebugCluster.qml
+        Clusters/Screen01.ui.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
