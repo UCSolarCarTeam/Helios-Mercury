@@ -8,6 +8,8 @@ QtObject {
     property color primary: "#3498DB"
     property color btnDisabled: "#111111"
 
+    property color lightShadow: "#74dcff"
+
     property color faintGrey: "#AAAAAA"
     property int rndfontSize: 20
 
