@@ -26,9 +26,18 @@ QtObject {
     property int gaugeFontSizeS: 18
     property int gaugeFontSizeM: 24
     property int gaugeFontSizeL: 28
-    property int gaugeFontSizeXL: 34
+    property int gaugeFontSizeXXL: 86
 
     property int batteryFontSize: 18
+
+    property color speedometerWhiteTicks: "#ffffff"
+    property color speedometerGrayTicks: "#515253"
+
+    // Wheel diameter in meters
+    property double wheelDiameter: 0.50419
+    property double rpmValue: (motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue) / 2
+
+    property int gaugeFontSizeXL: 34
 
     property int tempGaugeFontSize: 16
     property int tempGaugeLabelFontSize: 20
@@ -37,4 +46,5 @@ QtObject {
     property int smallGaugeSize: 180
     property int mediumGaugeSize: 240
     property int largeGaugeSize: 300
+
 }
