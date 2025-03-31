@@ -14,8 +14,8 @@ Window {
     title: "Mercury"
 
     property bool rawMode: Qt.application.arguments.indexOf("-raw") !== -1
-    property int screenNum: 0
-    property var screens: [
+    property int clusterNum: 0
+    property var clusters: [
         "Clusters/RaceCluster.qml",
         "Clusters/BatteryDebugCluster.qml",
         "Clusters/MotorDebugCluster.qml",
@@ -27,7 +27,7 @@ Window {
     Loader {
         id: dashLoader
         anchors.fill: parent
-        source: rawMode ? "Clusters/Screen01.ui.qml" : screens[screenNum]
+        source: rawMode ? "Clusters/Screen01.ui.qml" : clusters[clusterNum]
 
         // When the Loader is completed, set up the connection.
         Component.onCompleted: {
@@ -35,8 +35,7 @@ Window {
                 b3.onRaceModeChanged.connect(function() {
                     // Increment the screen counter
                     if (b3.RaceMode) {
-                        screenNum = (screenNum + 1) % screens.length;
-                        console.log("Switched to screen: " + screens[screenNum]);
+                        clusterNum = (clusterNum + 1) % clusters.length;
                     }
                 });
             }

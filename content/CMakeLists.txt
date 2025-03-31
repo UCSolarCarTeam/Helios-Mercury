@@ -21,7 +21,7 @@ qt6_add_qml_module(content
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Config/Config.qml
-	      Components/BatteryIcon.qml
+        Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
         Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
@@ -33,7 +33,7 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
-	      Images/Battery.png
+        Images/Battery.png
         Images/ParkingBrake.png
         Images/Hot.png
         Images/Cool.png
