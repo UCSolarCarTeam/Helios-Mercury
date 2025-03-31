@@ -9,17 +9,22 @@ qt6_add_qml_module(content
     QML_FILES
         App.qml
         Clusters/RaceCluster.qml
-        Clusters/DebugCluster.qml
+        Clusters/MotorDebugCluster.qml
+        Clusters/BatteryDebugCluster.qml
+        Clusters/DriverControlsDebugCluster.qml
+        Clusters/MpptMbbsDebugCluster.qml
+        Clusters/TelemetryDebugCluster.qml
         Clusters/Screen01.ui.qml
         Clusters/MpptMbmsDebugCluster.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
         Components/StatusIcon.qml
+        Components/Speedometer.qml
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Config/Config.qml
-	Components/BatteryIcon.qml
+        Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
         Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
@@ -33,4 +38,12 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
         Images/MpptMbmsStatusOff.png
         Images/MpptMbmsStatusOn.png
+        Images/Battery.png
+        Images/ParkingBrake.png
+        Images/Hot.png
+        Images/Cool.png
+        Images/TempBar.png
+        Images/ThermometerIcon.png
+        Images/AccelerationIcon.png
+        Images/BoltIcon.png
 )

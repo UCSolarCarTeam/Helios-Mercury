@@ -14,11 +14,32 @@ Window {
     title: "Mercury"
 
     property bool rawMode: Qt.application.arguments.indexOf("-raw") !== -1
+    property int clusterNum: 0
+    property var clusters: [
+        "Clusters/RaceCluster.qml",
+        "Clusters/BatteryDebugCluster.qml",
+        "Clusters/MotorDebugCluster.qml",
+        "Clusters/DriverControlsDebugCluster.qml",
+        "Clusters/MpptMbbsDebugCluster.qml",
+        "Clusters/TelemetryDebugCluster.qml"
+    ]
 
     Loader {
         id: dashLoader
         anchors.fill: parent
-        source: rawMode ? "Clusters/Screen01.ui.qml" : (b3.RaceMode ? "Clusters/RaceCluster.qml" : "Clusters/MpptMbmsDebugCluster.qml")
+        source: rawMode ? "Clusters/Screen01.ui.qml" : clusters[clusterNum]
+
+        // When the Loader is completed, set up the connection.
+        Component.onCompleted: {
+            if (!rawMode) {
+                b3.onRaceModeChanged.connect(function() {
+                    // Increment the screen counter
+                    if (b3.RaceMode) {
+                        clusterNum = (clusterNum + 1) % clusters.length;
+                    }
+                });
+            }
+        }
     }
 
     // Screen Background to black
