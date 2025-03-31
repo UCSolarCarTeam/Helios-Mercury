@@ -20,7 +20,7 @@ Window {
         "Clusters/BatteryDebugCluster.qml",
         "Clusters/MotorDebugCluster.qml",
         "Clusters/DriverControlsDebugCluster.qml",
-        "Clusters/MpptMbbsDebugCluster.qml",
+        "Clusters/MpptMbmsDebugCluster.qml",
         "Clusters/TelemetryDebugCluster.qml"
     ]
 
