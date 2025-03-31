@@ -13,7 +13,7 @@ Item {
     // gauge properties
     property int minValue: 0
     property int maxValue: 160
-    property string units: "KMH"
+    property string units: "KM/H"
     property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
 
     // animation properties 
@@ -96,7 +96,7 @@ Item {
         }
     }
 
-    property var numberPositions: [
+    property var numberPositions: [ //TODO: automate this so we do not need to manually place
         {x: 95, y: 341, value: "0"},
         {x: 47, y: 249, value: "20"},
         {x: 56, y: 147, value: "40"},
@@ -153,7 +153,7 @@ Item {
             }
         }
         
-        property var tickPositions: [
+        property var tickPositions: [ //TODO: automate this so we do not need to manually place
             [62, 370, 45, true], // 1, 0
             [26, 321, 61.875, false], // 2, 10
             [4, 261, 78.75, true], // 3, 20
