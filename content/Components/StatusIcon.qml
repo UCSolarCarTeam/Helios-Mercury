@@ -26,17 +26,12 @@ Item {
             width: parent.width
         }
 
-        Image {  
+        Image {
+            width: 24
+            height: 24
             anchors.horizontalCenter: parent.horizontalCenter
             source: isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-            sourceSize: Qt.size(24, 24)
-            smooth: true
-            visible: true
-        }      
-        MultiEffect {
-            antialiasing: true
-            layer.enabled: true
-            layer.smooth: true
-        }          
+            sourceSize: Qt.size(22, 22)
+        }
     }
 }
