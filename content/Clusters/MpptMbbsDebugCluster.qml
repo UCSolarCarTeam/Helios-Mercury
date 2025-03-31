@@ -19,13 +19,5 @@ Item {
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
-    Text {
-        id: mpptMbbsLabel
-        y: 14
-        color: "#ffffff"
-        font.family: Config.fontStyle
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("MPPT & MBBS")
-        font.pixelSize: 24
-    }
+
 }
