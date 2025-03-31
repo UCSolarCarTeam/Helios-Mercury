@@ -41,7 +41,6 @@ qt6_add_qml_module(content
 	Images/Battery.png
         Images/MpptMbmsStatusOff.png
         Images/MpptMbmsStatusOn.png
-        Images/Battery.png
         Images/ParkingBrake.png
         Images/Hot.png
         Images/Cool.png
