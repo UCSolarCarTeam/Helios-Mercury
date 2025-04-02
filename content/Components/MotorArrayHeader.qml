@@ -4,10 +4,9 @@ import Mercury
 
 Item {
     id: motorArrayHeader
-    width: 440
+    width: 470
     height: 40
 
-    // Common function for color determination
     function getValueColor(current) {
         if (current > 60)
             return Config.valueHigh;
@@ -16,18 +15,15 @@ Item {
         return Config.valueLow;
     }
 
-    // Reusable function to format current with color
     function formatCurrentWithColor(value, label) {
         const currentValue = Math.floor(value / 1000);
         return label + ": <font color=\"" + getValueColor(currentValue) + "\">" + currentValue + "</font> A";
     }
 
-    // Function to create formatted motor current text
     function formatMotorText(motorId, current) {
         return "Motor " + motorId + " Current: <font color=\"" + getValueColor(current) + "\">" + current + "</font> A";
     }
 
-    // Common text properties component
     component StyledText: Text {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -40,13 +36,14 @@ Item {
         textFormat: Text.RichText
     }
 
-    // Left column with motor headers
     Column {
         id: motorHeadersColumn
         width: motorArrayHeader.width / 2
-        anchors.left: motorArrayHeader.left
-        anchors.top: motorArrayHeader.top
-        anchors.bottom: motorArrayHeader.bottom
+        anchors {
+            left: motorArrayHeader.left
+            top: motorArrayHeader.top
+            bottom: motorArrayHeader.bottom
+        }
 
         StyledText {
             id: motor0Header
@@ -63,15 +60,15 @@ Item {
         }
     }
 
-    // Right section with array current information
     Item {
         id: arrayCurrentSection
         width: motorArrayHeader.width / 2
-        anchors.left: motorHeadersColumn.right
-        //anchors.rightMargin: 20
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors {
+            left: motorHeadersColumn.right
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
 
         StyledText {
             id: totalArrayCurrentLabel
@@ -84,18 +81,18 @@ Item {
 
         Grid {
             id: arrayCurrentGrid
-            anchors.left: totalArrayCurrentLabel.right
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
             columns: 2
             rows: 2
+            anchors {
+                left: totalArrayCurrentLabel.right
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
             
-            // Calculate the cell size based on the grid dimensions
             property real cellWidth: width / columns * 1.3
             property real cellHeight: height / rows
 
-            // Create array current indicators using a more concise approach
             Repeater {
                 model: [
                     { id: "0", current: mppt0.ArrayCurrent },
