@@ -100,8 +100,8 @@ Item {
             left: rpmGauge.left
             leftMargin: 105
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
@@ -120,8 +120,8 @@ Item {
             leftMargin: 55
 
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
@@ -139,8 +139,8 @@ Item {
             left: rpmGauge.left
             leftMargin: 20
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
@@ -157,8 +157,8 @@ Item {
             left: rpmGauge.left
             leftMargin: 10
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
@@ -177,8 +177,8 @@ Item {
             leftMargin: 25
 
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
@@ -197,8 +197,8 @@ Item {
             leftMargin: 65
 
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
@@ -216,8 +216,8 @@ Item {
             left: rpmGauge.left
             leftMargin: 110
         }
-        verticalAlignment: AlignVCenter
-        horizontalAlignment: AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.family: Config.fontStyle
         font.weight: Font.Medium
     }
