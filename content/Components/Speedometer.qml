@@ -7,7 +7,7 @@ import Mercury
 
 Item {
     id: speedometer
-    width: 480
+    width: 460
     height: 460
 
     // gauge properties
@@ -127,17 +127,17 @@ Item {
             right: parent.right
             top: parent.top
             bottom: parent.bottom
-            leftMargin: 9
-            rightMargin: 8
-            topMargin: 7
-            bottomMargin: 74
+            // leftMargin: 9
+            // rightMargin: 8
+            // topMargin: 7
+            // bottomMargin: 74
         }
         
         Component {
             id: tickMark
             Rectangle {
-                width: isWhite ? 5 : 4
-                height: 9
+                width: isWhite ? 5 : 5
+                height: 10
                 color: isWhite ? Config.speedometerWhiteTicks : Config.speedometerGrayTicks
                 
                 property bool isWhite: false
@@ -152,26 +152,61 @@ Item {
                 rotation: tickRotation
             }
         }
-        
+
         property var tickPositions: [ //TODO: automate this so we do not need to manually place
-            [62, 370, 45, true], // 1, 0
-            [26, 321, 61.875, false], // 2, 10
-            [4, 261, 78.75, true], // 3, 20
-            [1, 197, 95.625, false], // 4, 30
-            [17, 135, 112.5, true], // 5, 40
-            [50, 80, 129.375, false], // 6, 50
-            [97, 37, 146.25, true], // 7, 60
-            [155, 9, 163.125, false], // 8, 70
-            [218, 0, 0, true], // 9, 80
-            [282, 9, 16.875, false], // 10, 90
-            [340, 37, 33.75, true], // 11, 100
-            [388, 80, 50.625, false], // 12, 110
-            [420, 135, 67.5, true], // 13, 120
-            [437, 197, 84.375, false], // 14, 130
-            [433, 261, 101.25, true], // 15, 140
-            [412, 321, 118.125, false], // 16, 150
-            [375, 370, 135, true] // 17, 160
+            [71,377,45, true], // 1, 0
+            [34,328,61.875, false], // 2, 10
+            [12,268,78.75, true], // 3, 20
+            [10,204,95.625, false], // 4, 30
+            [25,142,112.5, true], // 5, 40
+            [58,87,129.375, false], // 6, 50
+            [105,44,146.25, true], // 7, 60
+            [163,16,163.125, false], // 8, 70
+            [230,6,180, true], // 9, 80
+            [292,16,196.875, false], // 10, 90
+            [350,44,213.75, true], // 11, 100
+            [398,87,230.625, false], // 12, 110
+            [430,142,247.5, true], // 13, 120
+            [445,204,264.375, false], // 14, 130
+            [443,268,281.25, true], // 15, 140
+            [422,328,298.125, false], // 16, 150
+            [384,377,315, true] // 17, 160
         ]
+
+        // property var tickPositions: {
+        //     let positions = [];
+        //     // const centerX = ; // Approximate center X
+        //     // const centerY = ; // Approximate center Y
+        //     const radius = ( inactiveArc.width - (2 * inactiveArc.arcWidth)) / 2; 
+            
+        //     // Create 17 ticks distributed around 270 degrees
+        //     const totalTicks = 17;
+            
+        //     for (let i = 0; i < totalTicks; i++) {
+        //         // Calculate angle in degrees (starting at 135, going counterclockwise)
+        //         const angleDeg = i / (totalTicks - 1) * (inactiveArc.begin - inactiveArc.end) + 45
+        //         // Calculate position
+        //         // const x = radius * Math.cos(angleRad);
+        //         // const y = radius * Math.sin(angleRad);
+        //         const x = 62;
+        //         const y = 370;
+                
+        //         // Define tick rotation (perpendicular to the radius)
+        //         const tickRotation = angleDeg;
+                
+        //         // Alternate between white and gray ticks (starting with white)
+        //         const isWhite = i % 2 === 0;
+                
+        //         positions.push([
+        //             x,  // X position
+        //             y,  // Y position
+        //             tickRotation, // Rotation angle
+        //             isWhite      // Color flag
+        //         ]);
+        //     }
+            
+        //     return positions;
+        // }
         
         Component.onCompleted: {
             for (var i = 0; i < tickPositions.length; i++) {
