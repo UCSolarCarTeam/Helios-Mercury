@@ -20,26 +20,14 @@ Item {
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
-    Text {
-        id: text1
-        x: 711
-        y: 12
-        width: 157
-        height: 16
-        text: qsTr("Motor R Current: XXX A")
-        font.pixelSize: 12
-        color: "white"
-    }
-
-    Text {
-        id: text2
-        x: 711
-        y: 29
-        width: 157
-        height: 16
-        text: qsTr("Motor L Current: XXX A")
-        font.pixelSize: 12
-        color: "white"
+    MotorArrayHeader {
+        id: motorArrayHeader
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            horizontalCenterOffset: -30
+            top: parent.top
+            topMargin: 7
+        }
     }
 
     ArrowIndicator {
