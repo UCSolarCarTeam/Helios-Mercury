@@ -10,7 +10,7 @@ class SerialReceiver : public QObject {
     Q_OBJECT
 
 public:
-    explicit SerialReceiver(PacketFactory* packetFactory);
+    SerialReceiver(PacketFactory* packetFactory);
     ~SerialReceiver();
 
 signals:
@@ -18,11 +18,10 @@ signals:
 
 private slots:
     void handleReadyRead();
-    void onDevDirectoryChanged();
+    void checkPortAvailability();
 
 private:
     void tryConnect();
-    void checkPortAvailability();
 
     QSerialPort* serialPort_;
     PacketFactory* packetFactory_;

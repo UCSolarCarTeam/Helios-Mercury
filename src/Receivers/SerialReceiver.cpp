@@ -19,7 +19,7 @@ SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
     portName_ = config.getPortName();
 
     devWatcher_ = new QFileSystemWatcher(this);
-    connect(devWatcher_, &QFileSystemWatcher::directoryChanged, this, &SerialReceiver::onDevDirectoryChanged);
+    connect(devWatcher_, &QFileSystemWatcher::directoryChanged, this, &SerialReceiver::checkPortAvailability);
 
     devWatcher_->addPath(DEV_PATH);
     devWatcher_->addPath(DEV_PTS_PATH);
@@ -46,11 +46,6 @@ void SerialReceiver::handleReadyRead() {
     }
 
     emit dataReceived(data);
-}
-
-/** Called when /dev/ directory changes */
-void SerialReceiver::onDevDirectoryChanged() {
-    checkPortAvailability();
 }
 
 /** Check if the port is available in /dev/ */
