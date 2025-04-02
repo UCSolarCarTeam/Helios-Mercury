@@ -36,6 +36,8 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+        Images/RadioBoardConnected.png
+        Images/TelemetryConnected.png
         Images/ContactorConnected.png
         Images/ContactorDisconnected.png
 	Images/Battery.png

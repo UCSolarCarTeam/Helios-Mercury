@@ -74,6 +74,22 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    DashIcon {
+        id: embeddedConnectionStatus
+        x: 1175
+        y: 507
+        imageSource: "../Images/RadioBoardConnected.png"
+        isOn: pi.EmbeddedState
+    }
+
+    DashIcon {
+        id: awsConnectionStatus
+        x: 1125
+        y: 506
+        imageSource: "../Images/TelemetryConnected.png"
+        isOn: pi.AWSState
+    }
+
     Speedometer {
         id: speedometer
         x: 1356
