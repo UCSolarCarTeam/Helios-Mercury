@@ -41,6 +41,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 7
+    }
 
     Text {
         id: text1
