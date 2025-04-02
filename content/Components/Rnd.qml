@@ -58,7 +58,7 @@ Item {
             source: gearMarker
             shadowScale: 1.25
             anchors.fill: gearMarker
-            shadowColor: Config.primary
+            shadowColor: Config.lightShadow
             shadowEnabled: true
             shadowBlur: 0.25
             shadowOpacity: 0.75
@@ -84,6 +84,7 @@ Item {
                     id: gearText
                     text: gears[index]
                     font.pixelSize: Config.rndfontSize
+                    font.weight: index === currentGear ? 600 : 400
                     color: index === currentGear ? Config.primary : Config.fontColor
                     anchors.centerIn: parent
                 }
@@ -92,10 +93,10 @@ Item {
                     source: gearText
                     anchors.fill: gearText
                     shadowEnabled: index === currentGear
-                    shadowBlur: 0.25
-                    shadowColor: Config.primary
-                    shadowOpacity: 0.75
-                    shadowScale: 1.25
+                    shadowBlur: 0.5
+                    shadowColor: Config.lightShadow
+                    shadowOpacity: 0.9
+                    shadowScale: 1.4
                 }
             }
         }
