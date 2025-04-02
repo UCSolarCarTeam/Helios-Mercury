@@ -7,7 +7,7 @@ Item {
     width: 440
     height: 40
 
-    // Function Changes the Color on the current value
+    // Common function for color determination
     function getValueColor(current) {
         if (current > 60)
             return Config.valueHigh;
@@ -16,98 +16,99 @@ Item {
         return Config.valueLow;
     }
 
-    //  Function Formats the current value with color in the correct unit
+    // Reusable function to format current with color
     function formatCurrentWithColor(value, label) {
         const currentValue = Math.floor(value / 1000);
         return label + ": <font color=\"" + getValueColor(currentValue) + "\">" + currentValue + "</font> A";
     }
 
-    Text {
-        id: motor0
-        anchors.left: parent.left
-        anchors.top: parent.top
-        width: 120
-        height: 16
-        font.pixelSize: Config.fontSize
+    // Function to create formatted motor current text
+    function formatMotorText(motorId, current) {
+        return "Motor " + motorId + " Current: <font color=\"" + getValueColor(current) + "\">" + current + "</font> A";
+    }
+
+    // Common text properties component
+    component StyledText: Text {
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {
+            pixelSize: Config.motorArrayFontSize
+            weight: Font.Medium
+            family: Config.fontStyle
+        }
         color: Config.fontColor
-        text: "Motor 0 Current: <font color=\"" + getValueColor(motorDetails0.InverterPeakCurrent) + "\">" + motorDetails0.InverterPeakCurrent + "</font> A"
         textFormat: Text.RichText
     }
 
-    Text {
-        id: motor1
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        width: 120
-        height: 16
-        font.pixelSize: Config.fontSize
-        color: Config.fontColor
-        text: "Motor 1 Current: <font color=\"" + getValueColor(motorDetails1.InverterPeakCurrent) + "\">" + motorDetails1.InverterPeakCurrent + "</font> A"
-        textFormat: Text.RichText
+    // Left column with motor headers
+    Column {
+        id: motorHeadersColumn
+        width: motorArrayHeader.width / 2
+        anchors.left: motorArrayHeader.left
+        anchors.top: motorArrayHeader.top
+        anchors.bottom: motorArrayHeader.bottom
+
+        StyledText {
+            id: motor0Header
+            width: motorHeadersColumn.width
+            height: motorHeadersColumn.height / 2
+            text: formatMotorText(0, motorDetails0.InverterPeakCurrent)
+        }
+
+        StyledText {
+            id: motor1Header
+            width: motorHeadersColumn.width
+            height: motorHeadersColumn.height / 2
+            text: formatMotorText(1, motorDetails1.InverterPeakCurrent)
+        }
     }
 
-    Row {
-        id: arrayCurrentRow
-        x: 182
-        width: 255
+    // Right section with array current information
+    Item {
+        id: arrayCurrentSection
+        width: motorArrayHeader.width / 2
+        anchors.left: motorHeadersColumn.right
+        //anchors.rightMargin: 20
         anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
 
-        Text {
+        StyledText {
             id: totalArrayCurrentLabel
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             width: 120
-            height: 16
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 120
             text: "Array Current:"
-            font.pixelSize: Config.fontSize
-            color: Config.fontColor
         }
 
         Grid {
             id: arrayCurrentGrid
+            anchors.left: totalArrayCurrentLabel.right
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             columns: 2
             rows: 2
-            spacing: 10
+            
+            // Calculate the cell size based on the grid dimensions
+            property real cellWidth: width / columns * 1.3
+            property real cellHeight: height / rows
 
-            Text {
-                id: totalArrayCurrent0s
-                width: 90
-                height: 16
-                font.pixelSize: Config.fontSize
-                color: Config.fontColor
-                textFormat: Text.RichText
-                text: formatCurrentWithColor(mppt0.ArrayCurrent, "0")
-            }
-
-            Text {
-                id: totalArrayCurrent1
-                width: 90
-                height: 16
-                font.pixelSize: Config.fontSize
-                color: Config.fontColor
-                text: formatCurrentWithColor(mppt1.ArrayCurrent, "1")
-                textFormat: Text.RichText
-            }
-
-            Text {
-                id: totalArrayCurrent2
-                width: 90
-                height: 16
-                font.pixelSize: Config.fontSize
-                color: Config.fontColor
-                text: formatCurrentWithColor(mppt2.ArrayCurrent, "2")
-                textFormat: Text.RichText
-            }
-
-            Text {
-                id: totalArrayCurrent3
-                width: 90
-                height: 16
-                font.pixelSize: Config.fontSize
-                color: Config.fontColor
-                text: formatCurrentWithColor(mppt3.ArrayCurrent, "3")
-                textFormat: Text.RichText
+            // Create array current indicators using a more concise approach
+            Repeater {
+                model: [
+                    { id: "0", current: mppt0.ArrayCurrent },
+                    { id: "1", current: mppt1.ArrayCurrent },
+                    { id: "2", current: mppt2.ArrayCurrent },
+                    { id: "3", current: mppt3.ArrayCurrent }
+                ]
+                
+                StyledText {
+                    width: arrayCurrentGrid.cellWidth
+                    height: arrayCurrentGrid.cellHeight
+                    text: formatCurrentWithColor(modelData.current, modelData.id)
+                }
             }
         }
     }
