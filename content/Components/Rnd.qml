@@ -58,7 +58,7 @@ Item {
             source: gearMarker
             shadowScale: 1.25
             anchors.fill: gearMarker
-            shadowColor: Config.primary
+            shadowColor: Config.lightShadow
             shadowEnabled: true
             shadowBlur: 0.25
             shadowOpacity: 0.75
