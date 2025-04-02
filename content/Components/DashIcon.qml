@@ -1,26 +1,35 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Mercury
+import QtQuick.Effects
 
 Item {
     id: dashIcon
     width: 32
     height: 32
+    smooth: true
 
-    property string imageSource: ""
+    property string imageSource: "" //IMPORTANT: Image must be solid white
     property bool isOn: false
+    property bool isHighContrast: false
+    property color iconMaskColor: dashIcon.isOn ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
 
     Image {
-        id: iconImg
-        source: parent.imageSource
+        id: staticImage
         anchors.fill: parent
+        source: parent.imageSource
+        sourceSize: Qt.size(64, 64)
+        smooth: true
+        visible: false
     }
 
-    ShaderEffect {
-        id: movingColorEffect
+    MultiEffect {
         anchors.fill: parent
-        property variant source: iconImg
-        fragmentShader: "qrc:/content/Shaders/ColorOverlay.frag.qsb"
-        property color overlayColor: parent.isOn ? Config.primary : Config.btnDisabled
+        source: staticImage
+        colorization: 1.0 
+        colorizationColor: iconMaskColor 
+        antialiasing: true
+        layer.enabled: true
+        layer.smooth: true
     }
 }

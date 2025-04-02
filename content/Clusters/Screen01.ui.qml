@@ -82,10 +82,10 @@ Rectangle {
                         text: "GPS Additional Flags: " + telemetry.GpsAdditionalFlags
                     }
                     Text {
-                        text: "GPS Longitude: " + telemetry.GpsLongitude
+                        text: "GPS Longitude: " + telemetry.GpsLongitude.toFixed(6)
                     }
                     Text {
-                        text: "GPS Latitude: " + telemetry.GpsLatitude
+                        text: "GPS Latitude: " + telemetry.GpsLatitude.toFixed(6)
                     }
                     Text {
                         text: "MPU Acceleration X: " + telemetry.MpuAccelerationX
@@ -1164,6 +1164,18 @@ Rectangle {
                     }
                     Text {
                         text: "Debug Mode: " + keyMotor.DebugMode
+                    }
+                }
+
+                Column {
+                    Text {
+                        text: "Pi"
+                    }
+                    Text {
+                        text: "Rfid: " + pi.Rfid
+                    }
+                    Text {
+                        text: "Driver Name: " + pi.DriverName
                     }
                 }
             }
