@@ -3,7 +3,7 @@ import QtQuick.Controls
 import Mercury
 
 Item {
-    id: raceClusterHeader
+    id: motorArrayHeader
     width: 440
     height: 40
 
