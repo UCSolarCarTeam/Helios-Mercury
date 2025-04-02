@@ -20,27 +20,14 @@ Item {
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
-    DashIcon {
-        id: dashIcon
-        x: 1025
-        y: 54
-        isOn: b3.HeadlightsSwitchIn
-        imageSource: "../Images/Headlights.png"
-    }
-
-    DashIcon {
-        id: dashIcon2
-        x: 875
-        y: 54
-        isOn: b3.DaytimeRunningLightSignalOut
-        imageSource: "../Images/DaytimeRunningLights.png"
-    }
-
     MotorArrayHeader {
         id: motorArrayHeader
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 7
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            horizontalCenterOffset: -30
+            top: parent.top
+            topMargin: 7
+        }
     }
 
     ArrowIndicator {
