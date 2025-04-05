@@ -19,18 +19,18 @@ Item {
             text: statusIcon.label
             font.pixelSize: Config.mpptmbmsFontSizeS
             color: Config.fontColor
-            wrapMode: Text.Wrap
+            wrapMode: Text.NoWrap
             horizontalAlignment: Text.AlignHCenter
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
         }
 
-        Image {
+        DashIcon {
             width: 24
             height: 24
             anchors.horizontalCenter: parent.horizontalCenter
-            source: isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-            sourceSize: Qt.size(22, 22)
+            imageSource: isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+            iconMaskColor: isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
         }
     }
 }
