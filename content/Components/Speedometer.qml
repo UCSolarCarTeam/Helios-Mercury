@@ -122,21 +122,11 @@ Item {
 
     Item {
         id: incrementDashes
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            bottom: parent.bottom
-            // leftMargin: 9
-            // rightMargin: 8
-            // topMargin: 7
-            // bottomMargin: 74
-        }
         
         Component {
             id: tickMark
             Rectangle {
-                width: isWhite ? 5 : 5
+                width: 5
                 height: 10
                 color: isWhite ? Config.speedometerWhiteTicks : Config.speedometerGrayTicks
                 
@@ -153,60 +143,49 @@ Item {
             }
         }
 
-        property var tickPositions: [ //TODO: automate this so we do not need to manually place
-            [71,377,45, true], // 1, 0
-            [34,328,61.875, false], // 2, 10
-            [12,268,78.75, true], // 3, 20
-            [10,204,95.625, false], // 4, 30
-            [25,142,112.5, true], // 5, 40
-            [58,87,129.375, false], // 6, 50
-            [105,44,146.25, true], // 7, 60
-            [163,16,163.125, false], // 8, 70
-            [230,6,180, true], // 9, 80
-            [292,16,196.875, false], // 10, 90
-            [350,44,213.75, true], // 11, 100
-            [398,87,230.625, false], // 12, 110
-            [430,142,247.5, true], // 13, 120
-            [445,204,264.375, false], // 14, 130
-            [443,268,281.25, true], // 15, 140
-            [422,328,298.125, false], // 16, 150
-            [384,377,315, true] // 17, 160
-        ]
+        // property var tickPositions: [ //TODO: automate this so we do not need to manually place
+        //     [71,377,45, true], // 1, 0
+        //     [34,328,61.875, false], // 2, 10
+        //     [12,268,78.75, true], // 3, 20
+        //     [10,204,95.625, false], // 4, 30
+        //     [25,142,112.5, true], // 5, 40
+        //     [58,87,129.375, false], // 6, 50
+        //     [105,44,146.25, true], // 7, 60
+        //     [163,16,163.125, false], // 8, 70
+        //     [230,6,180, true], // 9, 80
+        //     [292,16,196.875, false], // 10, 90
+        //     [350,44,213.75, true], // 11, 100
+        //     [398,87,230.625, false], // 12, 110
+        //     [430,142,247.5, true], // 13, 120
+        //     [445,204,264.375, false], // 14, 130
+        //     [443,268,281.25, true], // 15, 140
+        //     [422,328,298.125, false], // 16, 150
+        //     [384,377,315, true] // 17, 160
+        // ]
 
-        // property var tickPositions: {
-        //     let positions = [];
-        //     // const centerX = ; // Approximate center X
-        //     // const centerY = ; // Approximate center Y
-        //     const radius = ( inactiveArc.width - (2 * inactiveArc.arcWidth)) / 2; 
+        property var tickPositions: {
+            let positions = [];
+            const arcAngle = outerArc.begin - outerArc.end;
+            const needleRadius = (outerArc.width - outerArc.arcWidth) / 2;
             
-        //     // Create 17 ticks distributed around 270 degrees
-        //     const totalTicks = 17;
+            // const centerY = ; // Approximate center Y
+            const radius = ( inactiveArc.width - (2 * inactiveArc.arcWidth)) / 2; 
             
-        //     for (let i = 0; i < totalTicks; i++) {
-        //         // Calculate angle in degrees (starting at 135, going counterclockwise)
-        //         const angleDeg = i / (totalTicks - 1) * (inactiveArc.begin - inactiveArc.end) + 45
-        //         // Calculate position
-        //         // const x = radius * Math.cos(angleRad);
-        //         // const y = radius * Math.sin(angleRad);
-        //         const x = 62;
-        //         const y = 370;
-                
-        //         // Define tick rotation (perpendicular to the radius)
-        //         const tickRotation = angleDeg;
-                
-        //         // Alternate between white and gray ticks (starting with white)
-        //         const isWhite = i % 2 === 0;
-                
-        //         positions.push([
-        //             x,  // X position
-        //             y,  // Y position
-        //             tickRotation, // Rotation angle
-        //             isWhite      // Color flag
-        //         ]);
-        //     }
+            // Create 17 ticks distributed around 270 degrees
+            const totalTicks = 17;
             
-        //     return positions;
-        // }
+            for (let i = 0; i < totalTicks; i++) {
+                const angle = (outerArc.begin + (i / (totalTicks - 1)) * arcAngle);
+                const x = (outerArc.width / 2) + Math.cos(gaugeAnimation.degreesToRadians(angle)) * needleRadius - width / 2;
+                const y = (outerArc.height / 2) + Math.sin(gaugeAnimation.degreesToRadians(angle)) * needleRadius - height / 2;
+                const tickRotation = i / (totalTicks - 1) * arcAngle + 45;
+                const isWhite = i % 2 === 0;
+                
+                positions.push([x, y, tickRotation, isWhite]);
+            }
+            
+            return positions;
+        }
         
         Component.onCompleted: {
             for (var i = 0; i < tickPositions.length; i++) {
