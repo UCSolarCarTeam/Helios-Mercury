@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 
 import QtQuick.Layouts
 import QtQuick.Controls
 import "../Components"
@@ -33,6 +33,11 @@ Item {
         }
         text: "MPPT"
         font.pixelSize: Config.headerFontSize
+    }
+
+    Text {
+        text: "test" + mppt0.ArrayCurrent
+        color: "#ffffff"
     }
 
     Text {

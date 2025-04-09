@@ -11,8 +11,6 @@ namespace {
     const int BATTERY_VOLTAGE_OFFSET = 6;
     const int TEMPERATURE_OFFSET = 8;
 
-    const int CENTI_TO_ONES = 100;
-    const int MILLI_TO_ONES = 1000;
 }
 
 MpptPacket::MpptPacket() {
@@ -30,10 +28,10 @@ void MpptPacket::populatePacket(const QByteArray& data) {
     setMpptStatus(statusAndChannelNumber & MPPT_STATUS_MASK);
     setChannelNumber(statusAndChannelNumber & CHANNEL_NUMBER_MASK);
 
-    setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET) / CENTI_TO_ONES);
-    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET) / MILLI_TO_ONES);
-    setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET) / CENTI_TO_ONES);
-    setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET) / CENTI_TO_ONES);
+    setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
+    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
+    setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET));
+    setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET));
 }
 
 QJsonObject MpptPacket::toJson() {
