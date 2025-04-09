@@ -14,6 +14,7 @@ qt6_add_qml_module(content
         Clusters/DriverControlsDebugCluster.qml
         Clusters/TelemetryDebugCluster.qml
         Clusters/MpptMbmsDebugCluster.qml
+        Clusters/MpptDebugCluster.qml
         Clusters/Screen01.ui.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
