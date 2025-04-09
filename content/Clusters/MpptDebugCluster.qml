@@ -29,15 +29,10 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
-            topMargin: 15
+            topMargin: 17
         }
         text: "MPPT"
         font.pixelSize: Config.headerFontSize
-    }
-
-    Text {
-        text: "test" + mppt0.ArrayCurrent
-        color: "#ffffff"
     }
 
     Text {
@@ -64,9 +59,9 @@ Item {
         gaugeSize: Config.smallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "V"
+        units: "mA"
         gaugeTitle: "MPPT Current"
-        value: Math.round(( mppt0.ArrayCurrent + mppt1.ArrayCurrent + mppt2.ArrayCurrent + mppt3.ArrayCurrent ) / 4)
+        value: (( mppt0.ArrayCurrent + mppt1.ArrayCurrent + mppt2.ArrayCurrent + mppt3.ArrayCurrent ) / 4)
         icon: "BoltIcon.png"
         iconWidth: 20
         iconHeight: 25
@@ -83,9 +78,9 @@ Item {
         gaugeSize: Config.smallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "V"
+        units: "V" // 10mV
         gaugeTitle: "MPPT Voltage"
-        value: Math.round(( mppt0.ArrayVoltage + mppt1.ArrayVoltage + mppt2.ArrayVoltage + mppt3.ArrayVoltage ) / 4)
+        value: (( mppt0.ArrayVoltage + mppt1.ArrayVoltage + mppt2.ArrayVoltage + mppt3.ArrayVoltage ) / 4)
         icon: "BoltIcon.png"
         iconWidth: 20
         iconHeight: 25
@@ -102,9 +97,9 @@ Item {
         gaugeSize: Config.smallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "V"
+        units: "V" // 10mV
         gaugeTitle: "Battery Voltage"
-        value: Math.round(( mppt0.BatteryVoltage + mppt1.BatteryVoltage + mppt2.BatteryVoltage + mppt3.BatteryVoltage ) / 4)
+        value: (( mppt0.BatteryVoltage + mppt1.BatteryVoltage + mppt2.BatteryVoltage + mppt3.BatteryVoltage ) / 4)
         icon: "BoltIcon.png"
         iconWidth: 20
         iconHeight: 25
@@ -118,12 +113,11 @@ Item {
             topMargin: 25
         }
         baseHeight: 0
-        temperatureValue: Math.round(( mppt0.Temperature + mppt1.Temperature + mppt2.Temperature + mppt3.Temperature ) / 4)
+        temperatureValue: ((mppt0.Temperature + mppt1.Temperature + mppt2.Temperature + mppt3.Temperature) / 4) // 1/100th °C 
     }
 
-    // MPPT 0 - Top Left
     ColumnLayout {
-        id: mppt0
+        id: mppt0Container
         Layout.preferredWidth: 570
         Layout.preferredHeight: 250
         spacing: 10
@@ -134,14 +128,29 @@ Item {
             leftMargin: 100
         }
         
-        Text {
-            id: mppt0Label
+        RowLayout {
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            text: "MPPT 0"
-            font.pixelSize: Config.headerFontSize
-            font.bold: true
+            Layout.preferredHeight: Config.headerFontSize
+            spacing: 10
+            
+            Text {
+                id: mppt0Label
+                Layout.preferredWidth: implicitWidth  
+                Layout.alignment: Qt.AlignVCenter     
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                text: "MPPT 0"
+                font.pixelSize: Config.headerFontSize
+                font.bold: true
+            }
+
+            DashIcon {
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 24
+                imageSource: mppt0.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                iconMaskColor: mppt0.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+            }
         }
 
         RowLayout {
@@ -156,10 +165,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "mA"
                 gaugeTitle: "MPPT Current"
-                //value: mppt0.ArrayCurrent
-                value: b3.Acceleration
+                value: mppt0.ArrayCurrent
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -170,7 +178,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "MPPT Voltage"
                 value: mppt0.ArrayVoltage
                 icon: "BoltIcon.png"
@@ -183,7 +191,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "Battery Voltage"
                 value: mppt0.BatteryVoltage
                 icon: "BoltIcon.png"
@@ -196,13 +204,12 @@ Item {
             id: tempGauge0
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt0.Temperature
+            temperatureValue: mppt0.Temperature // 1/100th °C 
         }
     }
 
-    // MPPT 1 - Top Right
     ColumnLayout {
-        id: mppt1
+        id: mppt1Container
         Layout.preferredWidth: 570
         Layout.preferredHeight: 250
         spacing: 10
@@ -213,14 +220,29 @@ Item {
             rightMargin: 100
         }
         
-        Text {
-            id: mppt1Label
+        RowLayout {
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            text: "MPPT 1"
-            font.pixelSize: Config.headerFontSize
-            font.bold: true
+            Layout.preferredHeight: Config.headerFontSize
+            spacing: 10
+            
+            Text {
+                id: mppt1Label
+                Layout.preferredWidth: implicitWidth  
+                Layout.alignment: Qt.AlignVCenter     
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                text: "MPPT 1"
+                font.pixelSize: Config.headerFontSize
+                font.bold: true
+            }
+
+            DashIcon {
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 24
+                imageSource: mppt1.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                iconMaskColor: mppt1.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+            }
         }
 
         RowLayout {
@@ -235,7 +257,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "mA"
                 gaugeTitle: "MPPT Current"
                 value: mppt1.ArrayCurrent
                 icon: "BoltIcon.png"
@@ -248,7 +270,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "MPPT Voltage"
                 value: mppt1.ArrayVoltage
                 icon: "BoltIcon.png"
@@ -261,7 +283,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "Battery Voltage"
                 value: mppt1.BatteryVoltage
                 icon: "BoltIcon.png"
@@ -274,13 +296,12 @@ Item {
             id: tempGauge1
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt1.Temperature
+            temperatureValue: mppt1.Temperature // 1/100th °C 
         }
     }
 
-    // MPPT 2 - Bottom Left
     ColumnLayout {
-        id: mppt2
+        id: mppt2Container
         Layout.preferredWidth: 570
         Layout.preferredHeight: 250
         spacing: 10
@@ -291,14 +312,29 @@ Item {
             leftMargin: 100
         }
         
-        Text {
-            id: mppt2Label
+        RowLayout {
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            text: "MPPT 2"
-            font.pixelSize: Config.headerFontSize
-            font.bold: true
+            Layout.preferredHeight: Config.headerFontSize
+            spacing: 10
+            
+            Text {
+                id: mppt2Label
+                Layout.preferredWidth: implicitWidth  
+                Layout.alignment: Qt.AlignVCenter     
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                text: "MPPT 2"
+                font.pixelSize: Config.headerFontSize
+                font.bold: true
+            }
+
+            DashIcon {
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 24
+                imageSource: mppt2.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                iconMaskColor: mppt2.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+            }
         }
 
         RowLayout {
@@ -313,7 +349,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "mA"
                 gaugeTitle: "MPPT Current"
                 value: mppt2.ArrayCurrent
                 icon: "BoltIcon.png"
@@ -326,7 +362,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "MPPT Voltage"
                 value: mppt2.ArrayVoltage
                 icon: "BoltIcon.png"
@@ -339,7 +375,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "Battery Voltage"
                 value: mppt2.BatteryVoltage
                 icon: "BoltIcon.png"
@@ -352,13 +388,12 @@ Item {
             id: tempGauge2
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt2.Temperature
+            temperatureValue: mppt2.Temperature // 1/100th °C 
         }
     }
 
-    // MPPT 3 - Bottom Right
     ColumnLayout {
-        id: mppt3
+        id: mppt3Container
         Layout.preferredWidth: 570
         Layout.preferredHeight: 250
         spacing: 10
@@ -369,14 +404,29 @@ Item {
             rightMargin: 100
         }
         
-        Text {
-            id: mppt3Label
+        RowLayout {
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            text: "MPPT 3"
-            font.pixelSize: Config.headerFontSize
-            font.bold: true
+            Layout.preferredHeight: Config.headerFontSize
+            spacing: 10
+            
+            Text {
+                id: mppt3Label
+                Layout.preferredWidth: implicitWidth  
+                Layout.alignment: Qt.AlignVCenter     
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                text: "MPPT 3"
+                font.pixelSize: Config.headerFontSize
+                font.bold: true
+            }
+
+            DashIcon {
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 24
+                imageSource: mppt3.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                iconMaskColor: mppt3.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+            }
         }
 
         RowLayout {
@@ -391,7 +441,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "mA"
                 gaugeTitle: "MPPT Current"
                 value: mppt3.ArrayCurrent
                 icon: "BoltIcon.png"
@@ -404,7 +454,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "MPPT Voltage"
                 value: mppt3.ArrayVoltage
                 icon: "BoltIcon.png"
@@ -417,7 +467,7 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V"
+                units: "V" // 10mV
                 gaugeTitle: "Battery Voltage"
                 value: mppt3.BatteryVoltage
                 icon: "BoltIcon.png"
@@ -430,7 +480,7 @@ Item {
             id: tempGauge3
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt3.Temperature
+            temperatureValue: mppt3.Temperature // 1/100th °C 
         }
     }
 }
