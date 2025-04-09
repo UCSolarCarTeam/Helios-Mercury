@@ -1,35 +1,34 @@
 #include "SerialReceiver.h"
 #include "../Config/ConfigManager.h"
 #include <QDebug>
-#include <QDir>
 #include <QFile>
+#include <filesystem>
+#include <chrono>
+#include <thread>
 
-namespace {
-    const QString DEV_PATH = "/dev/";
-    const QString DEV_PTS_PATH = "/dev/pts/";
-}
+namespace fs = std::filesystem;
 
 /** Constructor */
 SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
-    : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)), connected_(false) {
-
+    : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)), connected_(false), monitoring_(true)
+{
     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
 
     ConfigManager& config = ConfigManager::instance();
     portName_ = config.getPortName();
 
-    devWatcher_ = new QFileSystemWatcher(this);
-    connect(devWatcher_, &QFileSystemWatcher::directoryChanged, this, &SerialReceiver::checkPortAvailability);
-
-    devWatcher_->addPath(DEV_PATH);
-    devWatcher_->addPath(DEV_PTS_PATH);
-
-    checkPortAvailability();
+    // Start monitoring thread
+    monitorThread_ = std::thread(&SerialReceiver::monitorPortAvailability, this);
 }
 
 /** Destructor */
 SerialReceiver::~SerialReceiver() {
-    if(serialPort_->isOpen()) {
+    monitoring_ = false;
+
+    if (monitorThread_.joinable())
+        monitorThread_.join();
+
+    if (serialPort_->isOpen()) {
         serialPort_->close();
     }
 }
@@ -37,10 +36,9 @@ SerialReceiver::~SerialReceiver() {
 /** Handle incoming serial data */
 void SerialReceiver::handleReadyRead() {
     QByteArray data = serialPort_->readAll();
+    qDebug() << "Data Received: " << data;
 
-    qDebug() << "Data Recieved: " << data;
-
-    if(data.isEmpty()) {
+    if (data.isEmpty()) {
         qDebug() << "Incoming data is empty";
         return;
     }
@@ -48,26 +46,26 @@ void SerialReceiver::handleReadyRead() {
     emit dataReceived(data);
 }
 
-/** Check if the port is available in /dev/ */
-void SerialReceiver::checkPortAvailability() {
-    ConfigManager& config = ConfigManager::instance();
-    portName_ = config.getPortName();
+/** Monitor port presence using filesystem polling */
+void SerialReceiver::monitorPortAvailability() {
+    bool previouslyExists = QFile::exists(portName_);
 
-    QFile portFile(portName_);
+    while (monitoring_) {
+        bool currentlyExists = QFile::exists(portName_);
 
-    if (portFile.exists()) {
-        if (!connected_) {
-            tryConnect();
+        if (currentlyExists && !previouslyExists) {
+            qDebug() << "[CONNECTED] Port appeared";
+            QMetaObject::invokeMethod(this, "tryConnect", Qt::QueuedConnection);
+        } else if (!currentlyExists && previouslyExists) {
+            qDebug() << "[DISCONNECTED] Port disappeared";
+            QMetaObject::invokeMethod(this, "disconnectPort", Qt::QueuedConnection);
         }
-    } else {
-        if (connected_) {
-            qDebug() << "Serial port disconnected: " << portName_;
-            connected_ = false;
-            serialPort_->close();
-            packetFactory_->getPiPacket().setEmbeddedState(false);
-        }
+
+        previouslyExists = currentlyExists;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
+
 
 /** Attempt to connect */
 void SerialReceiver::tryConnect() {
@@ -88,7 +86,18 @@ void SerialReceiver::tryConnect() {
         connected_ = true;
         packetFactory_->getPiPacket().setEmbeddedState(true);
     } else {
+        qDebug() << "Failed to open serial port";
         connected_ = false;
         packetFactory_->getPiPacket().setEmbeddedState(false);
     }
 }
+
+void SerialReceiver::disconnectPort() {
+    if (connected_) {
+        qDebug() << "[DISCONNECTED] Port disappeared";
+        connected_ = false;
+        serialPort_->close();
+        packetFactory_->getPiPacket().setEmbeddedState(false);
+    }
+}
+

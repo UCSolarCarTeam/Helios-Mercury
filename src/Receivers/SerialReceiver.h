@@ -3,32 +3,35 @@
 
 #include <QObject>
 #include <QSerialPort>
-#include <QFileSystemWatcher>
+#include <atomic>
+#include <thread>
 #include "../PacketFactory/PacketFactory.h"
 
 class SerialReceiver : public QObject {
     Q_OBJECT
 
 public:
-    SerialReceiver(PacketFactory* packetFactory);
+    explicit SerialReceiver(PacketFactory* packetFactory);
     ~SerialReceiver();
 
 signals:
-    void dataReceived(const QByteArray& data);
+    void dataReceived(const QByteArray &data);
 
 private slots:
     void handleReadyRead();
-    void checkPortAvailability();
+    void tryConnect();
+    void disconnectPort();
 
 private:
-    void tryConnect();
+    void monitorPortAvailability(); // Thread function
 
-    QSerialPort* serialPort_;
     PacketFactory* packetFactory_;
+    QSerialPort* serialPort_;
     QString portName_;
     bool connected_;
 
-    QFileSystemWatcher* devWatcher_;
+    std::atomic<bool> monitoring_;
+    std::thread monitorThread_;
 };
 
 #endif // SERIALRECEIVER_H
