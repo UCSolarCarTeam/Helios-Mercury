@@ -13,7 +13,7 @@ qt6_add_qml_module(content
         Clusters/BatteryDebugCluster.qml
         Clusters/DriverControlsDebugCluster.qml
         Clusters/TelemetryDebugCluster.qml
-        Clusters/MpptMbmsDebugCluster.qml
+        Clusters/MbmsDebugCluster.qml
         Clusters/MpptDebugCluster.qml
         Clusters/Screen01.ui.qml
         Components/ArrowIndicator.qml
@@ -49,4 +49,5 @@ qt6_add_qml_module(content
         Images/ThermometerIcon.png
         Images/AccelerationIcon.png
         Images/BoltIcon.png
+        Images/Exclaimation.png
 )
