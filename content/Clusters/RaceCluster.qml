@@ -74,20 +74,56 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
-    DashIcon {
-        id: embeddedConnectionStatus
-        x: 1175
-        y: 507
-        imageSource: "../Images/RadioBoardConnected.png"
-        isOn: pi.EmbeddedState
-    }
+    Row {
+        spacing: 40
+        x: 1075
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 30
+        anchors.bottomMargin: 8
 
-    DashIcon {
-        id: awsConnectionStatus
-        x: 1125
-        y: 506
-        imageSource: "../Images/TelemetryConnected.png"
-        isOn: pi.AWSState
+        Column {
+            spacing: 3
+            width: 40
+
+            Text {
+                text: "EMBEDDED"
+                font.pixelSize: 10
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+            }
+
+            DashIcon {
+                id: embeddedConnectionStatus
+                width: 24
+                height: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+                imageSource: "../Images/RadioBoardConnected.png"
+                isOn: pi.EmbeddedState
+            }
+        }
+
+        Column {
+            spacing: 3
+            width: 40
+
+            Text {
+                text: "TELEMETRY"
+                font.pixelSize: 10
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+            }
+
+            DashIcon {
+                id: awsConnectionStatus
+                width: 24
+                height: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+                imageSource: "../Images/TelemetryConnected.png"
+                isOn: pi.AWSState
+            }
+        }
     }
 
     Speedometer {
