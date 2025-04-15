@@ -29,10 +29,10 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
-            topMargin: 17
+            topMargin: 15
         }
         text: "MPPT"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.debugHeaderFontSize
     }
 
     Text {
