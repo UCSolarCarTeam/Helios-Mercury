@@ -75,7 +75,7 @@ Item {
     }
 
     Row {
-        spacing: 40
+        spacing: 30
         x: 1075
         anchors.bottom: parent.bottom
         anchors.rightMargin: 30
@@ -87,7 +87,7 @@ Item {
 
             Text {
                 text: "EMBEDDED"
-                font.pixelSize: 10
+                font.pixelSize: Config.statusIconFontSize
                 color: "white"
                 horizontalAlignment: Text.AlignHCenter
                 width: parent.width
@@ -109,7 +109,7 @@ Item {
 
             Text {
                 text: "TELEMETRY"
-                font.pixelSize: 10
+                font.pixelSize: Config.statusIconFontSize
                 color: "white"
                 horizontalAlignment: Text.AlignHCenter
                 width: parent.width

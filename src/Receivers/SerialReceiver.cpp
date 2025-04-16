@@ -17,6 +17,8 @@ SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
     ConfigManager& config = ConfigManager::instance();
     portName_ = config.getPortName();
 
+    tryConnect();
+
     // Start monitoring thread
     monitorThread_ = std::thread(&SerialReceiver::monitorPortAvailability, this);
 }
