@@ -47,7 +47,7 @@ Item {
         maxValue: 100
         units: "A"
         gaugeTitle: "Pack Current"
-        value: battery.PackCurrent.toFixed(3)
+        value: battery.PackCurrent.toFixed(2) / 10 // 0.1 A
         icon: "BoltIcon.png"
         iconWidth: 25
         iconHeight: 35
@@ -66,7 +66,7 @@ Item {
         maxValue: 100
         units: "V"
         gaugeTitle: "Pack Voltage"
-        value:  battery.PackVoltage.toFixed(3)
+        value:  battery.PackVoltage.toFixed(2) / 10 // 0.1 V
         icon: "BoltIcon.png"
         iconWidth: 25
         iconHeight: 35
@@ -85,7 +85,7 @@ Item {
         maxValue: 100
         units: "%"
         gaugeTitle: "Depth of Charge"
-        value:  battery.PackDepthOfDischarge.toFixed(3)
+        value:  battery.PackDepthOfDischarge.toFixed(2) / 2 // 0.5%
         icon: "BoltIcon.png"
         iconWidth: 25
         iconHeight: 35
@@ -127,21 +127,21 @@ Item {
             verticalCenterOffset: 12
         }
         TemperatureGauge {
-            id: highThermistorGauge
+            id: highTemperatureGauge
             temperatureValue: battery.HighTemperature
-            gaugeLabel: "High Thermistor"
+            gaugeLabel: "High Temperature"
         }
 
         TemperatureGauge {
-            id: lowThermistorGauge
+            id: lowTemperatureGauge
             temperatureValue: battery.LowTemperature
-            gaugeLabel: "Low Thermistor"
+            gaugeLabel: "Low Temperature"
         }
 
         TemperatureGauge {
-            id: averageThermistorGauge
+            id: averageTemperatureGauge
             temperatureValue: battery.AverageTemperature
-            gaugeLabel: "Average Thermistor"
+            gaugeLabel: "Average Temperature"
         }
 
         TemperatureGauge {
@@ -159,7 +159,7 @@ Item {
         anchors {
             bottom: batteryDebugCluster.bottom
             right: batteryDebugCluster.right
-            bottomMargin: 25
+            bottomMargin: 30
             rightMargin: 100
         }
 
@@ -168,9 +168,9 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "V"
+            units: "mV"
             gaugeTitle: "High Cell Voltage"
-            value:   battery.HighCellVoltage
+            value:   battery.HighCellVoltage / 10 // 0.1 mV 
             icon: "BoltIcon.png"
             iconWidth: 20
             iconHeight: 25
@@ -181,9 +181,9 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "V"
+            units: "mV"
             gaugeTitle: "Average Cell Voltage"
-            value: battery.AverageCellVoltage
+            value: battery.AverageCellVoltage / 10 // 0.1 mV
             icon: "BoltIcon.png"
             iconWidth: 20
             iconHeight: 25
@@ -194,9 +194,9 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "V"
+            units: "mV"
             gaugeTitle: "Low Cell Voltage"
-            value:  battery.LowCellVoltage
+            value:  battery.LowCellVoltage / 10 // 0.1 mV
             icon: "BoltIcon.png"
             iconWidth: 20
             iconHeight: 25
@@ -207,14 +207,13 @@ Item {
         id: fanSpeedGauge
         anchors {
             horizontalCenter: gaugeRow.horizontalCenter
-            horizontalCenterOffset: 25
             bottom: gaugeRow.top
-            bottomMargin: 25
+            bottomMargin: 20
         }
         gaugeSize: Config.largeGaugeSize
         minValue: 0
         maxValue: 2500
-        units: "m/s"
+        //units: "" // units are # in spreadsheet
         gaugeTitle: "Fan Speed"
         value:  battery.FanSpeed
         icon: "FanIcon.png"
@@ -227,15 +226,15 @@ Item {
         width: implicitWidth
         height: implicitHeight
         anchors {
-            verticalCenter: fanSpeedGauge.verticalCenter
-            left: fanSpeedGauge.right
-            leftMargin: 25
+            horizontalCenter: fanSpeedGauge.horizontalCenter
+            top: fanSpeedGauge.bottom
+            topMargin: -15
         }
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         color: Config.fontColor
         font.family: Config.fontStyle
-        text: battery.RequestedFanSpeed + "m/s\nRequested Speed"
+        text: "Requested Fan Speed: " + battery.RequestedFanSpeed
         font.pixelSize: Config.headerFontSize 
         font.weight: Font.Medium
     }
@@ -246,13 +245,14 @@ Item {
             right: fanSpeedGauge.left
             rightMargin: 20
             top: fanSpeedGauge.top
+            topMargin: 35
         }
         gaugeSize: Config.extraSmallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "m/s"
+        units: "V"
         gaugeTitle: "12V Input Voltage"
-        value:  battery.Input12V.toFixed(3)
+        value:  battery.Input12V / 10 // 0.1 V
         icon: "BoltIcon.png"
         iconWidth: 10
         iconHeight: 15
@@ -261,16 +261,17 @@ Item {
     GaugeTemplate {
         id: fanVoltageGauge
         anchors {
-            right: fanSpeedGauge.left
-            rightMargin: 20
-            bottom: fanSpeedGauge.bottom
+            left: fanSpeedGauge.right
+            leftMargin: 20
+            top: fanSpeedGauge.top
+            topMargin: 35
         }
         gaugeSize: Config.extraSmallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "m/s"
+        units: "V"
         gaugeTitle: "Fan Voltage"
-        value: battery.FanVoltage.toFixed(3)
+        value: battery.FanVoltage / 100 // 0.01 V
         icon: "BoltIcon.png"
         iconWidth: 10
         iconHeight: 15
