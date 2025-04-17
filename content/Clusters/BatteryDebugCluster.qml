@@ -29,17 +29,17 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
-            topMargin: 17
+            topMargin: 15
         }
         text: "Battery"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.debugHeaderFontSize
     }
 
     GaugeTemplate {
         id: packCurrentGauge
         anchors {
             left: batteryDebugCluster.left
-            leftMargin: 100
+            leftMargin: 465
             verticalCenter: batteryDebugCluster.verticalCenter
         }
         gaugeSize: Config.mediumGaugeSize
@@ -57,7 +57,7 @@ Item {
         id: packVoltageGauge
         anchors {
             left: batteryDebugCluster.left
-            leftMargin: 375
+            leftMargin: 240
             verticalCenter: batteryDebugCluster.verticalCenter
             verticalCenterOffset: 130
         }
@@ -76,7 +76,7 @@ Item {
         id: depthOfDischargeGauge
         anchors {
             left: batteryDebugCluster.left
-            leftMargin: 375
+            leftMargin: 240
             verticalCenter: batteryDebugCluster.verticalCenter
             verticalCenterOffset: -130
         }
@@ -84,11 +84,37 @@ Item {
         minValue: 0
         maxValue: 100
         units: "%"
-        gaugeTitle: "Pack Voltage"
+        gaugeTitle: "Depth of Charge"
         value:  battery.PackDepthOfDischarge.toFixed(3)
         icon: "BoltIcon.png"
         iconWidth: 25
         iconHeight: 35
+    }
+
+    Text {
+        id: batteryIconLabel
+        color: Config.fontColor
+        font.family: Config.fontStyle
+        anchors {
+            left: batteryDebugCluster.left
+            leftMargin: 80
+            verticalCenter: batteryDebugCluster.verticalCenter
+            verticalCenterOffset: -30
+        }
+        text: "Battery Pack"
+        font.pixelSize: Config.headerFontSize
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+    }
+        
+    BatteryIcon {
+        id: batteryIcon
+        anchors {
+            left: batteryDebugCluster.left
+            leftMargin: 100
+            verticalCenter: batteryDebugCluster.verticalCenter
+            verticalCenterOffset: 20
+        } 
     }
 
     ColumnLayout {
@@ -133,7 +159,7 @@ Item {
         anchors {
             bottom: batteryDebugCluster.bottom
             right: batteryDebugCluster.right
-            bottomMargin: 30
+            bottomMargin: 25
             rightMargin: 100
         }
 
@@ -181,8 +207,9 @@ Item {
         id: fanSpeedGauge
         anchors {
             horizontalCenter: gaugeRow.horizontalCenter
+            horizontalCenterOffset: 25
             bottom: gaugeRow.top
-            bottomMargin: 10
+            bottomMargin: 25
         }
         gaugeSize: Config.largeGaugeSize
         minValue: 0
@@ -195,12 +222,30 @@ Item {
         iconHeight: 50
     }
 
+    Text {
+        id: requestedSpeed
+        width: implicitWidth
+        height: implicitHeight
+        anchors {
+            verticalCenter: fanSpeedGauge.verticalCenter
+            left: fanSpeedGauge.right
+            leftMargin: 25
+        }
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: Config.fontColor
+        font.family: Config.fontStyle
+        text: battery.RequestedFanSpeed + "m/s\nRequested Speed"
+        font.pixelSize: Config.headerFontSize 
+        font.weight: Font.Medium
+    }
+
     GaugeTemplate {
         id: inputVoltageGauge
         anchors {
             right: fanSpeedGauge.left
-            top: batteryDebugCluster.top
-            topMargin: 40
+            rightMargin: 20
+            top: fanSpeedGauge.top
         }
         gaugeSize: Config.extraSmallGaugeSize
         minValue: 0
@@ -216,9 +261,9 @@ Item {
     GaugeTemplate {
         id: fanVoltageGauge
         anchors {
-            left: fanSpeedGauge.right
-            top: batteryDebugCluster.top
-            topMargin: 40
+            right: fanSpeedGauge.left
+            rightMargin: 20
+            bottom: fanSpeedGauge.bottom
         }
         gaugeSize: Config.extraSmallGaugeSize
         minValue: 0
@@ -230,6 +275,4 @@ Item {
         iconWidth: 10
         iconHeight: 15
     }
-
-    
 }
