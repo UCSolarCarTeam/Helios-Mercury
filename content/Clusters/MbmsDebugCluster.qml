@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 6.2
 import QtQuick.Layouts
 import QtQuick.Controls
 import "../Components"
@@ -29,7 +29,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
-            topMargin: 15
+            topMargin: 13
         }
         text: "MBMS"
         font.pixelSize: Config.debugHeaderFontSize

@@ -1,4 +1,4 @@
-import QtQuick 
+import QtQuick 6.2
 import QtQuick.Layouts
 import QtQuick.Controls
 import "../Components"
@@ -29,7 +29,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
-            topMargin: 15
+            topMargin: 13
         }
         text: "MPPT"
         font.pixelSize: Config.debugHeaderFontSize
@@ -78,9 +78,9 @@ Item {
         gaugeSize: Config.smallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "V" // 10mV
+        units: "V"
         gaugeTitle: "MPPT Voltage"
-        value: (( mppt0.ArrayVoltage + mppt1.ArrayVoltage + mppt2.ArrayVoltage + mppt3.ArrayVoltage ) / 4)
+        value: (( mppt0.ArrayVoltage + mppt1.ArrayVoltage + mppt2.ArrayVoltage + mppt3.ArrayVoltage ) / 400) // 10 mV 
         icon: "BoltIcon.png"
         iconWidth: 20
         iconHeight: 25
@@ -97,9 +97,9 @@ Item {
         gaugeSize: Config.smallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "V" // 10mV
+        units: "V" 
         gaugeTitle: "Battery Voltage"
-        value: (( mppt0.BatteryVoltage + mppt1.BatteryVoltage + mppt2.BatteryVoltage + mppt3.BatteryVoltage ) / 4)
+        value: (( mppt0.BatteryVoltage + mppt1.BatteryVoltage + mppt2.BatteryVoltage + mppt3.BatteryVoltage ) / 400) // 10 mV 
         icon: "BoltIcon.png"
         iconWidth: 20
         iconHeight: 25
@@ -113,7 +113,7 @@ Item {
             topMargin: 25
         }
         baseHeight: 0
-        temperatureValue: ((mppt0.Temperature + mppt1.Temperature + mppt2.Temperature + mppt3.Temperature) / 4) // 1/100th °C 
+        temperatureValue: ((mppt0.Temperature + mppt1.Temperature + mppt2.Temperature + mppt3.Temperature) / 400) // 1/100th °C 
     }
 
     ColumnLayout {
@@ -178,9 +178,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
+                units: "V" 
                 gaugeTitle: "MPPT Voltage"
-                value: mppt0.ArrayVoltage
+                value: mppt0.ArrayVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -191,9 +191,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
+                units: "V"
                 gaugeTitle: "Battery Voltage"
-                value: mppt0.BatteryVoltage
+                value: mppt0.BatteryVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -204,7 +204,7 @@ Item {
             id: tempGauge0
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt0.Temperature // 1/100th °C 
+            temperatureValue: mppt0.Temperature / 100 // 1/100th °C 
         }
     }
 
@@ -270,9 +270,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
-                gaugeTitle: "MPPT Voltage"
-                value: mppt1.ArrayVoltage
+                units: "V" 
+                gaugeTitle: "MPPT Voltage" 
+                value: mppt1.ArrayVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -283,9 +283,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
-                gaugeTitle: "Battery Voltage"
-                value: mppt1.BatteryVoltage
+                units: "V" 
+                gaugeTitle: "Battery Voltage" 
+                value: mppt1.BatteryVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -296,7 +296,7 @@ Item {
             id: tempGauge1
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt1.Temperature // 1/100th °C 
+            temperatureValue: mppt1.Temperature / 100 // 1/100th °C 
         }
     }
 
@@ -362,9 +362,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
+                units: "V" 
                 gaugeTitle: "MPPT Voltage"
-                value: mppt2.ArrayVoltage
+                value: mppt2.ArrayVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -375,9 +375,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
+                units: "V" 
                 gaugeTitle: "Battery Voltage"
-                value: mppt2.BatteryVoltage
+                value: mppt2.BatteryVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -388,7 +388,7 @@ Item {
             id: tempGauge2
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt2.Temperature // 1/100th °C 
+            temperatureValue: mppt2.Temperature / 100 // 1/100th °C 
         }
     }
 
@@ -454,9 +454,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
+                units: "V" 
                 gaugeTitle: "MPPT Voltage"
-                value: mppt3.ArrayVoltage
+                value: mppt3.ArrayVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -467,9 +467,9 @@ Item {
                 gaugeSize: Config.smallGaugeSize
                 minValue: 0
                 maxValue: 100
-                units: "V" // 10mV
+                units: "V"
                 gaugeTitle: "Battery Voltage"
-                value: mppt3.BatteryVoltage
+                value: mppt3.BatteryVoltage / 100 // 10 mV
                 icon: "BoltIcon.png"
                 iconWidth: 20
                 iconHeight: 25
@@ -480,7 +480,7 @@ Item {
             id: tempGauge3
             baseHeight: 0
             Layout.alignment: Qt.AlignHCenter
-            temperatureValue: mppt3.Temperature // 1/100th °C 
+            temperatureValue: mppt3.Temperature / 100 // 1/100th °C 
         }
     }
 }
