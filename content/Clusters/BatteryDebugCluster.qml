@@ -29,7 +29,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
-            topMargin: 15
+            topMargin: 13
         }
         text: "Battery"
         font.pixelSize: Config.debugHeaderFontSize
