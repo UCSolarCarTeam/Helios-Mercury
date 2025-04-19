@@ -53,4 +53,7 @@ QtObject {
     property int largeGaugeSize: 300
 
     property int mpptmbmsFontSizeS: 12
+
+    property int debugHeaderFontSize: 24
+    property int headerFontSize: 18
 }
