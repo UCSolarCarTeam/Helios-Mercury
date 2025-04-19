@@ -47,8 +47,9 @@ Item {
         x: 608
         y: 15
         z: 1000
-        isRight: false
+        // isRight: false
         isOn: b3.LeftSignalIn || b3.HazardLightsIn
+        rotation: 180
     }
 
     ArrowIndicator {
@@ -56,7 +57,7 @@ Item {
         x: 1278
         y: 15
         z: 1000
-        isRight: true
+        // isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
@@ -68,11 +69,11 @@ Item {
         anchors.horizontalCenterOffset: 0
     }
 
-    CameraView {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -75
-    }
+    // CameraView {
+    //     anchors.horizontalCenter: parent.horizontalCenter
+    //     anchors.verticalCenter: parent.verticalCenter
+    //     anchors.verticalCenterOffset: -75
+    // }
 
     Speedometer {
         id: speedometer
