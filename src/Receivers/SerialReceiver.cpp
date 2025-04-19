@@ -4,45 +4,35 @@
 #include <QDir>
 #include <QFile>
 
-namespace {
-const QString DEV_PATH = "/dev/";
-const QString DEV_PTS_PATH = "/dev/pts/";
-}
-
 /** Constructor */
 SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
-    : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)), connected_(false) {
+    : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)),
+    devWatcher_(new QFileSystemWatcher(this)), retryTimer_(new QTimer(this)), connected_(false) {
 
     connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
 
-    ConfigManager& config = ConfigManager::instance();
-    portName_ = config.getPortName();
+    retryTimer_->setInterval(2000); // Retry every 2 seconds
 
-    devWatcher_ = new QFileSystemWatcher(this);
-    devWatcher_->addPath(portName_);
+    connect(retryTimer_, &QTimer::timeout, this, [=]() {
+        qDebug() << "[TIMER] Retrying connection to" << portName_;
+        checkPortAvailability();
 
-    qDebug() << "CONTAINS PATH" << devWatcher_->files().contains(portName_);
+        if (QFile::exists(portName_)) {
+            qDebug() << "[TIMER] Port back, Stopping retry timer. Adding path back";
+            retryTimer_->stop();
+            devWatcher_->addPath(portName_);
+        }
+    });
 
     connect(devWatcher_, &QFileSystemWatcher::fileChanged, this, [=](const QString &path) {
-        qDebug() << "File changed:" << path;
+        qDebug() << "[Watcher] File changed:" << path;
 
         if (!devWatcher_->files().contains(path)) {
-            qDebug() << "Watcher no longer watching" << path;
-
-            if (QFile::exists(path)) {
-                qDebug() << "File still exists. Re-adding to watcher.";
-                devWatcher_->addPath(path);
-            } else {
-                qDebug() << path << "was removed. Will retry later.";
-            }
+            qDebug() << "[Watcher] File removed. Starting retry.";
+            if (!retryTimer_->isActive()) retryTimer_->start();
         }
         checkPortAvailability();
     });
-
-    devWatcher_->addPath(DEV_PATH);
-    devWatcher_->addPath(DEV_PTS_PATH);
-
-    checkPortAvailability();
 }
 
 /** Destructor */
@@ -70,8 +60,6 @@ void SerialReceiver::handleReadyRead() {
 void SerialReceiver::checkPortAvailability() {
     ConfigManager& config = ConfigManager::instance();
     portName_ = config.getPortName();
-
-    qDebug() << portName_;
 
     QFile portFile(portName_);
 
@@ -111,4 +99,15 @@ void SerialReceiver::tryConnect() {
         connected_ = false;
         packetFactory_->getPiPacket().setEmbeddedState(false);
     }
+}
+
+void SerialReceiver::setPortPath(const QString &path) {
+    portName_ = path;
+    qDebug() << "[SETPATH] ADDING PATH";
+    if(devWatcher_->addPath(path)) {
+        qDebug() << "[SETPATH] SUCCESSFULLY ADDED PATH";
+        qDebug() << "[SETPATH] FILES: " << devWatcher_->files();
+        qDebug() << "CONTAINS PATH" << devWatcher_->files().contains(portName_);
+    }
+    checkPortAvailability();
 }

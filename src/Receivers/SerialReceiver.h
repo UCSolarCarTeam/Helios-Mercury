@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSerialPort>
 #include <QFileSystemWatcher>
+#include <QTimer>
 #include "../PacketFactory/PacketFactory.h"
 
 class SerialReceiver : public QObject {
@@ -12,6 +13,7 @@ class SerialReceiver : public QObject {
 public:
     explicit SerialReceiver(PacketFactory* packetFactory);
     ~SerialReceiver();
+    void setPortPath(const QString &path);
 
 signals:
     void dataReceived(const QByteArray& data);
@@ -29,6 +31,8 @@ private:
     bool connected_;
 
     QFileSystemWatcher* devWatcher_;
+
+    QTimer* retryTimer_;
 };
 
 #endif // SERIALRECEIVER_H
