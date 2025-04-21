@@ -53,15 +53,20 @@ ConfigManager::ConfigManager(const QString& path){
     telemetryTopic_ = settings.value("telemetryTopic", "packet").toString();
     pingTopic_ = settings.value("pingTopic", "ping").toString();
     pongTopic_ = settings.value("pongTopic", "pong").toString();
-    telemetryHostname_ = settings.value("telemetryHostname", "aedes.solarcar.ca").toString();
+    telemetryHostname_ = settings.value("telemetryHostname", "aedes.IDontWantToKeepConnecting.ca").toString();
     telemetryPort_ = settings.value("telemetryPort", 1883).toInt();
     telemetryUsername_ = settings.value("telemetryUsername", "YouDontBelongHere").toString();
     telemetryPassword_ = settings.value("telemetryPassword", "QuitBeingNaughty").toString();
     settings.endGroup();
 
     settings.beginGroup("Logging");
-    logLevel_ = settings.value("logLevel", 3).toInt();
     loggingEnabled_ = settings.value("loggingEnabled", true).toBool();
+    logPath_ = settings.value("logPath", "Mercury.log").toString();
+    settings.endGroup();
+
+    settings.beginGroup("Gpio");
+    rfidPin0_ = settings.value("rfidPin0", 20).toInt();
+    rfidPin1_ = settings.value("rfidPin1", 21).toInt();
     settings.endGroup();
 }
 
@@ -92,6 +97,10 @@ QString ConfigManager::getTelemetryUsername() const { return telemetryUsername_;
 
 QString ConfigManager::getTelemetryPassword() const { return telemetryPassword_; }
 
-int ConfigManager::getLogLevel() const { return logLevel_; }
-
 bool ConfigManager::getLoggingEnabled() const { return loggingEnabled_; }
+
+QString ConfigManager::getLogPath() const { return logPath_; }
+
+int ConfigManager::getRfidPin0() const { return rfidPin0_; }
+
+int ConfigManager::getRfidPin1() const { return rfidPin1_; }

@@ -1,40 +1,41 @@
+// FaultsMessage.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-
 Rectangle {
-    id:mainContainer
-    anchors.horizontalCenter: parent.horizontalCenter
-    // Determines Icon Used
-    property string errorType
-    // Determines Message Displayed
-    property string messageText
-    // Determines background color, can be either low,mid,high
-    property string severity
-    property bool visibile:false
-    property string icon: errorType === "motor" ? "../Images/MotorFault.png" : errorType === "battery" ? "../Images/BatteryFault.png" : ""
-    property color backGroundColor: severity === "high" ? "#FC1313" :  // Red for severe
-                                 severity === "mid" ? "#F6EC93" :     // Yellow for mid
-                                                      "white"       // White default
-    color:backGroundColor
+    id: faultMessage
+    width: parent ? parent.width : 426
+    height: 33
     radius: 8
-    border.color: 'black'
+    border.color: "black"
+
+    property string errorType
+    property string messageText
+    property string severity
+
+    property string icon: errorType === "motor" ? "../Images/MotorFault.png"
+                           : errorType === "battery" ? "../Images/BatteryFault.png"
+                           : ""
+    property color backGroundColor: severity === "high" ? "#FC1313"
+                                      : severity === "mid" ? "#F6EC93"
+                                      : "white"
+    color: backGroundColor
+
     Row {
-        id:row
-        anchors.centerIn: mainContainer
+        anchors.fill: parent
+        anchors.margins: 5
+        spacing: 8
         Image {
-            id: iconImage
-            width:25
-            height:25
             source: icon
+            width: icon ? 25 : 0
+            height: icon ? 25 : 0
+            visible: icon !== ""
         }
         Text {
-            height:row.height
-            verticalAlignment:Text.AlignVCenter
-            id:text
-            text:messageText
+            text: messageText
             font.pixelSize: 15
-            color:"black"
+            color: "black"
+            verticalAlignment: Text.AlignVCenter
         }
-  }
+    }
 }

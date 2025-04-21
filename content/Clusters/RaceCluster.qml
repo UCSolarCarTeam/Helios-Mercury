@@ -81,12 +81,10 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
+
     FaultsDisplayContainer{
         anchors.top: cameraView.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 10
-        batteryObject:batteryFaults
-        motor0Object: motorDetails0
-        motor1Object: motorDetails1
     }
 }
