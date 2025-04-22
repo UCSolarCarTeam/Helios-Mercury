@@ -48,4 +48,6 @@ qt6_add_qml_module(content
         Images/ThermometerIcon.png
         Images/AccelerationIcon.png
         Images/BoltIcon.png
+        Images/TelemetryConnected.png
+        Images/RadioBoardConnected.png
 )

@@ -29,7 +29,8 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     #endif
 
     //initialize SerialReceiver which will begin to listen to serial port for incoming data
-    SerialReceiver* serialReceiver = new SerialReceiver();
+    SerialReceiver* serialReceiver = new SerialReceiver(packetFactory);
+    serialReceiver->setPortPath("/dev/pts/3");
 
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
@@ -38,7 +39,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
 
     //initialize MessageTransmitter which will transmit data every period of time deinifed in config.ini
-    MessageTransmitter* messageTransmitter = new MessageTransmitter();
+    MessageTransmitter* messageTransmitter = new MessageTransmitter(packetFactory);
 
     //initialize MessageAggregator which will aggregate all packets into one json message and transmit
     MessageAggregator* messageAggregator = new MessageAggregator(messageTransmitter, packetFactory);

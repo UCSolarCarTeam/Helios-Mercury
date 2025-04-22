@@ -147,4 +147,57 @@ Item {
             { name: "LV", isConnected: mbms.LvContactorState }
         ]
     }
+
+
+    Row {
+        spacing: 30
+        x: 1075
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 30
+        anchors.bottomMargin: 8
+
+        Column {
+            spacing: 3
+            width: 40
+
+            Text {
+                text: "EMBEDDED"
+                font.pixelSize: Config.statusIconFontSize
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+            }
+
+            DashIcon {
+                id: embeddedConnectionStatus
+                width: 24
+                height: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+                imageSource: "../Images/RadioBoardConnected.png"
+                isOn: pi.EmbeddedState
+            }
+        }
+
+        Column {
+            spacing: 3
+            width: 40
+
+            Text {
+                text: "TELEMETRY"
+                font.pixelSize: Config.statusIconFontSize
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
+            }
+
+            DashIcon {
+                id: awsConnectionStatus
+                width: 24
+                height: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+                imageSource: "../Images/TelemetryConnected.png"
+                isOn: pi.AWSState
+            }
+        }
+    }
 }

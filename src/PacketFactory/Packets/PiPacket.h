@@ -9,6 +9,8 @@ class PiPacket : public QObject{
     Q_OBJECT
     DEFINE_PROPERTY(QString, Rfid);
     DEFINE_PROPERTY(QString, DriverName);
+    DEFINE_PROPERTY(bool, EmbeddedState)
+    DEFINE_PROPERTY(bool, AWSState)
 public:
     PiPacket();
     QJsonObject toJson();
