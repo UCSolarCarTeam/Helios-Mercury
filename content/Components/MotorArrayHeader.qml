@@ -26,7 +26,6 @@ Item {
 
     component StyledText: Text {
         verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
         font {
             pixelSize: Config.motorArrayFontSize
             weight: Font.Medium
@@ -43,6 +42,7 @@ Item {
             left: motorArrayHeader.left
             top: motorArrayHeader.top
             bottom: motorArrayHeader.bottom
+            leftMargin: 20
         }
 
         StyledText {

@@ -10,9 +10,6 @@ namespace {
     const int ARRAY_CURRENT_OFFSET = 4;
     const int BATTERY_VOLTAGE_OFFSET = 6;
     const int TEMPERATURE_OFFSET = 8;
-
-    const int CENTI_TO_ONES = 100;
-    const int MILLI_TO_ONES = 1000;
 }
 
 MpptPacket::MpptPacket() {
