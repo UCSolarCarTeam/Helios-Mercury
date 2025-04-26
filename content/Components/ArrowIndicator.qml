@@ -17,6 +17,16 @@ Item {
         source: "../Images/Arrow.png"
     }
 
+    MultiEffect {
+        anchors.fill: parent
+        source: batteryImage
+        colorization: 1.0 
+        colorizationColor: Config.btnDisabled
+        antialiasing: true
+        layer.enabled: true
+        layer.smooth: true
+    }
+
     Item {
         id: batteryFillContainer
         anchors.fill: batteryImage
