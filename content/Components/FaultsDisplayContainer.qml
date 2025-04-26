@@ -188,7 +188,8 @@ Rectangle {
                        : "transparent"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment:   Text.AlignVCenter
-                anchors.fill: parent
+                height: parent.height
+                width: parent.width
             }
         }
     }
