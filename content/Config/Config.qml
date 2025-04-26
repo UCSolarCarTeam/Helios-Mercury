@@ -38,6 +38,9 @@ QtObject {
     property color contactorConnectedColor: "#00ff00"
 
     property int batteryFontSize: 18
+
+    property int headerFontSize: 18
+    property int debugHeaderFontSize: 24
     
     property color speedometerWhiteTicks: "#ffffff"
     property color speedometerGrayTicks: "#515253"
