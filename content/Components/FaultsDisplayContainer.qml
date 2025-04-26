@@ -9,8 +9,8 @@ Rectangle {
 
     // Fault data sources
     property QtObject batteryObject: batteryFaults
-    property QtObject motor0Object: motorDetails0
-    property QtObject motor1Object: motorDetails1
+    // TODO: Add more fault sources later
+
 
     // Height for fault boxes
     property int delegateHeight: 33
@@ -38,11 +38,8 @@ Rectangle {
 
     // Helper to test if a fault is active
     function isFaultActive(fault) {
-        if (fault.errorType === "motor")
-            return (motor0Object && motor0Object[fault.faultProperty]) ||
-                   (motor1Object && motor1Object[fault.faultProperty]);
-        else
-            return batteryObject && batteryObject[fault.faultProperty];
+        // TODO: add more fault types here later
+        return batteryObject && batteryObject[fault.faultProperty];
     }
 
     // The ListModel that feeds the ListView
