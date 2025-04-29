@@ -40,8 +40,7 @@ CanReceiver::~CanReceiver() {
 void CanReceiver::handleReadyRead() {
     while (canDevice_->framesAvailable()){
         QCanBusFrame frame = canDevice_->readFrame();
-        qDebug() << "Received CAN frame: " << frame.frameType();
-
+        
         if(frame.frameType() != QCanBusFrame::DataFrame) {
             qWarning() << "(" << frame.frameType() << ") Invalid frame received with ID:" << frame.frameId() << "and payload:" << frame.payload();
             continue;
