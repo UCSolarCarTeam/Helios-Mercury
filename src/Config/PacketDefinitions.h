@@ -21,9 +21,13 @@ namespace PacketDefinitions {
 
     const int B3_ID = 4;
     const int B3_LENGTH = 9;
+    const int B3_ID_MIN = 0x610;
+    const int B3_ID_MAX = 0x620;
 
     const int TELEMETRY_ID = 5;
     const int TELEMETRY_LENGTH = 33;
+    const int TELEMETRY_ID_MIN= 0x630;
+    const int TELEMETRY_ID_MAX = 0x635;
 
     const int BATTERY_FAULTS_ID = 6;
     const int BATTERY_FAULTS_LENGTH = 7;

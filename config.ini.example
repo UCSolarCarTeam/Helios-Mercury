@@ -13,6 +13,10 @@ packetTitle=Helios
 portName=/dev/pts/5
 baudrate=115200
 
+[Can]
+interface=can0
+enabled=true
+
 [Mqtt]
 telemetryTopic=packet
 pingTopic=ping
