@@ -153,6 +153,13 @@ bool StreamProcessor::isValidChecksum(QByteArray& decodedPacket){
 void StreamProcessor::validateAndForwardPacket(QByteArray& packetBody) {
     const int id = packetBody.at(PacketDefinitions::ID_INDEX);
 
+    // date time id for telem
+    const quint32 testId = 0x630;
+    uint16_t year = 2025;
+
+    // 2) Build a dummy payload of 8 bytes (enough to cover offsets 1–7):
+    QByteArray payload(7, 0);
+
     if(PacketDefinitions::packetLength[id] != packetBody.size()) {
         qDebug() << "Packet length is incorrect for ID: " << id;
         qDebug() << "Got: " << packetBody.size() << " Expected: " << PacketDefinitions::packetLength[id];
@@ -177,7 +184,25 @@ void StreamProcessor::validateAndForwardPacket(QByteArray& packetBody) {
             packetFactory_->getB3Packet().populatePacket(packetBody);
             return;
         case PacketDefinitions::TELEMETRY_ID:
-            qDebug() << "Telemetry Packet";
+            qDebug() << "Telemetry Packet";           //   – bytes [1,2] = year = 2025 (0x07E9 little-endiian)
+            payload[0] = static_cast<char>(year & 0xFF);        // low byte
+            payload[1] = static_cast<char>((year >> 8) & 0xFF); // high byte
+
+            // Month = December (12)
+            payload[2] = static_cast<char>(12);
+
+            // Day = 31
+            payload[3] = static_cast<char>(31);
+
+            // Hour = 23
+            payload[4] = static_cast<char>(23);
+
+            // Minute = 59
+            payload[5] = static_cast<char>(59);
+
+            // Second = 45
+            payload[6] = static_cast<char>(45);
+
             packetFactory_->getTelemetryPacket().populatePacket(packetBody);
             return;
         case PacketDefinitions::BATTERY_FAULTS_ID:

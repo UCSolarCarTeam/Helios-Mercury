@@ -31,6 +31,15 @@ private:                                                                      \
 }                                                                         \
                                                                               \
     Q_SIGNALS:                                                                      \
-    void name##Changed();
+    void name##Changed();                                                           \
+
+#define DEFINE_HANDLER(canId, type, name, offset)                                 \
+registerHandler((canId), [this](const QByteArray& data) {                          \
+        auto v = this->getValue<type>(data, offset);              \
+        qDebug() << "handler for" << QString::number(canId,16)    \
+<< "invoked, raw data =" << data.toHex() << "value changed is type" << v;                  \
+        this->set##name(v);                                         \
+    }                                                                          \
+);
 
 #endif // PROPERTYDEFINITIONS_H

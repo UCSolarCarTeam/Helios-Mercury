@@ -49,6 +49,11 @@ ConfigManager::ConfigManager(const QString& path){
     baudrate_ = settings.value("baudrate", 115200).toInt();
     settings.endGroup();
 
+    settings.beginGroup("Can");
+    canInterface_ = settings.value("interface", "can0").toString();
+    canEnabled_ = settings.value("enabled", true).toBool();
+    settings.endGroup();
+
     settings.beginGroup("Mqtt");
     telemetryTopic_ = settings.value("telemetryTopic", "packet").toString();
     pingTopic_ = settings.value("pingTopic", "ping").toString();
@@ -82,6 +87,10 @@ QString ConfigManager::getPacketTitle() const { return packetTitle_; }
 QString ConfigManager::getPortName() const { return portName_; }
 
 int ConfigManager::getBaudrate() const { return baudrate_; }
+
+QString ConfigManager::getCanInterface() const { return canInterface_; }
+
+bool ConfigManager::getCanEnabled() const { return canEnabled_; }
 
 QString ConfigManager::getTelemetryTopic() const { return telemetryTopic_; }
 
