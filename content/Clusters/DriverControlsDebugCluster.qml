@@ -9,15 +9,15 @@ Item {
     width: 1920
     height: 550
 
-    property bool leftSignalActive: false
-    property bool rightSignalActive: false
+    property bool hornActive: true
+    property bool hazardActive: true
+    property bool headlightsActive: true
+    property bool leftSignalActive: true
+    property bool rightSignalActive: true
+    property bool parkingBrakeActive: true
     property bool drlActive: false
-    property bool headlightsActive: false
     property bool brakeActive: false
     property bool mtrResetActive: false
-    property bool hornActive: false
-    property bool parkingBrakeActive: false
-    property bool hazardActive: false
 
     // Background images
     Image {
@@ -47,6 +47,19 @@ Item {
         id: driverIconComponent
         x: 242
         y: 131
+
+        // hornActive: b3.HornSignalOut
+        // hazardActive: b3.HazardLightsIn
+        // headlightsActive: b3.HeadlightSignalOut
+        // leftSignalActive: b3.LeftSignalIn
+        // rightSignalActive: b3.RightSignalIn
+        // parkingBrakeActive: b3.HandbrakeSwitch
+        hornActive: true
+        hazardActive: true
+        headlightsActive: true
+        leftSignalActive: true
+        rightSignalActive: true
+        parkingBrakeActive: true
     }
 
 
@@ -74,14 +87,15 @@ Item {
 
     // Signal list with heading
     Column {
-        spacing: 15
-        anchors.right: parent.right
-        anchors.rightMargin: 120
+        x:parent.width * (3/4) + 30
+        spacing: 20
+        // anchors.right: parent.right
+        // anchors.rightMargin: 200
         anchors.verticalCenter: parent.verticalCenter
 
         Text {
             text: "Signal"
-            font.pixelSize: 22
+            font.pixelSize: 35
             font.family: Config.fontStyle
             color: "white"
         }
@@ -96,24 +110,53 @@ Item {
                 { label: "Mtr Reset", active: mtrResetActive },
                 { label: "Horn", active: hornActive }
             ]
-            delegate: Text {
-                text: modelData.label
-                color: modelData.active ? "green" : "red"
-                font.pixelSize: 22
-                font.family: Config.fontStyle
+            delegate: Item {
+                width: parent.width
+                height: 40  // Adjust as needed
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: modelData.label
+                    color: modelData.active ? "green" : "red"
+                    font.pixelSize: 35
+                    font.family: Config.fontStyle
+                }
             }
         }
     }
 
-    // Placeholder for PRNDL
-    Text {
-        id: prndlLabel
-        text: "PRNDL: TBD"
-        font.pixelSize: 24
-        color: "#cccccc"
-        anchors.left: parent.left
-        anchors.leftMargin: 100
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
+    Item {
+        id: prndlDisplay
+        x: 120
+        y:parent.height/4 + 50
+        width: 50
+        height: 150
+        // anchors.left: parent.left
+        // anchors.leftMargin: 100
+        // anchors.bottom: parent.bottom
+        // anchors.bottomMargin: 30
+
+        property var gears: ["P", "R", "N", "D"]
+        property int currentGear: 2  // Example: highlight "N"
+
+        Column {
+            id: gearColumn
+            spacing: 15
+            anchors.centerIn: parent
+
+            Repeater {
+                model: prndlDisplay.gears.length
+
+                Text {
+                    text: prndlDisplay.gears[index]
+                    font.pixelSize: 35
+                    font.family: Config.fontStyle
+                    color: index === prndlDisplay.currentGear ? "red" : "white"
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+        }
     }
 }

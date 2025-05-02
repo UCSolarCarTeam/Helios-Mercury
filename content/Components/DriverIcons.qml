@@ -16,82 +16,82 @@ Item {
     property bool rightSignalActive: false
     property bool parkingBrakeActive: false
 
-    // // Horn Icon
-    // Image {
-    //     id: hornIcon
-    //     source: "../Images/Horn.png"
-    //     x: 65
-    //     y: 0
-    //     width: 70
-    //     height: 70
-    //     visible: hornActive // Change based on logic
-    // }
-
-    // // Hazard Icon
-    // Image {
-    //     id: hazardIcon
-    //     source: "../Images/Hazard.png"
-    //     x: 65
-    //     y: 0
-    //     width: 70
-    //     height: 70
-    //     visible: hazardActive // Change based on logic
-    // }
-
-    // Left Headlight Icon (reflected if needed)
-    Image {
-        id: headlightLeftIcon
-        source: "../Images/Headlights.png"
-        x: 116
-        y: 156
-        width: 75
-        height: 49
-        transform: Scale { xScale: -1; origin.x: width / 2 } // reflect if needed
-        visible: headlightsActive // Change based on logic
+    // Horn Icon (Orange)
+    DashIcon {
+        imageSource: "../Images/CarHorn.png"
+        isOn: true
+        iconMaskColor: hornActive ? "orange" : "white"
+        x: parent.width * (3/4) - 45
+        y: 0
+        width: 70
+        height: 70
     }
 
-    // Right Headlight Icon
-    Image {
-        id: headlightRightIcon
-        source: "../Images/Headlights.png"
-        x: 116
-        y: 156
-        width: 75
-        height: 49
-        visible: headlightsActive // Change based on logic
+    // Hazard Icon (Red)
+    DashIcon {
+        imageSource: "../Images/HazardIcon.png"
+        isOn: true
+        iconMaskColor: hazardActive ? "red" : "white"
+        x: parent.width / 4
+        y: 15
+        width: 40
+        height: 40
     }
 
-    // Left Arrow Icon
-    Image {
-        id: arrowLeftIcon
-        source: "../Images/Arrow.png"
-        x: 0
-        y: 106
+    // Left Headlight Icon (Green, mirrored)
+    DashIcon {
+        imageSource: "../Images/Headlights.png"
+        isOn: true
+        iconMaskColor: headlightsActive ? "green" : "white"
+        x: parent.width/2
+        y: 156
+        width: 65
+        height: 40
+        transform: Scale { xScale: -1 }
+    }
+
+    // Right Headlight Icon (Green)
+    DashIcon {
+        imageSource: "../Images/Headlights.png"
+        isOn: true
+        iconMaskColor: headlightsActive ? "green" : "white"
+        x: parent.width/2
+        y: 156
+        width: 65
+        height: 40
+    }
+
+    // Left Arrow Icon (Green, mirrored)
+    DashIcon {
+        imageSource: "../Images/Arrow.png"
+        isOn: true
+        iconMaskColor: leftSignalActive ? "green" : "white"
+        x: 75
+        y: 85
         width: 75
         height: 50
-        transform: Scale { xScale: -1; origin.x: width / 2 } // mirror horizontally
-        visible: leftSignalActive // Change based on logic
+        transform: Scale { xScale: -1 }
     }
 
-    // Right Arrow Icon
-    Image {
-        id: arrowRightIcon
-        source: "../Images/Arrow.png"
-        x: width - 75
-        y: 106
+    // Right Arrow Icon (Green)
+    DashIcon {
+        imageSource: "../Images/Arrow.png"
+        isOn: true
+        iconMaskColor: rightSignalActive ? "green" : "white"
+        x: parent.width - 75
+        y: 85
         width: 75
         height: 50
-        visible: rightSignalActive // Change based on logic
     }
 
-    // Parking Brake Icon
-    Image {
-        id: parkingBrakeIcon
-        source: "../Images/ParkingBrake.png"
-        x: 119
-        y: 241
-        width: 49
-        height: 68
-        visible: parkingBrakeActive // Change based on logic
+    // Parking Brake Icon (Red)
+    DashIcon {
+        imageSource: "../Images/ParkingBrake.png"
+        isOn: true
+        iconMaskColor: parkingBrakeActive ? "red" : "white"
+        x: parent.width/2 - 25
+        y: parent.height - 60
+        width: 50
+        height: 50
     }
 }
