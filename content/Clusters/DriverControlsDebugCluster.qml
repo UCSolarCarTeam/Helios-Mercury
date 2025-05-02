@@ -3,21 +3,22 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import "../Config"
 import "../Components"
+import Mercury
 
 Item {
     id: driverControlsDebugCluster
     width: 1920
     height: 550
 
-    property bool hornActive: true
-    property bool hazardActive: true
-    property bool headlightsActive: true
-    property bool leftSignalActive: true
-    property bool rightSignalActive: true
-    property bool parkingBrakeActive: true
-    property bool drlActive: false
-    property bool brakeActive: false
-    property bool mtrResetActive: false
+    property bool hornActive: b3.HornSignalOut
+    property bool hazardActive: b3.HazardLightsIn
+    property bool headlightsActive: b3.HeadlightSignalOut
+    property bool leftSignalActive: b3.LeftSignalOut
+    property bool rightSignalActive: b3.RightSignalOut
+    property bool parkingBrakeActive: b3.HandbrakeSwitch
+    property bool drlActive: b3.DaytimeRunningLightSignalOut
+    property bool brakeActive: b3.BrakeLightSignalOut
+    property bool mtrResetActive: b3.MotorReset
 
     // Background images
     Image {
@@ -48,22 +49,16 @@ Item {
         x: 242
         y: 131
 
-        // hornActive: b3.HornSignalOut
-        // hazardActive: b3.HazardLightsIn
-        // headlightsActive: b3.HeadlightSignalOut
-        // leftSignalActive: b3.LeftSignalIn
-        // rightSignalActive: b3.RightSignalIn
-        // parkingBrakeActive: b3.HandbrakeSwitch
-        hornActive: true
-        hazardActive: true
-        headlightsActive: true
-        leftSignalActive: true
-        rightSignalActive: true
-        parkingBrakeActive: true
+        hornActive: driverControlsDebugCluster.hornActive
+        hazardActive: driverControlsDebugCluster.hazardActive
+        headlightsActive: driverControlsDebugCluster.headlightsActive
+        leftSignalActive: driverControlsDebugCluster.leftSignalActive
+        rightSignalActive: driverControlsDebugCluster.rightSignalActive
+        parkingBrakeActive: driverControlsDebugCluster.parkingBrakeActive
     }
 
 
-    // Central debug time
+    // Middle Text (Looks really empty without it)
     Text {
         id: debugTimeDisplay
         text: "00:00:000"
@@ -74,7 +69,7 @@ Item {
         color: "#ffffff"
     }
 
-    // Motor status
+    // Middle text
     Text {
         id: motorStatus
         text: "8/8"
@@ -85,12 +80,10 @@ Item {
         anchors.topMargin: 10
     }
 
-    // Signal list with heading
+    // Signal list on right
     Column {
-        x:parent.width * (3/4) + 30
+        x:parent.width * (3/4)
         spacing: 20
-        // anchors.right: parent.right
-        // anchors.rightMargin: 200
         anchors.verticalCenter: parent.verticalCenter
 
         Text {
@@ -112,7 +105,7 @@ Item {
             ]
             delegate: Item {
                 width: parent.width
-                height: 40  // Adjust as needed
+                height: 40
 
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -126,19 +119,17 @@ Item {
         }
     }
 
+    // RND because no P
     Item {
-        id: prndlDisplay
+        id: rndDisplay
         x: 120
         y:parent.height/4 + 50
         width: 50
         height: 150
-        // anchors.left: parent.left
-        // anchors.leftMargin: 100
-        // anchors.bottom: parent.bottom
-        // anchors.bottomMargin: 30
 
-        property var gears: ["P", "R", "N", "D"]
-        property int currentGear: 2  // Example: highlight "N"
+        property var gears: ["R", "N", "D"]
+        property int currentGear: b3.Reverse ? 0 : (b3.ForwardIn ? 2 : 1)
+
 
         Column {
             id: gearColumn
@@ -146,13 +137,13 @@ Item {
             anchors.centerIn: parent
 
             Repeater {
-                model: prndlDisplay.gears.length
+                model: rndDisplay.gears.length
 
                 Text {
-                    text: prndlDisplay.gears[index]
+                    text: rndDisplay.gears[index]
                     font.pixelSize: 35
                     font.family: Config.fontStyle
-                    color: index === prndlDisplay.currentGear ? "red" : "white"
+                    color: index === rndDisplay.currentGear ? "red" : "white"
                     horizontalAlignment: Text.AlignHCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                 }

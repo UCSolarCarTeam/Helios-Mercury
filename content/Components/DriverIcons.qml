@@ -16,7 +16,7 @@ Item {
     property bool rightSignalActive: false
     property bool parkingBrakeActive: false
 
-    // Horn Icon (Orange)
+    // Horn Icon
     DashIcon {
         imageSource: "../Images/CarHorn.png"
         isOn: true
@@ -27,7 +27,7 @@ Item {
         height: 70
     }
 
-    // Hazard Icon (Red)
+    // Hazard Icon
     DashIcon {
         imageSource: "../Images/HazardIcon.png"
         isOn: true
@@ -38,7 +38,7 @@ Item {
         height: 40
     }
 
-    // Left Headlight Icon (Green, mirrored)
+    // Left Headlight Icon
     DashIcon {
         imageSource: "../Images/Headlights.png"
         isOn: true
@@ -50,7 +50,7 @@ Item {
         transform: Scale { xScale: -1 }
     }
 
-    // Right Headlight Icon (Green)
+    // Mirrored Headlight Icon
     DashIcon {
         imageSource: "../Images/Headlights.png"
         isOn: true
@@ -61,7 +61,7 @@ Item {
         height: 40
     }
 
-    // Left Arrow Icon (Green, mirrored)
+    // Left Arrow Icon
     DashIcon {
         imageSource: "../Images/Arrow.png"
         isOn: true
@@ -73,7 +73,7 @@ Item {
         transform: Scale { xScale: -1 }
     }
 
-    // Right Arrow Icon (Green)
+    // Right Arrow Icon
     DashIcon {
         imageSource: "../Images/Arrow.png"
         isOn: true
@@ -84,7 +84,7 @@ Item {
         height: 50
     }
 
-    // Parking Brake Icon (Red)
+    // Parking Brake Icon
     DashIcon {
         imageSource: "../Images/ParkingBrake.png"
         isOn: true
