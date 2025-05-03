@@ -1,3 +1,4 @@
+// FaultsDisplayContainer.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
@@ -7,88 +8,77 @@ Rectangle {
     height: 175
     color: "transparent"
 
-    // Height for fault boxes
+    // Height for each fault row
     property int delegateHeight: 33
 
-    // Faults list    
-    // TODO: Add more fault sources later
+    // All possible faults: we'll listen to <fault>NameChanged signals on each source object
     property var faultsData: [
-                { fault: "InternalCommunicationFault", msg: "Battery Fault: Internal Communication", severity: "high", type: "battery" },
-                { fault: "InternalConverversionFault",  msg: "Battery Fault: Internal Conversion",    severity: "high", type: "battery" },
-                { fault: "WeakCellFault",               msg: "Battery Fault: Weak Cell",              severity: "high", type: "battery" },
-                { fault: "LowCellVoltageFault",         msg: "Battery Fault: Low Cell Voltage",      severity: "mid", type: "battery" },
-                { fault: "OpenWiringFault",             msg: "Battery Fault: Open Wiring",           severity: "mid", type: "battery" },
-                { fault: "CurrentSensorFault",          msg: "Battery Fault: Current Sensor",        severity: "mid", type: "battery" },
-                { fault: "PackVoltageSensorFault",      msg: "Battery Fault: Pack Voltage Sensor",   severity: "mid", type: "battery" },
-                { fault: "VoltageRedundancyFault",      msg: "Battery Fault: Voltage Redundancy",    severity: "low", type: "battery" },
-                { fault: "FanMonitorFault",             msg: "Battery Fault: Fan Monitor",           severity: "low", type: "battery" },
-                { fault: "ThermistorFault",             msg: "Battery Fault: Thermistor",            severity: "low", type: "battery" },
-                { fault: "CanbusCommunicationFault",    msg: "Battery Fault: CANBUS Communications", severity: "low", type: "battery" },
-                { fault: "AlwaysOnSupplyFault",         msg: "Battery Fault: Always On Supply",      severity: "mid", type: "battery" },
-                { fault: "HighVoltageIsolationFault",   msg: "Battery Fault: High Voltage Isolation",severity: "mid", type: "battery" },
-                { fault: "PowerSupply12VFault",         msg: "Battery Fault: Power Supply 12V",      severity: "mid", type: "battery" },
-                { fault: "ChargeLimitEnforcementFault", msg: "Battery Fault: Charge Limit Enforcement", severity: "low", type: "battery" },
-                { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid", type: "battery" },
-                { fault: "ChargerSafetyRelayFault",     msg: "Battery Fault: Charger Safety Relay",  severity: "mid", type: "battery" },
-            ]
+        { fault: "InternalCommunicationFault",     msg: "Battery Fault: Internal Communication",      severity: "high", type: "battery" },
+        { fault: "InternalConverversionFault",     msg: "Battery Fault: Internal Conversion",         severity: "high", type: "battery" },
+        { fault: "WeakCellFault",                  msg: "Battery Fault: Weak Cell",                   severity: "high", type: "battery" },
+        { fault: "LowCellVoltageFault",            msg: "Battery Fault: Low Cell Voltage",            severity: "mid",  type: "battery" },
+        { fault: "OpenWiringFault",                msg: "Battery Fault: Open Wiring",                 severity: "mid",  type: "battery" },
+        { fault: "CurrentSensorFault",             msg: "Battery Fault: Current Sensor",              severity: "mid",  type: "battery" },
+        { fault: "PackVoltageSensorFault",         msg: "Battery Fault: Pack Voltage Sensor",         severity: "mid",  type: "battery" },
+        { fault: "VoltageRedundancyFault",         msg: "Battery Fault: Voltage Redundancy",          severity: "low",  type: "battery" },
+        { fault: "FanMonitorFault",                msg: "Battery Fault: Fan Monitor",                 severity: "low",  type: "battery" },
+        { fault: "ThermistorFault",                msg: "Battery Fault: Thermistor",                  severity: "low",  type: "battery" },
+        { fault: "CanbusCommunicationFault",       msg: "Battery Fault: CANBUS Communications",       severity: "low",  type: "battery" },
+        { fault: "AlwaysOnSupplyFault",            msg: "Battery Fault: Always On Supply",            severity: "mid",  type: "battery" },
+        { fault: "HighVoltageIsolationFault",      msg: "Battery Fault: High Voltage Isolation",      severity: "mid",  type: "battery" },
+        { fault: "PowerSupply12VFault",            msg: "Battery Fault: Power Supply 12V",            severity: "mid",  type: "battery" },
+        { fault: "ChargeLimitEnforcementFault",    msg: "Battery Fault: Charge Limit Enforcement",    severity: "low",  type: "battery" },
+        { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid",  type: "battery" },
+        { fault: "ChargerSafetyRelayFault",        msg: "Battery Fault: Charger Safety Relay",        severity: "mid",  type: "battery" }
+    ]
 
-    // The ListModel that feeds the ListView
+    // External data source for battery faults
+    property QtObject batteryObject: batteryFaults
+
+    // The model backing the ListView
     ListModel { id: activeModel }
 
-    // Queue for new faults and banner state
+    // Queue + banner state
     property var pendingFaults: []
     property var displayedFault: null
-    property string bannerText: ""
     property bool bannerVisible: false
+    property string bannerText: ""
 
-    // Handle transition to next banner
     function showNextBanner() {
         if (pendingFaults.length > 0) {
             displayedFault = pendingFaults.shift()
-            bannerText = displayedFault.msg
-            bannerVisible = true
+            bannerText      = displayedFault.msg
+            bannerVisible   = true
             bannerTimer.restart()
         }
     }
 
-    // Banner hide timer insert by severity order
     Timer {
         id: bannerTimer
-        interval: 2000
-        repeat: false
+        interval: 2000; repeat: false
         onTriggered: {
             bannerVisible = false
             if (displayedFault) {
-                // determine insertion index based on severity
+                // insert into activeModel in severity order
                 var idx = 0
                 var sev = displayedFault.severity
                 if (sev === "high") {
-                    // after existing highs
-                    for (var i = 0; i < activeModel.count; ++i) {
-                        if (activeModel.get(i).severity === "high")
-                            idx++
-                        else
-                            break
-                    }
+                    while (idx < activeModel.count && activeModel.get(idx).severity === "high")
+                        idx++
                 } else if (sev === "mid") {
-                    // after highs + mids
-                    for (var i = 0; i < activeModel.count; ++i) {
-                        var s = activeModel.get(i).severity
-                        if (s === "high" || s === "mid")
-                            idx++
-                        else
-                            break
+                    while (idx < activeModel.count) {
+                        var s = activeModel.get(idx).severity
+                        if (s === "high" || s === "mid") idx++
+                        else break
                     }
                 } else {
-                    // low or default at end
                     idx = activeModel.count
                 }
-                // insert the fault at the computed index
                 activeModel.insert(idx, {
-                    fault: displayedFault.fault,
-                    msg:    displayedFault.msg,
-                    severity:       displayedFault.severity,
-                    type:      displayedFault.type
+                    fault:    displayedFault.fault,
+                    msg:      displayedFault.msg,
+                    severity: displayedFault.severity,
+                    type:     displayedFault.type
                 })
                 displayedFault = null
             }
@@ -96,64 +86,85 @@ Rectangle {
         }
     }
 
-    // // Poll faultsData queue new or remove old faults
-    //TODO: implement alternative to timer - each fault emits a signal when it is changed
-    Timer {
-        id: updateTimer
-        interval: 200
-        running: true
-        repeat: true
-        onTriggered: {
-            // checks through fault database, finds which are active
-            for (var i = 0; i < faultsData.length; ++i) {
-                var f = faultsData[i]
-                var inModel = false
-                for (var j = 0; j < activeModel.count; ++j)
-                    if (activeModel.get(j).fault === f.fault)
-                        inModel = true
+    // Central handler for all fault-changed signals
+    function onFaultChanged(desc, newVal) {
+        // Determine actual boolean
+        var isActive = (newVal === undefined)
+                       ? batteryObject && batteryObject[desc.fault]
+                       : newVal
 
-                var inQueue = pendingFaults.some(function(q) { return q.fault === f.fault })
-                var isDisplaying = displayedFault && displayedFault.fault === f.fault
-                var active = batteryFaults[f.fault]
+        if (isActive) {
+            // check if already in model
+            var inModel = false
+            for (var i = 0; i < activeModel.count; ++i) {
+                if (activeModel.get(i).fault === desc.fault) {
+                    inModel = true
+                    break
+                }
+            }
+            // check if in queue
+            var inQueue = pendingFaults.some(function(f){ return f.fault === desc.fault })
+            var isDisplaying = displayedFault && displayedFault.fault === desc.fault
 
-                if (active && !inModel && !inQueue && !isDisplaying) {
-                    pendingFaults.push(f)
-                    if (!bannerVisible && !displayedFault)
-                        showNextBanner()
-                } else if (!active) {
-                    // remove from model
-                    for (var m = 0; m < activeModel.count; ++m) {
-                        if (activeModel.get(m).fault === f.fault) {
-                            activeModel.remove(m)
-                            break
-                        }
-                    }
-                    // remove from queue
-                    pendingFaults = pendingFaults.filter(function(q){ return q.fault !== f.fault })
-                    // cancel banner if showing
-                    if (isDisplaying) {
-                        bannerVisible = false
-                        displayedFault = null
-                    }
+            if (!inModel && !inQueue && !isDisplaying) {
+                pendingFaults.push(desc)
+                if (!bannerVisible && !displayedFault)
+                    showNextBanner()
+            }
+        } else {
+            // remove from queue
+            for (var q = pendingFaults.length - 1; q >= 0; --q) {
+                if (pendingFaults[q].fault === desc.fault) {
+                    pendingFaults.splice(q,1)
+                }
+            }
+            // cancel banner if showing
+            if (displayedFault && displayedFault.fault === desc.fault) {
+                bannerVisible   = false
+                displayedFault  = null
+            }
+            // remove from list
+            for (var j = 0; j < activeModel.count; ++j) {
+                if (activeModel.get(j).fault === desc.fault) {
+                    activeModel.remove(j)
+                    break
                 }
             }
         }
     }
 
-    // Collapsible banner at top
+    // Wire up each fault’s Changed signal to onFaultChanged() on complete
+    Component.onCompleted: {
+        for (var i = 0; i < faultsData.length; ++i) {
+            (function(descriptor) {
+                var source = descriptor.type === "battery"
+                             ? batteryObject
+                             // if you add motor0/motor1 types later:
+                             : descriptor.type === "motor0" ? motor0Object
+                             : motor1Object
+
+                var sig = "on" + descriptor.fault + "Changed";
+                if (source && source[sig]) {
+                    source[sig].connect(function(newVal) {
+                        faultsDisplayContainer.onFaultChanged(descriptor, newVal)
+                    })
+                }
+            })(faultsData[i])
+        }
+    }
+
+    // Collapsible banner
     Rectangle {
         id: bannerArea
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors { top: parent.top; left: parent.left; right: parent.right }
         height: bannerVisible ? 60 : 0
         radius: 8
+        clip: true
         color: displayedFault
                ? (displayedFault.severity === "high" ? "#FC1313"
                   : displayedFault.severity === "mid"  ? "#F6EC93"
                                                         : "white")
                : "#666666"
-        clip: true
 
         Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
@@ -161,14 +172,15 @@ Rectangle {
             anchors.fill: parent
             anchors.margins: 12
             spacing: 8
+
             opacity: bannerVisible ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
             SequentialAnimation on scale {
                 loops: Animation.Infinite
                 running: bannerVisible
-                NumberAnimation { from: 1;    to: 1.05; duration: 600; easing.type: Easing.InOutQuad }
-                NumberAnimation { from: 1.05; to: 1;    duration: 600; easing.type: Easing.InOutQuad }
+                NumberAnimation { from: 1.0;  to: 1.05; duration: 600; easing.type: Easing.InOutQuad }
+                NumberAnimation { from: 1.05; to: 1.0;  duration: 600; easing.type: Easing.InOutQuad }
             }
 
             Text {
@@ -179,58 +191,50 @@ Rectangle {
                        : "transparent"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment:   Text.AlignVCenter
-                height: parent.height
-                width: parent.width
+                anchors.fill: parent
             }
         }
     }
 
-    // Auto‑scrolling list below the banner
+    // Auto-scrolling ListView
     ListView {
         id: listView
-        anchors.top: bannerArea.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors { top: bannerArea.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         model: activeModel
         interactive: false
         clip: true
 
         Behavior on contentY { NumberAnimation { duration: 2000; easing.type: Easing.Linear } }
 
-        // Handles scroll behaviour
         Timer {
             id: scrollTimer
             interval: 2000
-            running: true //TODO: should only run if scroll is needed
             repeat: true
-            property int faultsOnView: faultsDisplayContainer.height / delegateHeight
+            // timer only runs when there’s more faults than will fit on screen
+            running: activeModel.count > faultsOnView
+            property int faultsOnView: Math.floor(faultsDisplayContainer.height / delegateHeight)
             onTriggered: {
-                if (activeModel.count >= faultsOnView + 1) {
-                    var newY = listView.contentY + delegateHeight;
-                    if (newY > (activeModel.count - faultsOnView) * delegateHeight)
-                       newY = 0;
-                    listView.contentY = newY;
-                }   
+                var newY = listView.contentY + delegateHeight
+                var maxY = (activeModel.count - faultsOnView) * delegateHeight
+                listView.contentY = newY > maxY ? 0 : newY
             }
         }
 
         delegate: FaultsMessage {
-            type: model.type
-            severity: model.severity
+            type:   model.type
+            severity:    model.severity
             msg: model.msg
-            width: listView.width
-            height: delegateHeight
+            width:       listView.width
+            height:      delegateHeight
         }
 
-        // Animations for faults when they become actice/inactive
         add: Transition {
-            NumberAnimation { property: "x"; from: width; to: 0; duration: 300; easing.type: Easing.OutBack }
-            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 300 }
+            NumberAnimation { property: "x";       from: width; to: 0; duration: 300; easing.type: Easing.OutBack }
+            NumberAnimation { property: "opacity"; from: 0;     to: 1; duration: 300 }
         }
         remove: Transition {
-            NumberAnimation { property: "x"; to: width; duration: 300; easing.type: Easing.InQuad }
-            NumberAnimation { property: "opacity"; to: 0; duration: 300 }
+            NumberAnimation { property: "x";       to: width; duration: 300; easing.type: Easing.InQuad }
+            NumberAnimation { property: "opacity"; to: 0;     duration: 300 }
         }
     }
 }
