@@ -11,7 +11,7 @@ set(CMAKE_AUTOUIC ON)
 
 configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config.ini COPYONLY)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort)
+find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort SerialBus)
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_policy(SET QTP0001 NEW)
@@ -53,6 +53,7 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/Receivers/TelemetryReceiver.h src/Receivers/TelemetryReceiver.cpp
     src/Config/Logger.h src/Config/Logger.cpp
     src/PacketFactory/Packets/PiPacket.h src/PacketFactory/Packets/PiPacket.cpp
+    src/Receivers/CanReceiver.h src/Receivers/CanReceiver.cpp
     ${ADDITIONAL_SOURCES}
 )
 
@@ -69,6 +70,7 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Quick
     Qt6::Mqtt
     Qt6::SerialPort
+    Qt6::SerialBus
     ${PIGPIO_LIB}
 )
 
