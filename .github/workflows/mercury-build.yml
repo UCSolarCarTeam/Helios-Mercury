@@ -19,6 +19,9 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
 
+        with:
+          modules: "qtmqtt"
+
       #   - name: Install dependencies
       #     run: |
       #       sudo apt-get update
