@@ -74,10 +74,20 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    RpmGauge {
+        id: flipped
+        x: 1600
+        y: 0
+        minValue: 0
+        maxValue: 6000
+        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+        flipped: true
+    }
+
     Speedometer {
         id: speedometer
-        x: 1356
-        y: 46
+        x: 1239
+        y: 48
     }
 
     Rnd {
