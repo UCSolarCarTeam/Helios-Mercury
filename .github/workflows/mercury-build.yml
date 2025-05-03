@@ -20,17 +20,19 @@ jobs:
         uses: jurplel/install-qt-action@v4
 
         with:
+          email: ${{ secrets.QT_EMAIL }}
+          pw: ${{ secrets.QT_PW }}
           modules: "qtmqtt"
 
-      #   - name: Install dependencies
-      #     run: |
-      #       sudo apt-get update
-      #       sudo apt-get install -y software-properties-common
-      #       sudo mkdir -p /etc/apt/keyrings
-      #       wget -qO - https://download.qt.io/official_releases/online_installer_releases/keys/qt-official.gpg | sudo tee /etc/apt/keyrings/qt-official.gpg > /dev/null
-      #       echo "deb [signed-by=/etc/apt/keyrings/qt-official.gpg] https://download.qt.io/official_releases/online_installers/ linux main" | sudo tee /etc/apt/sources.list.d/qt-official.list
-      #       sudo apt-get update
-      #       sudo apt-get install -y \
+      # - name: Install dependencies
+      #       run: |
+      #         sudo apt-get update
+      #         sudo apt-get install -y software-properties-common
+      #         sudo mkdir -p /etc/apt/keyrings
+      #         wget -qO - https://download.qt.io/official_releases/online_installer_releases/keys/qt-official.gpg | sudo tee /etc/apt/keyrings/qt-official.gpg > /dev/null
+      #         echo "deb [signed-by=/etc/apt/keyrings/qt-official.gpg] https://download.qt.io/official_releases/online_installers/ linux main" | sudo tee /etc/apt/sources.list.d/qt-official.list
+      #         sudo apt-get update
+      #         sudo apt-get install -y \
       #           qt6-* \
       #           build-essential \
       #           cmake \
