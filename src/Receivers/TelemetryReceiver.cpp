@@ -2,9 +2,11 @@
 #include "../Config/ConfigManager.h"
 
 #include <QTimer>
+#include <QJsonDocument>
 
 /** Initilize receiver mqtt client to receive messages */
-TelemetryReceiver::TelemetryReceiver() {
+TelemetryReceiver::TelemetryReceiver(PiPacket* piPacket) {
+    piPacket_ = piPacket;
     client_ = new QMqttClient(this);
     setup();
 }
@@ -73,5 +75,43 @@ void TelemetryReceiver::sendPong() {
 
 void TelemetryReceiver::handleTelemetryMessage(const QByteArray& message) {
     qDebug() << "Telemetry message received: " << message;
-    qDebug() << "POPULATING....";
+    
+    QJsonParseError parseError;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(message, &parseError);
+
+    if (parseError.error != QJsonParseError::NoError) {
+        qWarning() << "ERROR - Failed to parse Telemetry message:" << parseError.errorString();
+        return;
+    }
+
+    if (!jsonDoc.isObject()) {
+        qWarning() << "Telemetry message is not an object";
+        return;
+    }
+
+    QJsonObject jsonObj = jsonDoc.object();
+
+    // Extract carLatency
+    if (jsonObj.contains("carLatency")) {
+        if (jsonObj["carLatency"].isString()) {
+            bool ok;
+            int carLatency = jsonObj["carLatency"].toString().toInt(&ok);
+            if (ok) {
+                piPacket_->setLatency(carLatency);
+            } else {
+                qWarning() << "ERROR - Failed to convert carLatency to integer.";
+            }
+        } else {
+            qWarning() << "ERROR - carLatency is not a string.";
+        }
+    } else {
+        qWarning() << "ERROR - carLatency key is missing.";
+    }
+
+    // Extract driver name
+    if (jsonObj.contains("driverName") && jsonObj["driverName"].isString()) {
+        piPacket_->setDriverName(jsonObj["driverName"].toString());
+    } else {
+        qWarning() << "ERROR - driverName key is missing or invalid.";
+    }
 }
