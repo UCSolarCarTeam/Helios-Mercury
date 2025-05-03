@@ -29,7 +29,7 @@ QtObject {
     equal to width of arc, but can passed to the function as the fourth argument to make needle 
     longer/shorter. Needle length by default is 5 units, but can be passed as the fifth argument
     to make needle thicker/thinner. */
-    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth, needleLength = 5) {
+    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth, needleLength = 5, flipped = false) {
         var ctx = canvas.getContext("2d");
         ctx.reset();
 
@@ -51,7 +51,7 @@ QtObject {
             arcRadius - gauge.arcWidth / 2,
             degreesToRadians(gauge.arcBegin),
             degreesToRadians(valueAngle),
-            false
+            flipped
         );
         ctx.stroke();
 

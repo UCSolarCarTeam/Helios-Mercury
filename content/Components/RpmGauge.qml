@@ -13,7 +13,7 @@ Item {
     property real minValue 
     property real maxValue
     property real value 
-    property bool flipped: false
+    property bool flipped: true
 
     // animation properties 
     property int animationDuration: 300
@@ -31,16 +31,17 @@ Item {
         height: 590
         anchors {
             verticalCenter: rpmGauge.verticalCenter
-            // left: rpmGauge.left
-            // leftMargin: 45
-            horizontalCenter: rpmGauge.horizontalCenter
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 45
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 45 : undefined
         }
         strokeWidth: 0 
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.outerArcColor
-        end: -45
-        begin: -135
+        end: flipped ? 45 : -45
+        begin: flipped ? 135 : -135
         arcWidth: 2
         antialiasing: true
     }
@@ -51,15 +52,17 @@ Item {
         height: 580
         anchors {
             verticalCenter: rpmGauge.verticalCenter
-            left: outerArc.left
-            leftMargin: 5
+            left: flipped ? undefined : outerArc.left
+            leftMargin: flipped ? undefined : 5
+            right: flipped ? outerArc.right : undefined
+            rightMargin: flipped ? 5 : undefined
         }
         strokeWidth: 0
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.btnDisabled
-        end: -45
-        begin: -135
+        end: flipped ? 45 : -45
+        begin: flipped ? 135 : -135
         arcWidth: 20
         antialiasing: true
     }
@@ -81,7 +84,7 @@ Item {
         Canvas {
             id: activeArc
             anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, rpmGauge, activeArcContainer.animatedValue, 50, undefined); }
+            onPaint: { gaugeAnimation.drawGauge(activeArc, rpmGauge, activeArcContainer.animatedValue, 50, undefined, flipped); }
             Connections {
                 target: activeArcContainer
                 function onAnimatedValueChanged() { activeArc.requestPaint(); }
@@ -94,13 +97,34 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("6")
+        text: "6"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             bottom: rpmGauge.verticalCenter
-            bottomMargin: 210
-            left: rpmGauge.left
-            leftMargin: 105
+            bottomMargin: 170
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 10
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 75 : undefined
+        }
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font.family: Config.fontStyle
+        font.weight: Font.Medium
+    }
+
+    Text {
+        id: rpmLabel
+        height: Config.rpmLabelFontSize
+        width: 15
+        color: Config.rpmLabelFontColor
+        text: "x1000 RPM"
+        font.pixelSize: Config.rpmLabelFontSize
+        anchors {
+            bottom: label6.bottom
+            bottomMargin: 5
+            left: label6.right 
+            leftMargin: 32
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -113,14 +137,15 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("5")
+        text: "5"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             bottom: rpmGauge.verticalCenter
-            bottomMargin: 145
-            left: rpmGauge.left
-            leftMargin: 55
-
+            bottomMargin: 115
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 40
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 40 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -133,13 +158,15 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("4")
+        text: "4"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             bottom: rpmGauge.verticalCenter
-            bottomMargin: 65
-            left: rpmGauge.left
-            leftMargin: 20
+            bottomMargin: 50
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 20
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 20 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -152,12 +179,14 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("3")
+        text: "3"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             verticalCenter: rpmGauge.verticalCenter
-            left: rpmGauge.left
-            leftMargin: 10
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 10
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 10 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -170,14 +199,15 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("2")
+        text: "2"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             top: rpmGauge.verticalCenter
-            topMargin: 65
-            left: rpmGauge.left
-            leftMargin: 25
-
+            topMargin: 50
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 20
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 20 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -190,14 +220,15 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("1")
+        text: "1"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             top: rpmGauge.verticalCenter
-            topMargin: 145
-            left: rpmGauge.left
-            leftMargin: 65
-
+            topMargin: 115
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 45
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 45 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -210,13 +241,15 @@ Item {
         height: Config.rpmGaugeFontSize
         width: 15
         color: Config.fontColor
-        text: qsTr("0")
+        text: "0"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             top: rpmGauge.verticalCenter
-            topMargin: 210
-            left: rpmGauge.left
-            leftMargin: 110
+            topMargin: 170
+            left: flipped ? undefined : rpmGauge.left
+            leftMargin: flipped ? undefined : 80
+            right: flipped ? rpmGauge.right : undefined
+            rightMargin: flipped ? 80 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter

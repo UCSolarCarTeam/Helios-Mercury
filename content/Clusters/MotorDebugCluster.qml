@@ -281,11 +281,24 @@ Item {
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: 50
+            horizontalCenterOffset: -130
         }
         minValue: 0
-        maxValue: 100
-        value: 50
+        maxValue: 6
+        value: battery.FanSpeed
         flipped: false
+    }
+
+    RpmGauge {
+        id: flipped
+        anchors {
+            verticalCenter: motorDebugCluster.verticalCenter
+            horizontalCenter: motorDebugCluster.horizontalCenter
+            horizontalCenterOffset: 130
+        }
+        minValue: 0
+        maxValue: 6
+        value: battery.FanSpeed
+        flipped: true
     }
 }
