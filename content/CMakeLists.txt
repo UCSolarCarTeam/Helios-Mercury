@@ -29,6 +29,7 @@ qt6_add_qml_module(content
         Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
         Components/GaugeTemplate.qml
+        Components/RpmGauge.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
