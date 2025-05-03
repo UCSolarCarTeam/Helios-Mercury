@@ -69,11 +69,11 @@ Item {
         anchors.horizontalCenterOffset: 0
     }
 
-    // CameraView {
-    //     anchors.horizontalCenter: parent.horizontalCenter
-    //     anchors.verticalCenter: parent.verticalCenter
-    //     anchors.verticalCenterOffset: -75
-    // }
+    CameraView {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -75
+    }
 
     Speedometer {
         id: speedometer
