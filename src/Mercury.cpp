@@ -30,7 +30,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     #endif
 
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
-    TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
+    TelemetryReceiver* telemetryReceiver = new TelemetryReceiver(&packetFactory->getPiPacket());
 
     //Initialize either the can or serial receiver depending on mode of input
     if(config.getCanEnabled()){
