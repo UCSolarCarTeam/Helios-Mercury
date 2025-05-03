@@ -9,17 +9,27 @@ qt6_add_qml_module(content
     QML_FILES
         App.qml
         Clusters/RaceCluster.qml
-        Clusters/DebugCluster.qml
+        Clusters/MotorDebugCluster.qml
+        Clusters/BatteryDebugCluster.qml
+        Clusters/DriverControlsDebugCluster.qml
+        Clusters/TelemetryDebugCluster.qml
+        Clusters/MpptMbmsDebugCluster.qml
         Clusters/Screen01.ui.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/MotorArrayHeader.qml
+        Components/StatusIcon.qml
+        Components/Speedometer.qml
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
+        Components/ContactorStatus.qml
         Config/Config.qml
-	Components/BatteryIcon.qml
+        Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
+        Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
+        Components/GaugeTemplate.qml
     RESOURCES
         fonts/fonts.txt
         Images/RaceClusterFrameBackground.png
@@ -27,6 +37,17 @@ qt6_add_qml_module(content
         Images/Arrow.png
         Images/Headlights.png
         Images/DaytimeRunningLights.png
+        Images/ContactorConnected.png
+        Images/ContactorDisconnected.png
 	Images/Battery.png
+        Images/MpptMbmsStatusOff.png
+        Images/MpptMbmsStatusOn.png
         Images/ParkingBrake.png
+        Images/Hot.png
+        Images/Cool.png
+        Images/TempBar.png
+        Images/ThermometerIcon.png
+        Images/AccelerationIcon.png
+        Images/BoltIcon.png
+        Images/FanIcon.png
 )
