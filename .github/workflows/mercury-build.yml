@@ -1,0 +1,100 @@
+name: Build Qt App
+
+on:
+  push:
+    branches:
+      - ideen-ci-branch
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+              build-essential \
+              cmake \
+              ninja-build \
+              pkg-config \
+              qt6-base-dev \
+              qt6-tools-dev \
+              qt6-tools-dev-tools \
+              qt6-3d-dev \
+              qt6-5compat-dev \
+              qt6-charts-dev \
+              qt6-connectivity-dev \
+              qt6-datavis3d-dev \
+              qt6-declarative-dev \
+              qt6-grpc-dev \
+              qt6-httpserver-dev \
+              qt6-imageformats-dev \
+              qt6-keychain-dev \
+              qt6-languageserver-dev \
+              qt6-location-dev \
+              qt6-lottie-dev \
+              qt6-mqtt-dev \
+              qt6-multimedia-dev \
+              qt6-networkauth-dev \
+              qt6-positioning-dev \
+              qt6-quick3d-dev \
+              qt6-quicktimeline-dev \
+              qt6-remoteobjects-dev \
+              qt6-scxml-dev \
+              qt6-sensors-dev \
+              qt6-serialbus-dev \
+              qt6-serialport-dev \
+              qt6-shadertools-dev \
+              qt6-speech-dev \
+              qt6-svg-dev \
+              qt6-tools-dev \
+              qt6-translations \
+              qt6-virtualkeyboard-dev \
+              qt6-wayland-dev \
+              qt6-webchannel-dev \
+              qt6-webengine-dev \
+              qt6-websockets-dev \
+              qt6-webview-dev \
+              libxrender-dev \
+              libxcb1-dev \
+              x11-utils \
+              libxrandr-dev \
+              libxfixes-dev \
+              libxkbfile-dev \
+              libxkbcommon-dev \
+              libxkbcommon-x11-dev \
+              libxshmfence-dev \
+              x11-xserver-utils \
+              x11proto-dev \
+              libxcursor-dev \
+              libfontconfig1-dev \
+              libfreetype6-dev \
+              libx11-dev \
+              libxext-dev \
+              libsm-dev \
+              libice-dev \
+              libglib2.0-dev
+
+      # Build the Qt application
+      - name: Build Qt App
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make
+
+      # Optional: Archive build artifacts
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: qt-app-build
+          path: build/
