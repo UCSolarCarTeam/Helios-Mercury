@@ -22,7 +22,7 @@ jobs:
         with:
           email: ${{ secrets.QT_EMAIL }}
           pw: ${{ secrets.QT_PW }}
-          modules: "qtmqtt"
+        #   modules: "qtmqtt"
 
       - name: Install dependencies
         run: |
