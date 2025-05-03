@@ -24,6 +24,7 @@ qt6_add_qml_module(content
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Components/ContactorStatus.qml
+        Components/DriverIcons.qml
         Config/Config.qml
         Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
@@ -50,4 +51,6 @@ qt6_add_qml_module(content
         Images/AccelerationIcon.png
         Images/BoltIcon.png
         Images/FanIcon.png
+        Images/CarHorn.png
+        Images/HazardIcon.png
 )
