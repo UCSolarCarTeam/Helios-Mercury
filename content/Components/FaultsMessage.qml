@@ -9,12 +9,12 @@ Rectangle {
     radius: 8
     border.color: "black"
 
-    property string errorType
-    property string messageText
+    property string type
+    property string msg
     property string severity
 
-    property string icon: errorType === "motor" ? "../Images/MotorFault.png"
-                           : errorType === "battery" ? "../Images/BatteryFault.png"
+    property string icon: type === "motor" ? "../Images/MotorFault.png"
+                           : type === "battery" ? "../Images/BatteryFault.png"
                            : ""
     property color backGroundColor: severity === "high" ? "#FC1313"
                                       : severity === "mid" ? "#F6EC93"
@@ -32,7 +32,7 @@ Rectangle {
             visible: icon !== ""
         }
         Text {
-            text: messageText
+            text: msg
             font.pixelSize: 15
             color: "black"
             verticalAlignment: Text.AlignVCenter

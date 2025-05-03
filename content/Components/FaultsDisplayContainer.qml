@@ -2,45 +2,35 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 Rectangle {
-    id: mainContainer
+    id: faultsDisplayContainer
     width: 426
     height: 175
     color: "transparent"
 
-    // Fault data sources
-    property QtObject batteryObject: batteryFaults
-    // TODO: Add more fault sources later
-
-
     // Height for fault boxes
     property int delegateHeight: 33
 
-    // Faults list
+    // Faults list    
+    // TODO: Add more fault sources later
     property var faultsData: [
-                { faultProperty: "InternalCommunicationFault", messageText: "Battery Fault: Internal Communication", severity: "high", errorType: "battery" },
-                { faultProperty: "InternalConverversionFault",  messageText: "Battery Fault: Internal Conversion",    severity: "high", errorType: "battery" },
-                { faultProperty: "WeakCellFault",               messageText: "Battery Fault: Weak Cell",              severity: "high", errorType: "battery" },
-                { faultProperty: "LowCellVoltageFault",         messageText: "Battery Fault: Low Cell Voltage",      severity: "mid", errorType: "battery" },
-                { faultProperty: "OpenWiringFault",             messageText: "Battery Fault: Open Wiring",           severity: "mid", errorType: "battery" },
-                { faultProperty: "CurrentSensorFault",          messageText: "Battery Fault: Current Sensor",        severity: "mid", errorType: "battery" },
-                { faultProperty: "PackVoltageSensorFault",      messageText: "Battery Fault: Pack Voltage Sensor",   severity: "mid", errorType: "battery" },
-                { faultProperty: "VoltageRedundancyFault",      messageText: "Battery Fault: Voltage Redundancy",    severity: "low", errorType: "battery" },
-                { faultProperty: "FanMonitorFault",             messageText: "Battery Fault: Fan Monitor",           severity: "low", errorType: "battery" },
-                { faultProperty: "ThermistorFault",             messageText: "Battery Fault: Thermistor",            severity: "low", errorType: "battery" },
-                { faultProperty: "CanbusCommunicationFault",    messageText: "Battery Fault: CANBUS Communications", severity: "low", errorType: "battery" },
-                { faultProperty: "AlwaysOnSupplyFault",         messageText: "Battery Fault: Always On Supply",      severity: "mid", errorType: "battery" },
-                { faultProperty: "HighVoltageIsolationFault",   messageText: "Battery Fault: High Voltage Isolation",severity: "mid", errorType: "battery" },
-                { faultProperty: "PowerSupply12VFault",         messageText: "Battery Fault: Power Supply 12V",      severity: "mid", errorType: "battery" },
-                { faultProperty: "ChargeLimitEnforcementFault", messageText: "Battery Fault: Charge Limit Enforcement", severity: "low", errorType: "battery" },
-                { faultProperty: "DischargeLimitEnforcementFault", messageText: "Battery Fault: Discharge Limit Enforcement", severity: "mid", errorType: "battery" },
-                { faultProperty: "ChargerSafetyRelayFault",     messageText: "Battery Fault: Charger Safety Relay",  severity: "mid", errorType: "battery" },
+                { fault: "InternalCommunicationFault", msg: "Battery Fault: Internal Communication", severity: "high", type: "battery" },
+                { fault: "InternalConverversionFault",  msg: "Battery Fault: Internal Conversion",    severity: "high", type: "battery" },
+                { fault: "WeakCellFault",               msg: "Battery Fault: Weak Cell",              severity: "high", type: "battery" },
+                { fault: "LowCellVoltageFault",         msg: "Battery Fault: Low Cell Voltage",      severity: "mid", type: "battery" },
+                { fault: "OpenWiringFault",             msg: "Battery Fault: Open Wiring",           severity: "mid", type: "battery" },
+                { fault: "CurrentSensorFault",          msg: "Battery Fault: Current Sensor",        severity: "mid", type: "battery" },
+                { fault: "PackVoltageSensorFault",      msg: "Battery Fault: Pack Voltage Sensor",   severity: "mid", type: "battery" },
+                { fault: "VoltageRedundancyFault",      msg: "Battery Fault: Voltage Redundancy",    severity: "low", type: "battery" },
+                { fault: "FanMonitorFault",             msg: "Battery Fault: Fan Monitor",           severity: "low", type: "battery" },
+                { fault: "ThermistorFault",             msg: "Battery Fault: Thermistor",            severity: "low", type: "battery" },
+                { fault: "CanbusCommunicationFault",    msg: "Battery Fault: CANBUS Communications", severity: "low", type: "battery" },
+                { fault: "AlwaysOnSupplyFault",         msg: "Battery Fault: Always On Supply",      severity: "mid", type: "battery" },
+                { fault: "HighVoltageIsolationFault",   msg: "Battery Fault: High Voltage Isolation",severity: "mid", type: "battery" },
+                { fault: "PowerSupply12VFault",         msg: "Battery Fault: Power Supply 12V",      severity: "mid", type: "battery" },
+                { fault: "ChargeLimitEnforcementFault", msg: "Battery Fault: Charge Limit Enforcement", severity: "low", type: "battery" },
+                { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid", type: "battery" },
+                { fault: "ChargerSafetyRelayFault",     msg: "Battery Fault: Charger Safety Relay",  severity: "mid", type: "battery" },
             ]
-
-    // Helper to test if a fault is active
-    function isFaultActive(fault) {
-        // TODO: add more fault types here later
-        return batteryObject && batteryObject[fault.faultProperty];
-    }
 
     // The ListModel that feeds the ListView
     ListModel { id: activeModel }
@@ -55,7 +45,7 @@ Rectangle {
     function showNextBanner() {
         if (pendingFaults.length > 0) {
             displayedFault = pendingFaults.shift()
-            bannerText = displayedFault.messageText
+            bannerText = displayedFault.msg
             bannerVisible = true
             bannerTimer.restart()
         }
@@ -64,7 +54,8 @@ Rectangle {
     // Banner hide timer insert by severity order
     Timer {
         id: bannerTimer
-        interval: 2000; repeat: false
+        interval: 2000
+        repeat: false
         onTriggered: {
             bannerVisible = false
             if (displayedFault) {
@@ -94,10 +85,10 @@ Rectangle {
                 }
                 // insert the fault at the computed index
                 activeModel.insert(idx, {
-                    faultProperty: displayedFault.faultProperty,
-                    messageText:    displayedFault.messageText,
+                    fault: displayedFault.fault,
+                    msg:    displayedFault.msg,
                     severity:       displayedFault.severity,
-                    errorType:      displayedFault.errorType
+                    type:      displayedFault.type
                 })
                 displayedFault = null
             }
@@ -105,22 +96,25 @@ Rectangle {
         }
     }
 
-    // Poll faultsData queue new or remove old faults
+    // // Poll faultsData queue new or remove old faults
+    //TODO: implement alternative to timer - each fault emits a signal when it is changed
     Timer {
         id: updateTimer
-        interval: 200; running: true; repeat: true
+        interval: 200
+        running: true
+        repeat: true
         onTriggered: {
             // checks through fault database, finds which are active
             for (var i = 0; i < faultsData.length; ++i) {
                 var f = faultsData[i]
                 var inModel = false
                 for (var j = 0; j < activeModel.count; ++j)
-                    if (activeModel.get(j).faultProperty === f.faultProperty)
+                    if (activeModel.get(j).fault === f.fault)
                         inModel = true
 
-                var inQueue = pendingFaults.some(function(q) { return q.faultProperty === f.faultProperty })
-                var isDisplaying = displayedFault && displayedFault.faultProperty === f.faultProperty
-                var active = isFaultActive(f)
+                var inQueue = pendingFaults.some(function(q) { return q.fault === f.fault })
+                var isDisplaying = displayedFault && displayedFault.fault === f.fault
+                var active = batteryFaults[f.fault]
 
                 if (active && !inModel && !inQueue && !isDisplaying) {
                     pendingFaults.push(f)
@@ -129,13 +123,13 @@ Rectangle {
                 } else if (!active) {
                     // remove from model
                     for (var m = 0; m < activeModel.count; ++m) {
-                        if (activeModel.get(m).faultProperty === f.faultProperty) {
+                        if (activeModel.get(m).fault === f.fault) {
                             activeModel.remove(m)
                             break
                         }
                     }
                     // remove from queue
-                    pendingFaults = pendingFaults.filter(function(q){ return q.faultProperty !== f.faultProperty })
+                    pendingFaults = pendingFaults.filter(function(q){ return q.fault !== f.fault })
                     // cancel banner if showing
                     if (isDisplaying) {
                         bannerVisible = false
@@ -208,9 +202,9 @@ Rectangle {
         Timer {
             id: scrollTimer
             interval: 2000
-            running: true
+            running: true //TODO: should only run if scroll is needed
             repeat: true
-            property int faultsOnView: mainContainer.height / delegateHeight
+            property int faultsOnView: faultsDisplayContainer.height / delegateHeight
             onTriggered: {
                 if (activeModel.count >= faultsOnView + 1) {
                     var newY = listView.contentY + delegateHeight;
@@ -222,9 +216,9 @@ Rectangle {
         }
 
         delegate: FaultsMessage {
-            errorType: model.errorType
+            type: model.type
             severity: model.severity
-            messageText: model.messageText
+            msg: model.msg
             width: listView.width
             height: delegateHeight
         }
