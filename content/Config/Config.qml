@@ -60,9 +60,6 @@ QtObject {
 
     property int mpptmbmsFontSizeS: 12
 
-    property int debugHeaderFontSize: 24
-    property int headerFontSize: 18
-
     property int rpmGaugeFontSize: 40
     property int rpmLabelFontSize: 12
     property color rpmLabelFontColor: "#7a7a7a"
