@@ -23,7 +23,7 @@ Item {
     }
 
     Text {
-        id: mbmsLabel
+        id: motorLabel
         color: Config.fontColor
         font.family: Config.fontStyle
         anchors {
@@ -61,8 +61,6 @@ Item {
                 text: "Motor 0"
                 font.pixelSize: Config.debugHeaderFontSize
                 font.weight: Font.Bold
-                // verticalAlignment: Text.AlignVCenter
-                // horizontalAlignment: Text.AlignHCenter
                 font.bold: true
             }
 
@@ -75,8 +73,6 @@ Item {
                 font.weight: Font.Medium
                 text: "Control Value: " + motorDetails0.ControlValue
                 font.pixelSize: Config.headerFontSize
-                // verticalAlignment: Text.AlignVCenter
-                // horizontalAlignment: Text.AlignHCenter
             }
         }
 
