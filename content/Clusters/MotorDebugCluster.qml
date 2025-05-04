@@ -43,44 +43,48 @@ Item {
         spacing: 15
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
+            verticalCenterOffset: -7
             left: motorDebugCluster.left
             leftMargin: 45
         }
+        Layout.alignment: Qt.AlignHCenter
 
-        Text {
-            id: motor0Label
-            width: 95
-            height: Config.headerFontSize
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            text: "Motor 0"
-            font.pixelSize: Config.debugHeaderFontSize
-            font.weight: Font.Bold
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+        RowLayout {
+            spacing: 10
             Layout.alignment: Qt.AlignHCenter
-            font.bold: true
-        }
+            Text {
+                id: motor0Label
+                width: 95
+                height: Config.headerFontSize
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                text: "Motor 0"
+                font.pixelSize: Config.debugHeaderFontSize
+                font.weight: Font.Bold
+                // verticalAlignment: Text.AlignVCenter
+                // horizontalAlignment: Text.AlignHCenter
+                font.bold: true
+            }
 
-        Text {
-            id: motor0ControlValue
-            width: 150
-            height: Config.headerFontSize
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            font.weight: Font.Medium
-            text: "Control Value: " + motorDetails0.ControlValue
-            font.pixelSize: Config.headerFontSize
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            Layout.alignment: Qt.AlignHCenter
+            Text {
+                id: motor0ControlValue
+                width: 150
+                height: Config.headerFontSize
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                font.weight: Font.Medium
+                text: "Control Value: " + motorDetails0.ControlValue
+                font.pixelSize: Config.headerFontSize
+                // verticalAlignment: Text.AlignVCenter
+                // horizontalAlignment: Text.AlignHCenter
+            }
         }
 
         RowLayout {
             width: 460
             height: 180
-            spacing: 10
-            Layout.alignment: Qt.AlignLeft
+            spacing: 15
+            Layout.alignment: Qt.AlignHCenter
 
             GaugeTemplate {
                 id: motor0Torque
@@ -125,7 +129,7 @@ Item {
         RowLayout {
             width: 290
             height: 180
-            spacing: 10
+            spacing: 20
             Layout.alignment: Qt.AlignHCenter
 
             GaugeTemplate {
@@ -154,6 +158,53 @@ Item {
                 iconHeight: 25
             }
         }
+
+        RowLayout {
+            id: motor0ControlFlagContainer
+            Layout.preferredWidth: 300
+            Layout.preferredHeight: 50
+            spacing: 10
+            Layout.alignment: Qt.AlignHCenter
+            
+            Repeater {
+                model: [
+                    { name: "Control Mode", isOn: motorDetails0.ControlMode },
+                    { name: "Motor Mode", isOn: motorDetails0.MotorMode },
+                    { name: "Software Enable", isOn: motorDetails0.SoftwareEnable },
+                    { name: "Debug Mode", isOn: motorDetails0.DebugMode }
+                ]
+                
+                delegate: Item {
+                    id: motor0ControlFlagFrame
+                    Layout.fillHeight: true
+                    width: 100
+                    
+                    Text {
+                        id: motor0ControlFlagTitle
+                        text: modelData.name
+                        font.pixelSize: Config.contactorLabelFontSize
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.family: Config.fontStyle
+                        color: Config.fontColor
+                        anchors.bottom: controlFlagIcon.top
+                        anchors.bottomMargin: 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    
+                    DashIcon {
+                        id: motor0ControlFlagIcon
+                        width: 20
+                        height: 20
+                        imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                        iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.bottomMargin: 2
+                    }
+                }
+            }
+        }
     }
 
     ColumnLayout {
@@ -163,44 +214,48 @@ Item {
         spacing: 15
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
+            verticalCenterOffset: -7
             right: motorDebugCluster.right
             rightMargin: 45
         }
+        Layout.alignment: Qt.AlignHCenter
 
-        Text {
-            id: motor1Label
-            width: 95
-            height: Config.headerFontSize
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            text: "Motor 1"
-            font.pixelSize: Config.debugHeaderFontSize
-            font.weight: Font.Bold
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+        RowLayout {
+            spacing: 10
             Layout.alignment: Qt.AlignHCenter
-            font.bold: true
-        }
+            Text {
+                id: motor1Label
+                width: 95
+                height: Config.headerFontSize
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                text: "Motor 1"
+                font.pixelSize: Config.debugHeaderFontSize
+                font.weight: Font.Bold
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.bold: true
+            }
 
-        Text {
-            id: motor1ControlValue
-            width: 150
-            height: Config.headerFontSize
-            color: Config.fontColor
-            font.family: Config.fontStyle
-            font.weight: Font.Medium
-            text: "Control Value: " + motorDetails1.ControlValue
-            font.pixelSize: Config.headerFontSize
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            Layout.alignment: Qt.AlignHCenter
+            Text {
+                id: motor1ControlValue
+                width: 150
+                height: Config.headerFontSize
+                color: Config.fontColor
+                font.family: Config.fontStyle
+                font.weight: Font.Medium
+                text: "Control Value: " + motorDetails1.ControlValue
+                font.pixelSize: Config.headerFontSize
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+            }
         }
 
         RowLayout {
             width: 460
             height: 180
-            spacing: 10
-            Layout.alignment: Qt.AlignRight
+            spacing: 20
+            Layout.alignment: Qt.AlignHCenter
 
             GaugeTemplate {
                 id: motor1Torque
@@ -245,7 +300,7 @@ Item {
         RowLayout {
             width: 290
             height: 180
-            spacing: 10
+            spacing: 20
             Layout.alignment: Qt.AlignHCenter
 
             GaugeTemplate {
@@ -272,6 +327,53 @@ Item {
                 icon: "ThermometerIcon.png"
                 iconWidth: 20
                 iconHeight: 25
+            }
+        }
+
+        RowLayout {
+            id: motor1ControlFlagContainer
+            Layout.preferredWidth: 300
+            Layout.preferredHeight: 50
+            spacing: 10
+            Layout.alignment: Qt.AlignHCenter
+            
+            Repeater {
+                model: [
+                    { name: "Control Mode", isOn: motorDetails1.ControlMode },
+                    { name: "Motor Mode", isOn: motorDetails1.MotorMode },
+                    { name: "Software Enable", isOn: motorDetails1.SoftwareEnable },
+                    { name: "Debug Mode", isOn: motorDetails1.DebugMode }
+                ]
+                
+                delegate: Item {
+                    id: motor1ControlFlagFrame
+                    Layout.fillHeight: true
+                    width: 100
+                    
+                    Text {
+                        id: motor1ControlFlagTitle
+                        text: modelData.name
+                        font.pixelSize: Config.contactorLabelFontSize
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.family: Config.fontStyle
+                        color: Config.fontColor
+                        anchors.bottom: controlFlagIcon.top
+                        anchors.bottomMargin: 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    
+                    DashIcon {
+                        id: motor1ControlFlagIcon
+                        width: 20
+                        height: 20
+                        imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                        iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.bottomMargin: 2
+                    }
+                }
             }
         }
     }
@@ -370,7 +472,7 @@ Item {
         height: Config.contactorFontSize
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: 193
+            horizontalCenterOffset: 200
             bottom: motorDebugCluster.bottom
             bottomMargin: 21
         }
@@ -415,10 +517,10 @@ Item {
         
         Repeater {
             model: [
-                { name: "Control Mode", isConnected: keyMotor.ControlMode },
-                { name: "Motor Mode", isConnected: keyMotor.MotorMode },
-                { name: "Software Enable", isConnected: keyMotor.SoftwareEnable },
-                { name: "Debug Mode", isConnected: keyMotor.DebugMode }
+                { name: "Control Mode", isOn: keyMotor.ControlMode },
+                { name: "Motor Mode", isOn: keyMotor.MotorMode },
+                { name: "Software Enable", isOn: keyMotor.SoftwareEnable },
+                { name: "Debug Mode", isOn: keyMotor.DebugMode }
             ]
             
             delegate: Item {
@@ -443,8 +545,8 @@ Item {
                     id: controlFlagIcon
                     width: 20
                     height: 20
-                    imageSource: modelData.isConnected ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                    iconMaskColor: modelData.isConnected ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                    imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+                    iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottomMargin: 2
