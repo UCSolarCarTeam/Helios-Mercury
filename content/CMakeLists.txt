@@ -20,6 +20,7 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/MotorArrayHeader.qml
         Components/StatusIcon.qml
         Components/Speedometer.qml
         Components/Rnd.qml
@@ -53,4 +54,5 @@ qt6_add_qml_module(content
         Images/BoltIcon.png
         Images/AngleIcon.png
         Images/TorqueIcon.png
+        Images/FanIcon.png
 )

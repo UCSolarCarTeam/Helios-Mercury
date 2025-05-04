@@ -8,6 +8,10 @@ QtObject {
     property color primary: "#3498DB"
     property color btnDisabled: "#111111"
 
+    property int motorArrayFontSize: 16
+    property color valueLow: "#4CAF50"
+    property color valueModerate: "#FFC107"
+    property color valueHigh: "#FF5252"
     property color lightShadow: "#74dcff"
 
     property color faintGrey: "#AAAAAA"
@@ -35,6 +39,9 @@ QtObject {
     property color contactorConnectedColor: "#00ff00"
 
     property int batteryFontSize: 18
+
+    property int headerFontSize: 18
+    property int debugHeaderFontSize: 24
     
     property color speedometerWhiteTicks: "#ffffff"
     property color speedometerGrayTicks: "#515253"
