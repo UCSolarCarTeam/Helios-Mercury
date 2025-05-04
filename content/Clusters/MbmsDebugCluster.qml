@@ -94,7 +94,7 @@ Item {
                     id: contactorIcon
                     width: 20
                     height: 20
-                    imageSource: modelData.hasError ? "../Images/Exclaimation.png" : 
+                    imageSource: modelData.hasError ? "../Images/Exclamation.png" : 
                                 (modelData.isConnected ? "../Images/ContactorConnected.png" : "../Images/ContactorDisconnected.png")
                     iconMaskColor: modelData.hasError ? Config.contactorDisconnectedColor : 
                                 (modelData.isConnected ? Config.contactorConnectedColor : Config.contactorDisconnectedColor)
@@ -147,7 +147,6 @@ Item {
                 ]
 
                 delegate: Item {
-                    id: statusFrame
                     width: 65
                     height: 50
                     
@@ -191,7 +190,6 @@ Item {
                 ]
 
                 delegate: Item {
-                    id: statusFrame
                     width: 90
                     height: 50
                     
@@ -343,7 +341,7 @@ Item {
             maxValue: 100
             units: "V" // ADC Count
             gaugeTitle: "Array Voltage"
-            value: mbms.MotorVoltage
+            value: mbms.ArrayVoltage
             icon: "BoltIcon.png"
             iconWidth: 20
             iconHeight: 25
