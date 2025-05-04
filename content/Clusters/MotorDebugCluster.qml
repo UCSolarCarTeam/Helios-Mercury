@@ -377,7 +377,25 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         font.weight: Font.Medium
-        text: "Motor Setpoint: " + keyMotor.MotorSetpoint
+        text: "Motor Setpoint:\n" + keyMotor.MotorSetpoint
+        font.pixelSize: Config.contactorFontSize
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+    }
+
+    Text {
+        id: keyMotorLabel
+        height: Config.contactorFontSize
+        anchors {
+            horizontalCenter: motorDebugCluster.horizontalCenter
+            horizontalCenterOffset: -240
+            bottom: motorDebugCluster.bottom
+            bottomMargin: 22
+        }
+        color: Config.fontColor
+        font.family: Config.fontStyle
+        font.weight: Font.Medium
+        text: "Key\nMotor:"
         font.pixelSize: Config.contactorFontSize
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -385,13 +403,13 @@ Item {
 
     RowLayout {
         id: controlFlagContainer
-        width: 400
+        width: 350
         height: 35
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: -65
+            horizontalCenterOffset: -40
             bottom: motorDebugCluster.bottom
-            bottomMargin: 7
+            bottomMargin: 8
         }
         spacing: 5
         
@@ -426,7 +444,7 @@ Item {
                     width: 20
                     height: 20
                     imageSource: modelData.isConnected ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                    iconMaskColor: modelData.isConnected ? "#ff0000" : Config.contactorConnectedColor
+                    iconMaskColor: modelData.isConnected ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottomMargin: 2
