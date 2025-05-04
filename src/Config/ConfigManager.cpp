@@ -49,10 +49,16 @@ ConfigManager::ConfigManager(const QString& path){
     baudrate_ = settings.value("baudrate", 115200).toInt();
     settings.endGroup();
 
+    settings.beginGroup("Can");
+    canInterface_ = settings.value("interface", "can0").toString();
+    canEnabled_ = settings.value("enabled", true).toBool();
+    settings.endGroup();
+
     settings.beginGroup("Mqtt");
     telemetryTopic_ = settings.value("telemetryTopic", "packet").toString();
     pingTopic_ = settings.value("pingTopic", "ping").toString();
     pongTopic_ = settings.value("pongTopic", "pong").toString();
+    receiverTopic_ = settings.value("receiverTopic", "telemetryToCar").toString();
     telemetryHostname_ = settings.value("telemetryHostname", "aedes.IDontWantToKeepConnecting.ca").toString();
     telemetryPort_ = settings.value("telemetryPort", 1883).toInt();
     telemetryUsername_ = settings.value("telemetryUsername", "YouDontBelongHere").toString();
@@ -83,11 +89,17 @@ QString ConfigManager::getPortName() const { return portName_; }
 
 int ConfigManager::getBaudrate() const { return baudrate_; }
 
+QString ConfigManager::getCanInterface() const { return canInterface_; }
+
+bool ConfigManager::getCanEnabled() const { return canEnabled_; }
+
 QString ConfigManager::getTelemetryTopic() const { return telemetryTopic_; }
 
 QString ConfigManager::getPingTopic() const { return pingTopic_; }
 
 QString ConfigManager::getPongTopic() const { return pongTopic_; }
+
+QString ConfigManager::getReceiverTopic() const { return receiverTopic_; }
 
 QString ConfigManager::getTelemetryHostname() const { return telemetryHostname_; }
 

@@ -21,9 +21,13 @@ public:
     QString getPortName() const;
     int getBaudrate() const;
 
+    QString getCanInterface() const;
+    bool getCanEnabled() const;
+
     QString getTelemetryTopic() const;
     QString getPingTopic() const;
     QString getPongTopic() const;
+    QString getReceiverTopic() const;
     QString getTelemetryHostname() const;
     int getTelemetryPort() const;
     QString getTelemetryUsername() const;
@@ -46,9 +50,13 @@ private:
     QString portName_;
     int baudrate_;
 
+    QString canInterface_;
+    bool canEnabled_;
+
     QString telemetryTopic_;
     QString pingTopic_;
     QString pongTopic_;
+    QString receiverTopic_;
     QString telemetryHostname_;
     int telemetryPort_;
     QString telemetryUsername_;
