@@ -15,6 +15,7 @@ Item {
     property bool leftSignalActive: false
     property bool rightSignalActive: false
     property bool parkingBrakeActive: false
+    property bool daylightRunningLightsActive: false
 
     // Horn Icon
     DashIcon {
@@ -38,25 +39,15 @@ Item {
         height: 40
     }
 
-    // Left Headlight Icon
+    // Headlight Icon
     DashIcon {
         imageSource: "../Images/Headlights.png"
         isOn: true
-        iconMaskColor: headlightsActive ? "green" : "white"
-        x: parent.width/2
-        y: 156
-        width: 65
-        height: 40
-        transform: Scale { xScale: -1 }
-    }
-
-    // Mirrored Headlight Icon
-    DashIcon {
-        imageSource: "../Images/Headlights.png"
-        isOn: true
-        iconMaskColor: headlightsActive ? "green" : "white"
-        x: parent.width/2
-        y: 156
+        iconMaskColor: headlightsActive ? "yellow" : "white"
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
+        y: 155
         width: 65
         height: 40
     }
@@ -86,12 +77,29 @@ Item {
 
     // Parking Brake Icon
     DashIcon {
+        y: parent.height - 60
         imageSource: "../Images/ParkingBrake.png"
         isOn: true
         iconMaskColor: parkingBrakeActive ? "red" : "white"
-        x: parent.width/2 - 25
-        y: parent.height - 60
+        anchors {
+            left: parent.left
+            leftMargin: 75
+        }
         width: 50
         height: 50
     }
+
+    //DRL Icon
+    Text {
+        id: text1
+        anchors {
+            right: parent.right
+            rightMargin: 65
+        }
+        y: parent.height - 60
+        color: daylightRunningLightsActive ? "yellow": "white"
+        text: qsTr("DRL")
+        font.pixelSize: 42
+    }
+
 }

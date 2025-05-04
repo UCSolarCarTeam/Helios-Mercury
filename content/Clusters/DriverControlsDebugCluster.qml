@@ -10,30 +10,6 @@ Item {
     width: 1920
     height: 550
 
-    property bool hornActive: b3.HornSignalOut
-    property bool hazardActive: b3.HazardLightsIn
-    property bool headlightsActive: b3.HeadlightSignalOut
-    property bool leftSignalActive: b3.LeftSignalOut
-    property bool rightSignalActive: b3.RightSignalOut
-    property bool parkingBrakeActive: b3.HandbrakeSwitch
-    property bool drlActive: b3.DaytimeRunningLightSignalOut
-    property bool brakeActive: b3.BrakeLightSignalOut
-    property bool mtrResetActive: b3.MotorReset
-
-    // Background images
-    Image {
-        id: frameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: frameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
-    }
-
     Text {
         id: clusterTitle
         y: 14
@@ -44,64 +20,90 @@ Item {
         font.pixelSize: 24
     }
 
+    // Background images
+    Image {
+        id: raceClusterFrameBackground
+        x: 1
+        y: 2
+        source: "../Images/RaceClusterFrameBackground.png"
+    }
+
+    Image {
+        id: raceClusterFrameOutline
+        anchors.fill: parent
+        source: "../Images/RaceClusterFrameOutline.png"
+    }
+
+    // Acceleration Gauge
+    GaugeTemplate {
+        id: accelerationGauge
+        gaugeSize: Config.mediumGaugeSize
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Acceleration"
+        //TODO: confirm correct units for this gauge
+        units: "m/s²"
+        value: b3.Acceleration
+        anchors {
+            left: driverControlsDebugCluster.left
+            leftMargin: 650
+            top: driverControlsDebugCluster.top
+            topMargin: parent.height/4
+        }
+    }
+
+    // Regen Braking Gauge
+    GaugeTemplate {
+        id: regenBrakingGauge
+        gaugeSize: Config.mediumGaugeSize
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Regen Braking"
+        //TODO: confirm correct units for this gauge
+        units: "kW"
+        value: b3.RegenBraking
+        anchors {
+            right: driverControlsDebugCluster.right
+            rightMargin: 650
+            top: driverControlsDebugCluster.top
+            topMargin: parent.height/4
+        }
+    }
+
+    // RND Component
+    Rnd {
+        id: rnd
+        x: 870
+        y: 439
+    }
+
+    // B3 Light Outputs
     DriverIcons {
         id: driverIconComponent
-        x: 242
+        x: 161
         y: 131
-
-        hornActive: driverControlsDebugCluster.hornActive
-        hazardActive: driverControlsDebugCluster.hazardActive
-        headlightsActive: driverControlsDebugCluster.headlightsActive
-        leftSignalActive: driverControlsDebugCluster.leftSignalActive
-        rightSignalActive: driverControlsDebugCluster.rightSignalActive
-        parkingBrakeActive: driverControlsDebugCluster.parkingBrakeActive
+        hornActive: b3.HornSignalOut
+        hazardActive: b3.HazardLightsIn
+        headlightsActive: b3.HeadlightSignalOut
+        leftSignalActive: b3.LeftSignalOut
+        rightSignalActive: b3.RightSignalOut
+        parkingBrakeActive: b3.HandbrakeSwitch
+        daylightRunningLightsActive: b3.DaytimeRunningLightSignalOut
     }
 
-
-    // Middle Text (Looks really empty without it)
-    Text {
-        id: debugTimeDisplay
-        text: "00:00:000"
-        font.pixelSize: 64
-        font.family: Config.fontStyle
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        color: "#ffffff"
-    }
-
-    // Middle text
-    Text {
-        id: motorStatus
-        text: "8/8"
-        font.pixelSize: 24
-        color: "#ffffff"
-        anchors.right: debugTimeDisplay.right
-        anchors.top: debugTimeDisplay.bottom
-        anchors.topMargin: 10
-    }
-
-    // Signal list on right
+    // B3 Switches
     Column {
-        x:parent.width * (3/4)
+        x: parent.width * (3/4)
         spacing: 20
         anchors.verticalCenter: parent.verticalCenter
 
-        Text {
-            text: "Signal"
-            font.pixelSize: 35
-            font.family: Config.fontStyle
-            color: "white"
-        }
-
         Repeater {
             model: [
-                { label: "Left", active: leftSignalActive },
-                { label: "Right", active: rightSignalActive },
-                { label: "DRL", active: drlActive },
-                { label: "Headlights", active: headlightsActive },
-                { label: "Brake", active: brakeActive },
-                { label: "Mtr Reset", active: mtrResetActive },
-                { label: "Horn", active: hornActive }
+                { label: "Headlights", active: b3.HeadlightsSwitchIn},
+                { label: "Horn", active: b3.HornSwitchIn },
+                { label: "Forward", active: b3.ForwardSwitchIn },
+                { label: "Brake", active: b3.BrakeSwitch },
+                { label: "Motor Reset", active: b3.MotorReset}
             ]
             delegate: Item {
                 width: parent.width
@@ -111,41 +113,9 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     text: modelData.label
-                    color: modelData.active ? "green" : "red"
-                    font.pixelSize: 35
+                    color: modelData.active ? "blue" : "white"
+                    font.pixelSize: 25
                     font.family: Config.fontStyle
-                }
-            }
-        }
-    }
-
-    // RND because no P
-    Item {
-        id: rndDisplay
-        x: 120
-        y:parent.height/4 + 50
-        width: 50
-        height: 150
-
-        property var gears: ["R", "N", "D"]
-        property int currentGear: b3.Reverse ? 0 : (b3.ForwardIn ? 2 : 1)
-
-
-        Column {
-            id: gearColumn
-            spacing: 15
-            anchors.centerIn: parent
-
-            Repeater {
-                model: rndDisplay.gears.length
-
-                Text {
-                    text: rndDisplay.gears[index]
-                    font.pixelSize: 35
-                    font.family: Config.fontStyle
-                    color: index === rndDisplay.currentGear ? "red" : "white"
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
         }
