@@ -10,7 +10,6 @@ namespace {
     const int ARRAY_CURRENT_OFFSET = 4;
     const int BATTERY_VOLTAGE_OFFSET = 6;
     const int TEMPERATURE_OFFSET = 8;
-
 }
 
 MpptPacket::MpptPacket() {
