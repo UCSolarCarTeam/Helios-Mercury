@@ -44,4 +44,4 @@ QJsonObject MpptPacket::toJson() {
     json[JsonDefinitions::TEMPERATURE] = Temperature_;
 
     return json;
-}
+} 
