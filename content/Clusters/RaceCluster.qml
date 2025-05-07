@@ -62,18 +62,18 @@ Item {
     }
 
     RpmGauge {
-        id: flipped
-        x: 1600
-        y: 0
+        id: rpmGauge
+        x: 1598
+        y: -8
         minValue: 0
-        maxValue: 6000
+        maxValue: 1500
         value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
         flipped: true
     }
 
     Speedometer {
         id: speedometer
-        x: 1239
+        x: 1237
         y: 48
     }
 

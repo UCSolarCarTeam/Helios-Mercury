@@ -95,17 +95,17 @@ Item {
     Text {
         id: label6
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 50
         color: Config.fontColor
-        text: "6"
+        text: "1500"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             bottom: rpmGauge.verticalCenter
-            bottomMargin: 170
+            bottomMargin: 175
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : 10
+            leftMargin: flipped ? undefined : -5
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 75 : undefined
+            rightMargin: flipped ? 30 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -116,17 +116,17 @@ Item {
     Text {
         id: label5
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 50
         color: Config.fontColor
-        text: "5"
+        text: "1250"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             bottom: rpmGauge.verticalCenter
             bottomMargin: 115
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : -25
+            leftMargin: flipped ? undefined : -40
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 40 : undefined
+            rightMargin: flipped ? -5 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -137,17 +137,17 @@ Item {
     Text {
         id: label4
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 50
         color: Config.fontColor
-        text: "4"
+        text: "1000"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             bottom: rpmGauge.verticalCenter
             bottomMargin: 50
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : -45
+            leftMargin: flipped ? undefined : -60
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 20 : undefined
+            rightMargin: flipped ? -30 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -158,16 +158,16 @@ Item {
     Text {
         id: label3
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 30
         color: Config.fontColor
-        text: "3"
+        text: "750"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             verticalCenter: rpmGauge.verticalCenter
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : -55
+            leftMargin: flipped ? undefined : -45
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 10 : undefined
+            rightMargin: flipped ? -20 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -178,17 +178,17 @@ Item {
     Text {
         id: label2
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 30
         color: Config.fontColor
-        text: "2"
+        text: "500"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             top: rpmGauge.verticalCenter
             topMargin: 50
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : -45
+            leftMargin: flipped ? undefined : -35
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 20 : undefined
+            rightMargin: flipped ? -10 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -199,17 +199,17 @@ Item {
     Text {
         id: label1
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 30
         color: Config.fontColor
-        text: "1"
+        text: "250"
         font.pixelSize: Config.rpmGaugeFontSize
         anchors {
             top: rpmGauge.verticalCenter
             topMargin: 115
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : -20
+            leftMargin: flipped ? undefined : -10
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 45 : undefined
+            rightMargin: flipped ? 15 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -220,7 +220,7 @@ Item {
     Text {
         id: label0
         height: Config.rpmGaugeFontSize
-        width: 15
+        width: 0
         color: Config.fontColor
         text: "0"
         font.pixelSize: Config.rpmGaugeFontSize
@@ -228,9 +228,9 @@ Item {
             top: rpmGauge.verticalCenter
             topMargin: 170
             left: flipped ? undefined : rpmGauge.left
-            leftMargin: flipped ? undefined : 15
+            leftMargin: flipped ? undefined : 55
             right: flipped ? rpmGauge.right : undefined
-            rightMargin: flipped ? 80 : undefined
+            rightMargin: flipped ? 85 : undefined
         }
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -257,7 +257,7 @@ Item {
             height: Config.rpmLabelFontSize
             width: 15
             color: Config.rpmLabelFontColor
-            text: "x1000 RPM"
+            text: "RPM"
             font.pixelSize: Config.rpmLabelFontSize
             anchors {
                 bottom: modelData.targetLabel.bottom

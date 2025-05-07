@@ -45,7 +45,7 @@ Item {
             verticalCenter: motorDebugCluster.verticalCenter
             verticalCenterOffset: -7
             left: motorDebugCluster.left
-            leftMargin: 45
+            leftMargin: 35
         }
         Layout.alignment: Qt.AlignHCenter
 
@@ -212,7 +212,7 @@ Item {
             verticalCenter: motorDebugCluster.verticalCenter
             verticalCenterOffset: -7
             right: motorDebugCluster.right
-            rightMargin: 45
+            rightMargin: 35
         }
         Layout.alignment: Qt.AlignHCenter
 
@@ -379,10 +379,10 @@ Item {
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: -170
+            horizontalCenterOffset: -150
         }
         minValue: 0
-        maxValue: 6000
+        maxValue: 1500
         value: motorDetails0.CurrentRpmValue
         flipped: false
     }
@@ -394,7 +394,7 @@ Item {
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             left: motor0RpmGauge.right
-            leftMargin: -100
+            leftMargin: -80
         }
         text: motorDetails0.CurrentRpmValue
         verticalAlignment: Text.AlignVCenter
@@ -423,10 +423,10 @@ Item {
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: 170
+            horizontalCenterOffset: 150
         }
         minValue: 0
-        maxValue: 6000
+        maxValue: 1500
         value: motorDetails1.CurrentRpmValue
         flipped: true
     }
@@ -438,7 +438,7 @@ Item {
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             right: motor1RpmGauge.left
-            rightMargin: -100
+            rightMargin: -80
         }
         text: motorDetails1.CurrentRpmValue
         verticalAlignment: Text.AlignVCenter
