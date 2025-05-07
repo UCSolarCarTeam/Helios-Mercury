@@ -28,7 +28,8 @@ QtObject {
     color and Config.btnDisabled is the unfilled gauge color. Needle witdh by default is 
     equal to width of arc, but can passed to the function as the fourth argument to make needle 
     longer/shorter. Needle length by default is 5 units, but can be passed as the fifth argument
-    to make needle thicker/thinner. */
+    to make needle thicker/thinner. Needle moves clockwise by default, to flip needle's movement
+    to counterclockwise, pass true as sixth argument. */
     function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth, needleLength = 5, flipped = false) {
         var ctx = canvas.getContext("2d");
         ctx.reset();
