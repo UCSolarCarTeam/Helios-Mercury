@@ -80,7 +80,6 @@ Item {
     ColumnLayout {
         id: statusContainer
         width: 305
-        height: 120
         anchors {
             horizontalCenter: statusLabel.horizontalCenter
             top: statusLabel.bottom
@@ -91,43 +90,19 @@ Item {
         RowLayout {
             id: statusTopRow
             Layout.alignment: Qt.AlignHCenter
-            spacing: 15 
+            spacing: 15
 
             Repeater {
                 model: [
                     { label: "Strobe\nBMS Light", isOn: mbms.StrobeBmsLight },
-                    { label: "Allow \nCharge", isOn: mbms.AllowCharge },
-                    { label: "Allow \nDischarge", isOn: mbms.AllowDischarge },
-                    { label: "Charge \nShould Trip", isOn: mbms.ChargeShouldTrip}
+                    { label: "Allow\nCharge", isOn: mbms.AllowCharge },
+                    { label: "Allow\nDischarge", isOn: mbms.AllowDischarge },
+                    { label: "Charge\nShould Trip", isOn: mbms.ChargeShouldTrip}
                 ]
 
-                delegate: Item {
-                    width: 65
-                    height: 50
-                    
-                    Text {
-                        id: statusTitle
-                        text: modelData.label
-                        font.pixelSize: Config.contactorLabelFontSize
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: Config.fontStyle
-                        color: Config.fontColor
-                        anchors.bottom: statusIcon.top
-                        anchors.bottomMargin: 2
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    
-                    DashIcon {
-                        id: statusIcon
-                        width: 24
-                        height: 24
-                        imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                        iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottomMargin: 2
-                    }
+                delegate: StatusIcon {
+                    label: modelData.label
+                    isOn: modelData.isOn
                 }
             }
         }
@@ -135,42 +110,19 @@ Item {
         RowLayout {
             id: statusBottomRow
             Layout.alignment: Qt.AlignHCenter
-            spacing: 15 
+            spacing: 15
 
             Repeater {
                 model: [
-                    { label: "High Voltage \nEnable State", isOn: mbms.HighVoltageEnableState },
-                    { label: "Orion Can \nReceived Recent", isOn: mbms.OrionCanReceivedRecently },
-                    { label: "Discharge \nShould Trip", isOn: mbms.DischargeShouldTrip }
+                    { label: "High Voltage\nEnable State", isOn: mbms.HighVoltageEnableState },
+                    { label: "Orion Can\nReceived Recent", isOn: mbms.OrionCanReceivedRecently },
+                    { label: "Discharge\nShould Trip", isOn: mbms.DischargeShouldTrip }
                 ]
 
-                delegate: Item {
-                    width: 90
-                    height: 50
-                    
-                    Text {
-                        id: statusTitle
-                        text: modelData.label
-                        font.pixelSize: Config.contactorLabelFontSize
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: Config.fontStyle
-                        color: Config.fontColor
-                        anchors.bottom: statusIcon.top
-                        anchors.bottomMargin: 2
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    
-                    DashIcon {
-                        id: statusIcon
-                        width: 24
-                        height: 24
-                        imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                        iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottomMargin: 2
-                    }
+                delegate: StatusIcon {
+                    Layout.preferredWidth: 90
+                    label: modelData.label
+                    isOn: modelData.isOn
                 }
             }
         }
@@ -207,45 +159,22 @@ Item {
 
         Repeater {
             model: [
-                { label: "High Cell \nVoltage Trip", isTripped: mbms.HighCellVoltageTrip },
-                { label: "Low Cell \nVoltage Trip", isTripped: mbms.LowCellVoltageTrip },
-                { label: "High Common \nCurrent Trip", isTripped: mbms.HighCommonCurrentTrip },
-                { label: "Motor High TC \nTrip", isTripped: mbms.MotorHighTemperatureCurrentTrip},
-                { label: "Array High TC \nTrip", isTripped: mbms.ArrayHighTemperatureCurrentTrip},
-                { label: "LV High TC \nTrip", isTripped: mbms.LvHighTemperatureCurrentTrip},
-                { label: "Charge \nHigh/Temp Trip", isTripped: mbms.ChargeHighTemperatureCurrentTrip},
-                { label: "Protection \nTrip", isTripped: mbms.ProtectionTrip},
-                { label: "Orion Message \nTimeout Trip", isTripped: mbms.OrionMessageTimeoutTrip},                
-                { label: "Contactor \nDisconnect Trip", isTripped: mbms.ContactorDisconnectedUnexpectedlyTrip}
+                { label: "High Cell\nVoltage Trip", isTripped: mbms.HighCellVoltageTrip },
+                { label: "Low Cell\nVoltage Trip", isTripped: mbms.LowCellVoltageTrip },
+                { label: "High Common\nCurrent Trip", isTripped: mbms.HighCommonCurrentTrip },
+                { label: "Motor High TC\nTrip", isTripped: mbms.MotorHighTemperatureCurrentTrip},
+                { label: "Array High TC\nTrip", isTripped: mbms.ArrayHighTemperatureCurrentTrip},
+                { label: "LV High TC\nTrip", isTripped: mbms.LvHighTemperatureCurrentTrip},
+                { label: "Charge\nHigh/Temp Trip", isTripped: mbms.ChargeHighTemperatureCurrentTrip},
+                { label: "Protection\nTrip", isTripped: mbms.ProtectionTrip},
+                { label: "Orion Message\nTimeout Trip", isTripped: mbms.OrionMessageTimeoutTrip},                
+                { label: "Contactor\nDisconnect Trip", isTripped: mbms.ContactorDisconnectedUnexpectedlyTrip}
             ]
-            delegate: Item {
-                id: statusFrame
-                width: 90
-                height: 50
-                
-                Text {
-                    id: statusTitle
-                    text: modelData.label
-                    font.pixelSize: Config.contactorLabelFontSize
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.family: Config.fontStyle
-                    color: Config.fontColor
-                    anchors.bottom: statusIcon.top
-                    anchors.bottomMargin: 2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-                
-                DashIcon {
-                    id: statusIcon
-                    width: 24
-                    height: 24
-                    imageSource: modelData.isTripped ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                    iconMaskColor: modelData.isTripped ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
-                    anchors.bottom: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottomMargin: 2
-                }
+            
+            delegate: StatusIcon {
+                Layout.preferredWidth: 90
+                label: modelData.label
+                isOn: modelData.isTripped
             }
         }
     }

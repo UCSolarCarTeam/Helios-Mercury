@@ -4,25 +4,27 @@ import Mercury
 
 Item {
     id: statusIcon
-    width: 32  // Gets redefined when used
-    height: 32 // Gets redefined when used
+    width: 65  // Gets redefined when used
+    height: 50 // Gets redefined when used
 
     property string label: ""
     property bool isOn: false 
 
     Column {
         width: parent.width
-        spacing: 4
+        spacing: 5
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: statusIcon.label
-            font.pixelSize: Config.mpptmbmsFontSizeS
-            color: Config.fontColor
-            wrapMode: Text.NoWrap
-            horizontalAlignment: Text.AlignHCenter
-            anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
+            text: statusIcon.label
+            font.pixelSize: Config.contactorLabelFontSize
+            color: Config.fontColor
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.NoWrap
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.family: Config.fontStyle
         }
 
         DashIcon {
