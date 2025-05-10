@@ -24,7 +24,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     ConfigManager& config = ConfigManager::instance();
     PacketFactory* packetFactory = new PacketFactory();
 
-    //Initialize GPIO Receiver if on Pi
+    //initialize GPIO Receiver if on Pi
     #ifdef RUNNING_ON_PI
         GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
     #endif
@@ -32,11 +32,10 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
 
-    //Initialize either the can or serial receiver depending on mode of input
+    //initialize either the can or serial receiver depending on mode of input
     if(config.getCanEnabled()){
-        //initialize CanReceiver which will begin to listen to CAN interface for incoming data
+        //initialize CanReceiver and link PacketFactory which will begin to listen to CAN interface for incoming data
         CanReceiver* canReceiver = new CanReceiver(packetFactory);
-        //TODO: link packets to CanReceiver so they can be populated
     }else{
         //initialize SerialReceiver which will begin to listen to serial port for incoming data
         SerialReceiver* serialReceiver = new SerialReceiver();

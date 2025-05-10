@@ -31,25 +31,23 @@ void TelemetryPacket::populatePacket(const QByteArray& data) {
 
 QJsonObject TelemetryPacket::toJson() {
     QJsonObject json;
-
-    json[JsonDefinitions::GPS_YEAR]              = GpsYear();
-    json[JsonDefinitions::GPS_MONTH]             = GpsMonth();
-    json[JsonDefinitions::GPS_DAY]               = GpsDay();
-    json[JsonDefinitions::GPS_HOUR]              = GpsHour();
-    json[JsonDefinitions::GPS_MINUTE]            = GpsMinute();
-    json[JsonDefinitions::GPS_SECOND]            = GpsSecond();
-    json[JsonDefinitions::GPS_VALIDITY_FLAGS]    = GpsValidityFlags();
-    json[JsonDefinitions::GPS_FIX_STATUS_FLAGS]  = GpsFixStatusFlags();
-    json[JsonDefinitions::GPS_ADDITIONAL_FLAGS]  = GpsAdditionalFlags();
-    json[JsonDefinitions::GPS_LONGITUDE]         = GpsLongitude();
-    json[JsonDefinitions::GPS_LATITUDE]          = GpsLatitude();
-    json[JsonDefinitions::MPU_ACCELERATION_X]    = MpuAccelerationX();
-    json[JsonDefinitions::MPU_ACCELERATION_Y]    = MpuAccelerationY();
-    json[JsonDefinitions::MPU_ACCELERATION_Z]    = MpuAccelerationZ();
-    json[JsonDefinitions::MPU_ROTATION_X]        = MpuRotationX();
-    json[JsonDefinitions::MPU_ROTATION_Y]        = MpuRotationY();
-    json[JsonDefinitions::MPU_ROTATION_Z]        = MpuRotationZ();
-    json[JsonDefinitions::MPU_TEMPERATURE]       = MpuTemperature();
-
+    json[JsonDefinitions::GPS_YEAR] = GpsYear();
+    json[JsonDefinitions::GPS_MONTH] = GpsMonth();
+    json[JsonDefinitions::GPS_DAY] = GpsDay();
+    json[JsonDefinitions::GPS_HOUR] = GpsHour();
+    json[JsonDefinitions::GPS_MINUTE] = GpsMinute();
+    json[JsonDefinitions::GPS_SECOND] = GpsSecond();
+    json[JsonDefinitions::GPS_VALIDITY_FLAGS] = GpsValidityFlags();
+    json[JsonDefinitions::GPS_FIX_STATUS_FLAGS] = GpsFixStatusFlags();
+    json[JsonDefinitions::GPS_ADDITIONAL_FLAGS] = GpsAdditionalFlags();
+    json[JsonDefinitions::GPS_LONGITUDE] = GpsLongitude();
+    json[JsonDefinitions::GPS_LATITUDE] = GpsLatitude();
+    json[JsonDefinitions::MPU_ACCELERATION_X] = MpuAccelerationX();
+    json[JsonDefinitions::MPU_ACCELERATION_Y] = MpuAccelerationY();
+    json[JsonDefinitions::MPU_ACCELERATION_Z] = MpuAccelerationZ();
+    json[JsonDefinitions::MPU_ROTATION_X] = MpuRotationX();
+    json[JsonDefinitions::MPU_ROTATION_Y] = MpuRotationY();
+    json[JsonDefinitions::MPU_ROTATION_Z] = MpuRotationZ();
+    json[JsonDefinitions::MPU_TEMPERATURE] = MpuTemperature();
     return json;
 }
