@@ -7,7 +7,7 @@
 /** Constructor */
 SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
     : packetFactory_(packetFactory), serialPort_(new QSerialPort(this)),
-    devWatcher_(new QFileSystemWatcher(this)), retryTimer_(new QTimer(this)), connected_(false) {
+    devWatcher_(new QFileSystemWatcher(this)), retryTimer_(new QTimer(this)) {
 
     ConfigManager& config = ConfigManager::instance();
     portName_ = config.getPortName();
@@ -19,12 +19,13 @@ SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
         ConfigManager& config = ConfigManager::instance();
         qDebug() << "[TIMER] Trying connection to" << portName_;
 
-        // packetFactory_->getPiPacket().setEmbeddedState(false);
+        packetFactory_->getPiPacket().setEmbeddedState(false);
 
-        QFile portFile(portName_);
-        if (portFile.exists()) {
-            qDebug() << "[TIMER] FILE EXISTS";
-        } else { qDebug() << "[TIMER] FILE DOES NOT EXIST"; }
+        // QFile portFile(portName_);
+        // if (portFile.exists()) {
+        //     qDebug() << "[TIMER] FILE EXISTS";
+        // }
+        // else {qDebug() << "[TIMER] FILE DOES NOT EXIST";}
 
         if(!serialPort_->isOpen()){
             serialPort_->setPortName(config.getPortName());
@@ -35,21 +36,13 @@ SerialReceiver::SerialReceiver(PacketFactory* packetFactory)
         }
 
         if (serialPort_->open(QIODevice::ReadOnly)) {
-            qDebug() << "Serial Port Opened: " << config.getPortName();
-            connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
-            if(devWatcher_->addPath(portName_)) {
-                qDebug() << "[SETPATH] SUCCESSFULLY ADDED PATH";
-                qDebug() << "[SETPATH] FILES: " << devWatcher_->files();
-                qDebug() << "CONTAINS PATH" << devWatcher_->files().contains(portName_);
-            }
-            // connected_ = true;
-            packetFactory_->getPiPacket().setEmbeddedState(true);
+            qDebug() << "[SUCCESS TIMER] ENDING TIMER";
+            tryConnect();
             retryTimer_->stop();
         }
-        qDebug() << "[SECONDCHECK] FILES: " << devWatcher_->files();
     });
 
-    connect(devWatcher_, &QFileSystemWatcher::fileChanged, this, [=](const QString &path) {
+    connect(devWatcher_, &QFileSystemWatcher::directoryChanged, this, [=](const QString &path) {
         qDebug() << "[Watcher] File changed:" << path;
 
         if (!devWatcher_->files().contains(path)) {
@@ -79,4 +72,16 @@ void SerialReceiver::handleReadyRead() {
     }
 
     emit dataReceived(data);
+}
+
+void SerialReceiver::tryConnect() {
+    connect(serialPort_, &QSerialPort::readyRead, this, &SerialReceiver::handleReadyRead);
+    packetFactory_->getPiPacket().setEmbeddedState(true);
+    if(devWatcher_->addPath("/dev/pts/")) {
+        // devWatcher_->addPath("/dev/");
+        // qDebug() << "[SETPATH] SUCCESSFULLY ADDED PATH";
+        // qDebug() << "[SETPATH] FILES: " << devWatcher_->files();
+        // qDebug() << "CONTAINS PATH" << devWatcher_->files().contains(portName_);
+        retryTimer_->stop();
+    }
 }

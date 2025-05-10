@@ -11,9 +11,8 @@ class SerialReceiver : public QObject {
     Q_OBJECT
 
 public:
-    explicit SerialReceiver(PacketFactory* packetFactory);
+    SerialReceiver(PacketFactory* packetFactory);
     ~SerialReceiver();
-    void setPortPath(const QString &path);
 
 signals:
     void dataReceived(const QByteArray& data);
@@ -23,12 +22,10 @@ private slots:
 
 private:
     void tryConnect();
-    void checkPortAvailability();
 
     QSerialPort* serialPort_;
     PacketFactory* packetFactory_;
     QString portName_;
-    bool connected_;
 
     QFileSystemWatcher* devWatcher_;
 
