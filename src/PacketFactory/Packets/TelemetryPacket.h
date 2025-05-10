@@ -24,7 +24,7 @@ namespace {
     static constexpr int GPS_SECOND_OFFSET = 6;
 
     // GPS Flags
-    static constexpr int GPS_VALIDITY_FLAGS_OFFSET   = 0;
+    static constexpr int GPS_VALIDITY_FLAGS_OFFSET = 0;
     static constexpr int GPS_FIX_STATUS_FLAGS_OFFSET = 1;
     static constexpr int GPS_ADDITIONAL_FLAGS_OFFSET = 2;
 
@@ -43,7 +43,7 @@ namespace {
     static constexpr int MPU_ROTATION_Z_OFFSET = 4;
 
     // MPU Temperature
-    static constexpr int MPU_TEMPERATURE_OFFSET= 0;
+    static constexpr int MPU_TEMPERATURE_OFFSET = 0;
 }
 
 class TelemetryPacket : public IPacket {
@@ -89,9 +89,9 @@ public:
         DEFINE_HANDLER(TelemetryIds::GPS_POSITION, float, GpsLatitude, GPS_LATITUDE_OFFSET)
 
         // MPU Acceleration PGN = 0x633
-        DEFINE_HANDLER(TelemetryIds::MPU_ACCELERATION,unsigned short, MpuAccelerationX, MPU_ACCELERATION_X_OFFSET)
-        DEFINE_HANDLER(TelemetryIds::MPU_ACCELERATION,unsigned short, MpuAccelerationY, MPU_ACCELERATION_Y_OFFSET)
-        DEFINE_HANDLER(TelemetryIds::MPU_ACCELERATION,unsigned short, MpuAccelerationZ, MPU_ACCELERATION_Z_OFFSET)
+        DEFINE_HANDLER(TelemetryIds::MPU_ACCELERATION, unsigned short, MpuAccelerationX, MPU_ACCELERATION_X_OFFSET)
+        DEFINE_HANDLER(TelemetryIds::MPU_ACCELERATION, unsigned short, MpuAccelerationY, MPU_ACCELERATION_Y_OFFSET)
+        DEFINE_HANDLER(TelemetryIds::MPU_ACCELERATION, unsigned short, MpuAccelerationZ, MPU_ACCELERATION_Z_OFFSET)
 
         // MPU Gyro PGN = 0x634
         DEFINE_HANDLER(TelemetryIds::MPU_GYRO, unsigned short, MpuRotationX, MPU_ROTATION_X_OFFSET)
