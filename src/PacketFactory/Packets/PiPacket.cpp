@@ -4,8 +4,9 @@
 PiPacket::PiPacket() {
     setAWSState(false);
     setEmbeddedState(false);
-    setRfid("Unscanned");
+    setRfid(NULL);
     setDriverName("Unknown");
+    setLatency(-69);
 }
 
 QJsonObject PiPacket::toJson() {

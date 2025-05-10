@@ -2,6 +2,7 @@
 #include "Config/ConfigManager.h"
 #include "PacketFactory/PacketFactory.h"
 #include "Receivers/SerialReceiver.h"
+#include "Receivers/CanReceiver.h"
 #include "Receivers/TelemetryReceiver.h"
 #include "StreamProcessor/StreamProcessor.h"
 #include "MessageTransmitter/MessageTransmitter.h"
@@ -28,15 +29,21 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
         GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
     #endif
 
-    //initialize SerialReceiver which will begin to listen to serial port for incoming data
-    SerialReceiver* serialReceiver = new SerialReceiver(packetFactory);
-    // serialReceiver->setPortPath("/dev/pts/3");
-
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
-    TelemetryReceiver* telemetryReceiver = new TelemetryReceiver();
+    TelemetryReceiver* telemetryReceiver = new TelemetryReceiver(&packetFactory->getPiPacket());
 
-    //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
-    StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
+    //Initialize either the can or serial receiver depending on mode of input
+    if(config.getCanEnabled()){
+        //initialize CanReceiver which will begin to listen to CAN interface for incoming data
+        CanReceiver* canReceiver = new CanReceiver();
+        //TODO: link packets to CanReceiver so they can be populated
+    }else{
+        //initialize SerialReceiver which will begin to listen to serial port for incoming data
+        SerialReceiver* serialReceiver = new SerialReceiver(packetFactory);
+
+        //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
+        StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
+    }
 
     //initialize MessageTransmitter which will transmit data every period of time deinifed in config.ini
     MessageTransmitter* messageTransmitter = new MessageTransmitter(packetFactory);
