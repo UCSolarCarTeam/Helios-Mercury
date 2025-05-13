@@ -13,23 +13,23 @@ Rectangle {
 
     // All possible faults: we'll listen to <fault>NameChanged signals on each source object
     property var faultsData: [
-        { fault: "InternalCommunicationFault",     msg: "Battery Fault: Internal Communication",      severity: "high", type: "battery" },
-        { fault: "InternalConverversionFault",     msg: "Battery Fault: Internal Conversion",         severity: "high", type: "battery" },
-        { fault: "WeakCellFault",                  msg: "Battery Fault: Weak Cell",                   severity: "high", type: "battery" },
-        { fault: "LowCellVoltageFault",            msg: "Battery Fault: Low Cell Voltage",            severity: "mid",  type: "battery" },
-        { fault: "OpenWiringFault",                msg: "Battery Fault: Open Wiring",                 severity: "mid",  type: "battery" },
-        { fault: "CurrentSensorFault",             msg: "Battery Fault: Current Sensor",              severity: "mid",  type: "battery" },
-        { fault: "PackVoltageSensorFault",         msg: "Battery Fault: Pack Voltage Sensor",         severity: "mid",  type: "battery" },
-        { fault: "VoltageRedundancyFault",         msg: "Battery Fault: Voltage Redundancy",          severity: "low",  type: "battery" },
-        { fault: "FanMonitorFault",                msg: "Battery Fault: Fan Monitor",                 severity: "low",  type: "battery" },
-        { fault: "ThermistorFault",                msg: "Battery Fault: Thermistor",                  severity: "low",  type: "battery" },
-        { fault: "CanbusCommunicationFault",       msg: "Battery Fault: CANBUS Communications",       severity: "low",  type: "battery" },
-        { fault: "AlwaysOnSupplyFault",            msg: "Battery Fault: Always On Supply",            severity: "mid",  type: "battery" },
-        { fault: "HighVoltageIsolationFault",      msg: "Battery Fault: High Voltage Isolation",      severity: "mid",  type: "battery" },
-        { fault: "PowerSupply12VFault",            msg: "Battery Fault: Power Supply 12V",            severity: "mid",  type: "battery" },
-        { fault: "ChargeLimitEnforcementFault",    msg: "Battery Fault: Charge Limit Enforcement",    severity: "low",  type: "battery" },
+        { fault: "InternalCommunicationFault", msg: "Battery Fault: Internal Communication", severity: "high", type: "battery" },
+        { fault: "InternalConverversionFault", msg: "Battery Fault: Internal Conversion", severity: "high", type: "battery" },
+        { fault: "WeakCellFault", msg: "Battery Fault: Weak Cell", severity: "high", type: "battery" },
+        { fault: "LowCellVoltageFault", msg: "Battery Fault: Low Cell Voltage", severity: "mid",  type: "battery" },
+        { fault: "OpenWiringFault", msg: "Battery Fault: Open Wiring", severity: "mid",  type: "battery" },
+        { fault: "CurrentSensorFault", msg: "Battery Fault: Current Sensor", severity: "mid",  type: "battery" },
+        { fault: "PackVoltageSensorFault", msg: "Battery Fault: Pack Voltage Sensor", severity: "mid",  type: "battery" },
+        { fault: "VoltageRedundancyFault", msg: "Battery Fault: Voltage Redundancy", severity: "low",  type: "battery" },
+        { fault: "FanMonitorFault", msg: "Battery Fault: Fan Monitor", severity: "low",  type: "battery" },
+        { fault: "ThermistorFault", msg: "Battery Fault: Thermistor", severity: "low",  type: "battery" },
+        { fault: "CanbusCommunicationFault", msg: "Battery Fault: CANBUS Communications", severity: "low",  type: "battery" },
+        { fault: "AlwaysOnSupplyFault", msg: "Battery Fault: Always On Supply", severity: "mid",  type: "battery" },
+        { fault: "HighVoltageIsolationFault", msg: "Battery Fault: High Voltage Isolation", severity: "mid",  type: "battery" },
+        { fault: "PowerSupply12VFault", msg: "Battery Fault: Power Supply 12V", severity: "mid",  type: "battery" },
+        { fault: "ChargeLimitEnforcementFault",msg: "Battery Fault: Charge Limit Enforcement", severity: "low",  type: "battery" },
         { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid",  type: "battery" },
-        { fault: "ChargerSafetyRelayFault",        msg: "Battery Fault: Charger Safety Relay",        severity: "mid",  type: "battery" }
+        { fault: "ChargerSafetyRelayFault", msg: "Battery Fault: Charger Safety Relay", severity: "mid",  type: "battery" }
     ]
 
     // External data source for battery faults
@@ -47,8 +47,8 @@ Rectangle {
     function showNextBanner() {
         if (pendingFaults.length > 0) {
             displayedFault = pendingFaults.shift()
-            bannerText      = displayedFault.msg
-            bannerVisible   = true
+            bannerText = displayedFault.msg
+            bannerVisible = true
             bannerTimer.restart()
         }
     }
@@ -75,10 +75,10 @@ Rectangle {
                     idx = activeModel.count
                 }
                 activeModel.insert(idx, {
-                    fault:    displayedFault.fault,
-                    msg:      displayedFault.msg,
+                    fault: displayedFault.fault,
+                    msg: displayedFault.msg,
                     severity: displayedFault.severity,
-                    type:     displayedFault.type
+                    type: displayedFault.type
                 })
                 displayedFault = null
             }
@@ -87,30 +87,13 @@ Rectangle {
     }
 
     // Central handler for all fault-changed signals
-    function onFaultChanged(desc, newVal) {
+    function onFaultChanged(desc) {
         // Determine actual boolean
-        var isActive = (newVal === undefined)
-                       ? batteryObject && batteryObject[desc.fault]
-                       : newVal
-
+        var isActive = batteryObject && batteryObject[desc.fault]
         if (isActive) {
-            // check if already in model
-            var inModel = false
-            for (var i = 0; i < activeModel.count; ++i) {
-                if (activeModel.get(i).fault === desc.fault) {
-                    inModel = true
-                    break
-                }
-            }
-            // check if in queue
-            var inQueue = pendingFaults.some(function(f){ return f.fault === desc.fault })
-            var isDisplaying = displayedFault && displayedFault.fault === desc.fault
-
-            if (!inModel && !inQueue && !isDisplaying) {
-                pendingFaults.push(desc)
-                if (!bannerVisible && !displayedFault)
-                    showNextBanner()
-            }
+            pendingFaults.push(desc)
+            if (!bannerVisible && !displayedFault)
+                showNextBanner()
         } else {
             // remove from queue
             for (var q = pendingFaults.length - 1; q >= 0; --q) {
@@ -138,15 +121,15 @@ Rectangle {
         for (var i = 0; i < faultsData.length; ++i) {
             (function(descriptor) {
                 var source = descriptor.type === "battery"
-                             ? batteryObject
-                             // if you add motor0/motor1 types later:
-                             : descriptor.type === "motor0" ? motor0Object
-                             : motor1Object
+                     ? batteryObject
+                     // if you add motor0/motor1 types later:
+                     : descriptor.type === "motor0" ? motor0Object
+                     : motor1Object
 
                 var sig = "on" + descriptor.fault + "Changed";
                 if (source && source[sig]) {
-                    source[sig].connect(function(newVal) {
-                        faultsDisplayContainer.onFaultChanged(descriptor, newVal)
+                    source[sig].connect(function() {
+                        faultsDisplayContainer.onFaultChanged(descriptor)
                     })
                 }
             })(faultsData[i])
@@ -160,11 +143,10 @@ Rectangle {
         height: bannerVisible ? 60 : 0
         radius: 8
         clip: true
-        color: displayedFault
-               ? (displayedFault.severity === "high" ? "#FC1313"
-                  : displayedFault.severity === "mid"  ? "#F6EC93"
-                                                        : "white")
-               : "#666666"
+        color: displayedFault ? (displayedFault.severity === "high" ? "#FC1313"
+                : displayedFault.severity === "mid"  ? "#F6EC93"
+                : "white")
+                : "#666666"
 
         Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
@@ -187,8 +169,8 @@ Rectangle {
                 text: bannerText
                 font.pixelSize: 20
                 color: bannerVisible
-                       ? (displayedFault.severity === "high" ? "white" : "black")
-                       : "transparent"
+                    ? (displayedFault.severity === "high" ? "white" : "black")
+                    : "transparent"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment:   Text.AlignVCenter
                 anchors.fill: parent
@@ -221,20 +203,20 @@ Rectangle {
         }
 
         delegate: FaultsMessage {
-            type:   model.type
-            severity:    model.severity
+            type: model.type
+            severity: model.severity
             msg: model.msg
-            width:       listView.width
-            height:      delegateHeight
+            width: listView.width
+            height: delegateHeight
         }
 
         add: Transition {
-            NumberAnimation { property: "x";       from: width; to: 0; duration: 300; easing.type: Easing.OutBack }
-            NumberAnimation { property: "opacity"; from: 0;     to: 1; duration: 300 }
+            NumberAnimation { property: "x"; from: width; to: 0; duration: 300; easing.type: Easing.OutBack }
+            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 300 }
         }
         remove: Transition {
-            NumberAnimation { property: "x";       to: width; duration: 300; easing.type: Easing.InQuad }
-            NumberAnimation { property: "opacity"; to: 0;     duration: 300 }
+            NumberAnimation { property: "x"; to: width; duration: 300; easing.type: Easing.InQuad }
+            NumberAnimation { property: "opacity"; to: 0; duration: 300 }
         }
     }
 }
