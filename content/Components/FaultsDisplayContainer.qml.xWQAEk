@@ -1,0 +1,142 @@
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+
+Rectangle {
+    id: mainContainer
+    width: 426
+    height: 300
+    color: "transparent"
+
+    // External objects that hold fault flags.
+    property QtObject batteryObject: batteryFaults
+    property QtObject motor0Object: motorDetails0
+    property QtObject motor1Object: motorDetails1
+
+    // Define all possible faults.
+    // Each fault includes:
+    //   • faultProperty: unique identifier
+    //   • messageText: text to display
+    //   • severity: e.g., "mid" or "high"
+    //   • errorType: "battery" or "motor"
+    //   • activatedTime: 0 initially; set when the fault first becomes active.
+    property var faultsData: [
+        // Battery faults:
+        { faultProperty: "InternalCommunicationFault", messageText: "Battery Fault: Internal Communication", severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "InternalConverversionFault",  messageText: "Battery Fault: Internal Conversion",          severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "WeakCellFault",                messageText: "Battery Fault: Weak Cell",                        severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "LowCellVoltageFault",          messageText: "Battery Fault: Low Cell Voltage",               severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "OpenWiringFault",              messageText: "Battery Fault: Open Wiring",                    severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "CurrentSensorFault",           messageText: "Battery Fault: Current Sensor",                 severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "PackVoltageSensorFault",       messageText: "Battery Fault: Pack Voltage Sensor",            severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "VoltageRedundancyFault",       messageText: "Battery Fault: Voltage Redundancy",             severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "FanMonitorFault",              messageText: "Battery Fault: Fan Monitor",                    severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "ThermistorFault",              messageText: "Battery Fault: Thermistor",                     severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "CanbusCommunicationFault",     messageText: "Battery Fault: CANBUS Communications",          severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "AlwaysOnSupplyFault",          messageText: "Battery Fault: Always On Supply",               severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "HighVoltageIsolationFault",    messageText: "Battery Fault: High Voltage Isolation",         severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "PowerSupply12VFault",          messageText: "Battery Fault: Power Supply 12V",               severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "ChargeLimitEnforcementFault",  messageText: "Battery Fault: Charge Limit Enforcement",       severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "DischargeLimitEnforcementFault", messageText: "Battery Fault: Discharge Limit Enforcement",   severity: "mid", errorType: "battery", activatedTime: 0 },
+        { faultProperty: "ChargerSafetyRelayFault",      messageText: "Battery Fault: Charger Safety Relay",           severity: "mid", errorType: "battery", activatedTime: 0 },
+
+        // Motor faults:
+        { faultProperty: "MotorAboutToStall",            messageText: "Motor Warning: Motor About to Stall",           severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "DelayInReadingTempSensor",     messageText: "Motor Warning: Delay in Reading Temp Sensor",    severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "DelayInReadingPosSensor",      messageText: "Motor Warning: Delay in Reading Position Sensor",severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "Inverter1TempVeryHigh",        messageText: "Motor Warning: Inverter 1 Temperature Very High", severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "Inverter2TempVeryHigh",        messageText: "Motor Warning: Inverter 2 Temperature Very High", severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "CpuTemperatureVeryHigh",       messageText: "Motor Warning: CPU Temperature Very High",      severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "HallTemperatureVeryHigh",      messageText: "Motor Warning: Hall Temperature Very High",     severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "DclinkTemperatureVeryHigh",    messageText: "Motor Warning: DC Link Temperature Very High",   severity: "mid", errorType: "motor", activatedTime: 0 },
+        { faultProperty: "Inverter1OverCurrentWarning",  messageText: "Motor Warning: Inverter 1 Overcurrent",         severity: "mid", errorType: "motor", activatedTime: 0 }
+        // Add additional faults as needed.
+    ]
+
+    // Helper function to check if a fault is active based on its errorType.
+    function isFaultActive(fault) {
+        if (fault.errorType === "motor") {
+            return (motor0Object && motor0Object[fault.faultProperty]) ||
+                   (motor1Object && motor1Object[fault.faultProperty]);
+        } else { // default: battery fault
+            return batteryObject && batteryObject[fault.faultProperty];
+        }
+    }
+
+    // Declare a property to hold the list of active faults.
+    property var activeFaults: []
+    // A Binding computes activeFaults whenever referenced properties change.
+    Binding {
+        target: mainContainer
+        property: "activeFaults"
+        value: {
+            var arr = [];
+            for (var i = 0; i < mainContainer.faultsData.length; i++) {
+                var fault = mainContainer.faultsData[i];
+                if (isFaultActive(fault)) {
+                    // If this fault is active for the first time, record its activation time.
+                    if (fault.activatedTime === 0)
+                        fault.activatedTime = Date.now();
+                    arr.push(fault);
+                } else {
+                    // Reset activation time if fault is inactive.
+                    fault.activatedTime = 0;
+                }
+            }
+            // Sort active faults by activationTime so that the earliest activated appears at the top.
+            arr.sort(function(a, b) { return a.activatedTime - b.activatedTime; });
+            return arr;
+        }
+    }
+
+    // Display the active faults using a Column with a Repeater.
+    // Negative spacing creates a clustered, overlapping effect.
+    Flickable {
+        id: flickArea
+        anchors.fill: parent
+        contentWidth: faultsColumn.width
+        contentHeight: faultsColumn.height
+
+        // Disable interactive scrolling on the dashboard.
+        interactive: false
+
+        Column {
+            id: faultsColumn
+            width: parent.width
+            spacing: -6
+            // Use Behavior on y for smooth auto-scrolling.
+            Behavior on y {
+                NumberAnimation { duration: 500 }
+            }
+
+            Repeater {
+                id: faultsRepeater
+                model: mainContainer.activeFaults
+                delegate: FaultsMessage {
+                    errorType: modelData.errorType
+                    severity: modelData.severity
+                    messageText: modelData.messageText
+                    width: faultsColumn.width - (index * 20)
+                    height: 33
+                    // Adjust opacity so that newer (lower in the list) appear more prominent.
+                    opacity: 1 - (index / (mainContainer.activeFaults.length + 1))
+                }
+            }
+        }
+    }
+
+    // Timer to auto-scroll the Flickable's content.
+    Timer {
+        id: scrollTimer
+        interval: 3000   // every 3 seconds
+        running: true
+        repeat: true
+        onTriggered: {
+            // Calculate the new y position by moving one fault height.
+            var newY = flickArea.contentY + 33;
+            // If we have scrolled beyond the content, reset to 0.
+            if (newY > flickArea.contentHeight - flickArea.height)
+                newY = 0;
+            flickArea.contentY = newY;
+        }
+    }
+}

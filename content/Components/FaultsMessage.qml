@@ -14,11 +14,11 @@ Rectangle {
     property string severity
 
     property string icon: type === "motor" ? "../Images/MotorFault.png"
-                           : type === "battery" ? "../Images/BatteryFault.png"
-                           : ""
+                        : type === "battery" ? "../Images/BatteryFault.png"
+                        : ""
     property color backGroundColor: severity === "high" ? "#FC1313"
-                                      : severity === "mid" ? "#F6EC93"
-                                      : "white"
+                                  : severity === "mid" ? "#F6EC93"
+                                  : "white"
     color: backGroundColor
 
     Row {

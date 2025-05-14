@@ -18,18 +18,18 @@ Rectangle {
         { fault: "WeakCellFault", msg: "Battery Fault: Weak Cell", severity: "high", type: "battery" },
         { fault: "LowCellVoltageFault", msg: "Battery Fault: Low Cell Voltage", severity: "mid",  type: "battery" },
         { fault: "OpenWiringFault", msg: "Battery Fault: Open Wiring", severity: "mid",  type: "battery" },
-        { fault: "CurrentSensorFault", msg: "Battery Fault: Current Sensor", severity: "mid",  type: "battery" },
-        { fault: "PackVoltageSensorFault", msg: "Battery Fault: Pack Voltage Sensor", severity: "mid",  type: "battery" },
-        { fault: "VoltageRedundancyFault", msg: "Battery Fault: Voltage Redundancy", severity: "low",  type: "battery" },
-        { fault: "FanMonitorFault", msg: "Battery Fault: Fan Monitor", severity: "low",  type: "battery" },
-        { fault: "ThermistorFault", msg: "Battery Fault: Thermistor", severity: "low",  type: "battery" },
-        { fault: "CanbusCommunicationFault", msg: "Battery Fault: CANBUS Communications", severity: "low",  type: "battery" },
-        { fault: "AlwaysOnSupplyFault", msg: "Battery Fault: Always On Supply", severity: "mid",  type: "battery" },
-        { fault: "HighVoltageIsolationFault", msg: "Battery Fault: High Voltage Isolation", severity: "mid",  type: "battery" },
-        { fault: "PowerSupply12VFault", msg: "Battery Fault: Power Supply 12V", severity: "mid",  type: "battery" },
-        { fault: "ChargeLimitEnforcementFault",msg: "Battery Fault: Charge Limit Enforcement", severity: "low",  type: "battery" },
-        { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid",  type: "battery" },
-        { fault: "ChargerSafetyRelayFault", msg: "Battery Fault: Charger Safety Relay", severity: "mid",  type: "battery" }
+        { fault: "CurrentSensorFault", msg: "Battery Fault: Current Sensor", severity: "mid", type: "battery" },
+        { fault: "PackVoltageSensorFault", msg: "Battery Fault: Pack Voltage Sensor", severity: "mid", type: "battery" },
+        { fault: "VoltageRedundancyFault", msg: "Battery Fault: Voltage Redundancy", severity: "low", type: "battery" },
+        { fault: "FanMonitorFault", msg: "Battery Fault: Fan Monitor", severity: "low", type: "battery" },
+        { fault: "ThermistorFault", msg: "Battery Fault: Thermistor", severity: "low", type: "battery" },
+        { fault: "CanbusCommunicationFault", msg: "Battery Fault: CANBUS Communications", severity: "low", type: "battery" },
+        { fault: "AlwaysOnSupplyFault", msg: "Battery Fault: Always On Supply", severity: "mid", type: "battery" },
+        { fault: "HighVoltageIsolationFault", msg: "Battery Fault: High Voltage Isolation", severity: "mid", type: "battery" },
+        { fault: "PowerSupply12VFault", msg: "Battery Fault: Power Supply 12V", severity: "mid", type: "battery" },
+        { fault: "ChargeLimitEnforcementFault",msg: "Battery Fault: Charge Limit Enforcement", severity: "low", type: "battery" },
+        { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid", type: "battery" },
+        { fault: "ChargerSafetyRelayFault", msg: "Battery Fault: Charger Safety Relay", severity: "mid", type: "battery" }
     ]
 
     // External data source for battery faults
@@ -89,7 +89,12 @@ Rectangle {
     // Central handler for all fault-changed signals
     function onFaultChanged(desc) {
         // Determine actual boolean
-        var isActive = batteryObject && batteryObject[desc.fault]
+        var isActive = !!(
+                (desc.type === "battery" ? batteryObject
+                 : desc.type === "motor0" ? motor0Object
+                 : motor1Object
+                )[desc.fault]
+            );
         if (isActive) {
             pendingFaults.push(desc)
             if (!bannerVisible && !displayedFault)
@@ -103,8 +108,8 @@ Rectangle {
             }
             // cancel banner if showing
             if (displayedFault && displayedFault.fault === desc.fault) {
-                bannerVisible   = false
-                displayedFault  = null
+                bannerVisible = false
+                displayedFault = null
             }
             // remove from list
             for (var j = 0; j < activeModel.count; ++j) {
@@ -144,9 +149,9 @@ Rectangle {
         radius: 8
         clip: true
         color: displayedFault ? (displayedFault.severity === "high" ? "#FC1313"
-                : displayedFault.severity === "mid"  ? "#F6EC93"
-                : "white")
-                : "#666666"
+            : displayedFault.severity === "mid"  ? "#F6EC93"
+            : "white")
+            : "#666666"
 
         Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
@@ -173,7 +178,8 @@ Rectangle {
                     : "transparent"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment:   Text.AlignVCenter
-                anchors.fill: parent
+                width: parent.width
+                height: parent.height
             }
         }
     }
