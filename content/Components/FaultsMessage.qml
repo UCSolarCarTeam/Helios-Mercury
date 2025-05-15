@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 
 Rectangle {
     id: faultMessage
-    width: parent ? parent.width : 426
+    width: parent.width
     height: 33
     radius: 8
     border.color: "black"
@@ -14,23 +14,28 @@ Rectangle {
     property string severity
 
     property string icon: type === "motor" ? "../Images/MotorFault.png"
-                        : type === "battery" ? "../Images/BatteryFault.png"
-                        : ""
-    property color backGroundColor: severity === "high" ? "#FC1313"
+                        : type === "batteryFaults" ? "../Images/BatteryFault.png"
+                        : type === "mbms" ? "../Images/MotorFault.png"
+                        : "" //TODO: add other icons and default icon
+
+    property color backgroundColor: severity === "high" ? "#FC1313"
                                   : severity === "mid" ? "#F6EC93"
                                   : "white"
-    color: backGroundColor
+    color: backgroundColor
 
     Row {
         anchors.fill: parent
         anchors.margins: 5
         spacing: 8
-        Image {
-            source: icon
+
+        DashIcon {
+            id: faultIcon
             width: icon ? 25 : 0
             height: icon ? 25 : 0
-            visible: icon !== ""
+            imageSource: icon
+            iconMaskColor: "black"
         }
+
         Text {
             text: msg
             font.pixelSize: 15

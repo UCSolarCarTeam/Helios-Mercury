@@ -13,27 +13,33 @@ Rectangle {
 
     // All possible faults: we'll listen to <fault>NameChanged signals on each source object
     property var faultsData: [
-        { fault: "InternalCommunicationFault", msg: "Battery Fault: Internal Communication", severity: "high", type: "battery" },
-        { fault: "InternalConverversionFault", msg: "Battery Fault: Internal Conversion", severity: "high", type: "battery" },
-        { fault: "WeakCellFault", msg: "Battery Fault: Weak Cell", severity: "high", type: "battery" },
-        { fault: "LowCellVoltageFault", msg: "Battery Fault: Low Cell Voltage", severity: "mid",  type: "battery" },
-        { fault: "OpenWiringFault", msg: "Battery Fault: Open Wiring", severity: "mid",  type: "battery" },
-        { fault: "CurrentSensorFault", msg: "Battery Fault: Current Sensor", severity: "mid", type: "battery" },
-        { fault: "PackVoltageSensorFault", msg: "Battery Fault: Pack Voltage Sensor", severity: "mid", type: "battery" },
-        { fault: "VoltageRedundancyFault", msg: "Battery Fault: Voltage Redundancy", severity: "low", type: "battery" },
-        { fault: "FanMonitorFault", msg: "Battery Fault: Fan Monitor", severity: "low", type: "battery" },
-        { fault: "ThermistorFault", msg: "Battery Fault: Thermistor", severity: "low", type: "battery" },
-        { fault: "CanbusCommunicationFault", msg: "Battery Fault: CANBUS Communications", severity: "low", type: "battery" },
-        { fault: "AlwaysOnSupplyFault", msg: "Battery Fault: Always On Supply", severity: "mid", type: "battery" },
-        { fault: "HighVoltageIsolationFault", msg: "Battery Fault: High Voltage Isolation", severity: "mid", type: "battery" },
-        { fault: "PowerSupply12VFault", msg: "Battery Fault: Power Supply 12V", severity: "mid", type: "battery" },
-        { fault: "ChargeLimitEnforcementFault",msg: "Battery Fault: Charge Limit Enforcement", severity: "low", type: "battery" },
-        { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid", type: "battery" },
-        { fault: "ChargerSafetyRelayFault", msg: "Battery Fault: Charger Safety Relay", severity: "mid", type: "battery" }
+        { fault: "InternalCommunicationFault", msg: "Battery Fault: Internal Communication", severity: "high", type: "batteryFaults" },
+        { fault: "InternalConverversionFault", msg: "Battery Fault: Internal Conversion", severity: "high", type: "batteryFaults" },
+        { fault: "WeakCellFault", msg: "Battery Fault: Weak Cell", severity: "high", type: "batteryFaults" },
+        { fault: "LowCellVoltageFault", msg: "Battery Fault: Low Cell Voltage", severity: "mid",  type: "batteryFaults" },
+        { fault: "OpenWiringFault", msg: "Battery Fault: Open Wiring", severity: "mid",  type: "batteryFaults" },
+        { fault: "CurrentSensorFault", msg: "Battery Fault: Current Sensor", severity: "mid", type: "batteryFaults" },
+        { fault: "PackVoltageSensorFault", msg: "Battery Fault: Pack Voltage Sensor", severity: "mid", type: "batteryFaults" },
+        { fault: "VoltageRedundancyFault", msg: "Battery Fault: Voltage Redundancy", severity: "low", type: "batteryFaults" },
+        { fault: "FanMonitorFault", msg: "Battery Fault: Fan Monitor", severity: "low", type: "batteryFaults" },
+        { fault: "ThermistorFault", msg: "Battery Fault: Thermistor", severity: "low", type: "batteryFaults" },
+        { fault: "CanbusCommunicationFault", msg: "Battery Fault: CANBUS Communications", severity: "low", type: "batteryFaults" },
+        { fault: "AlwaysOnSupplyFault", msg: "Battery Fault: Always On Supply", severity: "mid", type: "batteryFaults" },
+        { fault: "HighVoltageIsolationFault", msg: "Battery Fault: High Voltage Isolation", severity: "mid", type: "batteryFaults" },
+        { fault: "PowerSupply12VFault", msg: "Battery Fault: Power Supply 12V", severity: "mid", type: "batteryFaults" },
+        { fault: "ChargeLimitEnforcementFault",msg: "Battery Fault: Charge Limit Enforcement", severity: "low", type: "batteryFaults" },
+        { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid", type: "batteryFaults" },
+        { fault: "ChargerSafetyRelayFault", msg: "Battery Fault: Charger Safety Relay", severity: "mid", type: "batteryFaults" },
+        { fault: "HighCellVoltageTrip", msg: "MBMS SAMPLE ERROR", severity: "mid", type: "mbms" }
     ]
 
-    // External data source for battery faults
-    property QtObject batteryObject: batteryFaults
+    //TODO: add levels as needed
+    //TODO: completely replace low/mid/high with number values or enum
+    property var severityRankings : {
+        "high": 0,
+        "mid": 1,
+        "low": 2
+    }
 
     // The model backing the ListView
     ListModel { id: activeModel }
@@ -41,80 +47,62 @@ Rectangle {
     // Queue + banner state
     property var pendingFaults: []
     property var displayedFault: null
-    property bool bannerVisible: false
     property string bannerText: ""
 
     function showNextBanner() {
         if (pendingFaults.length > 0) {
             displayedFault = pendingFaults.shift()
             bannerText = displayedFault.msg
-            bannerVisible = true
             bannerTimer.restart()
         }
     }
 
     Timer {
         id: bannerTimer
-        interval: 2000; repeat: false
+        interval: 2000
+        repeat: false
         onTriggered: {
-            bannerVisible = false
             if (displayedFault) {
-                // insert into activeModel in severity order
-                var idx = 0
-                var sev = displayedFault.severity
-                if (sev === "high") {
-                    while (idx < activeModel.count && activeModel.get(idx).severity === "high")
-                        idx++
-                } else if (sev === "mid") {
-                    while (idx < activeModel.count) {
-                        var s = activeModel.get(idx).severity
-                        if (s === "high" || s === "mid") idx++
-                        else break
-                    }
-                } else {
-                    idx = activeModel.count
+                var placementIndex = 0;
+                var severityRank = severityRankings[displayedFault.severity];
+
+                // Sort in the new fault in the correct place based on severity
+                while(placementIndex < activeModel.count){
+                    const currentRank = severityRankings[activeModel.get(placementIndex).severity];
+                    if(currentRank > severityRank) break;
+                    placementIndex++;
                 }
-                activeModel.insert(idx, {
-                    fault: displayedFault.fault,
-                    msg: displayedFault.msg,
-                    severity: displayedFault.severity,
-                    type: displayedFault.type
-                })
-                displayedFault = null
+
+                activeModel.insert(placementIndex, displayedFault);
+
+                displayedFault = null;
             }
             Qt.callLater(showNextBanner)
         }
     }
 
-    // Central handler for all fault-changed signals
-    function onFaultChanged(desc) {
-        // Determine actual boolean
-        var isActive = !!(
-                (desc.type === "battery" ? batteryObject
-                 : desc.type === "motor0" ? motor0Object
-                 : motor1Object
-                )[desc.fault]
-            );
+    /*
+        Handle the toggling of each defined fault
+        - If the fault is active, add it to the pendingFaults and show the next banner
+        - If the fault is inactive, remove it from pendingFaults and activeModel
+    */
+    function onFaultChanged(fault, isActive) {
         if (isActive) {
-            pendingFaults.push(desc)
-            if (!bannerVisible && !displayedFault)
-                showNextBanner()
+            pendingFaults.push(fault)
+            if (!displayedFault) showNextBanner()
         } else {
             // remove from queue
-            for (var q = pendingFaults.length - 1; q >= 0; --q) {
-                if (pendingFaults[q].fault === desc.fault) {
-                    pendingFaults.splice(q,1)
-                }
-            }
+            pendingFaults = pendingFaults.filter(function(pendingFault) {
+                return pendingFault.fault !== fault.fault;
+            });
+
             // cancel banner if showing
-            if (displayedFault && displayedFault.fault === desc.fault) {
-                bannerVisible = false
-                displayedFault = null
-            }
+            if (displayedFault?.fault === fault.fault) displayedFault = null
+
             // remove from list
-            for (var j = 0; j < activeModel.count; ++j) {
-                if (activeModel.get(j).fault === desc.fault) {
-                    activeModel.remove(j)
+            for (var i = 0; i < activeModel.count; ++i) {
+                if (activeModel.get(i).fault === fault.fault) {
+                    activeModel.remove(i)
                     break
                 }
             }
@@ -123,31 +111,30 @@ Rectangle {
 
     // Wire up each fault’s Changed signal to onFaultChanged() on complete
     Component.onCompleted: {
-        for (var i = 0; i < faultsData.length; ++i) {
-            (function(descriptor) {
-                var source = descriptor.type === "battery"
-                     ? batteryObject
-                     // if you add motor0/motor1 types later:
-                     : descriptor.type === "motor0" ? motor0Object
-                     : motor1Object
+        for(let fault of faultsData){
+            let sourceContext = null;
 
-                var sig = "on" + descriptor.fault + "Changed";
-                if (source && source[sig]) {
-                    source[sig].connect(function() {
-                        faultsDisplayContainer.onFaultChanged(descriptor)
-                    })
-                }
-            })(faultsData[i])
+            if(fault.type === "batteryFaults") sourceContext = batteryFaults;
+            else if (fault.type === "mbms") sourceContext = mbms;
+
+            sourceContext["on" + fault.fault + "Changed"].connect(function(){
+                onFaultChanged(fault, sourceContext[fault.fault]);
+            });
         }
     }
 
     // Collapsible banner
     Rectangle {
         id: bannerArea
-        anchors { top: parent.top; left: parent.left; right: parent.right }
-        height: bannerVisible ? 60 : 0
+        anchors { 
+            top: parent.top; 
+            left: parent.left; 
+            right: parent.right 
+        }
+        height: displayedFault ? 60 : 0
         radius: 8
         clip: true
+
         color: displayedFault ? (displayedFault.severity === "high" ? "#FC1313"
             : displayedFault.severity === "mid"  ? "#F6EC93"
             : "white")
@@ -160,12 +147,12 @@ Rectangle {
             anchors.margins: 12
             spacing: 8
 
-            opacity: bannerVisible ? 1 : 0
+            opacity: displayedFault ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
             SequentialAnimation on scale {
                 loops: Animation.Infinite
-                running: bannerVisible
+                running: displayedFault 
                 NumberAnimation { from: 1.0;  to: 1.05; duration: 600; easing.type: Easing.InOutQuad }
                 NumberAnimation { from: 1.05; to: 1.0;  duration: 600; easing.type: Easing.InOutQuad }
             }
@@ -173,7 +160,7 @@ Rectangle {
             Text {
                 text: bannerText
                 font.pixelSize: 20
-                color: bannerVisible
+                color: displayedFault
                     ? (displayedFault.severity === "high" ? "white" : "black")
                     : "transparent"
                 horizontalAlignment: Text.AlignHCenter
@@ -187,7 +174,12 @@ Rectangle {
     // Auto-scrolling ListView
     ListView {
         id: listView
-        anchors { top: bannerArea.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors { 
+            top: bannerArea.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom 
+        }
         model: activeModel
         interactive: false
         clip: true
@@ -198,6 +190,7 @@ Rectangle {
             id: scrollTimer
             interval: 2000
             repeat: true
+
             // timer only runs when there’s more faults than will fit on screen
             running: activeModel.count > faultsOnView
             property int faultsOnView: Math.floor(faultsDisplayContainer.height / delegateHeight)
