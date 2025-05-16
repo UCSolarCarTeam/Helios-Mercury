@@ -8,7 +8,12 @@ Item {
     height: 50 // Gets redefined when used
 
     property string label: ""
-    property bool isOn: false 
+    property bool isOn
+
+    onIsOnChanged: {
+        statusImage.source = isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+        statusImage.iconMaskColor = isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+    }
 
     Column {
         width: parent.width
@@ -22,17 +27,18 @@ Item {
             color: Config.fontColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            wrapMode: Text.NoWrap
+            wrapMode: Text.WordWrap
             anchors.horizontalCenter: parent.horizontalCenter
             font.family: Config.fontStyle
         }
 
         DashIcon {
+            id: statusImage
             width: 24
             height: 24
             anchors.horizontalCenter: parent.horizontalCenter
-            imageSource: isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-            iconMaskColor: isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+            imageSource: statusIcon.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+            iconMaskColor: statusIcon.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
         }
     }
 }

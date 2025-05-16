@@ -120,8 +120,8 @@ Item {
                 ]
 
                 delegate: StatusIcon {
-                    Layout.preferredWidth: 90
-                    label: modelData.label
+                    Layout.preferredWidth: 100
+                    label:  modelData.label
                     isOn: modelData.isOn
                 }
             }
