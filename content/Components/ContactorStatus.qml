@@ -4,30 +4,25 @@ import QtQuick.Layouts
 
 Item {
     id: contactorStatusContainer
-    
-    property var contactorData: []
+    width: 400
+    height: 35
     
     RowLayout {
-        id: layout
-        anchors.fill: parent
+        id: contactorContainer
+        width: 400
+        height: 35
         spacing: 10
         
-        Text {
-            id: contactorSectionTitle
-            text: qsTr("Contactor\n Status")
-            color: Config.fontColor
-            font.pixelSize: Config.contactorFontSize
-            Layout.fillHeight: true
-            Layout.bottomMargin: 4
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.family: Config.fontStyle
-        }
-        
         Repeater {
-            model: contactorData
+            model: [
+                { name: "CMN", isConnected: mbms.CommonContactorState, hasError: mbms.CommonContactorError },
+                { name: "MOTOR", isConnected: mbms.MotorContactorState, hasError: mbms.MotorContactorError },
+                { name: "ARRAY", isConnected: mbms.ArrayContactorState, hasError: mbms.ArrayContactorError },
+                { name: "CHARGE", isConnected: mbms.ChargeContactorState, hasError: mbms.ChargeContactorError }, 
+                { name: "LV", isConnected: mbms.LvContactorState, hasError: mbms.LvContactorError }
+            ]
             
-            Item {
+            delegate: Item {
                 id: contactorStatusFrame
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -36,6 +31,8 @@ Item {
                     id: contactorTitle
                     text: modelData.name
                     font.pixelSize: Config.contactorLabelFontSize
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                     font.family: Config.fontStyle
                     color: Config.fontColor
                     anchors.bottom: contactorIcon.top
@@ -47,8 +44,10 @@ Item {
                     id: contactorIcon
                     width: 20
                     height: 20
-                    imageSource: modelData.isConnected ? "../Images/ContactorConnected.png" : "../Images/ContactorDisconnected.png"
-                    iconMaskColor: modelData.isConnected ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                    imageSource: modelData.hasError ? "../Images/Exclamation.png" : 
+                                (modelData.isConnected ? "../Images/ContactorConnected.png" : "../Images/ContactorDisconnected.png")
+                    iconMaskColor: modelData.hasError ? Config.contactorDisconnectedColor : 
+                                (modelData.isConnected ? Config.contactorConnectedColor : Config.contactorDisconnectedColor)
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottomMargin: 2
