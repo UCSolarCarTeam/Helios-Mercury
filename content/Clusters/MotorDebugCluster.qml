@@ -460,9 +460,8 @@ Item {
             horizontalCenter: motorDebugCluster.horizontalCenter
             horizontalCenterOffset: -35
             bottom: motorDebugCluster.bottom
-            bottomMargin: 18
+            bottomMargin: 15
         }
-        //spacing: 5
         
         Repeater {
             model: [
@@ -474,8 +473,7 @@ Item {
            
             delegate: StatusIcon {
                 Layout.fillWidth: true
-                Layout.fillHeight: false
-                Layout.preferredHeight: 30
+                columnSpacing: 2
                 width: modelData.componentWidth
                 label: modelData.name
                 isOn: modelData.isOn
