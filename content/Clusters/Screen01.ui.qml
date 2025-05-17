@@ -1180,6 +1180,10 @@ Rectangle {
                     Text {
                         text: "Car Latency: " + pi.Latency
                     }
+
+                    Text {
+                        text: "Dark Mode: " + pi.DarkMode
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ PiPacket::PiPacket() {
     setRfid(NULL);
     setDriverName("Unknown");
     setLatency(-69);
+    setDarkMode(true);
 }
 
 QJsonObject PiPacket::toJson() {

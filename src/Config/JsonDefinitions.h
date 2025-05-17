@@ -307,6 +307,7 @@ namespace JsonDefinitions {
     constexpr const char* PI = "Pi";
     constexpr const char* RFID = "Rfid";
     constexpr const char* DRIVER_NAME = "DriverName";
+    constexpr const char* DARK_MODE = "DarkMode";
 }
 
 #endif // JSONDEFINITIONS_H
