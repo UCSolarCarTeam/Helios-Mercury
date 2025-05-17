@@ -54,4 +54,6 @@ qt6_add_qml_module(content
         Images/AccelerationIcon.png
         Images/BoltIcon.png
         Images/FanIcon.png
+        Images/RotationIcon.png
+        Images/DirectionIcon.png
 )

@@ -60,4 +60,6 @@ QtObject {
     property int largeGaugeSize: 300
 
     property int mpptmbmsFontSizeS: 12
+
+    property int telemetryFlagLabelFontSize: 24
 }
