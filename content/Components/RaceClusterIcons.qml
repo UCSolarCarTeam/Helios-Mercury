@@ -1,5 +1,6 @@
-import QtQuick
-import QtQuick.Layouts
+import QtQuick 6.2
+import QtQuick.Layouts 
+import Mercury
 
 Item {
     id: raceDashboardIcons
@@ -13,22 +14,21 @@ Item {
 
         DashIcon {
             id: parkingBrakeIcon
-            isOn: b3.HandbrakeSwitch
-            isHighContrast: true
+            iconMaskColor: b3.HandbrakeSwitch ? Config.highContrast : Config.btnDisabled
             imageSource: "../Images/ParkingBrake.png"
             Layout.alignment: Qt.AlignCenter
         }
 
         DashIcon {
             id: drlIcon
-            isOn: b3.DaytimeRunningLightSignalOut
+            iconMaskColor: b3.DaytimeRunningLightSignalOut ? Config.primary : Config.btnDisabled
             imageSource: "../Images/DaytimeRunningLights.png"
             Layout.alignment: Qt.AlignCenter
         }
 
         DashIcon {
             id: headlightsIcon
-            isOn: b3.HeadlightsSwitchIn
+            iconMaskColor: b3.HeadlightsSwitchIn ? Config.primary : Config.btnDisabled
             imageSource: "../Images/Headlights.png"
             Layout.alignment: Qt.AlignCenter
         }
