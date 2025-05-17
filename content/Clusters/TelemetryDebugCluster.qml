@@ -1,7 +1,6 @@
 import QtQuick 6.2
 import QtQuick.Layouts
 import QtQuick.Controls
-import QtLocation
 import "../Components"
 import Mercury
 
@@ -96,7 +95,7 @@ Item {
         anchors {
             verticalCenter: telemetryDebugCluster.verticalCenter
             right: telemetryDebugCluster.right 
-            rightMargin: 280
+            rightMargin: 300
         }
 
         GaugeTemplate {
@@ -104,7 +103,7 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "m/s\u00B2" // ADC Count
+            units: "m/s\u00B2"
             gaugeTitle: "MPU Acceleration X"
             value: telemetry.MpuAccelerationX
             icon: "AccelerationIcon.png"
@@ -117,7 +116,7 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "m/s\u00B2" // ADC Count
+            units: "m/s\u00B2"
             gaugeTitle: "MPU Acceleration Y"
             value: telemetry.MpuAccelerationY
             icon: "AccelerationIcon.png"
@@ -130,7 +129,7 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "m/s\u00B2" // ADC Count
+            units: "m/s\u00B2"
             gaugeTitle: "MPU Acceleration Z"
             value: telemetry.MpuAccelerationZ
             icon: "AccelerationIcon.png"
@@ -143,7 +142,7 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "°/s" // ADC Count
+            units: "°/s"
             gaugeTitle: "MPU Rotation X"
             value: telemetry.MpuRotationX
             icon: "RotationIcon.png"
@@ -156,7 +155,7 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "°/s" // ADC Count
+            units: "°/s" 
             gaugeTitle: "MPU Rotation Y"
             value: telemetry.MpuRotationY
             icon: "RotationIcon.png"
@@ -169,7 +168,7 @@ Item {
             gaugeSize: Config.smallGaugeSize
             minValue: 0
             maxValue: 100
-            units: "°/s" // ADC Count
+            units: "°/s" 
             gaugeTitle: "MPU Rotation Z"
             value: telemetry.MpuRotationZ
             icon: "RotationIcon.png"
@@ -185,15 +184,15 @@ Item {
             left: gaugeGrid.right
             leftMargin: 40
         }
-        gaugeSize: Config.extraSmallGaugeSize
+        gaugeSize: Config.smallGaugeSize
         minValue: 0
         maxValue: 100
-        units: "°" // ADC Count
+        units: "°" 
         gaugeTitle: "MPU Temperature"
         value: telemetry.MpuTemperature
         icon: "ThermometerIcon.png"
-        iconWidth: 10
-        iconHeight: 15
+        iconWidth: 20
+        iconHeight: 25
     }
 
     ColumnLayout {
@@ -202,7 +201,7 @@ Item {
         anchors {
             verticalCenter: telemetryDebugCluster.verticalCenter
             horizontalCenter: telemetryDebugCluster.horizontalCenter
-            horizontalCenterOffset: -250
+            horizontalCenterOffset: -270
         }
         Layout.alignment: Qt.AlignHCenter
         spacing: 100
@@ -281,16 +280,5 @@ Item {
             bottom: parent.bottom
             bottomMargin: 13
         }
-    }
-
-    Map {
-        id: map
-        anchors {
-            horizontalCenter: telemetryDebugCluster.horizontalCenter
-            verticalCenter: telemetryDebugCluster.verticalCenter
-        }
-        plugin: mapPlugin
-        center: QtPositioning.coordinate(59.91, 10.75) // Oslo
-        zoomLevel: 14
     }
 }
