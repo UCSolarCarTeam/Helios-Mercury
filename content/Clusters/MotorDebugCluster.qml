@@ -40,7 +40,7 @@ Item {
         id: motor0Layout
         width: implicitWidth
         height: implicitHeight
-        spacing: 15
+        spacing: 12
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             verticalCenterOffset: -7
@@ -170,34 +170,11 @@ Item {
                     { name: "Debug Mode", isOn: motorDetails0.DebugMode }
                 ]
                 
-                delegate: Item {
-                    id: motor0ControlFlagFrame
-                    Layout.fillHeight: true
+
+                delegate: StatusIcon {
                     width: 100
-                    
-                    Text {
-                        id: motor0ControlFlagTitle
-                        text: modelData.name
-                        font.pixelSize: Config.contactorLabelFontSize
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: Config.fontStyle
-                        color: Config.fontColor
-                        anchors.bottom: controlFlagIcon.top
-                        anchors.bottomMargin: 2
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    
-                    DashIcon {
-                        id: motor0ControlFlagIcon
-                        width: 20
-                        height: 20
-                        imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                        iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottomMargin: 2
-                    }
+                    label: modelData.name
+                    isOn: modelData.isOn
                 }
             }
         }
@@ -207,7 +184,7 @@ Item {
         id: motor1Layout
         width: implicitWidth
         height: implicitHeight
-        spacing: 15
+        spacing: 12
         anchors {
             verticalCenter: motorDebugCluster.verticalCenter
             verticalCenterOffset: -7
@@ -341,34 +318,10 @@ Item {
                     { name: "Debug Mode", isOn: motorDetails1.DebugMode }
                 ]
                 
-                delegate: Item {
-                    id: motor1ControlFlagFrame
-                    Layout.fillHeight: true
+                delegate: StatusIcon {
                     width: 100
-                    
-                    Text {
-                        id: motor1ControlFlagTitle
-                        text: modelData.name
-                        font.pixelSize: Config.contactorLabelFontSize
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: Config.fontStyle
-                        color: Config.fontColor
-                        anchors.bottom: controlFlagIcon.top
-                        anchors.bottomMargin: 2
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    
-                    DashIcon {
-                        id: motor1ControlFlagIcon
-                        width: 20
-                        height: 20
-                        imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                        iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottomMargin: 2
-                    }
+                    label: modelData.name
+                    isOn: modelData.isOn
                 }
             }
         }
@@ -468,7 +421,7 @@ Item {
         height: Config.contactorFontSize
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: 200
+            horizontalCenterOffset: 203
             bottom: motorDebugCluster.bottom
             bottomMargin: 21
         }
@@ -486,7 +439,7 @@ Item {
         height: Config.contactorFontSize
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: -240
+            horizontalCenterOffset: -241
             bottom: motorDebugCluster.bottom
             bottomMargin: 22
         }
@@ -500,53 +453,32 @@ Item {
     }
 
     RowLayout {
-        id: controlFlagContainer
-        width: 350
+        id: controlFlagContainers
+        width: 370
         height: 35
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
-            horizontalCenterOffset: -40
+            horizontalCenterOffset: -35
             bottom: motorDebugCluster.bottom
-            bottomMargin: 8
+            bottomMargin: 18
         }
-        spacing: 5
+        //spacing: 5
         
         Repeater {
             model: [
-                { name: "Control Mode", isOn: keyMotor.ControlMode },
-                { name: "Motor Mode", isOn: keyMotor.MotorMode },
-                { name: "Software Enable", isOn: keyMotor.SoftwareEnable },
-                { name: "Debug Mode", isOn: keyMotor.DebugMode }
+                { name: "Control Mode", isOn: keyMotor.ControlMode, componentWidth: 65 },
+                { name: "Motor Mode", isOn: keyMotor.MotorMode, componentWidth: 65 },
+                { name: "Software Enable", isOn: keyMotor.SoftwareEnable, componentWidth: 80 },
+                { name: "Debug Mode", isOn: keyMotor.DebugMode, componentWidth: 65 }
             ]
-            
-            delegate: Item {
-                id: controlFlagFrame
+           
+            delegate: StatusIcon {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                
-                Text {
-                    id: controlFlagTitle
-                    text: modelData.name
-                    font.pixelSize: Config.contactorLabelFontSize
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.family: Config.fontStyle
-                    color: Config.fontColor
-                    anchors.bottom: controlFlagIcon.top
-                    anchors.bottomMargin: 2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-                
-                DashIcon {
-                    id: controlFlagIcon
-                    width: 20
-                    height: 20
-                    imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                    iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
-                    anchors.bottom: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottomMargin: 2
-                }
+                Layout.fillHeight: false
+                Layout.preferredHeight: 30
+                width: modelData.componentWidth
+                label: modelData.name
+                isOn: modelData.isOn
             }
         }
     }
