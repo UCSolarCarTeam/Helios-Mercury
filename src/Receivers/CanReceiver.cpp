@@ -6,7 +6,7 @@
 #include "../Config/ConfigManager.h"
 #include "../Config/PacketDefinitions.h"
 
-CanReceiver::CanReceiver() {
+CanReceiver::CanReceiver(PacketFactory* packetFactory) : packetFactory_(packetFactory) {
     ConfigManager& config = ConfigManager::instance();
 
     QString errorString;
@@ -52,8 +52,10 @@ void CanReceiver::handleReadyRead() {
         //TODO: Add Remaining Packets
         if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX){
             qDebug() << "TODO: populate B3 Packet";
+            //packetFactory_->getB3Packet().populatePacket(id, payload);
         } else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX){
             qDebug() << "TODO: populate Telemetry Packet";
+            packetFactory_->getTelemetryPacket().populatePacket(id, payload);
         } else {
             qWarning() << "UNKNOWN ID:" << frame.frameId() << "With payload:" << frame.payload();
         }
