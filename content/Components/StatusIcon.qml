@@ -9,10 +9,11 @@ Item {
 
     property string label: ""
     property bool isOn: false 
+    property int columnSpacing: 5
 
     Column {
         width: parent.width
-        spacing: 4
+        spacing: statusIcon.columnSpacing
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {

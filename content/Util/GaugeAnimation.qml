@@ -28,8 +28,9 @@ QtObject {
     color and Config.btnDisabled is the unfilled gauge color. Needle witdh by default is 
     equal to width of arc, but can passed to the function as the fourth argument to make needle 
     longer/shorter. Needle length by default is 5 units, but can be passed as the fifth argument
-    to make needle thicker/thinner. */
-    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth, needleLength = 5) {
+    to make needle thicker/thinner. Needle moves clockwise by default, to flip needle's movement
+    to counterclockwise, pass true as sixth argument. */
+    function drawGauge(canvas, gauge, activeValue, needleWidth = gauge.arcWidth, needleLength = 5, flipped = false) {
         var ctx = canvas.getContext("2d");
         ctx.reset();
 
@@ -51,7 +52,7 @@ QtObject {
             arcRadius - gauge.arcWidth / 2,
             degreesToRadians(gauge.arcBegin),
             degreesToRadians(valueAngle),
-            false
+            flipped
         );
         ctx.stroke();
 
@@ -61,15 +62,28 @@ QtObject {
         
         var needleStartAngle, needleEndAngle;
         
-        if (Math.abs(valueAngle - gauge.arcBegin) < 1) {
-            needleStartAngle = gauge.arcBegin + needleLength / 3;
-            needleEndAngle = needleStartAngle - needleLength / 3; 
-        } else if (Math.abs(valueAngle - gauge.arcEnd) < 1) {
-            needleEndAngle = gauge.arcEnd - needleLength / 3;
-            needleStartAngle = needleEndAngle + needleLength / 3;
-        } else {
-            needleStartAngle = valueAngle + (needleLength / (2 * Math.PI * arcRadius)) * 180;
-            needleEndAngle = valueAngle - (needleLength / (2 * Math.PI * arcRadius)) * 180;
+        if (flipped) {
+            if (Math.abs(valueAngle - gauge.arcBegin) < 1) {
+                needleEndAngle = gauge.arcBegin - (needleLength / (2 * Math.PI * arcRadius)) * 360;
+                needleStartAngle = needleEndAngle + (needleLength / (2 * Math.PI * arcRadius)) * 360; 
+            } else if (Math.abs(valueAngle - gauge.arcEnd) < 1) {
+                needleStartAngle = gauge.arcEnd + (needleLength / (2 * Math.PI * arcRadius)) * 360;
+                needleEndAngle = needleStartAngle - (needleLength / (2 * Math.PI * arcRadius)) * 360;
+            } else {
+                needleStartAngle = valueAngle + (needleLength / (2 * Math.PI * arcRadius)) * 180;
+                needleEndAngle = valueAngle - (needleLength / (2 * Math.PI * arcRadius)) * 180;
+            }
+        } else { 
+            if (Math.abs(valueAngle - gauge.arcBegin) < 1) {
+                needleStartAngle = gauge.arcBegin + (needleLength / (2 * Math.PI * arcRadius)) * 360;
+                needleEndAngle = needleStartAngle - (needleLength / (2 * Math.PI * arcRadius)) * 360; 
+            } else if (Math.abs(valueAngle - gauge.arcEnd) < 1) {
+                needleEndAngle = gauge.arcEnd - (needleLength / (2 * Math.PI * arcRadius)) * 360;
+                needleStartAngle = needleEndAngle + (needleLength / (2 * Math.PI * arcRadius)) * 360;
+            } else {
+                needleStartAngle = valueAngle + (needleLength / (2 * Math.PI * arcRadius)) * 180;
+                needleEndAngle = valueAngle - (needleLength / (2 * Math.PI * arcRadius)) * 180;
+            }
         }
 
         var needleRadius = arcRadius - (needleWidth / 2);
