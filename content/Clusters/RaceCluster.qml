@@ -56,9 +56,16 @@ Item {
     }
 
     CameraView {
+        id:cameraView
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
+    }
+
+    FaultsDisplayContainer{
+        anchors.top: cameraView.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 10
     }
 
     Speedometer {
