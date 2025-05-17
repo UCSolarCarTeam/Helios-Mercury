@@ -56,6 +56,7 @@ Item {
     }
 
     CameraView {
+        id:cameraView
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
@@ -69,6 +70,12 @@ Item {
         maxValue: 1500
         value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
         flipped: true
+    }
+    
+    FaultsDisplayContainer{
+        anchors.top: cameraView.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 10
     }
 
     Speedometer {

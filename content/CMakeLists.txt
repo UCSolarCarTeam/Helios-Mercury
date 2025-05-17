@@ -20,6 +20,8 @@ qt6_add_qml_module(content
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/FaultsDisplayContainer.qml
+        Components/FaultsMessage.qml
         Components/MotorArrayHeader.qml
         Components/StatusIcon.qml
         Components/Speedometer.qml
@@ -35,6 +37,8 @@ qt6_add_qml_module(content
         Components/RpmGauge.qml
     RESOURCES
         fonts/fonts.txt
+        Images/MotorFault.png
+        Images/BatteryFault.png
         Images/RaceClusterFrameBackground.png
         Images/RaceClusterFrameOutline.png
         Images/Arrow.png
