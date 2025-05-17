@@ -70,7 +70,6 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Quick
     Qt6::Mqtt
     Qt6::SerialPort
-    Qt6::ShaderTools
     Qt6::SerialBus
     ${PIGPIO_LIB}
 )
@@ -101,10 +100,3 @@ install(TARGETS Helios-Mercury
 # make IDEs aware of the QML import path
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")
-
-qt6_add_shaders(Helios-Mercury "Helios-Mercury_shaders"
-    PREFIX
-        "/"
-    FILES
-        "content/Shaders/MovingColor.frag"
-)
