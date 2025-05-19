@@ -61,4 +61,6 @@ qt6_add_qml_module(content
         Images/AngleIcon.png
         Images/TorqueIcon.png
         Images/FanIcon.png
+        Images/RotationIcon.png
+        Images/DirectionIcon.png
 )
