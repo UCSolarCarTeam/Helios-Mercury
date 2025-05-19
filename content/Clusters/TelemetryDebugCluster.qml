@@ -36,7 +36,7 @@ Item {
             case 12:
                 return "December";
             default:
-                return "Invalid Month Number";
+                return "MM";
         }
     }
 
@@ -250,7 +250,7 @@ Item {
         id: telemetryDate
         width: implicitWidth
         color: Config.fontColor
-        text: telemetry.GpsDay + " " + numberToMonth(telemetry.GpsMonth) + ", " + telemetry.GpsYear
+        text: numberToMonth(telemetry.GpsMonth) + " " + telemetry.GpsDay + ", " + telemetry.GpsYear
         font.pixelSize: Config.debugHeaderFontSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -258,7 +258,7 @@ Item {
         font.family: Config.fontStyle
         anchors {
             horizontalCenter: parent.horizontalCenter
-            horizontalCenterOffset: -160
+            horizontalCenterOffset: -150
             bottom: parent.bottom
             bottomMargin: 13
         }
