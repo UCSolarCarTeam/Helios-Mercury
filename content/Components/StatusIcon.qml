@@ -4,33 +4,43 @@ import Mercury
 
 Item {
     id: statusIcon
-    width: 32  // Gets redefined when used
-    height: 32 // Gets redefined when used
+    width: 65  // Gets redefined when used
+    height: 50 // Gets redefined when used
 
     property string label: ""
-    property bool isOn: false 
+    property bool isOn
+
+    property int columnSpacing: 5
+
+    onIsOnChanged: {
+        statusImage.source = isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+        statusImage.iconMaskColor = isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+    }
 
     Column {
         width: parent.width
-        spacing: 4
+        spacing: parent.columnSpacing
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: statusIcon.label
-            font.pixelSize: Config.mpptmbmsFontSizeS
-            color: Config.fontColor
-            wrapMode: Text.Wrap
-            horizontalAlignment: Text.AlignHCenter
-            anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
+            text: statusIcon.label
+            font.pixelSize: Config.contactorLabelFontSize
+            color: Config.fontColor
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.WordWrap
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.family: Config.fontStyle
         }
 
-        Image {
+        DashIcon {
+            id: statusImage
             width: 24
             height: 24
             anchors.horizontalCenter: parent.horizontalCenter
-            source: isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-            sourceSize: Qt.size(22, 22)
+            imageSource: statusIcon.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
+            iconMaskColor: statusIcon.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
         }
     }
 }

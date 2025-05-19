@@ -30,6 +30,7 @@ QtObject {
     property int gaugeFontSizeS: 18
     property int gaugeFontSizeM: 24
     property int gaugeFontSizeL: 28
+    property int gaugeFontSizeXL: 34
     property int gaugeFontSizeXXL: 86
 
     property int contactorFontSize: 14
@@ -49,8 +50,6 @@ QtObject {
     property double wheelDiameter: 0.50419
     property double rpmValue: (motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue) / 2
 
-    property int gaugeFontSizeXL: 34
-
     property int tempGaugeFontSize: 16
     property int tempGaugeLabelFontSize: 20
 
@@ -62,4 +61,8 @@ QtObject {
     property int mpptmbmsFontSizeS: 12
 
     property int telemetryFlagLabelFontSize: 24
+    
+    property int rpmGaugeFontSize: 40
+    property int rpmLabelFontSize: 12
+    property color rpmLabelFontColor: "#7a7a7a"
 }
