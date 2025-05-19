@@ -56,6 +56,8 @@ void CanReceiver::handleReadyRead() {
             qDebug() << "TODO: populate B3 Packet";
         } else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX){
             packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);
+        } else if(id >= PacketDefinitions::PROXIMITY_SENSORS_ID_MIN && id <= PacketDefinitions::PROXIMITY_SENSORS_ID_MAX){
+            packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
         } else {
             qWarning() << "UNKNOWN ID:" << frame.frameId() << "With payload:" << frame.payload();
         }

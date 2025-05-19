@@ -43,6 +43,8 @@ namespace PacketDefinitions {
 
     const int PROXIMITY_SENSORS_ID = 10;
     const int PROXIMITY_SENSORS_LENGTH = 9;
+    const int PROXIMITY_SENSORS_ID_MIN = 0x700;
+    const int PROXIMITY_SENSORS_ID_MAX = 0x703;
 
     const std::array<int, 11> packetLength = {
         -69,
