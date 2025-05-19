@@ -22,7 +22,9 @@ Window {
         "Clusters/DriverControlsDebugCluster.qml",
         "Clusters/MbmsDebugCluster.qml",
         "Clusters/MpptDebugCluster.qml",
-        "Clusters/TelemetryDebugCluster.qml"
+        "Clusters/TelemetryDebugCluster.qml",
+        "Clusters/Motor0ErrorWarningDebugCluster.qml",
+        "Clusters/Motor1ErrorWarningDebugCluster.qml"
     ]
 
     Loader {

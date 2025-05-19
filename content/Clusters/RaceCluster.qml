@@ -56,15 +56,32 @@ Item {
     }
 
     CameraView {
+        id:cameraView
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
 
+    RpmGauge {
+        id: rpmGauge
+        x: 1598
+        y: -8
+        minValue: 0
+        maxValue: 1500
+        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+        flipped: true
+    }
+    
+    FaultsDisplayContainer{
+        anchors.top: cameraView.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 10
+    }
+
     Speedometer {
         id: speedometer
-        x: 1356
-        y: 46
+        x: 1237
+        y: 48
     }
 
     Rnd {

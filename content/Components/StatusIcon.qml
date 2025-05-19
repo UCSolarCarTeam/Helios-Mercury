@@ -10,6 +10,8 @@ Item {
     property string label: ""
     property bool isOn
 
+    property int columnSpacing: 5
+
     onIsOnChanged: {
         statusImage.source = isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
         statusImage.iconMaskColor = isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
@@ -17,7 +19,7 @@ Item {
 
     Column {
         width: parent.width
-        spacing: 5
+        spacing: parent.columnSpacing
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
