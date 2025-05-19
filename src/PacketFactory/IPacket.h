@@ -57,7 +57,7 @@ private:
 
 protected:
     /** Method for all child classes to map CAN messages IDs to the appropriate setters */
-    virtual void initializeIdActionMap(){};
+    virtual void initializeIdActionMap(){}; //TODO: switch from {} to = 0 once all child classes are updated
 
     /** Unordered mapping to define actions to populate data fields based on id */
     std::unordered_map<int, std::function<void(const QByteArray&)>> idActionMap;
