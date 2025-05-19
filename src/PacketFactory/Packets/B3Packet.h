@@ -10,7 +10,7 @@ class B3Packet : public IPacket {
     DEFINE_PROPERTY(bool, LeftSignalIn)
     DEFINE_PROPERTY(bool, HazardLightsIn)
     DEFINE_PROPERTY(bool, HeadlightsSwitchIn)
-    DEFINE_PROPERTY(bool, ForwardSwitchIn)
+    DEFINE_PROPERTY(bool, ForwardSwitchIn) //TODO: Verify if Required
     DEFINE_PROPERTY(bool, HornSwitchIn)
     DEFINE_PROPERTY(bool, ForwardIn)
 
@@ -21,10 +21,10 @@ class B3Packet : public IPacket {
     DEFINE_PROPERTY(bool, MotorReset)
     DEFINE_PROPERTY(bool, RaceMode)
     DEFINE_PROPERTY(bool, Lap)
-    DEFINE_PROPERTY(bool, ZoomZoom)
+    DEFINE_PROPERTY(bool, ZoomZoom) //TODO: Verify if Required
 
-    DEFINE_PROPERTY(unsigned short, Acceleration)
-    DEFINE_PROPERTY(unsigned short, RegenBraking)
+    DEFINE_PROPERTY(unsigned char, Acceleration)
+    DEFINE_PROPERTY(unsigned char, RegenBraking)
 
     DEFINE_PROPERTY(bool, RightSignalOut)
     DEFINE_PROPERTY(bool, LeftSignalOut)
@@ -37,6 +37,10 @@ public:
     B3Packet();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
+
+protected:
+    void initializeIdActionMap() override;
+
 };
 
 #endif // B3PACKET_H

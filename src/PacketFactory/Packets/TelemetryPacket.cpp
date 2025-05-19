@@ -2,6 +2,7 @@
 #include "../../Config/JsonDefinitions.h"
 
 namespace {
+    //Serial offsets -> TODO: phase out
     const int GPS_YEAR_OFFSET = 1;
     const int GPS_MONTH_OFFSET = 3;
     const int GPS_DAY_OFFSET = 4;
@@ -41,6 +42,8 @@ TelemetryPacket::TelemetryPacket() {
     setMpuRotationY(0);
     setMpuRotationZ(0);
     setMpuTemperature(0);
+
+    initializeIdActionMap();
 }
 
 void TelemetryPacket::populatePacket(const QByteArray& data) {
@@ -87,4 +90,50 @@ QJsonObject TelemetryPacket::toJson() {
     json[JsonDefinitions::MPU_TEMPERATURE] = MpuTemperature_;
 
     return json;
+}
+
+void TelemetryPacket::initializeIdActionMap() {
+    qDebug() << "Initializing Telemetry ID Action Map";
+    idActionMap[0x630] = {
+        [this](QByteArray payload) { 
+            setGpsYear(getValue<unsigned short>(payload, 0)); 
+            setGpsMonth(getValue<unsigned char>(payload, 2));
+            setGpsDay(getValue<unsigned char>(payload, 3));
+            setGpsHour(getValue<unsigned char>(payload, 4));
+            setGpsMinute(getValue<unsigned char>(payload, 5));
+            setGpsSecond(getValue<unsigned char>(payload, 6));
+        },
+    };
+    idActionMap[0x631] = {
+        [this](QByteArray payload) { 
+            setGpsValidityFlags(getValue<unsigned char>(payload, 0));
+            setGpsFixStatusFlags(getValue<unsigned char>(payload, 1));
+            setGpsAdditionalFlags(getValue<unsigned char>(payload, 2));
+        },
+    };
+    idActionMap[0x632] = {
+        [this](QByteArray payload) { 
+            setGpsLongitude(getValue<float>(payload, 0));
+            setGpsLatitude(getValue<float>(payload, 4));
+        },
+    };
+    idActionMap[0x633] = {
+        [this](QByteArray payload) { 
+            setMpuAccelerationX(getValue<unsigned short>(payload, 0));
+            setMpuAccelerationY(getValue<unsigned short>(payload, 2));
+            setMpuAccelerationZ(getValue<unsigned short>(payload, 4));
+        },
+    };
+    idActionMap[0x634] = {
+        [this](QByteArray payload) { 
+            setMpuRotationX(getValue<unsigned short>(payload, 0));
+            setMpuRotationY(getValue<unsigned short>(payload, 2));
+            setMpuRotationZ(getValue<unsigned short>(payload, 4));
+        },
+    };
+    idActionMap[0x635] = {
+        [this](QByteArray payload) { 
+            setMpuTemperature(getValue<unsigned short>(payload, 0));
+        },
+    };
 }
