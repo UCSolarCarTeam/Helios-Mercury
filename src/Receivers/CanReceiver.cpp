@@ -53,7 +53,7 @@ void CanReceiver::handleReadyRead() {
 
         //TODO: Add Remaining Packets
         if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX){
-            qDebug() << "TODO: populate B3 Packet";
+            packetFactory_->getB3Packet().IPacket::populatePacket(id, payload);
         } else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX){
             packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);
         } else if(id >= PacketDefinitions::PROXIMITY_SENSORS_ID_MIN && id <= PacketDefinitions::PROXIMITY_SENSORS_ID_MAX){

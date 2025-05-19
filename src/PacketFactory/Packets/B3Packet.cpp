@@ -2,6 +2,7 @@
 #include "../../Config/JsonDefinitions.h"
 
 namespace {
+    //Serial offsets -> TODO: phase out
     const int LIGHT_INPUTS_OFFSET = 1;
     const char RIGHT_SIGNAL_IN_MASK = 0x01;
     const char LEFT_SIGNAL_IN_MASK = 0x02;
@@ -60,6 +61,8 @@ B3Packet::B3Packet() {
     setHeadlightSignalOut(false);
     setBrakeLightSignalOut(false);
     setHornSignalOut(false);
+
+    initializeIdActionMap();
 }
 
 void B3Packet::populatePacket(const QByteArray& data) {
@@ -70,7 +73,7 @@ void B3Packet::populatePacket(const QByteArray& data) {
     setHeadlightsSwitchIn(lightInputs & HEADLIGHTS_SWITCH_IN_MASK);
 
     unsigned short driverInputs = getValue<unsigned short>(data, DRIVER_INPUTS_OFFSET);
-    setForwardSwitchIn(driverInputs & FORWARD_SWITCH_IN_MASK);
+    setForwardSwitchIn(driverInputs & FORWARD_SWITCH_IN_MASK); //TODO: Verify if Required
     setHornSwitchIn(driverInputs & HORN_SWITCH_IN_MASK);
     setForwardIn(driverInputs & FORWARD_IN_MASK);
     setNeutral(driverInputs & NEUTRAL_MASK);
@@ -80,7 +83,7 @@ void B3Packet::populatePacket(const QByteArray& data) {
     setMotorReset(driverInputs & MOTOR_RESET_MASK);
     setRaceMode(driverInputs & RACE_MODE_MASK);
     setLap(driverInputs & LAP_MASK);
-    setZoomZoom(driverInputs & ZOOM_ZOOM_MASK);
+    setZoomZoom(driverInputs & ZOOM_ZOOM_MASK); //TODO: Verify if Required
 
     setAcceleration(getValue<unsigned short>(data, ACCELERATION_OFFSET));
     setRegenBraking(getValue<unsigned short>(data, REGEN_BRAKING_OFFSET));
@@ -125,4 +128,48 @@ QJsonObject B3Packet::toJson() {
     json[JsonDefinitions::HORN_SIGNAL_OUT] = HornSignalOut_;
 
     return json;
+}
+
+void B3Packet::initializeIdActionMap() {
+    qDebug() << "Initializing B3 Packet ID Action Map";
+    idActionMap[0x610] = {
+        [this](QByteArray payload){
+            unsigned char lightInputs = getValue<unsigned char>(payload, 0);
+            setRightSignalIn(lightInputs & RIGHT_SIGNAL_IN_MASK);
+            setLeftSignalIn(lightInputs & LEFT_SIGNAL_IN_MASK);
+            setHazardLightsIn(lightInputs & HAZARD_LIGHTS_IN_MASK);
+            setHeadlightsSwitchIn(lightInputs & HEADLIGHTS_SWITCH_IN_MASK);
+        }
+    };
+    idActionMap[0x611] = { //Note this section removed ForwardSwitchIn and ZoomZoom
+        [this](QByteArray payload){
+            unsigned short digitalInputs = getValue<unsigned short>(payload, 0);
+            setForwardIn(digitalInputs & 0x0001);
+            setNeutral(digitalInputs & 0x0002);
+            setReverse(digitalInputs & 0x0004);
+            setHornSwitchIn(digitalInputs & 0x0008);
+            setBrakeSwitch(digitalInputs & 0x0010);
+            setHandbrakeSwitch(digitalInputs & 0x0020);
+            setMotorReset(digitalInputs & 0x0040);
+            setRaceMode(digitalInputs & 0x0080);
+            setLap(digitalInputs & 0x0100);
+        }
+    };
+    idActionMap[0x612] = {
+        [this](QByteArray payload){
+            setAcceleration(getValue<unsigned char>(payload, 0));
+            setRegenBraking(getValue<unsigned char>(payload, 1));
+        }
+    };
+    idActionMap[0x620] = {
+        [this](QByteArray payload){
+            unsigned char lightsStatus = getValue<unsigned char>(payload, 0);
+            setRightSignalOut(lightsStatus & RIGHT_SIGNAL_OUT_MASK);
+            setLeftSignalOut(lightsStatus & LEFT_SIGNAL_OUT_MASK);
+            setDaytimeRunningLightSignalOut(lightsStatus & DAYTIME_RUNNING_LIGHT_SIGNAL_OUT_MASK);
+            setHeadlightSignalOut(lightsStatus & HEADLIGHT_SIGNAL_OUT_MASK);
+            setBrakeLightSignalOut(lightsStatus & BRAKE_LIGHT_SIGNAL_OUT_MASK);
+            setHornSignalOut(lightsStatus & HORN_SIGNAL_OUT_MASK);
+        }
+    };
 }
