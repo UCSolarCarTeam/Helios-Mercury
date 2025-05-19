@@ -4,17 +4,20 @@
 #include <QObject>
 #include <QCanBusDevice>
 
+#include "../PacketFactory/PacketFactory.h"
+
 class CanReceiver : public QObject {
     Q_OBJECT
 public:
-    CanReceiver();
+    CanReceiver(PacketFactory* packetFactory);
     ~CanReceiver();
 
 private slots:
     void handleReadyRead();
 
 private:
-    QCanBusDevice *canDevice_;
+    QCanBusDevice* canDevice_;
+    PacketFactory* packetFactory_;
 };
 
 #endif // CANRECEIVER_H

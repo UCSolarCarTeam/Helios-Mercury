@@ -6,8 +6,10 @@
 #include "../Config/ConfigManager.h"
 #include "../Config/PacketDefinitions.h"
 
-CanReceiver::CanReceiver() {
+CanReceiver::CanReceiver(PacketFactory* packetFactory){
     ConfigManager& config = ConfigManager::instance();
+
+    packetFactory_ = packetFactory;
 
     QString errorString;
     canDevice_ = QCanBus::instance()->createDevice("socketcan", config.getCanInterface(), &errorString);
@@ -53,7 +55,7 @@ void CanReceiver::handleReadyRead() {
         if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX){
             qDebug() << "TODO: populate B3 Packet";
         } else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX){
-            qDebug() << "TODO: populate Telemetry Packet";
+            packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);
         } else {
             qWarning() << "UNKNOWN ID:" << frame.frameId() << "With payload:" << frame.payload();
         }

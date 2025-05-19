@@ -11,6 +11,20 @@ public:
     /** Populate class vars given a QByteArray */
     virtual void populatePacket(const QByteArray& data) = 0;
 
+    /**
+     *  Populate class vars given CAN message id and data
+     *  Searches idAction map to get setter action mapped to given id
+     *  if found, populate required class vars
+     *  if not found, print warning message and continue
+     */
+    virtual void populatePacket(const int id, const QByteArray& data) final {
+        if(idActionMap.find(id) != idActionMap.end()){
+            idActionMap[id](data); //execute action mapped to given id
+        } else {
+            qWarning() << "No actions registered for ID: " << id;
+        }
+    }
+
     /** returns Json object of all class data */
     virtual QJsonObject toJson() = 0;
 
@@ -40,6 +54,13 @@ private:
         stream >> value;
         return value;
     }
+
+protected:
+    /** Method for all child classes to map CAN messages IDs to the appropriate setters */
+    virtual void initializeIdActionMap(){};
+
+    /** Unordered mapping to define actions to populate data fields based on id */
+    std::unordered_map<int, std::function<void(const QByteArray&)>> idActionMap;
 };
 
 #endif // IPACKET_H

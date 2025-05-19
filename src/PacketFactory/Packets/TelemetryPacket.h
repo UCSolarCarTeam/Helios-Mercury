@@ -24,10 +24,15 @@ class TelemetryPacket : public IPacket {
     DEFINE_PROPERTY(unsigned short, MpuRotationY)
     DEFINE_PROPERTY(unsigned short, MpuRotationZ)
     DEFINE_PROPERTY(unsigned short, MpuTemperature)
+
 public:
     TelemetryPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
+
+protected:
+    void initializeIdActionMap() override;
+
 };
 
 #endif // TELEMETRYPACKET_H
