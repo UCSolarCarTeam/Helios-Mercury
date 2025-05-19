@@ -62,6 +62,16 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    RpmGauge {
+        id: rpmGauge
+        x: 1598
+        y: -8
+        minValue: 0
+        maxValue: 1500
+        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+        flipped: true
+    }
+    
     FaultsDisplayContainer{
         anchors.top: cameraView.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -70,8 +80,8 @@ Item {
 
     Speedometer {
         id: speedometer
-        x: 1356
-        y: 46
+        x: 1237
+        y: 48
     }
 
     Rnd {
@@ -129,21 +139,12 @@ Item {
 
     ContactorStatus {
         id: contactorsComponent
-        width: 350
-        height: 35
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            horizontalCenterOffset: -80
+            horizontalCenterOffset: -72
             bottomMargin: 10
         }
-        contactorData: [
-            { name: "CMN", isConnected: mbms.CommonContactorState },
-            { name: "MOTOR", isConnected: mbms.MotorContactorState },
-            { name: "ARRAY", isConnected: mbms.ArrayContactorState },
-            { name: "CHARGE", isConnected: mbms.ChargeContactorState }, 
-            { name: "LV", isConnected: mbms.LvContactorState }
-        ]
     }
 
     Text {
