@@ -135,20 +135,11 @@ Item {
 
     ContactorStatus {
         id: contactorsComponent
-        width: 350
-        height: 35
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            horizontalCenterOffset: -80
+            horizontalCenterOffset: -72
             bottomMargin: 10
         }
-        contactorData: [
-            { name: "CMN", isConnected: mbms.CommonContactorState },
-            { name: "MOTOR", isConnected: mbms.MotorContactorState },
-            { name: "ARRAY", isConnected: mbms.ArrayContactorState },
-            { name: "CHARGE", isConnected: mbms.ChargeContactorState }, 
-            { name: "LV", isConnected: mbms.LvContactorState }
-        ]
     }
 }
