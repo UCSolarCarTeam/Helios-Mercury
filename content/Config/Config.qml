@@ -60,6 +60,8 @@ QtObject {
 
     property int mpptmbmsFontSizeS: 12
 
+    property int driverNameFontSize: 20
+    
     property int telemetryFlagLabelFontSize: 24
     
     property int rpmGaugeFontSize: 40
