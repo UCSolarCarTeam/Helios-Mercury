@@ -36,6 +36,7 @@ qt6_add_qml_module(content
         Util/GaugeAnimation.qml
         Components/GaugeTemplate.qml
         Components/RpmGauge.qml
+        Components/ProximitySensors.qml        
     RESOURCES
         fonts/fonts.txt
         Images/MotorFault.png
@@ -63,4 +64,6 @@ qt6_add_qml_module(content
         Images/FanIcon.png
         Images/RotationIcon.png
         Images/DirectionIcon.png
+        Images/ProximitySensorCar.png
+        Images/ProximitySensorBarsIcon.png        
 )

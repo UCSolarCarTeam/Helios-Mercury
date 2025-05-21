@@ -104,6 +104,16 @@ Item {
         }
     }
 
+    ProximitySensors{
+        id: proximitySensorsIcon
+        x: 600
+        y: 115
+        sensorLeftDistanceCm: proximitySensors.ProximitySensor1 
+        sensorCenterLeftDistanceCm: proximitySensors.ProximitySensor2
+        sensorCenterRightDistanceCm: proximitySensors.ProximitySensor3
+        sensorRightDistanceCm: proximitySensors.ProximitySensor4
+    }
+
     ThreeQuarterGauge {
         id: motorTempGauge
         x: 212
