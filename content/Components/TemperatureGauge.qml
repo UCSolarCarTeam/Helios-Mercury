@@ -4,8 +4,7 @@ import QtQuick.Effects
 import "../Config"
 
 Item {
-    id: root
-    // Define a fixed “base” size for the overall design.
+    id: temperatureGauge
     property real baseWidth: 350
     property real baseHeight: 108
     width: baseWidth
@@ -15,46 +14,44 @@ Item {
     property real temperatureValue: 100
     property real minTemp: 0
     property real maxTemp: 100
-    property real neutralLowerBound
-    property real neutralUpperBound
+    property real neutralLowerBound: 30
+    property real neutralUpperBound: 70
 
     // Variable for defining gauge label
     property string gaugeLabel
 
     // Function for dynamic coloring applied on gauge components based on temperature value
     property color temperatureColor: {
-        // Define color stops in the gradient
-        var stops = [
-            { pos: 0.0,  r: 27/255,  g: 70/255,  b: 183/255 },  // Blue (#1B46B7)
-            { pos: 0.33, r: 79/255,  g: 143/255, b: 255/255 },   // Light Blue (#4F8FFF)
-            { pos: 0.66, r: 1,       g: 140/255, b: 0 },          // Orange (#FF8C00)
-            { pos: 1.0,  r: 206/255, g: 71/255,  b: 39/255 }       // Red (#CE4727)
-        ];
+        var blueColor = Qt.rgba(27/255, 70/255, 183/255, 1);     // Blue (#1B46B7)
+        var lightBlueColor = Qt.rgba(79/255, 143/255, 255/255, 1); // Light Blue (#4F8FFF)
+        var orangeColor = Qt.rgba(1, 140/255, 0, 1);             // Orange (#FF8C00)
+        var redColor = Qt.rgba(206/255, 71/255, 39/255, 1);       // Red (#CE4727)
+
         var temp = Math.min(Math.max(temperatureValue, minTemp), maxTemp);
         var fraction;
-        // Rapid color change to blue when temperature reaches below lower bound
+        var r, g, b;
+
         if (temp <= neutralLowerBound) {
-            fraction = ((temp - minTemp) / (neutralLowerBound - minTemp)) * 0.48;
-        // Rapid color change to red when temperature reaches above upper bound
+            fraction = (temp - minTemp) / (neutralLowerBound - minTemp);
+
+            r = blueColor.r + fraction * (lightBlueColor.r - blueColor.r);
+            g = blueColor.g + fraction * (lightBlueColor.g - blueColor.g);
+            b = blueColor.b + fraction * (lightBlueColor.b - blueColor.b);
+
         } else if (temp >= neutralUpperBound) {
-            fraction = 0.52 + ((temp - neutralUpperBound) / (maxTemp - neutralUpperBound)) * (1.0 - 0.52);
-        // Gradual color change when temperature is within neutral zone (play around with decimal values if needed)
+            fraction = (temp - neutralUpperBound) / (maxTemp - neutralUpperBound);
+            r = orangeColor.r + fraction * (redColor.r - orangeColor.r);
+            g = orangeColor.g + fraction * (redColor.g - orangeColor.g);
+            b = orangeColor.b + fraction * (redColor.b - orangeColor.b);
+
         } else {
-            var f = (temp - neutralLowerBound) / (neutralUpperBound - neutralLowerBound);
-            fraction = 0.48 + f * (0.52 - 0.48);
+            fraction = (temp - neutralLowerBound) / (neutralUpperBound - neutralLowerBound);
+
+            r = lightBlueColor.r + fraction * (orangeColor.r - lightBlueColor.r);
+            g = lightBlueColor.g + fraction * (orangeColor.g - lightBlueColor.g);
+            b = lightBlueColor.b + fraction * (orangeColor.b - lightBlueColor.b);
         }
-        // Iterate through segments of color gradient to return the correct color for a temperature value
-        for (var i = 0; i < stops.length - 1; i++) {
-            if (fraction >= stops[i].pos && fraction <= stops[i+1].pos) {
-                var localFraction = (fraction - stops[i].pos) / (stops[i+1].pos - stops[i].pos);
-                var r = stops[i].r + localFraction * (stops[i+1].r - stops[i].r);
-                var g = stops[i].g + localFraction * (stops[i+1].g - stops[i].g);
-                var b = stops[i].b + localFraction * (stops[i+1].b - stops[i].b);
-                return Qt.rgba(r, g, b, 1);
-            }
-        }
-        var last = stops[stops.length - 1];
-        return Qt.rgba(last.r, last.g, last.b, 1);
+        return Qt.rgba(r, g, b, 1);
     }
 
     Row {
@@ -81,6 +78,19 @@ Item {
                 source: "../Images/TempBar.png"
                 fillMode: Image.PreserveAspectFit
                 anchors.fill: parent
+                smooth: true
+                visible: false
+            }
+
+            MultiEffect {
+                id: fillEffect
+                anchors.fill: parent
+                source: tempBar
+                colorization: 1.0
+                colorizationColor: temperatureColor
+                antialiasing: true
+                layer.enabled: true
+                layer.smooth: true
             }
 
             // The needle is positioned relative to the tempBar.
@@ -88,11 +98,11 @@ Item {
                 id: needle
                 width: 20
                 height: 5
-                color: root.temperatureColor
+                color: temperatureGauge.temperatureColor
                 y: -5
                 x: {
-                    var clampedTemp = Math.max(root.minTemp, Math.min(root.temperatureValue, root.maxTemp));
-                    return ((clampedTemp - root.minTemp) / (root.maxTemp - root.minTemp))
+                    var clampedTemp = Math.max(temperatureGauge.minTemp, Math.min(temperatureGauge.temperatureValue, temperatureGauge.maxTemp));
+                    return ((clampedTemp - temperatureGauge.minTemp) / (temperatureGauge.maxTemp - temperatureGauge.minTemp))
                            * (parent.width - width);
                 }
                 Behavior on x { NumberAnimation { duration: 200 } }
@@ -123,7 +133,7 @@ Item {
             DashIcon {
                 id: thermostatIconImage
                 imageSource: "../Images/ThermometerIcon.png"
-                iconMaskColor: root.temperatureColor
+                iconMaskColor: temperatureGauge.temperatureColor
                 width: 24
                 height: 24
             }
@@ -133,8 +143,8 @@ Item {
         Text {
             id: temperatureText
             height: 18
-            text: root.temperatureValue + "°C"
-            color: root.temperatureColor
+            text: temperatureGauge.temperatureValue + "°C"
+            color: temperatureGauge.temperatureColor
             font.pixelSize: Config.tempGaugeFontSize
             font.weight: Font.Medium
             font.family: Config.fontStyle

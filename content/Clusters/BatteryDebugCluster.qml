@@ -9,17 +9,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate {
+        id: backplate
     }
 
     Text {
