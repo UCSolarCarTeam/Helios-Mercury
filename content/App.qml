@@ -20,8 +20,11 @@ Window {
         "Clusters/BatteryDebugCluster.qml",
         "Clusters/MotorDebugCluster.qml",
         "Clusters/DriverControlsDebugCluster.qml",
-        "Clusters/MpptMbmsDebugCluster.qml",
-        "Clusters/TelemetryDebugCluster.qml"
+        "Clusters/MbmsDebugCluster.qml",
+        "Clusters/MpptDebugCluster.qml",
+        "Clusters/TelemetryDebugCluster.qml",
+        "Clusters/Motor0ErrorWarningDebugCluster.qml",
+        "Clusters/Motor1ErrorWarningDebugCluster.qml"
     ]
 
     Loader {

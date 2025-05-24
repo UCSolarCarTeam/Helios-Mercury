@@ -53,6 +53,16 @@ Item {
         anchors.verticalCenterOffset: -75
     }
 
+    RpmGauge {
+        id: rpmGauge
+        x: 1598
+        y: -8
+        minValue: 0
+        maxValue: 1500
+        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+        flipped: true
+    }
+    
     FaultsDisplayContainer{
         anchors.top: cameraView.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -61,8 +71,8 @@ Item {
 
     Speedometer {
         id: speedometer
-        x: 1356
-        y: 46
+        x: 1237
+        y: 48
     }
 
     Rnd {
@@ -77,8 +87,12 @@ Item {
 
     BatteryIcon {
         id: batteryIcon
-        x: 16
-        y: 89
+        anchors { 
+            top: raceCluster.top
+            left: raceCluster.left
+            leftMargin: 75
+            topMargin: 90
+        }
     }
 
     ThreeQuarterGauge {
@@ -116,20 +130,33 @@ Item {
 
     ContactorStatus {
         id: contactorsComponent
-        width: 350
-        height: 35
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             horizontalCenterOffset: -80
             bottomMargin: 9
         }
-        contactorData: [
-            { name: "CMN", isConnected: mbms.CommonContactorState },
-            { name: "MOTOR", isConnected: mbms.MotorContactorState },
-            { name: "ARRAY", isConnected: mbms.ArrayContactorState },
-            { name: "CHARGE", isConnected: mbms.ChargeContactorState }, 
-            { name: "LV", isConnected: mbms.LvContactorState }
-        ]
+    }
+
+    Text {
+        id: driverNameComponent
+        width: 350
+        height: Config.driverNameFontSize
+        color: Config.fontColor 
+        text: "Driver Name: " + pi.DriverName 
+        wrapMode: Text.Wrap
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {
+            pixelSize: Config.driverNameFontSize
+            weight: Font.Medium
+            family: Config.fontStyle
+        }
+        anchors { 
+            horizontalCenter: raceCluster.horizontalCenter
+            horizontalCenterOffset: -450
+            bottom: raceCluster.bottom
+            bottomMargin: 55
+        }
     }
 }
