@@ -14,7 +14,7 @@ Item {
 
         DashIcon {
             id: parkingBrakeIcon
-            iconMaskColor: b3.HandbrakeSwitch ? Config.highContrast : Config.btnDisabled
+            iconMaskColor: b3.HandbrakeSwitch ? Config.needleColor : Config.btnDisabled
             imageSource: "../Images/ParkingBrake.png"
             Layout.alignment: Qt.AlignCenter
         }

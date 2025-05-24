@@ -7,17 +7,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     MotorArrayHeader {
@@ -131,7 +122,7 @@ Item {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             horizontalCenterOffset: -80
-            bottomMargin: 10
+            bottomMargin: 9
         }
         contactorData: [
             { name: "CMN", isConnected: mbms.CommonContactorState },
