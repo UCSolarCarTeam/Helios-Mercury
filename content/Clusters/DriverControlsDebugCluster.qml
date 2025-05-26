@@ -7,8 +7,8 @@ import Mercury
 
 Item {
     id: driverControlsDebugCluster
-    width: 1920
-    height: 550
+    width: Config.windowWidth
+    width: Config.windowHeight
 
     Backplate { 
         id: backplate
@@ -24,7 +24,7 @@ Item {
             topMargin: 13
         }
         text: "Driver Controls"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -80,11 +80,11 @@ Item {
 
         Text {
             id: driverInputsLabel
-            height: Config.headerFontSize
+            height: Config.fontSize4
             color: Config.fontColor
             font.family: Config.fontStyle
             text: "Driver Inputs"
-            font.pixelSize: Config.debugHeaderFontSize
+            font.pixelSize: Config.fontSize6
             font.weight: Font.Bold
             font.bold: true
             Layout.alignment: Qt.AlignHCenter
@@ -94,7 +94,7 @@ Item {
             width: implicitWidth
             height: implicitHeight
             columns: 5
-            rowSpacing: 25
+            rowSpacing: 40
             columnSpacing: 5
 
             Repeater {
@@ -133,11 +133,11 @@ Item {
 
         Text {
             id: lightsInputsLabel
-            height: Config.headerFontSize
+            height: Config.fontSize6
             color: Config.fontColor
             font.family: Config.fontStyle
             text: "Lights Input"
-            font.pixelSize: Config.debugHeaderFontSize
+            font.pixelSize: Config.fontSize6
             font.weight: Font.Bold
             font.bold: true
             Layout.alignment: Qt.AlignHCenter
@@ -177,11 +177,11 @@ Item {
 
         Text {
             id: lightsOutputsLabel
-            height: Config.headerFontSize
+            height: Config.fontSize6
             color: Config.fontColor
             font.family: Config.fontStyle
             text: "Lights Output"
-            font.pixelSize: Config.debugHeaderFontSize
+            font.pixelSize: Config.fontSize6
             font.weight: Font.Bold
             font.bold: true
             Layout.alignment: Qt.AlignHCenter
@@ -218,7 +218,7 @@ Item {
             }
 
             DashIcon {
-                iconMaskColor: b3.BrakeLightSignalOut ? Config.primary : Config.btnDisabled 
+                iconMaskColor: b3.BrakeLightSignalOut ? Config.valueHigh : Config.btnDisabled 
                 imageSource: "../Images/ParkingBrake.png"
                 Layout.alignment: Qt.AlignCenter
             }
