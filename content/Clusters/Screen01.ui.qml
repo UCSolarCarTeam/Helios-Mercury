@@ -1177,6 +1177,9 @@ Rectangle {
                     Text {
                         text: "Driver Name: " + pi.DriverName
                     }
+                    Text {
+                        text: "Car Latency: " + pi.Latency
+                    }
                 }
             }
         }

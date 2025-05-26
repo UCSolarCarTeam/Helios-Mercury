@@ -21,6 +21,7 @@ enabled=true
 telemetryTopic=packet
 pingTopic=ping
 pongTopic=pong
+receiverTopic=telemetryToCar
 telemetryHostname=aedes.IDontWantToKeepConnecting.ca
 telemetryPort=1883
 telemetryUsername=BEGONE

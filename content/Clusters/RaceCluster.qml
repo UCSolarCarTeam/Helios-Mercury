@@ -35,8 +35,8 @@ Item {
         x: 608
         y: 15
         z: 1000
-        isRight: false
         isOn: b3.LeftSignalIn || b3.HazardLightsIn
+        rotation: 180
     }
 
     ArrowIndicator {
@@ -44,7 +44,6 @@ Item {
         x: 1278
         y: 15
         z: 1000
-        isRight: true
         isOn: b3.RightSignalIn || b3.HazardLightsIn
     }
 
@@ -57,15 +56,32 @@ Item {
     }
 
     CameraView {
+        id:cameraView
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -75
     }
 
+    RpmGauge {
+        id: rpmGauge
+        x: 1598
+        y: -8
+        minValue: 0
+        maxValue: 1500
+        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+        flipped: true
+    }
+    
+    FaultsDisplayContainer{
+        anchors.top: cameraView.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 10
+    }
+
     Speedometer {
         id: speedometer
-        x: 1356
-        y: 46
+        x: 1237
+        y: 48
     }
 
     Rnd {
@@ -80,8 +96,12 @@ Item {
 
     BatteryIcon {
         id: batteryIcon
-        x: 16
-        y: 89
+        anchors { 
+            top: raceCluster.top
+            left: raceCluster.left
+            leftMargin: 75
+            topMargin: 90
+        }
     }
 
     ThreeQuarterGauge {
@@ -119,20 +139,33 @@ Item {
 
     ContactorStatus {
         id: contactorsComponent
-        width: 350
-        height: 35
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            horizontalCenterOffset: -80
+            horizontalCenterOffset: -72
             bottomMargin: 10
         }
-        contactorData: [
-            { name: "CMN", isConnected: mbms.CommonContactorState },
-            { name: "MOTOR", isConnected: mbms.MotorContactorState },
-            { name: "ARRAY", isConnected: mbms.ArrayContactorState },
-            { name: "CHARGE", isConnected: mbms.ChargeContactorState }, 
-            { name: "LV", isConnected: mbms.LvContactorState }
-        ]
+    }
+
+    Text {
+        id: driverNameComponent
+        width: 350
+        height: Config.driverNameFontSize
+        color: Config.fontColor 
+        text: "Driver Name: " + pi.DriverName 
+        wrapMode: Text.Wrap
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        font {
+            pixelSize: Config.driverNameFontSize
+            weight: Font.Medium
+            family: Config.fontStyle
+        }
+        anchors { 
+            horizontalCenter: raceCluster.horizontalCenter
+            horizontalCenterOffset: -450
+            bottom: raceCluster.bottom
+            bottomMargin: 55
+        }
     }
 }

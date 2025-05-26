@@ -4,10 +4,12 @@
 #include <QObject>
 #include <QMqttClient>
 
+#include "../PacketFactory/Packets/PiPacket.h"
+
 class TelemetryReceiver : public QObject {
     Q_OBJECT
 public:
-    TelemetryReceiver();
+    TelemetryReceiver(PiPacket* piPacket);
     ~TelemetryReceiver();
 
 private slots:
@@ -15,9 +17,11 @@ private slots:
 
 private:
     void sendPong();
+    void handleTelemetryMessage(const QByteArray& message);
     void setup();
 
     QMqttClient* client_;
+    PiPacket* piPacket_;
 };
 
 #endif // TELEMETRYRECEIVER_H

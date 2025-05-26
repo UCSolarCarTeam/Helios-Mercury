@@ -2,8 +2,9 @@
 #include "../../Config/JsonDefinitions.h"
 
 PiPacket::PiPacket() {
-    setRfid("Unscanned");
+    setRfid(NULL);
     setDriverName("Unknown");
+    setLatency(-69);
 }
 
 QJsonObject PiPacket::toJson() {

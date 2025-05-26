@@ -20,7 +20,7 @@ namespace PacketDefinitions {
     const int MOTOR_DETAILS_1_LENGTH = 33;
 
     const int B3_ID = 4;
-    const int B3_LENGTH = 9;
+    const int B3_LENGTH = 7;
     const int B3_ID_MIN = 0x610;
     const int B3_ID_MAX = 0x620;
 
@@ -43,6 +43,8 @@ namespace PacketDefinitions {
 
     const int PROXIMITY_SENSORS_ID = 10;
     const int PROXIMITY_SENSORS_LENGTH = 9;
+    const int PROXIMITY_SENSORS_ID_MIN = 0x700;
+    const int PROXIMITY_SENSORS_ID_MAX = 0x703;
 
     const std::array<int, 11> packetLength = {
         -69,

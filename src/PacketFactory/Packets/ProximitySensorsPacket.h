@@ -15,6 +15,10 @@ public:
     ProximitySensorsPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
+
+protected:
+    void initializeIdActionMap() override;
+
 };
 
 #endif // PROXIMITYSENSORSPACKET_H

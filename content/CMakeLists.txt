@@ -13,11 +13,16 @@ qt6_add_qml_module(content
         Clusters/BatteryDebugCluster.qml
         Clusters/DriverControlsDebugCluster.qml
         Clusters/TelemetryDebugCluster.qml
-        Clusters/MpptMbmsDebugCluster.qml
+        Clusters/MbmsDebugCluster.qml
+        Clusters/MpptDebugCluster.qml
+        Clusters/Motor0ErrorWarningDebugCluster.qml
+        Clusters/Motor1ErrorWarningDebugCluster.qml
         Clusters/Screen01.ui.qml
         Components/ArrowIndicator.qml
         Components/DashIcon.qml
         Components/CameraView.qml
+        Components/FaultsDisplayContainer.qml
+        Components/FaultsMessage.qml
         Components/MotorArrayHeader.qml
         Components/StatusIcon.qml
         Components/Speedometer.qml
@@ -31,8 +36,11 @@ qt6_add_qml_module(content
         Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
         Components/GaugeTemplate.qml
+        Components/RpmGauge.qml
     RESOURCES
         fonts/fonts.txt
+        Images/MotorFault.png
+        Images/BatteryFault.png
         Images/RaceClusterFrameBackground.png
         Images/RaceClusterFrameOutline.png
         Images/Arrow.png
@@ -50,7 +58,12 @@ qt6_add_qml_module(content
         Images/ThermometerIcon.png
         Images/AccelerationIcon.png
         Images/BoltIcon.png
+        Images/Exclamation.png
+        Images/AngleIcon.png
+        Images/TorqueIcon.png
         Images/FanIcon.png
         Images/CarHorn.png
         Images/HazardIcon.png
+        Images/RotationIcon.png
+        Images/DirectionIcon.png
 )
