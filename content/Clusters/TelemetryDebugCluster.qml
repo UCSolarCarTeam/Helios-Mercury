@@ -6,8 +6,8 @@ import Mercury
 
 Item {
     id: telemetryDebugCluster
-    width: 1920
-    height: 550
+    width: Config.windowWidth
+    width: Config.windowHeight
 
     function numberToMonth(monthNumber) {
         switch (monthNumber) {

@@ -10,12 +10,12 @@ numberOfMppts=4
 packetTitle=Helios
 
 [SerialPort]
-portName=/dev/pts/5
+portName=/dev/ttys017
 baudrate=115200
 
 [Can]
 interface=can0
-enabled=true
+enabled=false
 
 [Mqtt]
 telemetryTopic=packet
