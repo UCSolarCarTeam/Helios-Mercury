@@ -7,7 +7,7 @@ import Mercury
 Item {
     id: motorDebugCluster
     width: Config.windowWidth
-    width: Config.windowHeight
+    height: Config.windowHeight
 
     Backplate { 
         id: backplate

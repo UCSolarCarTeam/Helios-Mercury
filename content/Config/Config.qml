@@ -4,8 +4,8 @@ import QtQuick 2.15
 QtObject {
     property bool darkMode: false
 
-    property int windowwidth: Config.windowWidth
-    property int windowwidth: Config.windowHeight
+    property int windowWidth: 1920
+    property int windowheight: 550
 
     property string fontStyle: "SF Pro"
 

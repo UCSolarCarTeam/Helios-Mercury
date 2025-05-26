@@ -7,7 +7,7 @@ import Mercury
 Item {
     id: mbmsDebugCluster
     width: Config.windowWidth
-    width: Config.windowHeight
+    height: Config.windowHeight
 
     Backplate { 
         id: backplate

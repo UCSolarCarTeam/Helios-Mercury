@@ -7,7 +7,7 @@ import "../Util"
 Item {
     id: rpmGauge
     width: 200
-    width: Config.windowHeight
+    height: Config.windowHeight
 
     // gauge properties 
     property real minValue 

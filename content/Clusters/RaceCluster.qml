@@ -5,7 +5,7 @@ import "../Components"
 Item {
     id: raceCluster
     width: Config.windowWidth
-    width: Config.windowHeight
+    height: Config.windowHeight
 
     Backplate { 
         id: backplate

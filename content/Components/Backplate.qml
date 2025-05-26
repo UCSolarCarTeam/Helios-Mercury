@@ -6,7 +6,7 @@ import Mercury
 Item {
     id: backplate
     width: Config.windowWidth
-    width: Config.windowHeight
+    height: Config.windowHeight
     smooth: true
 
     Image {
@@ -36,7 +36,7 @@ Item {
     Image {
         id: raceClusterFrameOutline
         width: Config.windowWidth
-        width: Config.windowHeight
+        height: Config.windowHeight
         anchors {
             horizontalCenter: backplate.horizontalCenter
             verticalCenter: backplate.verticalCenter
