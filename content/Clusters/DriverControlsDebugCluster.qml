@@ -10,17 +10,6 @@ Item {
     width: 1920
     height: 550
 
-    Text {
-        id: clusterTitle
-        y: 14
-        color: "#ffffff"
-        font.family: Config.fontStyle
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Driver Controls")
-        font.pixelSize: 24
-    }
-
-    // Background images
     Image {
         id: raceClusterFrameBackground
         x: 1
@@ -34,7 +23,20 @@ Item {
         source: "../Images/RaceClusterFrameOutline.png"
     }
 
-    // Acceleration Gauge
+    Text {
+        id: motorLabel
+        color: Config.fontColor
+        font.family: Config.fontStyle
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: parent.top
+            topMargin: 13
+        }
+        text: "Driver Controls"
+        font.pixelSize: Config.debugHeaderFontSize
+        font.weight: Font.Medium
+    }
+
     GaugeTemplate {
         id: accelerationGauge
         gaugeSize: Config.mediumGaugeSize
@@ -45,14 +47,16 @@ Item {
         units: "m/s²"
         value: b3.Acceleration
         anchors {
-            left: driverControlsDebugCluster.left
-            leftMargin: 650
-            top: driverControlsDebugCluster.top
-            topMargin: parent.height/4
+            horizontalCenter: driverControlsDebugCluster.horizontalCenter
+            horizontalCenterOffset: -600
+            verticalCenter: driverControlsDebugCluster.verticalCenter
+            verticalCenterOffset: -120
         }
+        icon: "../Images/AccelerationIcon.png"
+        iconWidth: 35
+        iconHeight: 35
     }
 
-    // Regen Braking Gauge
     GaugeTemplate {
         id: regenBrakingGauge
         gaugeSize: Config.mediumGaugeSize
@@ -63,60 +67,176 @@ Item {
         units: "kW"
         value: b3.RegenBraking
         anchors {
-            right: driverControlsDebugCluster.right
-            rightMargin: 650
-            top: driverControlsDebugCluster.top
-            topMargin: parent.height/4
+            horizontalCenter: driverControlsDebugCluster.horizontalCenter
+            horizontalCenterOffset: 600
+            verticalCenter: driverControlsDebugCluster.verticalCenter
+            verticalCenterOffset: -120
+        }
+        icon: "../Images/AccelerationIcon.png"
+        iconWidth: 35
+        iconHeight: 35
+    }
+
+    ColumnLayout {
+        id: driverInputsLayout
+        width: implicitWidth
+        height: implicitHeight
+        spacing: 50
+        anchors {
+            horizontalCenter: driverControlsDebugCluster.horizontalCenter
+            verticalCenter: driverControlsDebugCluster.verticalCenter
+        }
+
+        Text {
+            id: driverInputsLabel
+            height: Config.headerFontSize
+            color: Config.fontColor
+            font.family: Config.fontStyle
+            text: "Driver Inputs"
+            font.pixelSize: Config.debugHeaderFontSize
+            font.weight: Font.Bold
+            font.bold: true
+            Layout.alignment: Qt.AlignHCenter
+        }
+
+        GridLayout {
+            width: implicitWidth
+            height: implicitHeight
+            columns: 5
+            rowSpacing: 25
+            columnSpacing: 5
+
+            Repeater {
+                model: [
+                    { label: "Forward Switch", isOn: b3.ForwardSwitchIn},
+                    { label: "Horn Switch", isOn: b3.HornSwitchIn},
+                    { label: "Forward", isOn: b3.ForwardIn},
+                    { label: "Neutral", isOn: b3.Neutral},
+                    { label: "Reverse", isOn: b3.Reverse},
+                    { label: "Brake Switch", isOn: b3.BrakeSwitch},
+                    { label: "Handbrake Switch", isOn: b3.HandbrakeSwitch},
+                    { label: "Motor Reset", isOn: b3.MotorReset},
+                    { label: "Race Mode", isOn: b3.RaceMode},
+                    { label: "Lap", isOn: b3.Lap}
+                ]
+
+                delegate: StatusIcon {
+                    Layout.preferredWidth: 110
+                    label: modelData.label
+                    isOn: modelData.isOn
+                }
+            }
         }
     }
 
-    // RND Component
-    Rnd {
-        id: rnd
-        x: 870
-        y: 439
+    ColumnLayout {
+        id: lightsInputsLayout
+        width: implicitWidth
+        height: implicitHeight
+        spacing: 25
+        anchors {
+            horizontalCenter: accelerationGauge.horizontalCenter
+            top: accelerationGauge.bottom
+            topMargin: 50
+        }
+
+        Text {
+            id: lightsInputsLabel
+            height: Config.headerFontSize
+            color: Config.fontColor
+            font.family: Config.fontStyle
+            text: "Lights Input"
+            font.pixelSize: Config.debugHeaderFontSize
+            font.weight: Font.Bold
+            font.bold: true
+            Layout.alignment: Qt.AlignHCenter
+        }
+
+        RowLayout {
+            spacing: 75
+            Layout.alignment: Qt.AlignHCenter
+
+            ArrowIndicator {
+                isOn: b3.LeftSignalIn || b3.HazardLightsIn
+                rotation: 180
+            }
+
+            ArrowIndicator {
+                isOn: b3.RightSignalIn || b3.HazardLightsIn
+            }
+        }
+
+        DashIcon {
+            isOn: b3.HeadlightsSwitchIn
+            imageSource: "../Images/Headlights.png"
+            Layout.alignment: Qt.AlignCenter
+        }
     }
 
-    // B3 Light Outputs
-    DriverIcons {
-        id: driverIconComponent
-        x: 161
-        y: 131
-        hornActive: b3.HornSignalOut
-        hazardActive: b3.HazardLightsIn
-        headlightsActive: b3.HeadlightSignalOut
-        leftSignalActive: b3.LeftSignalOut
-        rightSignalActive: b3.RightSignalOut
-        parkingBrakeActive: b3.HandbrakeSwitch
-        daylightRunningLightsActive: b3.DaytimeRunningLightSignalOut
-    }
+    ColumnLayout {
+        id: lightsOutputsLayout
+        width: implicitWidth
+        height: implicitHeight
+        spacing: 25
+        anchors {
+            horizontalCenter: regenBrakingGauge.horizontalCenter
+            top: regenBrakingGauge.bottom
+            topMargin: 50
+        }
 
-    // B3 Switches
-    Column {
-        x: parent.width * (3/4)
-        spacing: 20
-        anchors.verticalCenter: parent.verticalCenter
+        Text {
+            id: lightsOutputsLabel
+            height: Config.headerFontSize
+            color: Config.fontColor
+            font.family: Config.fontStyle
+            text: "Lights Output"
+            font.pixelSize: Config.debugHeaderFontSize
+            font.weight: Font.Bold
+            font.bold: true
+            Layout.alignment: Qt.AlignHCenter
+        }
 
-        Repeater {
-            model: [
-                { label: "Headlights", active: b3.HeadlightsSwitchIn},
-                { label: "Horn", active: b3.HornSwitchIn },
-                { label: "Forward", active: b3.ForwardSwitchIn },
-                { label: "Brake", active: b3.BrakeSwitch },
-                { label: "Motor Reset", active: b3.MotorReset}
-            ]
-            delegate: Item {
-                width: parent.width
-                height: 40
+        RowLayout {
+            spacing: 75
+            Layout.alignment: Qt.AlignHCenter
 
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: modelData.label
-                    color: modelData.active ? "blue" : "white"
-                    font.pixelSize: 25
-                    font.family: Config.fontStyle
-                }
+            ArrowIndicator {
+                isOn: b3.LeftSignalOut 
+                rotation: 180
+            }
+
+            ArrowIndicator {
+                isOn: b3.RightSignalOut
+            }
+        }
+
+        RowLayout {
+            spacing: 75
+            Layout.alignment: Qt.AlignHCenter
+
+            DashIcon {
+                isOn: b3.HeadlightSignalOut
+                imageSource: "../Images/Headlights.png"
+                Layout.alignment: Qt.AlignCenter
+            }
+
+            DashIcon {
+                isOn: b3.DaytimeRunningLightSignalOut
+                imageSource: "../Images/DaytimeRunningLights.png"
+                Layout.alignment: Qt.AlignCenter
+            }
+
+            DashIcon {
+                isOn: b3.BrakeLightSignalOut
+                isHighContrast: true
+                imageSource: "../Images/ParkingBrake.png"
+                Layout.alignment: Qt.AlignCenter
+            }
+
+            DashIcon {
+                isOn: b3.HornSignalOut
+                imageSource: "../Images/CarHorn.png"
+                Layout.alignment: Qt.AlignCenter
             }
         }
     }
