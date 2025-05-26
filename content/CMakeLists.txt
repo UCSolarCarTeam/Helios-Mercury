@@ -29,7 +29,6 @@ qt6_add_qml_module(content
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Components/ContactorStatus.qml
-        Components/DriverIcons.qml
         Config/Config.qml
         Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
