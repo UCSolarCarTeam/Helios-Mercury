@@ -7,8 +7,8 @@ import Mercury
 
 Item {
     id: driverControlsDebugCluster
-    width: Config.windowWidth
-    width: Config.windowHeight
+    width: 1920
+    height: 550
 
     Backplate { 
         id: backplate
