@@ -48,7 +48,7 @@ qt6_add_qml_module(content
         Images/DaytimeRunningLights.png
         Images/ContactorConnected.png
         Images/ContactorDisconnected.png
-	Images/Battery.png
+	    Images/Battery.png
         Images/MpptMbmsStatusOff.png
         Images/MpptMbmsStatusOn.png
         Images/ParkingBrake.png
