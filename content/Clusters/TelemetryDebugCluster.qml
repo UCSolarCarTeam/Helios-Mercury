@@ -59,17 +59,8 @@ Item {
         return formattedHour + ":" + formattedMinute + ":" + formattedSecond + " " + period;
     }
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
@@ -83,6 +74,7 @@ Item {
         }
         text: "Telemetry"
         font.pixelSize: Config.debugHeaderFontSize
+        font.weight: Font.Medium
     }
 
     GridLayout {

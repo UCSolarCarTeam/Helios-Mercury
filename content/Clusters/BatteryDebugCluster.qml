@@ -19,6 +19,7 @@ Item {
         font.family: Config.fontStyle
         text: "Battery"
         font.pixelSize: Config.debugHeaderFontSize
+        font.weight: Font.Medium
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top

@@ -9,17 +9,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: motor0ErrorWarningDebugClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: motor0ErrorWarningDebugClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
