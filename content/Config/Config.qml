@@ -2,6 +2,8 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
+    property bool darkMode: false
+
     property int windowWidth: 1920
     property int windowHeight: 550
 
@@ -32,6 +34,15 @@ QtObject {
 
     property int mpptmbmsFontSizeS: 12
 
+    property int driverNameFontSize: 20
+
+    property int telemetryFlagLabelFontSize: 24
+
+    property int rpmGaugeFontSize: 40
+    property int rpmLabelFontSize: 12
+
+    property color rpmLabelFontColor: "#7a7a7a"
+
     // Wheel diameter in meters
     property double wheelDiameter: 0.50419
     property double rpmValue: (motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue) / 2
@@ -42,19 +53,19 @@ QtObject {
     property int largeGaugeSize: 300
 
     // color values 
-    property color primary: pi.DarkMode ? "#3498DB" : "#0083DB"
-    property color backplateColor: pi.DarkMode ? "#111111" : "#FFFFFF"
-    property color btnDisabled: pi.DarkMode ? "#242424" : "#C2C2C2"
-    property color valueLow: pi.DarkMode ? "#4CAF50" : "#4CAF50"
-    property color valueModerate: pi.DarkMode ? "#FFC107" : "#FFC107"
-    property color valueHigh: pi.DarkMode ? "#FF5252" : "#FF5252" 
-    property color lightShadow: pi.DarkMode ? "#74DCFF" : "#74DCFF"
-    property color faintGrey: pi.DarkMode ? "#AAAAAA" : "#5C5C5C"
-    property color fontColor: pi.DarkMode ? "#FFFFFF" : "#111111"
+    property color primary: darkMode ? "#3498DB" : "#0083DB"
+    property color backplateColor: darkMode ? "#111111" : "#FFFFFF"
+    property color btnDisabled: darkMode ? "#242424" : "#C2C2C2"
+    property color valueLow: darkMode ? "#4CAF50" : "#4CAF50"
+    property color valueModerate: darkMode ? "#FFC107" : "#FFC107"
+    property color valueHigh: darkMode ? "#FF5252" : "#FF5252" 
+    property color lightShadow: darkMode ? "#74DCFF" : "#74DCFF"
+    property color faintGrey: darkMode ? "#AAAAAA" : "#5C5C5C"
+    property color fontColor: darkMode ? "#FFFFFF" : "#111111"
     property color needleColor: "#FF0000" 
-    property color outerArcColor: pi.DarkMode ? "#242627" : "#AEB8BD"
+    property color outerArcColor: darkMode ? "#242627" : "#AEB8BD"
     property color contactorDisconnectedColor: "#ff0000"
-    property color contactorConnectedColor: pi.DarkMode ? "#00ff00" : "#029902"
-    property color speedometerWhiteTicks: pi.DarkMode ? "#ffffff" : "#111111"
-    property color speedometerGrayTicks: pi.DarkMode ? "#515253" : "#97999c"
+    property color contactorConnectedColor: darkMode ? "#00ff00" : "#029902"
+    property color speedometerWhiteTicks: darkMode ? "#ffffff" : "#111111"
+    property color speedometerGrayTicks: darkMode ? "#515253" : "#97999c"
 }
