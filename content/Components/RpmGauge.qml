@@ -94,11 +94,11 @@ Item {
     
     Text {
         id: label6
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 50
         color: Config.fontColor
         text: "1500"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             bottom: rpmGauge.verticalCenter
             bottomMargin: 175
@@ -115,11 +115,11 @@ Item {
 
     Text {
         id: label5
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 50
         color: Config.fontColor
         text: "1250"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             bottom: rpmGauge.verticalCenter
             bottomMargin: 115
@@ -136,11 +136,11 @@ Item {
 
     Text {
         id: label4
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 50
         color: Config.fontColor
         text: "1000"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             bottom: rpmGauge.verticalCenter
             bottomMargin: 50
@@ -157,11 +157,11 @@ Item {
 
     Text {
         id: label3
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 30
         color: Config.fontColor
         text: "750"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             verticalCenter: rpmGauge.verticalCenter
             left: flipped ? undefined : rpmGauge.left
@@ -177,11 +177,11 @@ Item {
 
     Text {
         id: label2
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 30
         color: Config.fontColor
         text: "500"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             top: rpmGauge.verticalCenter
             topMargin: 50
@@ -198,11 +198,11 @@ Item {
 
     Text {
         id: label1
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 30
         color: Config.fontColor
         text: "250"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             top: rpmGauge.verticalCenter
             topMargin: 115
@@ -219,11 +219,11 @@ Item {
 
     Text {
         id: label0
-        height: Config.rpmGaugeFontSize
+        height: Config.fontSize9
         width: 0
         color: Config.fontColor
         text: "0"
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         anchors {
             top: rpmGauge.verticalCenter
             topMargin: 170
@@ -254,11 +254,11 @@ Item {
         
         Text {
             id: rpmLabel
-            height: Config.rpmLabelFontSize
+            height: Config.fontSize1
             width: 15
-            color: Config.rpmLabelFontColor
+            color: Config.speedometerGrayTicks
             text: "RPM"
-            font.pixelSize: Config.rpmLabelFontSize
+            font.pixelSize: Config.fontSize1
             anchors {
                 bottom: modelData.targetLabel.bottom
                 bottomMargin: 5

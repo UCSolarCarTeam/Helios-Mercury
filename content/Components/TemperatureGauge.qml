@@ -145,7 +145,7 @@ Item {
             height: 18
             text: temperatureGauge.temperatureValue + "°C"
             color: temperatureGauge.temperatureColor
-            font.pixelSize: Config.tempGaugeFontSize
+            font.pixelSize: Config.fontSize3
             font.weight: Font.Medium
             font.family: Config.fontStyle
             wrapMode: Text.NoWrap
@@ -159,7 +159,7 @@ Item {
         id: gaugeLabelText
         width: parent.width
         text: gaugeLabel
-        font.pixelSize: Config.tempGaugeLabelFontSize
+        font.pixelSize: Config.fontSize5
         font.weight: Font.Medium
         font.family: Config.fontStyle
         color: Config.fontColor

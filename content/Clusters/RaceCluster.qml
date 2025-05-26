@@ -141,14 +141,14 @@ Item {
     Text {
         id: driverNameComponent
         width: 350
-        height: Config.driverNameFontSize
+        height: Config.fontSize5
         color: Config.fontColor 
         text: "Driver Name: " + pi.DriverName 
         wrapMode: Text.Wrap
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font {
-            pixelSize: Config.driverNameFontSize
+            pixelSize: Config.fontSize5
             weight: Font.Medium
             family: Config.fontStyle
         }

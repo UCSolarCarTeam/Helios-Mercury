@@ -30,7 +30,7 @@ Item {
                 Text {
                     id: contactorTitle
                     text: modelData.name
-                    font.pixelSize: Config.contactorLabelFontSize
+                    font.pixelSize: Config.fontSize1
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: Config.fontStyle
@@ -46,8 +46,8 @@ Item {
                     height: 20
                     imageSource: modelData.hasError ? "../Images/Exclamation.png" : 
                                 (modelData.isConnected ? "../Images/ContactorConnected.png" : "../Images/ContactorDisconnected.png")
-                    iconMaskColor: modelData.hasError ? Config.contactorDisconnectedColor : 
-                                (modelData.isConnected ? Config.contactorConnectedColor : Config.contactorDisconnectedColor)
+                    iconMaskColor: modelData.hasError ? Config.valueHigh : 
+                                (modelData.isConnected ? Config.valueLow : Config.valueHigh)
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottomMargin: 2

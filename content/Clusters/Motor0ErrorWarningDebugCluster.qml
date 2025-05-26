@@ -23,7 +23,7 @@ Item {
             topMargin: 13
         }
         text: "Motor 0 Errors & Warnings"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -87,7 +87,7 @@ Item {
     //             Text {
     //                 id: motor0WarningFlagTitle
     //                 text: modelData.name
-    //                 font.pixelSize: Config.contactorLabelFontSize
+    //                 font.pixelSize: Config.fontSize1
     //                 horizontalAlignment: Text.AlignHCenter
     //                 verticalAlignment: Text.AlignVCenter
     //                 font.family: Config.fontStyle
@@ -102,7 +102,7 @@ Item {
     //                 width: 20
     //                 height: 20
     //                 imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-    //                 iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+    //                 iconMaskColor: modelData.isOn ? Config.valueLow : Config.valueHigh
     //                 anchors.bottom: parent.bottom
     //                 anchors.horizontalCenter: parent.horizontalCenter
     //                 anchors.bottomMargin: 2
@@ -177,7 +177,7 @@ Item {
     //             Text {
     //                 id: motor0ErrorFlagTitle
     //                 text: modelData.name
-    //                 font.pixelSize: Config.contactorLabelFontSize
+    //                 font.pixelSize: Config.fontSize1
     //                 horizontalAlignment: Text.AlignHCenter
     //                 verticalAlignment: Text.AlignVCenter
     //                 font.family: Config.fontStyle
@@ -192,7 +192,7 @@ Item {
     //                 width: 20
     //                 height: 20
     //                 imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-    //                 iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+    //                 iconMaskColor: modelData.isOn ? Config.valueLow : Config.valueHigh
     //                 anchors.bottom: parent.bottom
     //                 anchors.horizontalCenter: parent.horizontalCenter
     //                 anchors.bottomMargin: 2

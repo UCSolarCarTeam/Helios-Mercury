@@ -18,7 +18,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Battery"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -88,7 +88,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Battery Pack"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -227,7 +227,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Requested Fan Speed: " + battery.RequestedFanSpeed
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         font.weight: Font.Medium
         anchors {
             horizontalCenter: fanSpeedGauge.horizontalCenter

@@ -73,7 +73,7 @@ Item {
             topMargin: 13
         }
         text: "Telemetry"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -212,7 +212,7 @@ Item {
                     width: implicitWidth
                     color: Config.fontColor
                     text: modelData.label
-                    font.pixelSize: Config.telemetryFlagLabelFontSize
+                    font.pixelSize: Config.fontSize6
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.weight: Font.Medium
@@ -243,7 +243,7 @@ Item {
         width: implicitWidth
         color: Config.fontColor
         text: numberToMonth(telemetry.GpsMonth) + " " + telemetry.GpsDay + ", " + telemetry.GpsYear
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.weight: Font.Medium
@@ -261,7 +261,7 @@ Item {
         width: implicitWidth
         color: Config.fontColor
         text: formatTime12Hour(telemetry.GpsHour, telemetry.GpsMinute, telemetry.GpsSecond)
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.weight: Font.Medium

@@ -23,7 +23,7 @@ Item {
             topMargin: 13
         }
         text: "MBMS"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -39,7 +39,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Contactor Status"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -64,7 +64,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Miscellaneous Status"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -131,7 +131,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Trip Status"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
