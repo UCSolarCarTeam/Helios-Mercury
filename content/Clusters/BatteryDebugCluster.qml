@@ -6,8 +6,8 @@ import QtQuick.Layouts
 
 Item {
     id: batteryDebugCluster
-    width: Config.windowWidth
-    height: Config.windowHeight
+    width: 1920
+    height: 550
 
     Backplate {
         id: backplate
