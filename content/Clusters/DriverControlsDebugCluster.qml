@@ -10,17 +10,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
@@ -167,7 +158,7 @@ Item {
         }
 
         DashIcon {
-            isOn: b3.HeadlightsSwitchIn
+            iconMaskColor: b3.HeadlightsSwitchIn ? Config.primary : Config.btnDisabled 
             imageSource: "../Images/Headlights.png"
             Layout.alignment: Qt.AlignCenter
         }
@@ -215,26 +206,25 @@ Item {
             Layout.alignment: Qt.AlignHCenter
 
             DashIcon {
-                isOn: b3.HeadlightSignalOut
+                iconMaskColor: b3.HeadlightSignalOut ? Config.primary : Config.btnDisabled 
                 imageSource: "../Images/Headlights.png"
                 Layout.alignment: Qt.AlignCenter
             }
 
             DashIcon {
-                isOn: b3.DaytimeRunningLightSignalOut
+                iconMaskColor: b3.DaytimeRunningLightSignalOut ? Config.primary : Config.btnDisabled 
                 imageSource: "../Images/DaytimeRunningLights.png"
                 Layout.alignment: Qt.AlignCenter
             }
 
             DashIcon {
-                isOn: b3.BrakeLightSignalOut
-                isHighContrast: true
+                iconMaskColor: b3.BrakeLightSignalOut ? Config.primary : Config.btnDisabled 
                 imageSource: "../Images/ParkingBrake.png"
                 Layout.alignment: Qt.AlignCenter
             }
 
             DashIcon {
-                isOn: b3.HornSignalOut
+                iconMaskColor: b3.HornSignalOut ? Config.primary : Config.btnDisabled 
                 imageSource: "../Images/CarHorn.png"
                 Layout.alignment: Qt.AlignCenter
             }
