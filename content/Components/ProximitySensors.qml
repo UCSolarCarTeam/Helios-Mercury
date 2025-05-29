@@ -15,11 +15,22 @@ Item {
     property int sensorRightDistance: proximitySensors.ProximitySensor4   
 
     function truncateToDecimal(num, decimals) {
+        /**
+        * Truncates a number to a fixed number of decimal places without rounding.
+        * @param {number} num - The number to truncate.
+        * @param {number} decimals - The number of decimal places to keep.
+        * @returns {number} The truncated number.
+        */        
         var factor = Math.pow(10, decimals);
         return Math.floor(num * factor) / factor;
     }
 
     function getProximityColor(distance) {
+    /**
+    * Returns a color based on distance for proximity indication.
+    * @param {number} distance - Distance in centimeters.
+    * @returns {string} A color code from the Config object.
+    */        
         return distance <= 100 ? Config.proximityRed
              : distance < 500 ? Config.proximityYellow
              : distance < 1000 ? Config.proximityYellow
@@ -27,6 +38,11 @@ Item {
     }
 
     function getVisibleFraction(distance) {
+    /**
+    * Maps distance to a visibility fraction (for UI effects).
+    * @param {number} distance - Distance in centimeters.
+    * @returns {number} A fractional value between 0.25 and 1.0.
+    */        
         return distance <= 100 ? 0.25
              : distance < 500 ? 0.50
              : distance < 1000 ? 0.75
@@ -34,27 +50,40 @@ Item {
     }
 
     function formatDistanceLabel(distance) {
+    /**
+    * Formats a distance (in cm) as a label in meters with appropriate precision.
+    * @param {number} distance - Distance in centimeters.
+    * @returns {string} A formatted string like "1.2m" or "15m".
+    */        
         var meters = distance / 100.0;
         return meters < 10
             ? truncateToDecimal(meters, 1).toFixed(1) + "m"
             : Math.round(meters) + "m";
     }
 
-    function getMarginValue(distance, a, b, c, d) {
-        return distance <= 100 ? a
-             : distance < 500 ? b
-             : distance < 1000 ? c
-             : d;
+    function getMarginValue(distance, marginClose, marginMidClose, marginMidFar, marginFar) {
+        /**
+        * Returns a margin value based on the distance range.
+        * @param {number} distance - Distance in centimeters.
+        * @param {*} marginClose - Value when distance ≤ 100 cm.
+        * @param {*} marginMidClose - Value when 100 < distance < 500 cm.
+        * @param {*} marginMidFar - Value when 500 ≤ distance < 1000 cm.
+        * @param {*} marginFar - Value when distance ≥ 1000 cm.
+        * @returns {*} The selected margin value based on distance.
+        */        
+        return distance <= 100 ? marginClose
+            : distance < 500 ? marginMidClose
+            : distance < 1000 ? marginMidFar
+            : marginFar;
     }
 
     // === Car image ===
-    Image {
+    DashIcon {
         id: carImage
         width: 80
         height: 145
-        source: "../Images/ProximitySensorCar.png"
-        sourceSize: Qt.size(80, 145)
-        smooth: true
+        imageSource: "../Images/ProximitySensorCar.png"
+        iconMaskColor: Config.proximityCar
     }
 
     // ========== SENSOR LEFT ==========
