@@ -32,7 +32,7 @@ QtObject {
 
     // color values 
     property color primary: darkModeEnabled ? "#3498DB" : "#0083DB"
-    property color backplateColor: darkModeEnabled ? "#111111" : "#FFFFFF"
+    property color backplateColor: darkModeEnabled ? "#000000" : "#FFFFFF"
     property color btnDisabled: darkModeEnabled ? "#242424" : "#C2C2C2"
     property color valueLow: darkModeEnabled ? "#00ff00" : "#029902"
     property color valueModerate: "#FFC107"
