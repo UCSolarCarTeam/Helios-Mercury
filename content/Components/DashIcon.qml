@@ -1,6 +1,5 @@
-import QtQuick 2.15
+import QtQuick 6.2
 import QtQuick.Controls 2.15
-import Mercury
 import QtQuick.Effects
 
 Item {
@@ -10,9 +9,7 @@ Item {
     smooth: true
 
     property string imageSource: "" //IMPORTANT: Image must be solid white
-    property bool isOn: false
-    property bool isHighContrast: false
-    property color iconMaskColor: dashIcon.isOn ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
+    property color iconMaskColor
 
     Image {
         id: staticImage
@@ -24,10 +21,11 @@ Item {
     }
 
     MultiEffect {
+        id: fillEffect
         anchors.fill: parent
         source: staticImage
         colorization: 1.0 
-        colorizationColor: iconMaskColor 
+        colorizationColor: dashIcon.iconMaskColor 
         antialiasing: true
         layer.enabled: true
         layer.smooth: true

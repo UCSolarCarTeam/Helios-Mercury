@@ -1,22 +1,15 @@
 import QtQuick 2.15
 import "../Config"
+import Mercury
+import "../Components"
 
 Item {
     id: driverControlsDebugCluster
     width: 1920
     height: 550
 
-    Image {
-        id: driverControlsDebugClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: driverControlsDebugClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {

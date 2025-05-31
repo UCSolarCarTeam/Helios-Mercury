@@ -58,7 +58,7 @@ QtObject {
 
         ctx.beginPath();
         ctx.lineWidth = needleWidth;
-        ctx.strokeStyle = Config.needleColor;
+        ctx.strokeStyle = Config.valueHigh;
         
         var needleStartAngle, needleEndAngle;
         
@@ -110,27 +110,27 @@ QtObject {
     function getFontSizes(gaugeSize) {
         if (gaugeSize === Config.largeGaugeSize) {
             return {
-                l: "gaugeFontSizeXL",
-                m: "gaugeFontSizeL",
-                s: "gaugeFontSizeS"
+                l: "fontSize8",
+                m: "fontSize7",
+                s: "fontSize4"
             };
         } else if (gaugeSize === Config.mediumGaugeSize) {
             return {
-                l: "gaugeFontSizeL",
-                m: "gaugeFontSizeM",
-                s: "gaugeFontSizeS"
+                l: "fontSize7",
+                m: "fontSize6",
+                s: "fontSize4"
             };
         } else if (gaugeSize === Config.smallGaugeSize) {
             return {
-                l: "gaugeFontSizeM",
-                m: "gaugeFontSizeS",
-                s: "gaugeFontSizeXS"
+                l: "fontSize6",
+                m: "fontSize4",
+                s: "fontSize1"
             };
         } else if (gaugeSize === Config.extraSmallGaugeSize) {
             return {
-                l: "gaugeFontSizeS",
-                m: "gaugeFontSizeXS",
-                s: "gaugeFontSizeXXS"
+                l: "fontSize4",
+                m: "fontSize1",
+                s: "fontSize0"
             };
         } else {
             return null;

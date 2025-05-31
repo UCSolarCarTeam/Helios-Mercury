@@ -9,17 +9,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: motor1ErrorWarningDebugClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: motor1ErrorWarningDebugClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
@@ -32,7 +23,7 @@ Item {
             topMargin: 13
         }
         text: "Motor 1 Errors & Warnings"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -96,7 +87,7 @@ Item {
     //             Text {
     //                 id: motor1WarningFlagTitle
     //                 text: modelData.name
-    //                 font.pixelSize: Config.contactorLabelFontSize
+    //                 font.pixelSize: Config.fontSize1
     //                 horizontalAlignment: Text.AlignHCenter
     //                 verticalAlignment: Text.AlignVCenter
     //                 font.family: Config.fontStyle
@@ -111,7 +102,7 @@ Item {
     //                 width: 20
     //                 height: 20
     //                 imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-    //                 iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+    //                 iconMaskColor: modelData.isOn ? Config.valueLow : Config.valueHigh
     //                 anchors.bottom: parent.bottom
     //                 anchors.horizontalCenter: parent.horizontalCenter
     //                 anchors.bottomMargin: 2
@@ -186,7 +177,7 @@ Item {
     //             Text {
     //                 id: motor1ErrorFlagTitle
     //                 text: modelData.name
-    //                 font.pixelSize: Config.contactorLabelFontSize
+    //                 font.pixelSize: Config.fontSize1
     //                 horizontalAlignment: Text.AlignHCenter
     //                 verticalAlignment: Text.AlignVCenter
     //                 font.family: Config.fontStyle
@@ -201,7 +192,7 @@ Item {
     //                 width: 20
     //                 height: 20
     //                 imageSource: modelData.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-    //                 iconMaskColor: modelData.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+    //                 iconMaskColor: modelData.isOn ? Config.valueLow : Config.valueHigh
     //                 anchors.bottom: parent.bottom
     //                 anchors.horizontalCenter: parent.horizontalCenter
     //                 anchors.bottomMargin: 2

@@ -25,6 +25,14 @@ Item {
         visible: false
 
         Rectangle {
+            id: batteryBackground
+            width: parent.width
+            height: parent.height
+            anchors.bottom: parent.bottom
+            color: Config.btnDisabled
+        }
+
+        Rectangle {
             id: batteryFill
             width: parent.width
             height: parent.height * Math.max(0, Math.min(1, (batteryIcon.value) / 100))
@@ -78,7 +86,7 @@ Item {
                     return batteryIcon.value.toFixed(1) + " %";
             }
         }
-        font.pixelSize: Config.batteryFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         font.weight: Font.Medium

@@ -85,9 +85,9 @@ Item {
         id: numberLabel
         Text {
             width: 50
-            height: Config.gaugeFontSizeM
+            height: Config.fontSize6
             color: Config.fontColor
-            font.pixelSize: Config.gaugeFontSizeM
+            font.pixelSize: Config.fontSize6
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignTop
             wrapMode: Text.Wrap
@@ -138,7 +138,7 @@ Item {
             Rectangle {
                 width: isWhite ? 5 : 4
                 height: 9
-                color: isWhite ? Config.speedometerWhiteTicks : Config.speedometerGrayTicks
+                color: isWhite ? Config.fontColor : Config.speedometerGrayTicks
                 
                 property bool isWhite: false
                 property int posX: 0
@@ -204,10 +204,10 @@ Item {
     Text {
         id: speedometerValue
         width: 70
-        height: Config.gaugeFontSizeXXL
+        height: Config.fontSize10
         color: Config.fontColor
         text: speedometer.value
-        font.pixelSize: Config.gaugeFontSizeXXL
+        font.pixelSize: Config.fontSize10
         font.family: Config.fontStyle
         font.weight: Font.Medium
         horizontalAlignment: Text.AlignHCenter
@@ -222,10 +222,10 @@ Item {
     Text {
         id: speedometerUnits
         width: 70
-        height: Config.gaugeFontSizeM
+        height: Config.fontSize6
         text: speedometer.units
         color: Config.fontColor
-        font.pixelSize: Config.gaugeFontSizeM
+        font.pixelSize: Config.fontSize6
         font.family: Config.fontStyle
         font.weight: Font.Medium
         horizontalAlignment: Text.AlignHCenter

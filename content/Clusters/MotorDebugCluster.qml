@@ -9,17 +9,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: motorDebugClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: motorDebugClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
@@ -32,7 +23,7 @@ Item {
             topMargin: 13
         }
         text: "Motor"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -55,11 +46,11 @@ Item {
             Text {
                 id: motor0Label
                 width: 95
-                height: Config.headerFontSize
+                height: Config.fontSize4
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 text: "Motor 0"
-                font.pixelSize: Config.debugHeaderFontSize
+                font.pixelSize: Config.fontSize6
                 font.weight: Font.Bold
                 font.bold: true
             }
@@ -67,12 +58,12 @@ Item {
             Text {
                 id: motor0ControlValue
                 width: 150
-                height: Config.headerFontSize
+                height: Config.fontSize4
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 font.weight: Font.Medium
                 text: "Control Value: " + motorDetails0.ControlValue
-                font.pixelSize: Config.headerFontSize
+                font.pixelSize: Config.fontSize4
             }
         }
 
@@ -199,11 +190,11 @@ Item {
             Text {
                 id: motor1Label
                 width: 95
-                height: Config.headerFontSize
+                height: Config.fontSize4
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 text: "Motor 1"
-                font.pixelSize: Config.debugHeaderFontSize
+                font.pixelSize: Config.fontSize6
                 font.weight: Font.Bold
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
@@ -213,12 +204,12 @@ Item {
             Text {
                 id: motor1ControlValue
                 width: 150
-                height: Config.headerFontSize
+                height: Config.fontSize4
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 font.weight: Font.Medium
                 text: "Control Value: " + motorDetails1.ControlValue
-                font.pixelSize: Config.headerFontSize
+                font.pixelSize: Config.fontSize4
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -352,7 +343,7 @@ Item {
         text: motorDetails0.CurrentRpmValue
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         font.weight: Font.Medium
     }
 
@@ -367,7 +358,7 @@ Item {
         text: "RPM"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
@@ -396,7 +387,7 @@ Item {
         text: motorDetails1.CurrentRpmValue
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Config.rpmGaugeFontSize
+        font.pixelSize: Config.fontSize9
         font.weight: Font.Medium
     }
 
@@ -411,14 +402,14 @@ Item {
         text: "RPM"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
         font.weight: Font.Medium
     }
 
     Text {
         id: motorSetpointLabel
         width: 150
-        height: Config.contactorFontSize
+        height: Config.fontSize2
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
             horizontalCenterOffset: 203
@@ -429,14 +420,14 @@ Item {
         font.family: Config.fontStyle
         font.weight: Font.Medium
         text: "Motor Setpoint:\n" + keyMotor.MotorSetpoint
-        font.pixelSize: Config.contactorFontSize
+        font.pixelSize: Config.fontSize2
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
     }
 
     Text {
         id: keyMotorLabel
-        height: Config.contactorFontSize
+        height: Config.fontSize2
         anchors {
             horizontalCenter: motorDebugCluster.horizontalCenter
             horizontalCenterOffset: -241
@@ -447,7 +438,7 @@ Item {
         font.family: Config.fontStyle
         font.weight: Font.Medium
         text: "Key\nMotor:"
-        font.pixelSize: Config.contactorFontSize
+        font.pixelSize: Config.fontSize2
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
     }

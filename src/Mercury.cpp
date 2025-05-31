@@ -45,6 +45,9 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
         StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
     }
 
+    // makes boolean variable named darkModeEnabled available
+    engine_.rootContext()->setContextProperty("darkModeEnabled", config.getDarkMode());
+
     //initialize MessageTransmitter which will transmit data every period of time deinifed in config.ini
     MessageTransmitter* messageTransmitter = new MessageTransmitter();
 

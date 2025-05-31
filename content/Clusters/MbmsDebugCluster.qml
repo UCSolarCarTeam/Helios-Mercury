@@ -9,17 +9,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
@@ -32,7 +23,8 @@ Item {
             topMargin: 13
         }
         text: "MBMS"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
+        font.weight: Font.Medium
     }
 
     Text {
@@ -47,7 +39,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Contactor Status"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -72,7 +64,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Miscellaneous Status"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -139,7 +131,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Trip Status"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }

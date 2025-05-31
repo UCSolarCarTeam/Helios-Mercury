@@ -91,7 +91,7 @@ Item {
         height: 24
         color: Config.fontColor
         text: threeQuarterGauge.minValue
-        font.pixelSize: Config.gaugeFontSizeM
+        font.pixelSize: Config.fontSize6
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -108,7 +108,7 @@ Item {
         height: 24
         color: Config.fontColor
         text: threeQuarterGauge.maxValue
-        font.pixelSize: Config.gaugeFontSizeM
+        font.pixelSize: Config.fontSize6
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -131,7 +131,7 @@ Item {
                     return threeQuarterGauge.value.toFixed(1) + threeQuarterGauge.units;
             }
         }
-        font.pixelSize: Config.gaugeFontSizeL
+        font.pixelSize: Config.fontSize7
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -149,7 +149,7 @@ Item {
         height: 18
         color: Config.fontColor
         text: threeQuarterGauge.gaugeTitle
-        font.pixelSize: Config.gaugeFontSizeS
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {

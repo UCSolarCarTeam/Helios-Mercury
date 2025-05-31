@@ -27,7 +27,7 @@ Item {
     component StyledText: Text {
         verticalAlignment: Text.AlignVCenter
         font {
-            pixelSize: Config.motorArrayFontSize
+            pixelSize: Config.fontSize3
             weight: Font.Medium
             family: Config.fontStyle
         }
