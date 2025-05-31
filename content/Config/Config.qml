@@ -5,7 +5,7 @@ QtObject {
     property bool darkMode: false
 
     property int windowWidth: 1920
-    property int windowheight: 550
+    property int windowHeight: 550
 
     property string fontStyle: "SF Pro"
 
