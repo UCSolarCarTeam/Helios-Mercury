@@ -104,6 +104,12 @@ Item {
         }
     }
 
+    ProximitySensors{
+        id: proximitySensorsIcon
+        x: 600
+        y: 115
+    }
+
     ThreeQuarterGauge {
         id: motorTempGauge
         x: 212
