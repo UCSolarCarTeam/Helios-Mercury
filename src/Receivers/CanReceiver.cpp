@@ -58,6 +58,8 @@ void CanReceiver::handleReadyRead() {
             packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);
         } else if(id >= PacketDefinitions::PROXIMITY_SENSORS_ID_MIN && id <= PacketDefinitions::PROXIMITY_SENSORS_ID_MAX){
             packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
+        } else if(id >= PacketDefinitions::KEY_MOTOR_ID_MIN && id <= PacketDefinitions::KEY_MOTOR_ID_MAX){
+            packetFactory_->getKeyMotorPacket().IPacket::populatePacket(id, payload);
         } else {
             qWarning() << "UNKNOWN ID:" << frame.frameId() << "With payload:" << frame.payload();
         }

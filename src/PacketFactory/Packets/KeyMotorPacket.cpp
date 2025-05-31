@@ -17,6 +17,8 @@ KeyMotorPacket::KeyMotorPacket() {
     setMotorMode(false);
     setSoftwareEnable(false);
     setDebugMode(false);
+
+    initializeIdActionMap();
 }
 
 void KeyMotorPacket::populatePacket(const QByteArray& data) {
@@ -39,4 +41,17 @@ QJsonObject KeyMotorPacket::toJson() {
     json[JsonDefinitions::DEBUG_MODE] = DebugMode_;
 
     return json;
+}
+
+void KeyMotorPacket::initializeIdActionMap() {
+    qDebug() << "Initializing Key Motor ID Action Map";
+    idActionMap[0x550] = {
+        [this](QByteArray payload) {
+            unsigned char controlBits = getValue<unsigned char>(payload, 0);
+            setControlMode(controlBits & CONTROL_MODE_MASK);
+            setMotorMode(controlBits & MOTOR_MODE_MASK);
+            setSoftwareEnable(controlBits & SOFTWARE_ENABLE_MASK);
+            setDebugMode(controlBits & DEBUG_MODE_MASK);
+        }
+    };
 }
