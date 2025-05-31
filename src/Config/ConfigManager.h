@@ -39,6 +39,8 @@ public:
     int getRfidPin0() const;
     int getRfidPin1() const;
 
+    bool getDarkMode() const;
+
 private:
     ConfigManager(const QString& path);
 
@@ -67,6 +69,8 @@ private:
 
     int rfidPin0_;
     int rfidPin1_;
+
+    bool darkMode_;
 };
 
 #endif // CONFIGMANAGER_H

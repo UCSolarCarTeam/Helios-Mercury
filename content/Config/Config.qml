@@ -2,8 +2,6 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
-    property bool darkMode: false
-
     property int windowWidth: 1920
     property int windowHeight: 550
 
@@ -33,15 +31,15 @@ QtObject {
     property int largeGaugeSize: 300
 
     // color values 
-    property color primary: darkMode ? "#3498DB" : "#0083DB"
-    property color backplateColor: darkMode ? "#111111" : "#FFFFFF"
-    property color btnDisabled: darkMode ? "#242424" : "#C2C2C2"
-    property color valueLow: darkMode ? "#00ff00" : "#029902"
+    property color primary: darkModeEnabled ? "#3498DB" : "#0083DB"
+    property color backplateColor: darkModeEnabled ? "#111111" : "#FFFFFF"
+    property color btnDisabled: darkModeEnabled ? "#242424" : "#C2C2C2"
+    property color valueLow: darkModeEnabled ? "#00ff00" : "#029902"
     property color valueModerate: "#FFC107"
     property color valueHigh: "#FF0000"
     property color lightShadow: "#74DCFF"
-    property color faintGrey: darkMode ? "#AAAAAA" : "#5C5C5C"
-    property color fontColor: darkMode ? "#FFFFFF" : "#111111"
-    property color outerArcColor: darkMode ? "#242627" : "#AEB8BD"
-    property color speedometerGrayTicks: darkMode ? "#515253" : "#97999c"
+    property color faintGrey: darkModeEnabled ? "#AAAAAA" : "#5C5C5C"
+    property color fontColor: darkModeEnabled ? "#FFFFFF" : "#111111"
+    property color outerArcColor: darkModeEnabled ? "#242627" : "#AEB8BD"
+    property color speedometerGrayTicks: darkModeEnabled ? "#515253" : "#97999c"
 }

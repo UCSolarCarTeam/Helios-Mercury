@@ -34,3 +34,6 @@ logPath=Mercury.log
 [Gpio]
 rfidPin0=20
 rfidPin1=21
+
+[ColorMode]
+darkMode = false
