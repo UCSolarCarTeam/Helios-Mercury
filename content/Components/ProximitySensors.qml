@@ -43,7 +43,7 @@ Item {
     * @returns {number} A fractional value between 0.25 and 1.0.
     */  
     function getVisibleFraction(distance) {      
-        return distance <= 100 ? 0.25
+        return distance <= 100 ? 0.23
              : distance < 500 ? 0.50
              : distance < 1000 ? 0.75
              : 1.0;
@@ -81,7 +81,7 @@ Item {
     DashIcon {
         id: carImage
         width: 80
-        height: 145
+        height: 160
         imageSource: "../Images/ProximitySensorCar.png"
         iconMaskColor: Config.proximityCar
     }
@@ -101,7 +101,7 @@ Item {
             angle: 45
         }
         imageSource: "../Images/ProximitySensorBarsIcon.png"
-        iconMaskColor: getProximityColor(sensorLeftDistance)
+        iconMaskColor: getProximityColor(sensorLeftDistance)      
         visibleFraction: getVisibleFraction(sensorLeftDistance)
     }
     Text {
@@ -131,7 +131,7 @@ Item {
             angle: 0
         }
         imageSource: "../Images/ProximitySensorBarsIcon.png"
-        iconMaskColor: getProximityColor(sensorCenterLeftDistance)
+        iconMaskColor: getProximityColor(sensorCenterLeftDistance)  
         visibleFraction: getVisibleFraction(sensorCenterLeftDistance)
     }
     Text {
@@ -161,7 +161,7 @@ Item {
             angle: 0
         }
         imageSource: "../Images/ProximitySensorBarsIcon.png"
-        iconMaskColor: getProximityColor(sensorCenterRightDistance)
+        iconMaskColor: getProximityColor(sensorCenterRightDistance)    
         visibleFraction: getVisibleFraction(sensorCenterRightDistance)
     } 
     Text {
@@ -191,7 +191,7 @@ Item {
             angle: -45
         }
         imageSource: "../Images/ProximitySensorBarsIcon.png"
-        iconMaskColor: getProximityColor(sensorRightDistance)
+        iconMaskColor: getProximityColor(sensorRightDistance)         
         visibleFraction: getVisibleFraction(sensorRightDistance)
     }    
 
