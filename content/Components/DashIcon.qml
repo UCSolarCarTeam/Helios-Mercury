@@ -13,9 +13,9 @@ Item {
     property string imageSource: ""
     property bool isOn: false
     property bool isHighContrast: false
-    property color iconMaskColor: dashIcon.isOn
-                                  ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary)
-                                  : Config.btnDisabled
+    property color iconMaskColor: dashIcon.isOn ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
+    property int aspectRatioWidth: 32
+    property int aspectRatioHeight: 32
 
     Item {
         id: clipper
@@ -34,7 +34,7 @@ Item {
                     width: dashIcon.width
                     height: dashIcon.height
                     source: imageSource
-                    sourceSize: Qt.size(dashIcon.width, dashIcon.height)
+                    sourceSize: Qt.size(aspectRatioWidth, aspectRatioHeight)
                     smooth: true
                 }
                 hideSource: true

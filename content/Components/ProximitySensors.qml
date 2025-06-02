@@ -79,11 +79,14 @@ Item {
 
     // === Car image ===
     DashIcon {
-        id: carImage
+        id: carImage 
         width: 80
         height: 160
+        anchors.horizontalCenter: proximitySensorsIcon.horizontalCenter
         imageSource: "../Images/ProximitySensorCar.png"
         iconMaskColor: Config.proximityCar
+        aspectRatioWidth: 512
+        aspectRatioHeight: 512
     }
 
     // ========== SENSOR LEFT ==========
@@ -91,10 +94,12 @@ Item {
         id: sensorLeft
         width: carImage.width * 0.375
         height: carImage.height * 0.207
-        anchors.right: carImage.left
-        anchors.top: carImage.bottom
-        anchors.rightMargin: 58
-        anchors.topMargin: 16
+        anchors {
+            right: carImage.left
+            top: carImage.bottom
+            rightMargin: 58
+            topMargin: 16
+        }
         transform: Rotation {
             origin.x: width / 2
             origin.y: height / 2
@@ -103,7 +108,10 @@ Item {
         imageSource: "../Images/ProximitySensorBarsIcon.png"
         iconMaskColor: getProximityColor(sensorLeftDistance)      
         visibleFraction: getVisibleFraction(sensorLeftDistance)
+        aspectRatioWidth: 128
+        aspectRatioHeight: 128
     }
+
     Text {
         text: formatDistanceLabel(sensorLeftDistance)
         anchors.right: carImage.left
@@ -121,10 +129,12 @@ Item {
         id: sensorCenterLeft
         width: carImage.width * 0.375
         height: carImage.height * 0.213
-        anchors.horizontalCenter: carImage.horizontalCenter
-        anchors.top: carImage.bottom
-        anchors.topMargin: 4
-        anchors.horizontalCenterOffset: -15
+        anchors {
+            horizontalCenter: carImage.horizontalCenter
+            top: carImage.bottom
+            topMargin: 4
+            horizontalCenterOffset: -15
+        }
         transform: Rotation {
             origin.x: width / 2
             origin.y: height / 2
@@ -133,7 +143,10 @@ Item {
         imageSource: "../Images/ProximitySensorBarsIcon.png"
         iconMaskColor: getProximityColor(sensorCenterLeftDistance)  
         visibleFraction: getVisibleFraction(sensorCenterLeftDistance)
+        aspectRatioWidth: 128
+        aspectRatioHeight: 128
     }
+
     Text {
         text: formatDistanceLabel(sensorCenterLeftDistance)
         anchors.horizontalCenter: carImage.horizontalCenter
@@ -151,10 +164,12 @@ Item {
         id: sensorCenterRight
         width: carImage.width * 0.375
         height: carImage.height * 0.213
-        anchors.horizontalCenter: carImage.horizontalCenter
-        anchors.top: carImage.bottom
-        anchors.topMargin: 4
-        anchors.horizontalCenterOffset: 16
+        anchors {
+            horizontalCenter: carImage.horizontalCenter
+            top: carImage.bottom
+            topMargin: 4
+            horizontalCenterOffset: 16
+        }
         transform: Rotation {
             origin.x: width / 2
             origin.y: height / 2
@@ -163,7 +178,10 @@ Item {
         imageSource: "../Images/ProximitySensorBarsIcon.png"
         iconMaskColor: getProximityColor(sensorCenterRightDistance)    
         visibleFraction: getVisibleFraction(sensorCenterRightDistance)
+        aspectRatioWidth: 128
+        aspectRatioHeight: 128
     } 
+
     Text {
         text: formatDistanceLabel(sensorCenterRightDistance)
         anchors.horizontalCenter: carImage.horizontalCenter
@@ -181,10 +199,12 @@ Item {
         id: sensorRight
         width: carImage.width * 0.375
         height: carImage.height * 0.207
-        anchors.left: carImage.right
-        anchors.top: carImage.bottom
-        anchors.leftMargin: 25
-        anchors.topMargin: -68
+        anchors {
+            left: carImage.right
+            top: carImage.bottom
+            leftMargin: 25
+            topMargin: -68
+        }
         transform: Rotation {
             origin.x: width / 2
             origin.y: height / 2
@@ -193,6 +213,8 @@ Item {
         imageSource: "../Images/ProximitySensorBarsIcon.png"
         iconMaskColor: getProximityColor(sensorRightDistance)         
         visibleFraction: getVisibleFraction(sensorRightDistance)
+        aspectRatioWidth: 128
+        aspectRatioHeight: 128
     }    
 
     Text {
