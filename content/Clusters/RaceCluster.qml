@@ -106,7 +106,7 @@ Item {
 
     ProximitySensors{
         id: proximitySensorsIcon
-        x: 600
+        x: 580
         y: 115
     }
 
