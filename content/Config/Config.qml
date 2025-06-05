@@ -5,66 +5,41 @@ QtObject {
     property int windowWidth: 1920
     property int windowHeight: 550
 
-    property color primary: "#3498DB"
-    property color btnDisabled: "#111111"
-
-    property int motorArrayFontSize: 16
-    property color valueLow: "#4CAF50"
-    property color valueModerate: "#FFC107"
-    property color valueHigh: "#FF5252"
-    property color lightShadow: "#74dcff"
-
-    property color faintGrey: "#AAAAAA"
-    property int rndfontSize: 20
-
-    property color fontColor: "#FFFFFF"
-
-    property color needleColor: "#FF0000"
-    property color outerArcColor: "#242627"
-
     property string fontStyle: "SF Pro"
-    property color highContrast: "#A2180F"
 
-    property int gaugeFontSizeXXS: 8
-    property int gaugeFontSizeXS: 12
-    property int gaugeFontSizeS: 18
-    property int gaugeFontSizeM: 24
-    property int gaugeFontSizeL: 28
-    property int gaugeFontSizeXL: 34
-    property int gaugeFontSizeXXL: 86
-
-    property int contactorFontSize: 14
-    property int contactorLabelFontSize: 12
-    property color contactorDisconnectedColor: "#ff0000"
-    property color contactorConnectedColor: "#00ff00"
-
-    property int batteryFontSize: 18
-
-    property int headerFontSize: 18
-    property int debugHeaderFontSize: 24
-    
-    property color speedometerWhiteTicks: "#ffffff"
-    property color speedometerGrayTicks: "#515253"
+    // font sizes
+    property int fontSize0: 8
+    property int fontSize1: 12
+    property int fontSize2: 14
+    property int fontSize3: 16
+    property int fontSize4: 18
+    property int fontSize5: 20
+    property int fontSize6: 24
+    property int fontSize7: 28
+    property int fontSize8: 34
+    property int fontSize9: 40
+    property int fontSize10: 86
 
     // Wheel diameter in meters
     property double wheelDiameter: 0.50419
     property double rpmValue: (motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue) / 2
 
-    property int tempGaugeFontSize: 16
-    property int tempGaugeLabelFontSize: 20
-
+    // gauge sizes
     property int extraSmallGaugeSize: 120
     property int smallGaugeSize: 180
     property int mediumGaugeSize: 240
     property int largeGaugeSize: 300
 
-    property int mpptmbmsFontSizeS: 12
-
-    property int driverNameFontSize: 20
-    
-    property int telemetryFlagLabelFontSize: 24
-    
-    property int rpmGaugeFontSize: 40
-    property int rpmLabelFontSize: 12
-    property color rpmLabelFontColor: "#7a7a7a"
+    // color values 
+    property color primary: darkModeEnabled ? "#3498DB" : "#0083DB"
+    property color backplateColor: darkModeEnabled ? "#000000" : "#FFFFFF"
+    property color btnDisabled: darkModeEnabled ? "#242424" : "#C2C2C2"
+    property color valueLow: darkModeEnabled ? "#00ff00" : "#029902"
+    property color valueModerate: "#FFC107"
+    property color valueHigh: "#FF0000"
+    property color lightShadow: "#74DCFF"
+    property color faintGrey: darkModeEnabled ? "#AAAAAA" : "#5C5C5C"
+    property color fontColor: darkModeEnabled ? "#FFFFFF" : "#111111"
+    property color outerArcColor: darkModeEnabled ? "#242627" : "#AEB8BD"
+    property color speedometerGrayTicks: darkModeEnabled ? "#515253" : "#97999c"
 }
