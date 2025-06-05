@@ -74,6 +74,10 @@ ConfigManager::ConfigManager(const QString& path){
     rfidPin0_ = settings.value("rfidPin0", 20).toInt();
     rfidPin1_ = settings.value("rfidPin1", 21).toInt();
     settings.endGroup();
+
+    settings.beginGroup("ColorMode");
+    darkMode_ = settings.value("darkMode", true).toBool();
+    settings.endGroup();
 }
 
 //Getters
@@ -116,3 +120,5 @@ QString ConfigManager::getLogPath() const { return logPath_; }
 int ConfigManager::getRfidPin0() const { return rfidPin0_; }
 
 int ConfigManager::getRfidPin1() const { return rfidPin1_; }
+
+bool ConfigManager::getDarkMode() const { return darkMode_; }

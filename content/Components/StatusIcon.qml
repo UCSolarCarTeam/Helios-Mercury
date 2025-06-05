@@ -14,7 +14,7 @@ Item {
 
     onIsOnChanged: {
         statusImage.source = isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-        statusImage.iconMaskColor = isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+        statusImage.iconMaskColor = isOn ? Config.valueLow : Config.valueHigh
     }
 
     Column {
@@ -25,7 +25,7 @@ Item {
         Text {
             width: parent.width
             text: statusIcon.label
-            font.pixelSize: Config.contactorLabelFontSize
+            font.pixelSize: Config.fontSize1
             color: Config.fontColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -40,7 +40,7 @@ Item {
             height: 24
             anchors.horizontalCenter: parent.horizontalCenter
             imageSource: statusIcon.isOn ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-            iconMaskColor: statusIcon.isOn ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+            iconMaskColor: statusIcon.isOn ? Config.valueLow : Config.valueHigh
         }
     }
 }
