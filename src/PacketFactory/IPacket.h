@@ -37,7 +37,7 @@ public:
         }
 
         QDataStream stream(data.mid(startIndex, sizeof(T)));
-        stream.setByteOrder(QDataStream::LittleEndian);
+        stream.setByteOrder(QDataStream::BigEndian);
 
         if constexpr (std::is_floating_point_v<T>) {
             stream.setFloatingPointPrecision(QDataStream::SinglePrecision);

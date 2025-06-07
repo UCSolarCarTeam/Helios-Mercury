@@ -35,6 +35,7 @@ qt6_add_qml_module(content
         Components/TemperatureGauge.qml
         Util/GaugeAnimation.qml
         Components/GaugeTemplate.qml
+        Components/Backplate.qml
         Components/RpmGauge.qml
         Components/ProximitySensors.qml        
     RESOURCES
@@ -62,6 +63,7 @@ qt6_add_qml_module(content
         Images/AngleIcon.png
         Images/TorqueIcon.png
         Images/FanIcon.png
+        Images/CarHorn.png
         Images/RotationIcon.png
         Images/DirectionIcon.png
         Images/ProximitySensorCar.png

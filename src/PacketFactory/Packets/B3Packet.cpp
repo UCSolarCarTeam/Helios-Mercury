@@ -23,9 +23,9 @@ namespace {
     const unsigned short ZOOM_ZOOM_MASK = 0x0400;
 
     const int ACCELERATION_OFFSET = 4;
-    const int REGEN_BRAKING_OFFSET = 6;
+    const int REGEN_BRAKING_OFFSET = 5;
 
-    const int LIGHT_OUTPUTS_OFFSET = 8;
+    const int LIGHT_OUTPUTS_OFFSET = 6;
     const char RIGHT_SIGNAL_OUT_MASK = 0x01;
     const char LEFT_SIGNAL_OUT_MASK = 0x02;
     const char DAYTIME_RUNNING_LIGHT_SIGNAL_OUT_MASK = 0x04;
@@ -85,8 +85,8 @@ void B3Packet::populatePacket(const QByteArray& data) {
     setLap(driverInputs & LAP_MASK);
     setZoomZoom(driverInputs & ZOOM_ZOOM_MASK); //TODO: Verify if Required
 
-    setAcceleration(getValue<unsigned short>(data, ACCELERATION_OFFSET));
-    setRegenBraking(getValue<unsigned short>(data, REGEN_BRAKING_OFFSET));
+    setAcceleration(getValue<unsigned char>(data, ACCELERATION_OFFSET));
+    setRegenBraking(getValue<unsigned char>(data, REGEN_BRAKING_OFFSET));
 
     unsigned char lightOutputs = getValue<unsigned char>(data, LIGHT_OUTPUTS_OFFSET);
     setRightSignalOut(lightOutputs & RIGHT_SIGNAL_OUT_MASK);

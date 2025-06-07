@@ -9,21 +9,12 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     Text {
-        id: mpptMbbsLabel
+        id: mpptLabel
         color: Config.fontColor
         font.family: Config.fontStyle
         anchors {
@@ -32,7 +23,8 @@ Item {
             topMargin: 13
         }
         text: "MPPT"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
+        font.weight: Font.Medium
     }
 
     Text {
@@ -45,7 +37,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "MPPT Average"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         font.bold: true
     }
 
@@ -131,7 +123,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: Config.headerFontSize
+            Layout.preferredHeight: Config.fontSize4
             spacing: 10
             
             Text {
@@ -141,7 +133,7 @@ Item {
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 text: "MPPT 0"
-                font.pixelSize: Config.headerFontSize
+                font.pixelSize: Config.fontSize4
                 font.bold: true
             }
 
@@ -149,7 +141,7 @@ Item {
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 imageSource: mppt0.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                iconMaskColor: mppt0.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                iconMaskColor: mppt0.MpptStatus ? Config.valueLow : Config.valueHigh
             }
         }
 
@@ -223,7 +215,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: Config.headerFontSize
+            Layout.preferredHeight: Config.fontSize4
             spacing: 10
             
             Text {
@@ -233,7 +225,7 @@ Item {
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 text: "MPPT 1"
-                font.pixelSize: Config.headerFontSize
+                font.pixelSize: Config.fontSize4
                 font.bold: true
             }
 
@@ -241,7 +233,7 @@ Item {
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 imageSource: mppt1.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                iconMaskColor: mppt1.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                iconMaskColor: mppt1.MpptStatus ? Config.valueLow : Config.valueHigh
             }
         }
 
@@ -315,7 +307,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: Config.headerFontSize
+            Layout.preferredHeight: Config.fontSize4
             spacing: 10
             
             Text {
@@ -325,7 +317,7 @@ Item {
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 text: "MPPT 2"
-                font.pixelSize: Config.headerFontSize
+                font.pixelSize: Config.fontSize4
                 font.bold: true
             }
 
@@ -333,7 +325,7 @@ Item {
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 imageSource: mppt2.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                iconMaskColor: mppt2.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                iconMaskColor: mppt2.MpptStatus ? Config.valueLow : Config.valueHigh
             }
         }
 
@@ -407,7 +399,7 @@ Item {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: Config.headerFontSize
+            Layout.preferredHeight: Config.fontSize4
             spacing: 10
             
             Text {
@@ -417,7 +409,7 @@ Item {
                 color: Config.fontColor
                 font.family: Config.fontStyle
                 text: "MPPT 3"
-                font.pixelSize: Config.headerFontSize
+                font.pixelSize: Config.fontSize4
                 font.bold: true
             }
 
@@ -425,7 +417,7 @@ Item {
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 imageSource: mppt3.MpptStatus ? "../Images/MpptMbmsStatusOn.png" : "../Images/MpptMbmsStatusOff.png"
-                iconMaskColor: mppt3.MpptStatus ? Config.contactorConnectedColor : Config.contactorDisconnectedColor
+                iconMaskColor: mppt3.MpptStatus ? Config.valueLow : Config.valueHigh
             }
         }
 

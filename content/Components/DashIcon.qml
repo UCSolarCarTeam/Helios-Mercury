@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 6.2
 import QtQuick.Controls 2.15
 import QtQuick.Effects
 import Mercury
@@ -9,45 +9,26 @@ Item {
     height: 32
     smooth: true
 
-    property real visibleFraction: 1.0 // fraction of image visible (0..1)
-    property string imageSource: ""
-    property bool isOn: false
-    property bool isHighContrast: false
-    property color iconMaskColor: dashIcon.isOn
-                                  ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary)
-                                  : Config.btnDisabled
+    property string imageSource: "" //IMPORTANT: Image must be solid white
+    property color iconMaskColor
 
-    Item {
-        id: clipper
-        width: dashIcon.width
-        height: dashIcon.height * visibleFraction
-        anchors.top: parent.top
-        clip: true
+    Image {
+        id: staticImage
+        anchors.fill: parent
+        source: parent.imageSource
+        sourceSize: Qt.size(64, 64)
+        smooth: true
+        visible: false
+    }
 
-        MultiEffect {
-            anchors.top: parent.top
-            width: dashIcon.width
-            height: dashIcon.height
-            source: ShaderEffectSource {
-                sourceItem: Image {
-                    id: iconImage
-                    width: dashIcon.width
-                    height: dashIcon.height
-                    source: imageSource
-                    sourceSize: Qt.size(dashIcon.width, dashIcon.height)
-                    smooth: true
-                }
-                hideSource: true
-                live: true
-                width: dashIcon.width
-                height: dashIcon.height
-            }
-
-            colorization: 1.0
-            colorizationColor: iconMaskColor
-            antialiasing: true
-            layer.enabled: true
-            layer.smooth: true
-        }
+    MultiEffect {
+        id: fillEffect
+        anchors.fill: parent
+        source: staticImage
+        colorization: 1.0 
+        colorizationColor: dashIcon.iconMaskColor 
+        antialiasing: true
+        layer.enabled: true
+        layer.smooth: true
     }
 }

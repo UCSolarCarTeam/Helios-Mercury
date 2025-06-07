@@ -83,7 +83,7 @@ Item {
                 Text {
                     id: gearText
                     text: gears[index]
-                    font.pixelSize: Config.rndfontSize
+                    font.pixelSize: Config.fontSize5
                     font.weight: index === currentGear ? 600 : 400
                     color: index === currentGear ? Config.primary : Config.fontColor
                     anchors.centerIn: parent

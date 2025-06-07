@@ -9,17 +9,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate {
+        id: backplate
     }
 
     Text {
@@ -27,7 +18,8 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Battery"
-        font.pixelSize: Config.debugHeaderFontSize
+        font.pixelSize: Config.fontSize6
+        font.weight: Font.Medium
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
@@ -96,7 +88,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Battery Pack"
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors {
@@ -235,7 +227,7 @@ Item {
         color: Config.fontColor
         font.family: Config.fontStyle
         text: "Requested Fan Speed: " + battery.RequestedFanSpeed
-        font.pixelSize: Config.headerFontSize
+        font.pixelSize: Config.fontSize4
         font.weight: Font.Medium
         anchors {
             horizontalCenter: fanSpeedGauge.horizontalCenter

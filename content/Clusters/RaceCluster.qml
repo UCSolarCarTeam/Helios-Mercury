@@ -7,17 +7,8 @@ Item {
     width: 1920
     height: 550
 
-    Image {
-        id: raceClusterFrameBackground
-        x: 1
-        y: 2
-        source: "../Images/RaceClusterFrameBackground.png"
-    }
-
-    Image {
-        id: raceClusterFrameOutline
-        anchors.fill: parent
-        source: "../Images/RaceClusterFrameOutline.png"
+    Backplate { 
+        id: backplate
     }
 
     MotorArrayHeader {
@@ -149,21 +140,21 @@ Item {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             horizontalCenterOffset: -72
-            bottomMargin: 10
+            bottomMargin: 9
         }
     }
 
     Text {
         id: driverNameComponent
         width: 350
-        height: Config.driverNameFontSize
+        height: Config.fontSize5
         color: Config.fontColor 
         text: "Driver Name: " + pi.DriverName 
         wrapMode: Text.Wrap
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font {
-            pixelSize: Config.driverNameFontSize
+            pixelSize: Config.fontSize5
             weight: Font.Medium
             family: Config.fontStyle
         }
