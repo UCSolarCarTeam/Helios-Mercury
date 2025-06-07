@@ -30,6 +30,22 @@ QtObject {
     property int mediumGaugeSize: 240
     property int largeGaugeSize: 300
 
+    property int mpptmbmsFontSizeS: 12
+
+    property int driverNameFontSize: 20
+    
+    property int telemetryFlagLabelFontSize: 24
+    
+    property int rpmGaugeFontSize: 40
+    property int rpmLabelFontSize: 12
+    property color rpmLabelFontColor: "#7a7a7a"
+
+    property color proximityRed: "#ff0000"   
+    property color proximityYellow: "#f9ff33"   
+    property color proximityGreen: "#2dcd10"
+    property color proximityCar: "#ffffff"
+    property int proximityFontSize: 12
+
     // color values 
     property color primary: darkModeEnabled ? "#3498DB" : "#0083DB"
     property color backplateColor: darkModeEnabled ? "#000000" : "#FFFFFF"
