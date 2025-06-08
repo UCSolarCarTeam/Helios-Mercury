@@ -9,7 +9,7 @@
  *  private class var (type name_)
  *
  *  Defines:
- *  public getter Name()
+ *  public getter getName()
  *  public setter setName(type)
  *  private var Name_
  *
@@ -21,8 +21,8 @@ private:                                                                      \
     type name##_;                                                             \
                                                                               \
     public:                                                                       \
-    Q_PROPERTY(type name READ name WRITE set##name NOTIFY name##Changed)      \
-    type name() const { return name##_; }                                     \
+    Q_PROPERTY(type name READ get##name WRITE set##name NOTIFY name##Changed)      \
+    type get##name() const { return name##_; }                                     \
     void set##name(type value) {                                              \
         if (name##_ != value) {                                               \
             name##_ = value;                                                  \

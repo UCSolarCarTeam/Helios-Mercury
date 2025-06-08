@@ -9,13 +9,9 @@ numberOfMppts=4
 [JsonFormat]
 packetTitle=Helios
 
-[SerialPort]
-portName=/dev/pts/5
-baudrate=115200
-
 [Can]
 interface=can0
-enabled=true
+enabled=false
 
 [Mqtt]
 telemetryTopic=packet
@@ -36,4 +32,4 @@ rfidPin0=20
 rfidPin1=21
 
 [ColorMode]
-darkMode=false
+darkMode=true

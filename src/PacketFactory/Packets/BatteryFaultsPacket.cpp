@@ -81,46 +81,46 @@ BatteryFaultsPacket::BatteryFaultsPacket() {
     setCclReducedDueToAlternateCurrentLimit(false);
 }
 
-void BatteryFaultsPacket::populatePacket(const QByteArray& data) {
-    unsigned int errorFlags = getValue<unsigned int>(data, ERROR_FLAGS_OFFSET);
-    setInternalCommunicationFault(errorFlags & INTERNAL_COMMUNICATION_FAULT_MASK);
-    setInternalConverversionFault(errorFlags & INTERNAL_CONVERSION_FAULT_MASK);
-    setWeakCellFault(errorFlags & WEAK_CELL_FAULT_MASK);
-    setLowCellVoltageFault(errorFlags & LOW_CELL_VOLTAGE_FAULT_MASK);
-    setOpenWiringFault(errorFlags & OPEN_WIRING_FAULT_MASK);
-    setCurrentSensorFault(errorFlags & CURRENT_SENSOR_FAULT_MASK);
-    setPackVoltageSensorFault(errorFlags & PACK_VOLTAGE_SENSOR_FAULT_MASK);
-    setWeakPackFault(errorFlags & WEAK_PACK_FAULT_MASK);
-    setVoltageRedundancyFault(errorFlags & VOLTAGE_REDUNDANCY_FAULT_MASK);
-    setFanMonitorFault(errorFlags & FAN_MONITOR_FAULT_MASK);
-    setThermistorFault(errorFlags & THERMISTOR_FAULT_MASK);
-    setCanbusCommunicationFault(errorFlags & CANBUS_COMMUNICATION_FAULT_MASK);
-    setAlwaysOnSupplyFault(errorFlags & ALWAYS_ON_SUPPLY_FAULT_MASK);
-    setHighVoltageIsolationFault(errorFlags & HIGH_VOLTAGE_ISOLATION_FAULT_MASK);
-    setPowerSupply12VFault(errorFlags & POWER_SUPPLY_12V_FAULT_MASK);
-    setChargeLimitEnforcementFault(errorFlags & CHARGE_LIMIT_ENFORCEMENT_FAULT_MASK);
-    setDischargeLimitEnforcementFault(errorFlags & DISCHARGE_LIMIT_ENFORCEMENT_FAULT_MASK);
-    setChargerSafetyRelayFault(errorFlags & CHARGER_SAFETY_RELAY_FAULT_MASK);
-    setInternalMemoryFault(errorFlags & INTERNAL_MEMORY_FAULT_MASK);
-    setInternalThermistorFault(errorFlags & INTERNAL_THERMISTOR_FAULT_MASK);
-    setInternalLogicFault(errorFlags & INTERNAL_LOGIC_FAULT_MASK);
+// void BatteryFaultsPacket::populatePacket(const QByteArray& data) {
+//     unsigned int errorFlags = getValue<unsigned int>(data, ERROR_FLAGS_OFFSET);
+//     setInternalCommunicationFault(errorFlags & INTERNAL_COMMUNICATION_FAULT_MASK);
+//     setInternalConverversionFault(errorFlags & INTERNAL_CONVERSION_FAULT_MASK);
+//     setWeakCellFault(errorFlags & WEAK_CELL_FAULT_MASK);
+//     setLowCellVoltageFault(errorFlags & LOW_CELL_VOLTAGE_FAULT_MASK);
+//     setOpenWiringFault(errorFlags & OPEN_WIRING_FAULT_MASK);
+//     setCurrentSensorFault(errorFlags & CURRENT_SENSOR_FAULT_MASK);
+//     setPackVoltageSensorFault(errorFlags & PACK_VOLTAGE_SENSOR_FAULT_MASK);
+//     setWeakPackFault(errorFlags & WEAK_PACK_FAULT_MASK);
+//     setVoltageRedundancyFault(errorFlags & VOLTAGE_REDUNDANCY_FAULT_MASK);
+//     setFanMonitorFault(errorFlags & FAN_MONITOR_FAULT_MASK);
+//     setThermistorFault(errorFlags & THERMISTOR_FAULT_MASK);
+//     setCanbusCommunicationFault(errorFlags & CANBUS_COMMUNICATION_FAULT_MASK);
+//     setAlwaysOnSupplyFault(errorFlags & ALWAYS_ON_SUPPLY_FAULT_MASK);
+//     setHighVoltageIsolationFault(errorFlags & HIGH_VOLTAGE_ISOLATION_FAULT_MASK);
+//     setPowerSupply12VFault(errorFlags & POWER_SUPPLY_12V_FAULT_MASK);
+//     setChargeLimitEnforcementFault(errorFlags & CHARGE_LIMIT_ENFORCEMENT_FAULT_MASK);
+//     setDischargeLimitEnforcementFault(errorFlags & DISCHARGE_LIMIT_ENFORCEMENT_FAULT_MASK);
+//     setChargerSafetyRelayFault(errorFlags & CHARGER_SAFETY_RELAY_FAULT_MASK);
+//     setInternalMemoryFault(errorFlags & INTERNAL_MEMORY_FAULT_MASK);
+//     setInternalThermistorFault(errorFlags & INTERNAL_THERMISTOR_FAULT_MASK);
+//     setInternalLogicFault(errorFlags & INTERNAL_LOGIC_FAULT_MASK);
 
-    unsigned short limitFlags = getValue<unsigned short>(data, LIMIT_FLAGS_OFFSET);
-    setDclReducedDueToLowSoc(limitFlags & DCL_REDUCED_DUE_TO_LOW_SOC_MASK);
-    setDclReducedDueToHighCellResistance(limitFlags & DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
-    setDclReducedDueToTemperature(limitFlags & DCL_REDUCED_DUE_TO_TEMPERATURE_MASK);
-    setDclReducedDueToLowCellVoltage(limitFlags & DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE_MASK);
-    setDclReducedDueToLowPackVoltage(limitFlags & DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE_MASK);
-    setDclAndCclReducedDueToVoltageFailsafe(limitFlags & DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE_MASK);
-    setDclAndCclReducedDueToCommunicationFailsafe(limitFlags & DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE_MASK);
-    setCclReducedDueToHighSoc(limitFlags & CCL_REDUCED_DUE_TO_HIGH_SOC_MASK);
-    setCclReducedDueToHighCellResistance(limitFlags & CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
-    setCclReducedDueToTemperature(limitFlags & CCL_REDUCED_DUE_TO_TEMPERATURE_MASK);
-    setCclReducedDueToHighCellVoltage(limitFlags & CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE_MASK);
-    setCclReducedDueToHighPackVoltage(limitFlags & CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE_MASK);
-    setCclReducedDueToChargerLatch(limitFlags & CCL_REDUCED_DUE_TO_CHARGER_LATCH_MASK);
-    setCclReducedDueToAlternateCurrentLimit(limitFlags & CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT_MASK);
-}
+//     unsigned short limitFlags = getValue<unsigned short>(data, LIMIT_FLAGS_OFFSET);
+//     setDclReducedDueToLowSoc(limitFlags & DCL_REDUCED_DUE_TO_LOW_SOC_MASK);
+//     setDclReducedDueToHighCellResistance(limitFlags & DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
+//     setDclReducedDueToTemperature(limitFlags & DCL_REDUCED_DUE_TO_TEMPERATURE_MASK);
+//     setDclReducedDueToLowCellVoltage(limitFlags & DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE_MASK);
+//     setDclReducedDueToLowPackVoltage(limitFlags & DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE_MASK);
+//     setDclAndCclReducedDueToVoltageFailsafe(limitFlags & DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE_MASK);
+//     setDclAndCclReducedDueToCommunicationFailsafe(limitFlags & DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE_MASK);
+//     setCclReducedDueToHighSoc(limitFlags & CCL_REDUCED_DUE_TO_HIGH_SOC_MASK);
+//     setCclReducedDueToHighCellResistance(limitFlags & CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
+//     setCclReducedDueToTemperature(limitFlags & CCL_REDUCED_DUE_TO_TEMPERATURE_MASK);
+//     setCclReducedDueToHighCellVoltage(limitFlags & CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE_MASK);
+//     setCclReducedDueToHighPackVoltage(limitFlags & CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE_MASK);
+//     setCclReducedDueToChargerLatch(limitFlags & CCL_REDUCED_DUE_TO_CHARGER_LATCH_MASK);
+//     setCclReducedDueToAlternateCurrentLimit(limitFlags & CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT_MASK);
+// }
 
 QJsonObject BatteryFaultsPacket::toJson() {
     QJsonObject json;

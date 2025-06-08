@@ -3,7 +3,7 @@
 
 #include "Packets/KeyMotorPacket.h"
 #include "Packets/TelemetryPacket.h"
-#include "Packets/MotorDetailsPacket.h"
+#include "Packets/MotorPacket.h"
 #include "Packets/MpptPacket.h"
 #include "Packets/ProximitySensorsPacket.h"
 #include "Packets/BatteryPacket.h"
@@ -29,7 +29,7 @@ public:
     B3Packet& getB3Packet();
     PiPacket& getPiPacket();
 
-    MotorDetailsPacket& getMotorDetailsPacket(int index);
+    MotorPacket& getMotorPacket(int index);
     MpptPacket& getMpptPacket(int index);
 
 private:
@@ -41,9 +41,9 @@ private:
     QScopedPointer<BatteryFaultsPacket> batteryFaultsPacket_;
     QScopedPointer<B3Packet> b3Packet_;
     QScopedPointer<PiPacket> piPacket_;
+    QScopedPointer<MotorPacket> motorPacket_;
 
     //amounts defined in config.ini
-    QVector<MotorDetailsPacket*> motorDetailsPackets_;
     QVector<MpptPacket*> mpptPackets_;
 };
 

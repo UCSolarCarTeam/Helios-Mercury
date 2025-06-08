@@ -16,7 +16,6 @@ class MpptPacket : public IPacket {
     
 public:
     MpptPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 };
 

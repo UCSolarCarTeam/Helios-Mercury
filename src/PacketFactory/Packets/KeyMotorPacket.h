@@ -13,7 +13,6 @@ class KeyMotorPacket : public IPacket {
     DEFINE_PROPERTY(bool, DebugMode)
 public:
     KeyMotorPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 };
 

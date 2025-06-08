@@ -22,16 +22,16 @@ MpptPacket::MpptPacket() {
     setTemperature(0);
 }
 
-void MpptPacket::populatePacket(const QByteArray& data) {
-    unsigned char statusAndChannelNumber = getValue<unsigned char>(data, STATUS_AND_CHANNEL_NUMBER_OFFSET);
-    setMpptStatus(statusAndChannelNumber & MPPT_STATUS_MASK);
-    setChannelNumber(statusAndChannelNumber & CHANNEL_NUMBER_MASK);
+// void MpptPacket::populatePacket(const QByteArray& data) {
+//     unsigned char statusAndChannelNumber = getValue<unsigned char>(data, STATUS_AND_CHANNEL_NUMBER_OFFSET);
+//     setMpptStatus(statusAndChannelNumber & MPPT_STATUS_MASK);
+//     setChannelNumber(statusAndChannelNumber & CHANNEL_NUMBER_MASK);
 
-    setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
-    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
-    setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET));
-    setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET));
-}
+//     setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
+//     setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
+//     setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET));
+//     setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET));
+// }
 
 QJsonObject MpptPacket::toJson() {
     QJsonObject json;

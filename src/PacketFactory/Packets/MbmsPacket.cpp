@@ -91,53 +91,53 @@ MbmsPacket::MbmsPacket() {
     setContactorDisconnectedUnexpectedlyTrip(false);
 }
 
-void MbmsPacket::populatePacket(const QByteArray& data) {
-    unsigned char contactorStatus = getValue<unsigned char>(data, CONTACTOR_STATUS_OFFSET);
-    setCommonContactorState(contactorStatus & COMMON_CONTACTOR_STATE_OFFSET);
-    setMotorContactorState(contactorStatus & MOTOR_CONTACTOR_STATE_OFFSET);
-    setArrayContactorState(contactorStatus & ARRAY_CONTACTOR_STATE_OFFSET);
-    setLvContactorState(contactorStatus & LV_CONTACTOR_STATE_OFFSET);
-    setChargeContactorState(contactorStatus & CHARGE_CONTACTOR_STATE_OFFSET);
+// void MbmsPacket::populatePacket(const QByteArray& data) {
+//     unsigned char contactorStatus = getValue<unsigned char>(data, CONTACTOR_STATUS_OFFSET);
+//     setCommonContactorState(contactorStatus & COMMON_CONTACTOR_STATE_OFFSET);
+//     setMotorContactorState(contactorStatus & MOTOR_CONTACTOR_STATE_OFFSET);
+//     setArrayContactorState(contactorStatus & ARRAY_CONTACTOR_STATE_OFFSET);
+//     setLvContactorState(contactorStatus & LV_CONTACTOR_STATE_OFFSET);
+//     setChargeContactorState(contactorStatus & CHARGE_CONTACTOR_STATE_OFFSET);
 
-    unsigned char contactorError = getValue<unsigned char>(data, CONTACTOR_ERROR_OFFSET);
-    setCommonContactorError(contactorError & COMMON_CONTACTOR_ERROR_OFFSET);
-    setMotorContactorError(contactorError & MOTOR_CONTACTOR_ERROR_OFFSET);
-    setArrayContactorError(contactorError & ARRAY_CONTACTOR_ERROR_OFFSET);
-    setLvContactorError(contactorError & LV_CONTACTOR_ERROR_OFFSET);
-    setChargeContactorError(contactorError & CHARGE_CONTACTOR_ERROR_OFFSET);
+//     unsigned char contactorError = getValue<unsigned char>(data, CONTACTOR_ERROR_OFFSET);
+//     setCommonContactorError(contactorError & COMMON_CONTACTOR_ERROR_OFFSET);
+//     setMotorContactorError(contactorError & MOTOR_CONTACTOR_ERROR_OFFSET);
+//     setArrayContactorError(contactorError & ARRAY_CONTACTOR_ERROR_OFFSET);
+//     setLvContactorError(contactorError & LV_CONTACTOR_ERROR_OFFSET);
+//     setChargeContactorError(contactorError & CHARGE_CONTACTOR_ERROR_OFFSET);
 
-    unsigned char miscStatus = getValue<unsigned char>(data, MISCELLANOUS_STATUS);
-    setStrobeBmsLight(miscStatus & STROBE_BMS_LIGHT_OFFSET);
-    setAllowCharge(miscStatus & ALLOW_CHARGE_OFFSET);
-    setHighVoltageEnableState(miscStatus & HIGH_VOLTAGE_ENABLE_STATE_OFFSET);
-    setAllowDischarge(miscStatus & ALLOW_DISCHARGE_OFFSET);
-    setOrionCanReceivedRecently(miscStatus & ORION_CAN_RECEIVED_RECENTLY_OFFSET);
-    setDischargeShouldTrip(miscStatus & DISCHARGE_SHOULD_TRIP_OFFSET);
-    setChargeShouldTrip(miscStatus & CHARGE_SHOULD_TRIP_OFFSET);
+//     unsigned char miscStatus = getValue<unsigned char>(data, MISCELLANOUS_STATUS);
+//     setStrobeBmsLight(miscStatus & STROBE_BMS_LIGHT_OFFSET);
+//     setAllowCharge(miscStatus & ALLOW_CHARGE_OFFSET);
+//     setHighVoltageEnableState(miscStatus & HIGH_VOLTAGE_ENABLE_STATE_OFFSET);
+//     setAllowDischarge(miscStatus & ALLOW_DISCHARGE_OFFSET);
+//     setOrionCanReceivedRecently(miscStatus & ORION_CAN_RECEIVED_RECENTLY_OFFSET);
+//     setDischargeShouldTrip(miscStatus & DISCHARGE_SHOULD_TRIP_OFFSET);
+//     setChargeShouldTrip(miscStatus & CHARGE_SHOULD_TRIP_OFFSET);
 
-    setAuxillaryBatteryVoltage(getValue<unsigned short>(data, AUXILIARY_BATTERY_VOLTAGE_OFFSET));
-    setMotorVoltage(getValue<unsigned short>(data, MOTOR_VOLTAGE_OFFSET));
-    setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
-    setLvVoltage(getValue<unsigned short>(data, LV_VOLTAGE_OFFSET));
-    setChargeVoltage(getValue<unsigned short>(data, CHARGE_VOLTAGE_OFFSET));
-    setCommonCurrent(getValue<unsigned short>(data, COMMON_CURRENT_OFFSET));
-    setMotorCurrent(getValue<unsigned short>(data, MOTOR_CURRENT_OFFSET));
-    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
-    setLvCurrent(getValue<unsigned short>(data, LV_CURRENT_OFFSET));
-    setChargeCurrent(getValue<unsigned short>(data, CHARGE_CURRENT_OFFSET));
+//     setAuxillaryBatteryVoltage(getValue<unsigned short>(data, AUXILIARY_BATTERY_VOLTAGE_OFFSET));
+//     setMotorVoltage(getValue<unsigned short>(data, MOTOR_VOLTAGE_OFFSET));
+//     setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
+//     setLvVoltage(getValue<unsigned short>(data, LV_VOLTAGE_OFFSET));
+//     setChargeVoltage(getValue<unsigned short>(data, CHARGE_VOLTAGE_OFFSET));
+//     setCommonCurrent(getValue<unsigned short>(data, COMMON_CURRENT_OFFSET));
+//     setMotorCurrent(getValue<unsigned short>(data, MOTOR_CURRENT_OFFSET));
+//     setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
+//     setLvCurrent(getValue<unsigned short>(data, LV_CURRENT_OFFSET));
+//     setChargeCurrent(getValue<unsigned short>(data, CHARGE_CURRENT_OFFSET));
 
-    unsigned short tripFlags = getValue<unsigned short>(data, TRIP_FLAGS_OFFSET);
-    setHighCellVoltageTrip(tripFlags & HIGH_CELL_VOLTAGE_TRIP_OFFSET);
-    setLowCellVoltageTrip(tripFlags & LOW_CELL_VOLTAGE_TRIP_OFFSET);
-    setHighCommonCurrentTrip(tripFlags & HIGH_COMMON_CURRENT_TRIP_OFFSET);
-    setMotorHighTemperatureCurrentTrip(tripFlags & MOTOR_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
-    setArrayHighTemperatureCurrentTrip(tripFlags & ARRAY_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
-    setLvHighTemperatureCurrentTrip(tripFlags & LV_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
-    setChargeHighTemperatureCurrentTrip(tripFlags & CHARGE_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
-    setProtectionTrip(tripFlags & PROTECTION_TRIP_OFFSET);
-    setOrionMessageTimeoutTrip(tripFlags & ORION_MESSAGE_TIMEOUT_TRIP_OFFSET);
-    setContactorDisconnectedUnexpectedlyTrip(tripFlags & CONTACTOR_DISCONNECTED_UNEXPECTEDLY_TRIP_OFFSET);
-}
+//     unsigned short tripFlags = getValue<unsigned short>(data, TRIP_FLAGS_OFFSET);
+//     setHighCellVoltageTrip(tripFlags & HIGH_CELL_VOLTAGE_TRIP_OFFSET);
+//     setLowCellVoltageTrip(tripFlags & LOW_CELL_VOLTAGE_TRIP_OFFSET);
+//     setHighCommonCurrentTrip(tripFlags & HIGH_COMMON_CURRENT_TRIP_OFFSET);
+//     setMotorHighTemperatureCurrentTrip(tripFlags & MOTOR_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
+//     setArrayHighTemperatureCurrentTrip(tripFlags & ARRAY_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
+//     setLvHighTemperatureCurrentTrip(tripFlags & LV_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
+//     setChargeHighTemperatureCurrentTrip(tripFlags & CHARGE_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET);
+//     setProtectionTrip(tripFlags & PROTECTION_TRIP_OFFSET);
+//     setOrionMessageTimeoutTrip(tripFlags & ORION_MESSAGE_TIMEOUT_TRIP_OFFSET);
+//     setContactorDisconnectedUnexpectedlyTrip(tripFlags & CONTACTOR_DISCONNECTED_UNEXPECTEDLY_TRIP_OFFSET);
+// }
 
 QJsonObject MbmsPacket::toJson() {
     QJsonObject json;

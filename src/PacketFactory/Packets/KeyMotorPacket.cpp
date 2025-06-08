@@ -19,15 +19,15 @@ KeyMotorPacket::KeyMotorPacket() {
     setDebugMode(false);
 }
 
-void KeyMotorPacket::populatePacket(const QByteArray& data) {
-    setMotorSetpoint(getValue<unsigned short>(data, MOTOR_SETPOINT_OFFSET));
+// void KeyMotorPacket::populatePacket(const QByteArray& data) {
+//     setMotorSetpoint(getValue<unsigned short>(data, MOTOR_SETPOINT_OFFSET));
 
-    unsigned char controlBits = getValue<unsigned char>(data, CONTROL_BITS_OFFSET);
-    setControlMode(controlBits & CONTROL_MODE_MASK);
-    setMotorMode(controlBits & MOTOR_MODE_MASK);
-    setSoftwareEnable(controlBits & SOFTWARE_ENABLE_MASK);
-    setDebugMode(controlBits & DEBUG_MODE_MASK);
-}
+//     unsigned char controlBits = getValue<unsigned char>(data, CONTROL_BITS_OFFSET);
+//     setControlMode(controlBits & CONTROL_MODE_MASK);
+//     setMotorMode(controlBits & MOTOR_MODE_MASK);
+//     setSoftwareEnable(controlBits & SOFTWARE_ENABLE_MASK);
+//     setDebugMode(controlBits & DEBUG_MODE_MASK);
+// }
 
 QJsonObject KeyMotorPacket::toJson() {
     QJsonObject json;

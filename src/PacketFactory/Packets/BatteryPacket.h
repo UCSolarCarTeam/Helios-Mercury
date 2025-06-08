@@ -42,7 +42,6 @@ class BatteryPacket : public IPacket {
 
 public:
     BatteryPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 };
 

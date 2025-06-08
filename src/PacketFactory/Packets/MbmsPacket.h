@@ -50,7 +50,6 @@ class MbmsPacket : public IPacket {
 
 public:
     MbmsPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 };
 

@@ -72,42 +72,42 @@ BatteryPacket::BatteryPacket() {
     setAverageCellVoltage(0);
 }
 
-void BatteryPacket::populatePacket(const QByteArray& data) {
-    setBmuAlive(getValue<unsigned char>(data, BMU_ALIVE_OFFSET));
+// void BatteryPacket::populatePacket(const QByteArray& data) {
+//     setBmuAlive(getValue<unsigned char>(data, BMU_ALIVE_OFFSET));
 
-    unsigned char bmsRelayStatus = getValue<unsigned char>(data, BMS_RELAY_STATUS_OFFSET);
-    setDischargeRelayEnabled(bmsRelayStatus & DISCHARGE_RELAY_ENABLED_MASK);
-    setChargeRelayEnabled(bmsRelayStatus & CHARGE_RELAY_ENABLED_MASK);
-    setChargerSafetyRelayEnabled(bmsRelayStatus & CHARGER_SAFETY_RELAY_ENABLED_MASK);
-    setMalfunctionIndicatorActive(bmsRelayStatus & MALFUNCTION_INDICATOR_ACTIVE_MASK);
-    setMultiPurposeInputSignalStatus(bmsRelayStatus & MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK);
-    setAlwaysOnSignalStatus(bmsRelayStatus & ALWAYS_ON_SIGNAL_STATUS_MASK);
-    setIsReadySignalStatus(bmsRelayStatus & IS_READY_SIGNAL_STATUS_MASK);
-    setIsChargingSignalStatus(bmsRelayStatus & IS_CHARGING_SIGNAL_STATUS_MASK);
+//     unsigned char bmsRelayStatus = getValue<unsigned char>(data, BMS_RELAY_STATUS_OFFSET);
+//     setDischargeRelayEnabled(bmsRelayStatus & DISCHARGE_RELAY_ENABLED_MASK);
+//     setChargeRelayEnabled(bmsRelayStatus & CHARGE_RELAY_ENABLED_MASK);
+//     setChargerSafetyRelayEnabled(bmsRelayStatus & CHARGER_SAFETY_RELAY_ENABLED_MASK);
+//     setMalfunctionIndicatorActive(bmsRelayStatus & MALFUNCTION_INDICATOR_ACTIVE_MASK);
+//     setMultiPurposeInputSignalStatus(bmsRelayStatus & MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK);
+//     setAlwaysOnSignalStatus(bmsRelayStatus & ALWAYS_ON_SIGNAL_STATUS_MASK);
+//     setIsReadySignalStatus(bmsRelayStatus & IS_READY_SIGNAL_STATUS_MASK);
+//     setIsChargingSignalStatus(bmsRelayStatus & IS_CHARGING_SIGNAL_STATUS_MASK);
 
-    setPopulatedCells(getValue<unsigned char>(data, POPULATED_CELLS_OFFSET));
-    setInput12V(getValue<float>(data, INPUT_12V_OFFSET));
-    setFanVoltage(getValue<float>(data, FAN_VOLTAGE_OFFSET));
-    setPackCurrent(getValue<float>(data, PACK_CURRENT_OFFSET));
-    setPackVoltage(getValue<float>(data, PACK_VOLTAGE_OFFSET));
-    setPackStateOfCharge(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET));
-    setPackAmphours(getValue<float>(data, PACK_AMPHOURS_OFFSET));
-    setPackDepthOfDischarge(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET));
-    setHighTemperature(getValue<unsigned char>(data, HIGH_TEMPERATURE_OFFSET));
-    setHighThermistorId(getValue<unsigned char>(data, HIGH_THERMISTOR_ID_OFFSET));
-    setLowTemperature(getValue<unsigned char>(data, LOW_TEMPERATURE_OFFSET));
-    setLowThermistorId(getValue<unsigned char>(data, LOW_THERMISTOR_ID_OFFSET));
-    setAverageTemperature(getValue<unsigned char>(data, AVERAGE_TEMPERATURE_OFFSET));
-    setInternalTemperature(getValue<unsigned char>(data, INTERNAL_TEMPERATURE_OFFSET));
-    setFanSpeed(getValue<unsigned char>(data, FAN_SPEED_OFFSET));
-    setRequestedFanSpeed(getValue<unsigned char>(data, REQUESTED_FAN_SPEED_OFFSET));
+//     setPopulatedCells(getValue<unsigned char>(data, POPULATED_CELLS_OFFSET));
+//     setInput12V(getValue<float>(data, INPUT_12V_OFFSET));
+//     setFanVoltage(getValue<float>(data, FAN_VOLTAGE_OFFSET));
+//     setPackCurrent(getValue<float>(data, PACK_CURRENT_OFFSET));
+//     setPackVoltage(getValue<float>(data, PACK_VOLTAGE_OFFSET));
+//     setPackStateOfCharge(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET));
+//     setPackAmphours(getValue<float>(data, PACK_AMPHOURS_OFFSET));
+//     setPackDepthOfDischarge(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET));
+//     setHighTemperature(getValue<unsigned char>(data, HIGH_TEMPERATURE_OFFSET));
+//     setHighThermistorId(getValue<unsigned char>(data, HIGH_THERMISTOR_ID_OFFSET));
+//     setLowTemperature(getValue<unsigned char>(data, LOW_TEMPERATURE_OFFSET));
+//     setLowThermistorId(getValue<unsigned char>(data, LOW_THERMISTOR_ID_OFFSET));
+//     setAverageTemperature(getValue<unsigned char>(data, AVERAGE_TEMPERATURE_OFFSET));
+//     setInternalTemperature(getValue<unsigned char>(data, INTERNAL_TEMPERATURE_OFFSET));
+//     setFanSpeed(getValue<unsigned char>(data, FAN_SPEED_OFFSET));
+//     setRequestedFanSpeed(getValue<unsigned char>(data, REQUESTED_FAN_SPEED_OFFSET));
 
-    setLowCellVoltage(getValue<unsigned short>(data, LOW_CELL_VOLTAGE_OFFSET));
-    setLowCellVoltageId(getValue<unsigned char>(data, LOW_CELL_VOLTAGE_ID_OFFSET));
-    setHighCellVoltage(getValue<unsigned short>(data, HIGH_CELL_VOLTAGE_OFFSET));
-    setHighCellVoltageId(getValue<unsigned char>(data, HIGH_CELL_VOLTAGE_ID_OFFSET));
-    setAverageCellVoltage(getValue<unsigned short>(data, AVERAGE_CELL_VOLTAGE_OFFSET));
-}
+//     setLowCellVoltage(getValue<unsigned short>(data, LOW_CELL_VOLTAGE_OFFSET));
+//     setLowCellVoltageId(getValue<unsigned char>(data, LOW_CELL_VOLTAGE_ID_OFFSET));
+//     setHighCellVoltage(getValue<unsigned short>(data, HIGH_CELL_VOLTAGE_OFFSET));
+//     setHighCellVoltageId(getValue<unsigned char>(data, HIGH_CELL_VOLTAGE_ID_OFFSET));
+//     setAverageCellVoltage(getValue<unsigned short>(data, AVERAGE_CELL_VOLTAGE_OFFSET));
+// }
 
 QJsonObject BatteryPacket::toJson() {
     QJsonObject json;

@@ -30,8 +30,6 @@ else()
 endif()
 
 qt_add_executable(Helios-Mercury src/main.cpp
-    src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
-    src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
     src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
     src/PacketFactory/Packets/B3Packet.h src/PacketFactory/Packets/B3Packet.cpp
@@ -39,7 +37,7 @@ qt_add_executable(Helios-Mercury src/main.cpp
     src/PacketFactory/Packets/BatteryPacket.h src/PacketFactory/Packets/BatteryPacket.cpp
     src/PacketFactory/Packets/KeyMotorPacket.h src/PacketFactory/Packets/KeyMotorPacket.cpp
     src/PacketFactory/Packets/MbmsPacket.h src/PacketFactory/Packets/MbmsPacket.cpp
-    src/PacketFactory/Packets/MotorDetailsPacket.h src/PacketFactory/Packets/MotorDetailsPacket.cpp
+    src/PacketFactory/Packets/MotorPacket.h src/PacketFactory/Packets/MotorPacket.cpp
     src/PacketFactory/Packets/MpptPacket.h src/PacketFactory/Packets/MpptPacket.cpp
     src/PacketFactory/Packets/ProximitySensorsPacket.h src/PacketFactory/Packets/ProximitySensorsPacket.cpp
     src/PacketFactory/Packets/TelemetryPacket.h src/PacketFactory/Packets/TelemetryPacket.cpp

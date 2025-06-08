@@ -44,11 +44,6 @@ ConfigManager::ConfigManager(const QString& path){
     packetTitle_ = settings.value("packetTitle", "Hermes").toString();
     settings.endGroup();
 
-    settings.beginGroup("SerialPort");
-    portName_ = settings.value("portName", "/dev/ttyUSB0").toString();
-    baudrate_ = settings.value("baudrate", 115200).toInt();
-    settings.endGroup();
-
     settings.beginGroup("Can");
     canInterface_ = settings.value("interface", "can0").toString();
     canEnabled_ = settings.value("enabled", true).toBool();
@@ -88,10 +83,6 @@ int ConfigManager::getNumberOfMotors() const { return numberOfMotors_; }
 int ConfigManager::getNumberOfMppts() const { return numberOfMppts_; }
 
 QString ConfigManager::getPacketTitle() const { return packetTitle_; }
-
-QString ConfigManager::getPortName() const { return portName_; }
-
-int ConfigManager::getBaudrate() const { return baudrate_; }
 
 QString ConfigManager::getCanInterface() const { return canInterface_; }
 

@@ -12,22 +12,26 @@ class TelemetryPacket : public IPacket {
     DEFINE_PROPERTY(unsigned char, GpsHour)
     DEFINE_PROPERTY(unsigned char, GpsMinute)
     DEFINE_PROPERTY(unsigned char, GpsSecond)
+
     DEFINE_PROPERTY(unsigned char, GpsValidityFlags)
     DEFINE_PROPERTY(unsigned char, GpsFixStatusFlags)
     DEFINE_PROPERTY(unsigned char, GpsAdditionalFlags)
+
     DEFINE_PROPERTY(float, GpsLongitude)
     DEFINE_PROPERTY(float, GpsLatitude)
+
     DEFINE_PROPERTY(unsigned short, MpuAccelerationX)
     DEFINE_PROPERTY(unsigned short, MpuAccelerationY)
     DEFINE_PROPERTY(unsigned short, MpuAccelerationZ)
+
     DEFINE_PROPERTY(unsigned short, MpuRotationX)
     DEFINE_PROPERTY(unsigned short, MpuRotationY)
     DEFINE_PROPERTY(unsigned short, MpuRotationZ)
+    
     DEFINE_PROPERTY(unsigned short, MpuTemperature)
 
 public:
     TelemetryPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:

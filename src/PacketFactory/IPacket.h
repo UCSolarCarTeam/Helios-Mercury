@@ -8,9 +8,6 @@ class IPacket : public QObject {
 public:
     virtual ~IPacket() {}
 
-    /** Populate class vars given a QByteArray */
-    virtual void populatePacket(const QByteArray& data) = 0;
-
     /**
      *  Populate class vars given CAN message id and data
      *  Searches idAction map to get setter action mapped to given id

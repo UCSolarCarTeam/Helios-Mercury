@@ -13,7 +13,6 @@ class ProximitySensorsPacket : public IPacket {
 
 public:
     ProximitySensorsPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:
