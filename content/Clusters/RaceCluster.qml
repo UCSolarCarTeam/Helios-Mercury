@@ -85,6 +85,12 @@ Item {
         }
     }
 
+    ConnectionStatusIcon {
+        id: connectionStatusIcon
+        x: 1130
+        y: 498
+    }
+
     BatteryIcon {
         id: batteryIcon
         anchors { 

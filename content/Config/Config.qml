@@ -42,4 +42,10 @@ QtObject {
     property color fontColor: darkModeEnabled ? "#FFFFFF" : "#111111"
     property color outerArcColor: darkModeEnabled ? "#242627" : "#AEB8BD"
     property color speedometerGrayTicks: darkModeEnabled ? "#515253" : "#97999c"
+
+    property int connectionStatusIconFont: 14
+    property color connectionStatusIconStable: "#00ff00"
+    property color connectionStatusIconModerate: "#ffff00"
+    property color connectionStatusIconUnstable: "#ff0000"
+
 }
