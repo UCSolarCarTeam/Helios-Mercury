@@ -8,13 +8,9 @@ Item {
     width: 34
     height: 34
 
-    // property int latency: 50
-    // property bool telemetryConnected: true
-    property int latency: pi.latency
-    property bool telemetryConnected: telemetry.telemetryConnected 
-
-    // property int latency: typeof pi !== "undefined" && pi.latency !== undefined ? pi.latency : 0
-    // property bool telemetryConnected: typeof pi !== "undefined" && pi.telemetryConnected !== undefined ? pi.telemetryConnected : false
+    // This is put in place just in case if therea are any errors getting connection from Telemetry and or signal strength
+    property int latency: typeof pi !== "undefined" && pi.Latency !== undefined ? pi.Latency : 0
+    property bool telemetryConnected: typeof pi !== "undefined" && pi.TelemetryConnected !== undefined ? pi.TelemetryConnected : false
 
 
     Component.onCompleted: {
@@ -41,5 +37,6 @@ Item {
             : latency <= 300 ? Config.connectionStatusIconModerate // yellow
             : Config.connectionStatusIconUnstable // red   
         font.pixelSize: Config.connectionStatusIconFont
+        font.bold: true
     }    
 }
