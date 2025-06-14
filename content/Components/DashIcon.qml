@@ -11,9 +11,7 @@ Item {
 
     property real visibleFraction: 1.0 // fraction of image visible (0..1)
     property string imageSource: ""
-    property bool isOn: false
-    property bool isHighContrast: false
-    property color iconMaskColor: dashIcon.isOn ? (dashIcon.isHighContrast ? Config.highContrast : Config.primary) : Config.btnDisabled
+    property color iconMaskColor
     property int aspectRatioWidth: 32
     property int aspectRatioHeight: 32
 
