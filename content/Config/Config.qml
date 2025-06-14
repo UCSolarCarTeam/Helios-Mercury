@@ -42,4 +42,5 @@ QtObject {
     property color fontColor: darkModeEnabled ? "#FFFFFF" : "#111111"
     property color outerArcColor: darkModeEnabled ? "#242627" : "#AEB8BD"
     property color speedometerGrayTicks: darkModeEnabled ? "#515253" : "#97999c"
+
 }
