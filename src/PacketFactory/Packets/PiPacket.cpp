@@ -5,7 +5,6 @@ PiPacket::PiPacket() {
     setRfid(NULL);
     setDriverName("Unknown");
     setLatency(0);
-    setTelemetryConnected(false);
 }
 
 QJsonObject PiPacket::toJson() {

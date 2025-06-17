@@ -10,7 +10,7 @@ Item {
 
     // This is put in place just in case if therea are any errors getting connection from Telemetry and or signal strength
     property int latency: typeof pi !== "undefined" && pi.Latency !== undefined ? pi.Latency : 0
-    property bool telemetryConnected: typeof pi !== "undefined" && pi.TelemetryConnected !== undefined ? pi.TelemetryConnected : false 
+    property bool telemetryConnected: typeof pi !== "undefined" && transmitter.telemetryConnected!== undefined ? transmitter.telemetryConnected: false 
     
     DashIcon {
         id: connectionImage
