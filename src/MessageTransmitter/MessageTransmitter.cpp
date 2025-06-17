@@ -9,6 +9,10 @@ namespace {
 
 MessageTransmitter::MessageTransmitter() {
     telemetryClient_ = new QMqttClient();
+
+    connect(telemetryClient_, &QMqttClient::stateChanged,
+        this, &MessageTransmitter::onTelemetryStateChanged);    
+
     setupTelemetryClient();
 }
 
@@ -46,4 +50,18 @@ void MessageTransmitter::setupTelemetryClient() {
     });
 
     telemetryClient_->connectToHost();
+}
+
+bool MessageTransmitter::isTelemetryConnected() const {
+    return telemetryConnected_;
+}
+
+void MessageTransmitter::onTelemetryStateChanged(QMqttClient::ClientState state) {
+    bool connected = (state == QMqttClient::Connected);
+
+    if (telemetryConnected_ != connected) {
+        telemetryConnected_ = connected;
+        emit telemetryConnectedChanged();
+        qDebug() << "Telemetry connection status changed:" << telemetryConnected_;
+    }
 }
