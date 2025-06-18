@@ -1,8 +1,6 @@
 #include "BatteryFaultsPacket.h"
 #include "../../Config/JsonDefinitions.h"
-
 namespace {
-    const int ERROR_FLAGS_OFFSET = 1;
     const unsigned int INTERNAL_COMMUNICATION_FAULT_MASK = 0x00000001;
     const unsigned int INTERNAL_CONVERSION_FAULT_MASK = 0x00000002;
     const unsigned int WEAK_CELL_FAULT_MASK = 0x00000004;
@@ -25,7 +23,6 @@ namespace {
     const unsigned int INTERNAL_THERMISTOR_FAULT_MASK = 0x00080000;
     const unsigned int INTERNAL_LOGIC_FAULT_MASK = 0x00100000;
 
-    const int LIMIT_FLAGS_OFFSET = 5;
     const unsigned short DCL_REDUCED_DUE_TO_LOW_SOC_MASK = 0x0001;
     const unsigned short DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK = 0x0002;
     const unsigned short DCL_REDUCED_DUE_TO_TEMPERATURE_MASK = 0x0004;
@@ -43,8 +40,9 @@ namespace {
 }
 
 BatteryFaultsPacket::BatteryFaultsPacket() {
+    // Initialize all properties to false
     setInternalCommunicationFault(false);
-    setInternalConverversionFault(false);
+    setInternalConversionFault(false);
     setWeakCellFault(false);
     setLowCellVoltageFault(false);
     setOpenWiringFault(false);
@@ -125,11 +123,11 @@ void BatteryFaultsPacket::populatePacket(const QByteArray& data) {
 QJsonObject BatteryFaultsPacket::toJson() {
     QJsonObject json;
     
-    //Errors
+    // Errors
     QJsonObject errors;
 
     errors[JsonDefinitions::INTERNAL_COMMUNICATION_FAULT] = InternalCommunicationFault_;
-    errors[JsonDefinitions::INTERNAL_CONVERSION_FAULT] = InternalConverversionFault_;
+    errors[JsonDefinitions::INTERNAL_CONVERSION_FAULT] = InternalConversionFault_;
     errors[JsonDefinitions::WEAK_CELL_FAULT] = WeakCellFault_;
     errors[JsonDefinitions::LOW_CELL_VOLTAGE_FAULT] = LowCellVoltageFault_;
     errors[JsonDefinitions::OPEN_WIRING_FAULT] = OpenWiringFault_;
@@ -152,25 +150,76 @@ QJsonObject BatteryFaultsPacket::toJson() {
 
     json[JsonDefinitions::ERRORS] = errors;
 
-    //Limits/Warnings
-    QJsonObject limits;
+    // Warnings
+    QJsonObject warnings;
 
-    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_SOC] = DclReducedDueToLowSoc_;
-    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = DclReducedDueToHighCellResistance_;
-    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_TEMPERATURE] = DclReducedDueToTemperature_;
-    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE] = DclReducedDueToLowCellVoltage_;
-    limits[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE] = DclReducedDueToLowPackVoltage_;
-    limits[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE] = DclAndCclReducedDueToVoltageFailsafe_;
-    limits[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE] = DclAndCclReducedDueToCommunicationFailsafe_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_SOC] = CclReducedDueToHighSoc_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = CclReducedDueToHighCellResistance_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_TEMPERATURE] = CclReducedDueToTemperature_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE] = CclReducedDueToHighCellVoltage_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE] = CclReducedDueToHighPackVoltage_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_CHARGER_LATCH] = CclReducedDueToChargerLatch_;
-    limits[JsonDefinitions::CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT] = CclReducedDueToAlternateCurrentLimit_;
+    warnings[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_SOC] = DclReducedDueToLowSoc_;
+    warnings[JsonDefinitions::DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = DclReducedDueToHighCellResistance_;
+    warnings[JsonDefinitions::DCL_REDUCED_DUE_TO_TEMPERATURE] = DclReducedDueToTemperature_;
+    warnings[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE] = DclReducedDueToLowCellVoltage_;
+    warnings[JsonDefinitions::DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE] = DclReducedDueToLowPackVoltage_;
+    warnings[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE] = DclAndCclReducedDueToVoltageFailsafe_;
+    warnings[JsonDefinitions::DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE] = DclAndCclReducedDueToCommunicationFailsafe_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_SOC] = CclReducedDueToHighSoc_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE] = CclReducedDueToHighCellResistance_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_TEMPERATURE] = CclReducedDueToTemperature_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE] = CclReducedDueToHighCellVoltage_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE] = CclReducedDueToHighPackVoltage_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_CHARGER_LATCH] = CclReducedDueToChargerLatch_;
+    warnings[JsonDefinitions::CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT] = CclReducedDueToAlternateCurrentLimit_;
 
-    json[JsonDefinitions::WARNINGS] = limits;
+    json[JsonDefinitions::WARNINGS] = warnings;
     
     return json;
+}
+
+void BatteryFaultsPacket::initializeIdActionMap() {
+    qDebug() << "Initializing Battery Faults Packet ID Action Map";
+    
+    idActionMap[0x303] = [this](QByteArray payload) {
+        unsigned short limitFlags = (static_cast<unsigned char>(payload[1]) << 8) | 
+                                    static_cast<unsigned char>(payload[0]);
+
+        unsigned int dtcFlags = (static_cast<unsigned int>(static_cast<unsigned char>(payload[2])) |
+                               (static_cast<unsigned int>(static_cast<unsigned char>(payload[3])) << 8 |
+                               (static_cast<unsigned int>(static_cast<unsigned char>(payload[4])) << 16;
+
+        setDclReducedDueToLowSoc(limitFlags & DCL_REDUCED_DUE_TO_LOW_SOC_MASK);
+        setDclReducedDueToHighCellResistance(limitFlags & DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
+        setDclReducedDueToTemperature(limitFlags & DCL_REDUCED_DUE_TO_TEMPERATURE_MASK);
+        setDclReducedDueToLowCellVoltage(limitFlags & DCL_REDUCED_DUE_TO_LOW_CELL_VOLTAGE_MASK);
+        setDclReducedDueToLowPackVoltage(limitFlags & DCL_REDUCED_DUE_TO_LOW_PACK_VOLTAGE_MASK);
+        setDclAndCclReducedDueToVoltageFailsafe(limitFlags & DCL_AND_CCL_REDUCED_DUE_TO_VOLTAGE_FAILSAFE_MASK);
+        setDclAndCclReducedDueToCommunicationFailsafe(limitFlags & DCL_AND_CCL_REDUCED_DUE_TO_COMMUNICATION_FAILSAFE_MASK);
+        setCclReducedDueToHighSoc(limitFlags & CCL_REDUCED_DUE_TO_HIGH_SOC_MASK);
+        setCclReducedDueToHighCellResistance(limitFlags & CCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
+        setCclReducedDueToTemperature(limitFlags & CCL_REDUCED_DUE_TO_TEMPERATURE_MASK);
+        setCclReducedDueToHighCellVoltage(limitFlags & CCL_REDUCED_DUE_TO_HIGH_CELL_VOLTAGE_MASK);
+        setCclReducedDueToHighPackVoltage(limitFlags & CCL_REDUCED_DUE_TO_HIGH_PACK_VOLTAGE_MASK);
+        setCclReducedDueToChargerLatch(limitFlags & CCL_REDUCED_DUE_TO_CHARGER_LATCH_MASK);
+        setCclReducedDueToAlternateCurrentLimit(limitFlags & CCL_REDUCED_DUE_TO_ALTERNATE_CURRENT_LIMIT_MASK);
+
+        // Set DTC flags (errors)
+        setInternalCommunicationFault(dtcFlags & INTERNAL_COMMUNICATION_FAULT_MASK);
+        setInternalConversionFault(dtcFlags & INTERNAL_CONVERSION_FAULT_MASK);
+        setWeakCellFault(dtcFlags & WEAK_CELL_FAULT_MASK);
+        setLowCellVoltageFault(dtcFlags & LOW_CELL_VOLTAGE_FAULT_MASK);
+        setOpenWiringFault(dtcFlags & OPEN_WIRING_FAULT_MASK);
+        setCurrentSensorFault(dtcFlags & CURRENT_SENSOR_FAULT_MASK);
+        setPackVoltageSensorFault(dtcFlags & PACK_VOLTAGE_SENSOR_FAULT_MASK);
+        setWeakPackFault(dtcFlags & WEAK_PACK_FAULT_MASK);
+        setVoltageRedundancyFault(dtcFlags & VOLTAGE_REDUNDANCY_FAULT_MASK);
+        setFanMonitorFault(dtcFlags & FAN_MONITOR_FAULT_MASK);
+        setThermistorFault(dtcFlags & THERMISTOR_FAULT_MASK);
+        setCanbusCommunicationFault(dtcFlags & CANBUS_COMMUNICATION_FAULT_MASK);
+        setAlwaysOnSupplyFault(dtcFlags & ALWAYS_ON_SUPPLY_FAULT_MASK);
+        setHighVoltageIsolationFault(dtcFlags & HIGH_VOLTAGE_ISOLATION_FAULT_MASK);
+        setPowerSupply12VFault(dtcFlags & POWER_SUPPLY_12V_FAULT_MASK);
+        setChargeLimitEnforcementFault(dtcFlags & CHARGE_LIMIT_ENFORCEMENT_FAULT_MASK);
+        setDischargeLimitEnforcementFault(dtcFlags & DISCHARGE_LIMIT_ENFORCEMENT_FAULT_MASK);
+        setChargerSafetyRelayFault(dtcFlags & CHARGER_SAFETY_RELAY_FAULT_MASK);
+        setInternalMemoryFault(dtcFlags & INTERNAL_MEMORY_FAULT_MASK);
+        setInternalThermistorFault(dtcFlags & INTERNAL_THERMISTOR_FAULT_MASK);
+        setInternalLogicFault(dtcFlags & INTERNAL_LOGIC_FAULT_MASK);
+    };
 }

@@ -7,7 +7,7 @@
 class BatteryFaultsPacket : public IPacket {
     Q_OBJECT
     DEFINE_PROPERTY(bool, InternalCommunicationFault)
-    DEFINE_PROPERTY(bool, InternalConverversionFault)
+    DEFINE_PROPERTY(bool, InternalConversionFault)
     DEFINE_PROPERTY(bool, WeakCellFault)
     DEFINE_PROPERTY(bool, LowCellVoltageFault)
     DEFINE_PROPERTY(bool, OpenWiringFault)
@@ -47,6 +47,9 @@ public:
     BatteryFaultsPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
+
+protected:
+    void initializeIdActionMap() override;
 };
 
 #endif // BATTERYFAULTSPACKET_H
