@@ -12,35 +12,46 @@ namespace {
     const int TEMPERATURE_OFFSET = 8;
 }
 
-void MpptPacket::populatePacket(const QByteArray& data) {
-    unsigned char statusAndChannelNumber = getValue<unsigned char>(data, STATUS_AND_CHANNEL_NUMBER_OFFSET);
-    setMpptStatus(statusAndChannelNumber & MPPT_STATUS_MASK);
-    setChannelNumber(statusAndChannelNumber & CHANNEL_NUMBER_MASK);
-
-    setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
-    setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
-    setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET));
-    setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET));
-
+MpptPacket::MpptPacket() {
+    // Initialize all properties to 0
+    setChannel0ArrayVoltage(0);
+    setChannel0ArrayCurrent(0);
+    setChannel0BatteryVoltage(0);
+    setChannel0Temperature(0);
+    
+    setChannel1ArrayVoltage(0);
+    setChannel1ArrayCurrent(0);
+    setChannel1BatteryVoltage(0);
+    setChannel1Temperature(0);
+    
     initializeIdActionMap();
+}
+
+void MpptPacket::populatePacket(const QByteArray& data) {
+    // unsigned char statusAndChannelNumber = getValue<unsigned char>(data, STATUS_AND_CHANNEL_NUMBER_OFFSET);
+    // setMpptStatus(statusAndChannelNumber & MPPT_STATUS_MASK);
+    // setChannelNumber(statusAndChannelNumber & CHANNEL_NUMBER_MASK);
+
+    // setArrayVoltage(getValue<unsigned short>(data, ARRAY_VOLTAGE_OFFSET));
+    // setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
+    // setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET));
+    // setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET));
 }
 
 QJsonObject MpptPacket::toJson() {
     QJsonObject json;
     
-    // Channel 0 Data (All MPPT units)
     QJsonObject channel0;
-    channel0[JsonDefinitions::ARRAY_VOLTAGE] = Channel0ArrayVoltage_;
-    channel0[JsonDefinitions::ARRAY_CURRENT] = Channel0ArrayCurrent_;
-    channel0[JsonDefinitions::BATTERY_VOLTAGE] = Channel0BatteryVoltage_;
-    channel0[JsonDefinitions::TEMPERATURE] = Channel0Temperature_;
+    channel0["ArrayVoltage"] = static_cast<qint64>(Channel0ArrayVoltage_);
+    channel0["ArrayCurrent"] = static_cast<qint64>(Channel0ArrayCurrent_);
+    channel0["BatteryVoltage"] = static_cast<qint64>(Channel0BatteryVoltage_);
+    channel0["Temperature"] = static_cast<qint64>(Channel0Temperature_);
     
-    // Channel 1 Data (All MPPT units)
     QJsonObject channel1;
-    channel1[JsonDefinitions::ARRAY_VOLTAGE] = Channel1ArrayVoltage_;
-    channel1[JsonDefinitions::ARRAY_CURRENT] = Channel1ArrayCurrent_;
-    channel1[JsonDefinitions::BATTERY_VOLTAGE] = Channel1BatteryVoltage_;
-    channel1[JsonDefinitions::TEMPERATURE] = Channel1Temperature_;
+    channel1["ArrayVoltage"] = static_cast<qint64>(Channel1ArrayVoltage_);
+    channel1["ArrayCurrent"] = static_cast<qint64>(Channel1ArrayCurrent_);
+    channel1["BatteryVoltage"] = static_cast<qint64>(Channel1BatteryVoltage_);
+    channel1["Temperature"] = static_cast<qint64>(Channel1Temperature_);
     
     json["channel0"] = channel0;
     json["channel1"] = channel1;

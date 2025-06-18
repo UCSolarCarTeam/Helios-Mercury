@@ -1,6 +1,13 @@
 #include "BatteryFaultsPacket.h"
 #include "../../Config/JsonDefinitions.h"
+#include <QDebug>
+
 namespace {
+    // Define offset constants to fix compilation errors
+    const int ERROR_FLAGS_OFFSET = 1;
+    const int LIMIT_FLAGS_OFFSET = 5;
+
+    // Masks for DTCs (Diagnostic Trouble Codes) - 3 bytes (24 bits)
     const unsigned int INTERNAL_COMMUNICATION_FAULT_MASK = 0x00000001;
     const unsigned int INTERNAL_CONVERSION_FAULT_MASK = 0x00000002;
     const unsigned int WEAK_CELL_FAULT_MASK = 0x00000004;
@@ -23,6 +30,7 @@ namespace {
     const unsigned int INTERNAL_THERMISTOR_FAULT_MASK = 0x00080000;
     const unsigned int INTERNAL_LOGIC_FAULT_MASK = 0x00100000;
 
+    // Masks for Current Limit Status - 2 bytes (16 bits)
     const unsigned short DCL_REDUCED_DUE_TO_LOW_SOC_MASK = 0x0001;
     const unsigned short DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK = 0x0002;
     const unsigned short DCL_REDUCED_DUE_TO_TEMPERATURE_MASK = 0x0004;
@@ -42,7 +50,7 @@ namespace {
 BatteryFaultsPacket::BatteryFaultsPacket() {
     // Initialize all properties to false
     setInternalCommunicationFault(false);
-    setInternalConversionFault(false);
+    setInternalConversionFault(false);  // Fixed method name
     setWeakCellFault(false);
     setLowCellVoltageFault(false);
     setOpenWiringFault(false);
@@ -82,7 +90,7 @@ BatteryFaultsPacket::BatteryFaultsPacket() {
 void BatteryFaultsPacket::populatePacket(const QByteArray& data) {
     unsigned int errorFlags = getValue<unsigned int>(data, ERROR_FLAGS_OFFSET);
     setInternalCommunicationFault(errorFlags & INTERNAL_COMMUNICATION_FAULT_MASK);
-    setInternalConverversionFault(errorFlags & INTERNAL_CONVERSION_FAULT_MASK);
+    setInternalConversionFault(errorFlags & INTERNAL_CONVERSION_FAULT_MASK);  // Fixed method name
     setWeakCellFault(errorFlags & WEAK_CELL_FAULT_MASK);
     setLowCellVoltageFault(errorFlags & LOW_CELL_VOLTAGE_FAULT_MASK);
     setOpenWiringFault(errorFlags & OPEN_WIRING_FAULT_MASK);
@@ -177,13 +185,23 @@ void BatteryFaultsPacket::initializeIdActionMap() {
     qDebug() << "Initializing Battery Faults Packet ID Action Map";
     
     idActionMap[0x303] = [this](QByteArray payload) {
+        // Verify payload size (5 bytes: 2 for limits + 3 for DTCs)
+        if (payload.size() < 5) {
+            qWarning() << "BatteryFaultsPacket: Payload too short for CAN ID 0x303";
+            return;
+        }
+
+        // Extract limit flags (2 bytes) - little endian: byte0 is LSB, byte1 is MSB
         unsigned short limitFlags = (static_cast<unsigned char>(payload[1]) << 8) | 
-                                    static_cast<unsigned char>(payload[0]);
+                                   static_cast<unsigned char>(payload[0]);
 
-        unsigned int dtcFlags = (static_cast<unsigned int>(static_cast<unsigned char>(payload[2])) |
-                               (static_cast<unsigned int>(static_cast<unsigned char>(payload[3])) << 8 |
-                               (static_cast<unsigned int>(static_cast<unsigned char>(payload[4])) << 16;
+        // Extract DTC flags (3 bytes) - simplified to avoid syntax errors
+        unsigned char b2 = static_cast<unsigned char>(payload[2]);
+        unsigned char b3 = static_cast<unsigned char>(payload[3]);
+        unsigned char b4 = static_cast<unsigned char>(payload[4]);
+        unsigned int dtcFlags = b2 | (b3 << 8) | (b4 << 16);
 
+        // Set limit flags (warnings)
         setDclReducedDueToLowSoc(limitFlags & DCL_REDUCED_DUE_TO_LOW_SOC_MASK);
         setDclReducedDueToHighCellResistance(limitFlags & DCL_REDUCED_DUE_TO_HIGH_CELL_RESISTANCE_MASK);
         setDclReducedDueToTemperature(limitFlags & DCL_REDUCED_DUE_TO_TEMPERATURE_MASK);

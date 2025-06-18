@@ -1,5 +1,116 @@
 #include "MotorDetailsPacket.h"
 #include "../../Config/JsonDefinitions.h"
+namespace {
+    const int CONTROL_VALUE_OFFSET = 1;
+
+    const int CONTROL_BITS_OFFSET = 3;
+    const char CONTROL_MODE_MASK = 0x01;
+    const char MOTOR_MODE_MASK = 0x02;
+    const char SOFTWARE_ENABLE_MASK = 0x04;
+    const char DEBUG_MODE_MASK = 0x08;
+
+    const int CURRENT_MOTOR_TORQUE_OFFSET = 4;
+    const int CURRENT_RPM_VALUE_OFFSET = 6;
+    const int MOTOR_TEMPERATURE_OFFSET = 8;
+    const int INVERTER_PEAK_CURRENT_OFFSET = 9;
+    const int CURRENT_MOTOR_POWER_OFFSET = 11;
+    const int ABSOLUTE_ANGLE_OFFSET = 13;
+
+    const int WARNING_CODE_1_OFFSET = 15;
+    const short MOTOR_ABOUT_TO_STALL_MASK = 0x0001;
+    const short DELAY_IN_READING_TEMP_SENSOR_MASK = 0x0002;
+    const short DELAY_IN_READING_POS_SENSOR_MASK = 0x0004;
+    const short INVERTER_1_TEMP_VERY_HIGH_MASK = 0x0008;
+    const short INVERTER_2_TEMP_VERY_HIGH_MASK = 0x0010;
+    const short INVERTER_3_TEMP_VERY_HIGH_MASK = 0x0020;
+    const short INVERTER_4_TEMP_VERY_HIGH_MASK = 0x0040;
+    const short INVERTER_5_TEMP_VERY_HIGH_MASK = 0x0080;
+
+    const int WARNING_CODE_2_OFFSET = 17;
+    const short INVERTER_6_TEMP_VERY_HIGH_MASK = 0x0001;
+    const short CPU_TEMPERATURE_VERY_HIGH_MASK = 0x0002;
+    const short HALL_TEMPERATURE_VERY_HIGH_MASK = 0x0004;
+    const short DCLINK_TEMPERATURE_VERY_HIGH_MASK = 0x0008;
+    const short DELAY_IN_DCLINK_COMMUNICATION_MASK = 0x0010;
+    const short INVERTER_1_OVERCURRENT_WARNING_MASK = 0x0020;
+    const short INVERTER_2_OVERCURRENT_WARNING_MASK = 0x0040;
+    const short INVERTER_3_OVERCURRENT_WARNING_MASK = 0x0080;
+
+    const int WARNING_CODE_3_OFFSET = 19;
+    const short INVERTER_4_OVERCURRENT_WARNING_MASK = 0x0001;
+    const short INVERTER_5_OVERCURRENT_WARNING_MASK = 0x0002;
+    const short INVERTER_6_OVERCURRENT_WARNING_MASK = 0x0004;
+    const short DC_OVERVOLTAGE_WARNING_MASK = 0x0008;
+    const short DC_UNDERVOLTAGE_WARNING_MASK = 0x0010;
+    const short CAN_COMMS_TIMEOUT_MASK = 0x0020;
+    const short INVERTER_1_FAULT_WARNING_MASK = 0x0040;
+    const short INVERTER_2_FAULT_WARNING_MASK = 0x0080;
+
+    const int WARNING_CODE_4_OFFSET = 21;
+    const short INVERTER_3_FAULT_WARNING_MASK = 0x0001;
+    const short INVERTER_4_FAULT_WARNING_MASK = 0x0002;
+    const short INVERTER_5_FAULT_WARNING_MASK = 0x0004;
+    const short INVERTER_6_FAULT_WARNING_MASK = 0x0008;
+    const short CAN_SEND_WARNING_MASK = 0x0010;
+    const short LOST_FRAMES_ON_CAN_BUS_WARNING_MASK = 0x0020;
+    const short OVERSPEED_WARNING_MASK = 0x0040;
+    const short CPU_OVERLOAD_MASK = 0x0080;
+
+    const int WARNING_CODE_5_OFFSET = 23;
+    const char TORQUE_LIMITED_MASK = 0x01;
+    const char START_AT_HIGH_RPM_MASK = 0x02;
+
+    const int ERROR_CODE_1_OFFSET = 24;
+    const short INIT_ERROR_MASK = 0x0001;
+    const short SETTINGS_NOT_FOUND_MASK = 0x0002;
+    const short MOTOR_STALLED_MASK = 0x0004;
+    const short CONTROLLER_DATA_READING_TIMEOUT_MASK = 0x0008;
+    const short INVALID_HALL_SENSOR_SEQUENCE_MASK = 0x0010;
+    const short INVALID_HALL_SECTOR_MASK = 0x0020;
+    const short ERROR_READING_TEMP_SENSOR_MASK = 0x0040;
+    const short POSITION_SENSOR_READING_ERROR_MASK = 0x0080;
+
+    const int ERROR_CODE_2_OFFSET = 26;
+    const short ERROR_READING_ENCODER_MASK = 0x0001;
+    const short ZERO_POSITION_OFFSET_NOT_SET_MASK = 0x0002;
+    const short HW_ENABLE_NOT_SET_MASK = 0x0004;
+    const short INVERTER_1_TEMP_TOO_HIGH_MASK = 0x0008;
+    const short INVERTER_2_TEMP_TOO_HIGH_MASK = 0x0010;
+    const short INVERTER_3_TEMP_TOO_HIGH_MASK = 0x0020;
+    const short INVERTER_4_TEMP_TOO_HIGH_MASK = 0x0040;
+    const short INVERTER_5_TEMP_TOO_HIGH_MASK = 0x0080;
+
+    const int ERROR_CODE_3_OFFSET = 28;
+    const short INVERTER_6_TEMP_TOO_HIGH_MASK = 0x0001;
+    const short CPU_TEMPERATURE_TOO_HIGH_MASK = 0x0002;
+    const short HALL_TEMPERATURE_TOO_HIGH_MASK = 0x0004;
+    const short DCLINK_TEMPERATURE_TOO_HIGH_MASK = 0x0008;
+    const short ERROR_IN_DCLINK_COMMUNICATION_MASK = 0x0010;
+    const short INVERTER_1_OVERCURRENT_ERROR_MASK = 0x0020;
+    const short INVERTER_2_OVERCURRENT_ERROR_MASK = 0x0040;
+    const short INVERTER_3_OVERCURRENT_ERROR_MASK = 0x0080;
+
+    const int ERROR_CODE_4_OFFSET = 30;
+    const short INVERTER_4_OVERCURRENT_ERROR_MASK = 0x0001;
+    const short INVERTER_5_OVERCURRENT_ERROR_MASK = 0x0002;
+    const short INVERTER_6_OVERCURRENT_ERROR_MASK = 0x0004;
+    const short DC_OVERVOLTAGE_ERROR_MASK = 0x0008;
+    const short DC_UNDERVOLTAGE_ERROR_MASK = 0x0010;
+    const short DOUBLE_CAN_ID_ON_BUS_MASK = 0x0020;
+    const short CAN_COMMS_TIMEOUT_ERROR_MASK = 0x0040;
+    const short INVERTER_1_FAULT_ERROR_MASK = 0x0080;
+    const short INVERTER_2_FAULT_ERROR_MASK = 0x0100;
+    const short INVERTER_3_FAULT_ERROR_MASK = 0x0200;
+    const short INVERTER_4_FAULT_ERROR_MASK = 0x0400;
+    const short INVERTER_5_FAULT_ERROR_MASK = 0x0800;
+    const short INVERTER_6_FAULT_ERROR_MASK = 0x1000;
+    const short CAN_SEND_ERROR_MASK = 0x2000;
+    const short LOST_FRAMES_ON_CAN_BUS_ERROR_MASK = 0x4000;
+    const short OVERSPEED_ERROR_MASK = 0x8000;
+
+    const int ERROR_CODE_5_OFFSET = 32;
+    const char CPU_OVERLOADED_MASK = 0x01;
+}
 
 MotorDetailsPacket::MotorDetailsPacket() {
     // Initialize all properties to 0/false
@@ -60,174 +171,174 @@ MotorDetailsPacket::MotorDetailsPacket() {
 }
 
 void MotorDetailsPacket::populatePacket(const QByteArray& data) {
-    setControlValue(getValue<short>(data, CONTROL_VALUE_OFFSET));
+    // setControlValue(getValue<short>(data, CONTROL_VALUE_OFFSET));
 
-    unsigned char controlBits = getValue<unsigned char>(data, CONTROL_BITS_OFFSET);
-    setControlMode(controlBits & CONTROL_MODE_MASK);
-    setMotorMode(controlBits & MOTOR_MODE_MASK);
-    setSoftwareEnable(controlBits & SOFTWARE_ENABLE_MASK);
-    setDebugMode(controlBits & DEBUG_MODE_MASK);
+    // unsigned char controlBits = getValue<unsigned char>(data, CONTROL_BITS_OFFSET);
+    // setControlMode(controlBits & CONTROL_MODE_MASK);
+    // setMotorMode(controlBits & MOTOR_MODE_MASK);
+    // setSoftwareEnable(controlBits & SOFTWARE_ENABLE_MASK);
+    // setDebugMode(controlBits & DEBUG_MODE_MASK);
 
-    setCurrentMotorTorque(getValue<short>(data, CURRENT_MOTOR_TORQUE_OFFSET));
-    setCurrentRpmValue(getValue<short>(data, CURRENT_RPM_VALUE_OFFSET));
-    setMotorTemperature(getValue<char>(data, MOTOR_TEMPERATURE_OFFSET));
-    setInverterPeakCurrent(getValue<short>(data, INVERTER_PEAK_CURRENT_OFFSET));
-    setCurrentMotorPower(getValue<short>(data, CURRENT_MOTOR_POWER_OFFSET));
-    setAbsuluteAngle(getValue<unsigned short>(data, ABSOLUTE_ANGLE_OFFSET));
+    // setCurrentMotorTorque(getValue<short>(data, CURRENT_MOTOR_TORQUE_OFFSET));
+    // setCurrentRpmValue(getValue<short>(data, CURRENT_RPM_VALUE_OFFSET));
+    // setMotorTemperature(getValue<char>(data, MOTOR_TEMPERATURE_OFFSET));
+    // setInverterPeakCurrent(getValue<short>(data, INVERTER_PEAK_CURRENT_OFFSET));
+    // setCurrentMotorPower(getValue<short>(data, CURRENT_MOTOR_POWER_OFFSET));
+    // setAbsuluteAngle(getValue<unsigned short>(data, ABSOLUTE_ANGLE_OFFSET));
 
-    unsigned short warningCode1 = getValue<unsigned short>(data, WARNING_CODE_1_OFFSET);
-    setMotorAboutToStall(warningCode1 & MOTOR_ABOUT_TO_STALL_MASK);
-    setDelayInReadingTempSensor(warningCode1 & DELAY_IN_READING_TEMP_SENSOR_MASK);
-    setDelayInReadingPosSensor(warningCode1 & DELAY_IN_READING_POS_SENSOR_MASK);
-    setInverter1TempVeryHigh(warningCode1 & INVERTER_1_TEMP_VERY_HIGH_MASK);
-    setInverter2TempVeryHigh(warningCode1 & INVERTER_2_TEMP_VERY_HIGH_MASK);
-    setInverter3TempVeryHigh(warningCode1 & INVERTER_3_TEMP_VERY_HIGH_MASK);
-    setInverter4TempVeryHigh(warningCode1 & INVERTER_4_TEMP_VERY_HIGH_MASK);
-    setInverter5TempVeryHigh(warningCode1 & INVERTER_5_TEMP_VERY_HIGH_MASK);
+    // unsigned short warningCode1 = getValue<unsigned short>(data, WARNING_CODE_1_OFFSET);
+    // setMotorAboutToStall(warningCode1 & MOTOR_ABOUT_TO_STALL_MASK);
+    // setDelayInReadingTempSensor(warningCode1 & DELAY_IN_READING_TEMP_SENSOR_MASK);
+    // setDelayInReadingPosSensor(warningCode1 & DELAY_IN_READING_POS_SENSOR_MASK);
+    // setInverter1TempVeryHigh(warningCode1 & INVERTER_1_TEMP_VERY_HIGH_MASK);
+    // setInverter2TempVeryHigh(warningCode1 & INVERTER_2_TEMP_VERY_HIGH_MASK);
+    // setInverter3TempVeryHigh(warningCode1 & INVERTER_3_TEMP_VERY_HIGH_MASK);
+    // setInverter4TempVeryHigh(warningCode1 & INVERTER_4_TEMP_VERY_HIGH_MASK);
+    // setInverter5TempVeryHigh(warningCode1 & INVERTER_5_TEMP_VERY_HIGH_MASK);
 
-    unsigned short warningCode2 = getValue<unsigned short>(data, WARNING_CODE_2_OFFSET);
-    setInverter6TempVeryHigh(warningCode2 & INVERTER_6_TEMP_VERY_HIGH_MASK);
-    setCpuTemperatureVeryHigh(warningCode2 & CPU_TEMPERATURE_VERY_HIGH_MASK);
-    setHallTemperatureVeryHigh(warningCode2 & HALL_TEMPERATURE_VERY_HIGH_MASK);
-    setDclinkTemperatureVeryHigh(warningCode2 & DCLINK_TEMPERATURE_VERY_HIGH_MASK);
-    setDelayInDclinkCommunication(warningCode2 & DELAY_IN_DCLINK_COMMUNICATION_MASK);
-    setInverter1OverCurrentWarning(warningCode2 & INVERTER_1_OVERCURRENT_WARNING_MASK);
-    setInverter2OverCurrentWarning(warningCode2 & INVERTER_2_OVERCURRENT_WARNING_MASK);
-    setInverter3OverCurrentWarning(warningCode2 & INVERTER_3_OVERCURRENT_WARNING_MASK);
+    // unsigned short warningCode2 = getValue<unsigned short>(data, WARNING_CODE_2_OFFSET);
+    // setInverter6TempVeryHigh(warningCode2 & INVERTER_6_TEMP_VERY_HIGH_MASK);
+    // setCpuTemperatureVeryHigh(warningCode2 & CPU_TEMPERATURE_VERY_HIGH_MASK);
+    // setHallTemperatureVeryHigh(warningCode2 & HALL_TEMPERATURE_VERY_HIGH_MASK);
+    // setDclinkTemperatureVeryHigh(warningCode2 & DCLINK_TEMPERATURE_VERY_HIGH_MASK);
+    // setDelayInDclinkCommunication(warningCode2 & DELAY_IN_DCLINK_COMMUNICATION_MASK);
+    // setInverter1OverCurrentWarning(warningCode2 & INVERTER_1_OVERCURRENT_WARNING_MASK);
+    // setInverter2OverCurrentWarning(warningCode2 & INVERTER_2_OVERCURRENT_WARNING_MASK);
+    // setInverter3OverCurrentWarning(warningCode2 & INVERTER_3_OVERCURRENT_WARNING_MASK);
 
-    unsigned short warningCode3 = getValue<unsigned short>(data, WARNING_CODE_3_OFFSET);
-    setInverter4OverCurrentWarning(warningCode3 & INVERTER_4_OVERCURRENT_WARNING_MASK);
-    setInverter5OverCurrentWarning(warningCode3 & INVERTER_5_OVERCURRENT_WARNING_MASK);
-    setInverter6OverCurrentWarning(warningCode3 & INVERTER_6_OVERCURRENT_WARNING_MASK);
-    setDcOvervoltageWarning(warningCode3 & DC_OVERVOLTAGE_WARNING_MASK);
-    setDcUndervoltageWarning(warningCode3 & DC_UNDERVOLTAGE_WARNING_MASK);
-    setCanCommsTimeout(warningCode3 & CAN_COMMS_TIMEOUT_MASK);
-    setInverter1FaultWarning(warningCode3 & INVERTER_1_FAULT_WARNING_MASK);
-    setInverter2FaultWarning(warningCode3 & INVERTER_2_FAULT_WARNING_MASK);
+    // unsigned short warningCode3 = getValue<unsigned short>(data, WARNING_CODE_3_OFFSET);
+    // setInverter4OverCurrentWarning(warningCode3 & INVERTER_4_OVERCURRENT_WARNING_MASK);
+    // setInverter5OverCurrentWarning(warningCode3 & INVERTER_5_OVERCURRENT_WARNING_MASK);
+    // setInverter6OverCurrentWarning(warningCode3 & INVERTER_6_OVERCURRENT_WARNING_MASK);
+    // setDcOvervoltageWarning(warningCode3 & DC_OVERVOLTAGE_WARNING_MASK);
+    // setDcUndervoltageWarning(warningCode3 & DC_UNDERVOLTAGE_WARNING_MASK);
+    // setCanCommsTimeout(warningCode3 & CAN_COMMS_TIMEOUT_MASK);
+    // setInverter1FaultWarning(warningCode3 & INVERTER_1_FAULT_WARNING_MASK);
+    // setInverter2FaultWarning(warningCode3 & INVERTER_2_FAULT_WARNING_MASK);
 
-    unsigned short warningCode4 = getValue<unsigned short>(data, WARNING_CODE_4_OFFSET);
-    setInverter3FaultWarning(warningCode4 & INVERTER_3_FAULT_WARNING_MASK);
-    setInverter4FaultWarning(warningCode4 & INVERTER_4_FAULT_WARNING_MASK);
-    setInverter5FaultWarning(warningCode4 & INVERTER_5_FAULT_WARNING_MASK);
-    setInverter6FaultWarning(warningCode4 & INVERTER_6_FAULT_WARNING_MASK);
-    setCanSendWarning(warningCode4 & CAN_SEND_WARNING_MASK);
-    setLostFramesOnCanBusWarning(warningCode4 & LOST_FRAMES_ON_CAN_BUS_WARNING_MASK);
-    setOverspeedWarning(warningCode4 & OVERSPEED_WARNING_MASK);
-    setCpuOverload(warningCode4 & CPU_OVERLOAD_MASK);
+    // unsigned short warningCode4 = getValue<unsigned short>(data, WARNING_CODE_4_OFFSET);
+    // setInverter3FaultWarning(warningCode4 & INVERTER_3_FAULT_WARNING_MASK);
+    // setInverter4FaultWarning(warningCode4 & INVERTER_4_FAULT_WARNING_MASK);
+    // setInverter5FaultWarning(warningCode4 & INVERTER_5_FAULT_WARNING_MASK);
+    // setInverter6FaultWarning(warningCode4 & INVERTER_6_FAULT_WARNING_MASK);
+    // setCanSendWarning(warningCode4 & CAN_SEND_WARNING_MASK);
+    // setLostFramesOnCanBusWarning(warningCode4 & LOST_FRAMES_ON_CAN_BUS_WARNING_MASK);
+    // setOverspeedWarning(warningCode4 & OVERSPEED_WARNING_MASK);
+    // setCpuOverload(warningCode4 & CPU_OVERLOAD_MASK);
 
-    unsigned char warningCode5 = getValue<unsigned char>(data, WARNING_CODE_5_OFFSET);
-    setTorqueLimited(warningCode5 & TORQUE_LIMITED_MASK);
-    setStartAtHighRpm(warningCode5 & START_AT_HIGH_RPM_MASK);
+    // unsigned char warningCode5 = getValue<unsigned char>(data, WARNING_CODE_5_OFFSET);
+    // setTorqueLimited(warningCode5 & TORQUE_LIMITED_MASK);
+    // setStartAtHighRpm(warningCode5 & START_AT_HIGH_RPM_MASK);
 
-    unsigned short errorCode1 = getValue<unsigned short>(data, ERROR_CODE_1_OFFSET);
-    setInitError(errorCode1 & INIT_ERROR_MASK);
-    setSettingsNotFound(errorCode1 & SETTINGS_NOT_FOUND_MASK);
-    setMotorStalled(errorCode1 & MOTOR_STALLED_MASK);
-    setControllerDataReadingTimeout(errorCode1 & CONTROLLER_DATA_READING_TIMEOUT_MASK);
-    setInvalidHallSensorSequence(errorCode1 & INVALID_HALL_SENSOR_SEQUENCE_MASK);
-    setInvalidHallSector(errorCode1 & INVALID_HALL_SECTOR_MASK);
-    setErrorReadingTempSensor(errorCode1 & ERROR_READING_TEMP_SENSOR_MASK);
-    setPositionSensorReadingError(errorCode1 & POSITION_SENSOR_READING_ERROR_MASK);
+    // unsigned short errorCode1 = getValue<unsigned short>(data, ERROR_CODE_1_OFFSET);
+    // setInitError(errorCode1 & INIT_ERROR_MASK);
+    // setSettingsNotFound(errorCode1 & SETTINGS_NOT_FOUND_MASK);
+    // setMotorStalled(errorCode1 & MOTOR_STALLED_MASK);
+    // setControllerDataReadingTimeout(errorCode1 & CONTROLLER_DATA_READING_TIMEOUT_MASK);
+    // setInvalidHallSensorSequence(errorCode1 & INVALID_HALL_SENSOR_SEQUENCE_MASK);
+    // setInvalidHallSector(errorCode1 & INVALID_HALL_SECTOR_MASK);
+    // setErrorReadingTempSensor(errorCode1 & ERROR_READING_TEMP_SENSOR_MASK);
+    // setPositionSensorReadingError(errorCode1 & POSITION_SENSOR_READING_ERROR_MASK);
 
-    unsigned short errorCode2 = getValue<unsigned short>(data, ERROR_CODE_2_OFFSET);
-    setErrorReadingEncoder(errorCode2 & ERROR_READING_ENCODER_MASK);
-    setZeroPositionOffsetNotSet(errorCode2 & ZERO_POSITION_OFFSET_NOT_SET_MASK);
-    setHwEnableNotSet(errorCode2 & HW_ENABLE_NOT_SET_MASK);
-    setInverter1TempTooHigh(errorCode2 & INVERTER_1_TEMP_TOO_HIGH_MASK);
-    setInverter2TempTooHigh(errorCode2 & INVERTER_2_TEMP_TOO_HIGH_MASK);
-    setInverter3TempTooHigh(errorCode2 & INVERTER_3_TEMP_TOO_HIGH_MASK);
-    setInverter4TempTooHigh(errorCode2 & INVERTER_4_TEMP_TOO_HIGH_MASK);
-    setInverter5TempTooHigh(errorCode2 & INVERTER_5_TEMP_TOO_HIGH_MASK);
+    // unsigned short errorCode2 = getValue<unsigned short>(data, ERROR_CODE_2_OFFSET);
+    // setErrorReadingEncoder(errorCode2 & ERROR_READING_ENCODER_MASK);
+    // setZeroPositionOffsetNotSet(errorCode2 & ZERO_POSITION_OFFSET_NOT_SET_MASK);
+    // setHwEnableNotSet(errorCode2 & HW_ENABLE_NOT_SET_MASK);
+    // setInverter1TempTooHigh(errorCode2 & INVERTER_1_TEMP_TOO_HIGH_MASK);
+    // setInverter2TempTooHigh(errorCode2 & INVERTER_2_TEMP_TOO_HIGH_MASK);
+    // setInverter3TempTooHigh(errorCode2 & INVERTER_3_TEMP_TOO_HIGH_MASK);
+    // setInverter4TempTooHigh(errorCode2 & INVERTER_4_TEMP_TOO_HIGH_MASK);
+    // setInverter5TempTooHigh(errorCode2 & INVERTER_5_TEMP_TOO_HIGH_MASK);
 
-    unsigned short errorCode3 = getValue<unsigned short>(data, ERROR_CODE_3_OFFSET);
-    setInverter6TempTooHigh(errorCode3 & INVERTER_6_TEMP_TOO_HIGH_MASK);
-    setCpuTemperatureTooHigh(errorCode3 & CPU_TEMPERATURE_TOO_HIGH_MASK);
-    setHallTemperatureTooHigh(errorCode3 & HALL_TEMPERATURE_TOO_HIGH_MASK);
-    setDclinkTemperatureTooHigh(errorCode3 & DCLINK_TEMPERATURE_TOO_HIGH_MASK);
-    setErrorInDclinkCommunication(errorCode3 & ERROR_IN_DCLINK_COMMUNICATION_MASK);
-    setInverter1OvercurrentError(errorCode3 & INVERTER_1_OVERCURRENT_ERROR_MASK);
-    setInverter2OvercurrentError(errorCode3 & INVERTER_2_OVERCURRENT_ERROR_MASK);
-    setInverter3OvercurrentError(errorCode3 & INVERTER_3_OVERCURRENT_ERROR_MASK);
+    // unsigned short errorCode3 = getValue<unsigned short>(data, ERROR_CODE_3_OFFSET);
+    // setInverter6TempTooHigh(errorCode3 & INVERTER_6_TEMP_TOO_HIGH_MASK);
+    // setCpuTemperatureTooHigh(errorCode3 & CPU_TEMPERATURE_TOO_HIGH_MASK);
+    // setHallTemperatureTooHigh(errorCode3 & HALL_TEMPERATURE_TOO_HIGH_MASK);
+    // setDclinkTemperatureTooHigh(errorCode3 & DCLINK_TEMPERATURE_TOO_HIGH_MASK);
+    // setErrorInDclinkCommunication(errorCode3 & ERROR_IN_DCLINK_COMMUNICATION_MASK);
+    // setInverter1OvercurrentError(errorCode3 & INVERTER_1_OVERCURRENT_ERROR_MASK);
+    // setInverter2OvercurrentError(errorCode3 & INVERTER_2_OVERCURRENT_ERROR_MASK);
+    // setInverter3OvercurrentError(errorCode3 & INVERTER_3_OVERCURRENT_ERROR_MASK);
 
-    unsigned short errorCode4 = getValue<unsigned short>(data, ERROR_CODE_4_OFFSET);
-    setInverter4OvercurrentError(errorCode4 & INVERTER_4_OVERCURRENT_ERROR_MASK);
-    setInverter5OvercurrentError(errorCode4 & INVERTER_5_OVERCURRENT_ERROR_MASK);
-    setInverter6OvercurrentError(errorCode4 & INVERTER_6_OVERCURRENT_ERROR_MASK);
-    setDcOvervoltageError(errorCode4 & DC_OVERVOLTAGE_ERROR_MASK);
-    setDcUndervoltageError(errorCode4 & DC_UNDERVOLTAGE_ERROR_MASK);
-    setDoubleCanIdOnBus(errorCode4 & DOUBLE_CAN_ID_ON_BUS_MASK);
-    setCanCommsTimeoutError(errorCode4 & CAN_COMMS_TIMEOUT_ERROR_MASK);
-    setInverter1FaultError(errorCode4 & INVERTER_1_FAULT_ERROR_MASK);
-    setInverter2FaultError(errorCode4 & INVERTER_2_FAULT_ERROR_MASK);
-    setInverter3FaultError(errorCode4 & INVERTER_3_FAULT_ERROR_MASK);
-    setInverter4FaultError(errorCode4 & INVERTER_4_FAULT_ERROR_MASK);
-    setInverter5FaultError(errorCode4 & INVERTER_5_FAULT_ERROR_MASK);
-    setInverter6FaultError(errorCode4 & INVERTER_6_FAULT_ERROR_MASK);
-    setCanSendError(errorCode4 & CAN_SEND_ERROR_MASK);
-    setLostFramesOnCanBusError(errorCode4 & LOST_FRAMES_ON_CAN_BUS_ERROR_MASK);
-    setOverspeedError(errorCode4 & OVERSPEED_ERROR_MASK);
+    // unsigned short errorCode4 = getValue<unsigned short>(data, ERROR_CODE_4_OFFSET);
+    // setInverter4OvercurrentError(errorCode4 & INVERTER_4_OVERCURRENT_ERROR_MASK);
+    // setInverter5OvercurrentError(errorCode4 & INVERTER_5_OVERCURRENT_ERROR_MASK);
+    // setInverter6OvercurrentError(errorCode4 & INVERTER_6_OVERCURRENT_ERROR_MASK);
+    // setDcOvervoltageError(errorCode4 & DC_OVERVOLTAGE_ERROR_MASK);
+    // setDcUndervoltageError(errorCode4 & DC_UNDERVOLTAGE_ERROR_MASK);
+    // setDoubleCanIdOnBus(errorCode4 & DOUBLE_CAN_ID_ON_BUS_MASK);
+    // setCanCommsTimeoutError(errorCode4 & CAN_COMMS_TIMEOUT_ERROR_MASK);
+    // setInverter1FaultError(errorCode4 & INVERTER_1_FAULT_ERROR_MASK);
+    // setInverter2FaultError(errorCode4 & INVERTER_2_FAULT_ERROR_MASK);
+    // setInverter3FaultError(errorCode4 & INVERTER_3_FAULT_ERROR_MASK);
+    // setInverter4FaultError(errorCode4 & INVERTER_4_FAULT_ERROR_MASK);
+    // setInverter5FaultError(errorCode4 & INVERTER_5_FAULT_ERROR_MASK);
+    // setInverter6FaultError(errorCode4 & INVERTER_6_FAULT_ERROR_MASK);
+    // setCanSendError(errorCode4 & CAN_SEND_ERROR_MASK);
+    // setLostFramesOnCanBusError(errorCode4 & LOST_FRAMES_ON_CAN_BUS_ERROR_MASK);
+    // setOverspeedError(errorCode4 & OVERSPEED_ERROR_MASK);
 
-    unsigned char errorCode5 = getValue<unsigned char>(data, ERROR_CODE_5_OFFSET);
-    setCpuOverloaded(errorCode5 & CPU_OVERLOADED_MASK);
+    // unsigned char errorCode5 = getValue<unsigned char>(data, ERROR_CODE_5_OFFSET);
+    // setCpuOverloaded(errorCode5 & CPU_OVERLOADED_MASK);
 }
 
 QJsonObject MotorDetailsPacket::toJson() {
     QJsonObject json;
     
     // Motor identification
-    json[JsonDefinitions::MOTOR_ID] = MotorId_;
+    json[JsonDefinitions::MOTOR_ID] = static_cast<qint64>(MotorId_);
     
     // ID Info
-    json[JsonDefinitions::TRITIUM_ID] = TritiumId_;
-    json[JsonDefinitions::SERIAL_NUMBER] = SerialNumber_;
+    json[JsonDefinitions::TRITIUM_ID] = static_cast<qint64>(TritiumId_);
+    json[JsonDefinitions::SERIAL_NUMBER] = static_cast<qint64>(SerialNumber_);
     
     // Status
-    json[JsonDefinitions::LIMIT_FLAGS] = LimitFlags_;
-    json[JsonDefinitions::ERROR_FLAGS] = ErrorFlags_;
-    json[JsonDefinitions::ACTIVE_MOTOR] = ActiveMotor_;
-    json[JsonDefinitions::TX_ERROR_COUNT] = TxErrorCount_;
-    json[JsonDefinitions::RX_ERROR_COUNT] = RxErrorCount_;
+    json[JsonDefinitions::LIMIT_FLAGS] = static_cast<qint64>(LimitFlags_);
+    json[JsonDefinitions::ERROR_FLAGS] = static_cast<qint64>(ErrorFlags_);
+    json[JsonDefinitions::ACTIVE_MOTOR] = static_cast<qint64>(ActiveMotor_);
+    json[JsonDefinitions::TX_ERROR_COUNT] = static_cast<qint64>(TxErrorCount_);
+    json[JsonDefinitions::RX_ERROR_COUNT] = static_cast<qint64>(RxErrorCount_);
     
     // Bus Measurement
-    json[JsonDefinitions::BUS_VOLTAGE] = BusVoltage_;
-    json[JsonDefinitions::BUS_CURRENT] = BusCurrent_;
+    json[JsonDefinitions::BUS_VOLTAGE] = static_cast<qint64>(BusVoltage_);
+    json[JsonDefinitions::BUS_CURRENT] = static_cast<qint64>(BusCurrent_);
     
     // Velocity Measurement
-    json[JsonDefinitions::MOTOR_VELOCITY] = MotorVelocity_;
-    json[JsonDefinitions::VEHICLE_VELOCITY] = VehicleVelocity_;
+    json[JsonDefinitions::MOTOR_VELOCITY] = static_cast<qint64>(MotorVelocity_);
+    json[JsonDefinitions::VEHICLE_VELOCITY] = static_cast<qint64>(VehicleVelocity_);
     
     // Phase Current Measurement
-    json[JsonDefinitions::PHASE_CURRENT_B] = PhaseCurrentB_;
-    json[JsonDefinitions::PHASE_CURRENT_C] = PhaseCurrentC_;
+    json[JsonDefinitions::PHASE_CURRENT_B] = static_cast<qint64>(PhaseCurrentB_);
+    json[JsonDefinitions::PHASE_CURRENT_C] = static_cast<qint64>(PhaseCurrentC_);
     
     // Motor Voltage Vector Measurement
-    json[JsonDefinitions::VQ] = Vq_;
-    json[JsonDefinitions::VD] = Vd_;
+    json[JsonDefinitions::VQ] = static_cast<qint64>(Vq_);
+    json[JsonDefinitions::VD] = static_cast<qint64>(Vd_);
     
     // Motor Current Vector Measurement
-    json[JsonDefinitions::IQ] = Iq_;
-    json[JsonDefinitions::ID] = Id_;
+    json[JsonDefinitions::IQ] = static_cast<qint64>(Iq_);
+    json[JsonDefinitions::ID] = static_cast<qint64>(Id_);
     
     // Motor Back EMF Measurement/Prediction
-    json[JsonDefinitions::BEMF_Q] = BEMFq_;
-    json[JsonDefinitions::BEMF_D] = BEMFd_;
+    json[JsonDefinitions::BEMF_Q] = static_cast<qint64>(BEMFq_);
+    json[JsonDefinitions::BEMF_D] = static_cast<qint64>(BEMFd_);
     
     // Voltage Rail Measurements
-    json[JsonDefinitions::SUPPLY_15V] = Supply15V_;
-    json[JsonDefinitions::SUPPLY_1V9] = Supply1V9_;
-    json[JsonDefinitions::SUPPLY_3V3] = Supply3V3_;
+    json[JsonDefinitions::SUPPLY_15V] = static_cast<qint64>(Supply15V_);
+    json[JsonDefinitions::SUPPLY_1V9] = static_cast<qint64>(Supply1V9_);
+    json[JsonDefinitions::SUPPLY_3V3] = static_cast<qint64>(Supply3V3_);
     
     // Temperature Measurements
-    json[JsonDefinitions::MOTOR_TEMPERATURE] = MotorTemp_;
-    json[JsonDefinitions::HEATSINK_TEMPERATURE] = HeatsinkTemp_;
-    json[JsonDefinitions::DSP_BOARD_TEMPERATURE] = DspBoardTemp_;
+    json[JsonDefinitions::MOTOR_TEMPERATURE] = static_cast<qint64>(MotorTemp_);
+    json[JsonDefinitions::HEATSINK_TEMPERATURE] = static_cast<qint64>(HeatsinkTemp_);
+    json[JsonDefinitions::DSP_BOARD_TEMPERATURE] = static_cast<qint64>(DspBoardTemp_);
     
     // Odometer and Bus Ah
-    json[JsonDefinitions::ODOMETER] = Odometer_;
-    json[JsonDefinitions::DC_BUS_AH] = DCBusAh_;
+    json[JsonDefinitions::ODOMETER] = static_cast<qint64>(Odometer_);
+    json[JsonDefinitions::DC_BUS_AH] = static_cast<qint64>(DCBusAh_);
     
     // Slip Speed
-    json[JsonDefinitions::SLIP_SPEED] = SlipSpeed_;
+    json[JsonDefinitions::SLIP_SPEED] = static_cast<qint64>(SlipSpeed_);
     
     return json;
 }

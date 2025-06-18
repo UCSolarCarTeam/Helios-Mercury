@@ -58,11 +58,11 @@ void CanReceiver::handleReadyRead() {
         }
         else if(id >= PacketDefinitions::MOTOR_DETAILS_0_ID_MIN && id <= PacketDefinitions::MOTOR_DETAILS_0_ID_MAX) {
             // Left Motor Details (0x400-0x417)
-            packetFactory_->getMotorDetailsPacket().IPacket::populatePacket(id, payload);
+            packetFactory_->getMotorDetailsPacket(0).IPacket::populatePacket(id, payload);  // Added index 0
         }
         else if(id >= PacketDefinitions::MOTOR_DETAILS_1_ID_MIN && id <= PacketDefinitions::MOTOR_DETAILS_1_ID_MAX) {
             // Right Motor Details (0x420-0x437)
-            packetFactory_->getMotorDetailsPacket().IPacket::populatePacket(id, payload);
+            packetFactory_->getMotorDetailsPacket(1).IPacket::populatePacket(id, payload);  // Added index 1
         }
         else if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX) {
             // Driver Controls & Power Board Data (0x610-0x620)
@@ -83,7 +83,7 @@ void CanReceiver::handleReadyRead() {
         }
         else if(id >= PacketDefinitions::MPPT_ID_MIN && id <= PacketDefinitions::MPPT_ID_MAX) {
             // MPPT Data (0x600-0x607)
-            packetFactory_->getMpptPacket().IPacket::populatePacket(id, payload);
+            packetFactory_->getMpptPacket(0).IPacket::populatePacket(id, payload);  // Added index 0
         }
         else if(id >= PacketDefinitions::MBMS_ID_MIN && id <= PacketDefinitions::MBMS_ID_MAX) {
             // MBMS Data (0x100-0x105)

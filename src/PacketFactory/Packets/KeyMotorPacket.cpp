@@ -17,6 +17,8 @@ KeyMotorPacket::KeyMotorPacket() {
     setMotorMode(false);
     setSoftwareEnable(false);
     setDebugMode(false);
+
+    initializeIdActionMap();
 }
 
 void KeyMotorPacket::populatePacket(const QByteArray& data) {

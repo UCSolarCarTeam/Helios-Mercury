@@ -17,8 +17,8 @@ namespace PacketDefinitions {
 
     const int MOTOR_DETAILS_0_ID = 2;
     const int MOTOR_DETAILS_0_LENGTH = 33;
-    const int MOTOR_DETAILS_1_ID_MIN = 0x400;
-    const int MOTOR_DETAILS_1_ID_MAX = 0x417;
+    const int MOTOR_DETAILS_0_ID_MIN = 0x400;
+    const int MOTOR_DETAILS_0_ID_MAX = 0x417;
 
     const int MOTOR_DETAILS_1_ID = 3;
     const int MOTOR_DETAILS_1_LENGTH = 33;
@@ -55,7 +55,7 @@ namespace PacketDefinitions {
     const int MBMS_ID = 9;
     const int MBMS_LENGTH = 26;
     const int MBMS_ID_MIN = 0x100;
-    const int MBMS+ID_MAX = 0x105;
+    const int MBMS_ID_MAX = 0x105;
 
     const int PROXIMITY_SENSORS_ID = 10;
     const int PROXIMITY_SENSORS_LENGTH = 9;

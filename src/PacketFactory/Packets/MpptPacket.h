@@ -6,17 +6,17 @@
 
 class MpptPacket : public IPacket {
     Q_OBJECT
-    // Channel 0 Properties 
-    DEFINE_PROPERTY(quint16, Channel0ArrayVoltage)
-    DEFINE_PROPERTY(quint16, Channel0ArrayCurrent)
-    DEFINE_PROPERTY(quint16, Channel0BatteryVoltage)
-    DEFINE_PROPERTY(quint16, Channel0Temperature)
+    // Channel 0 properties
+    DEFINE_PROPERTY(unsigned short, Channel0ArrayVoltage)
+    DEFINE_PROPERTY(unsigned short, Channel0ArrayCurrent)
+    DEFINE_PROPERTY(unsigned short, Channel0BatteryVoltage)
+    DEFINE_PROPERTY(unsigned short, Channel0Temperature)
     
-    // Channel 1 Properties
-    DEFINE_PROPERTY(quint16, Channel1ArrayVoltage)
-    DEFINE_PROPERTY(quint16, Channel1ArrayCurrent)
-    DEFINE_PROPERTY(quint16, Channel1BatteryVoltage)
-    DEFINE_PROPERTY(quint16, Channel1Temperature)
+    // Channel 1 properties
+    DEFINE_PROPERTY(unsigned short, Channel1ArrayVoltage)
+    DEFINE_PROPERTY(unsigned short, Channel1ArrayCurrent)
+    DEFINE_PROPERTY(unsigned short, Channel1BatteryVoltage)
+    DEFINE_PROPERTY(unsigned short, Channel1Temperature)
 
 public:
     MpptPacket();
