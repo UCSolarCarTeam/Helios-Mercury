@@ -21,6 +21,8 @@ void MpptPacket::populatePacket(const QByteArray& data) {
     setArrayCurrent(getValue<unsigned short>(data, ARRAY_CURRENT_OFFSET));
     setBatteryVoltage(getValue<unsigned short>(data, BATTERY_VOLTAGE_OFFSET));
     setTemperature(getValue<unsigned short>(data, TEMPERATURE_OFFSET));
+
+    initializeIdActionMap();
 }
 
 QJsonObject MpptPacket::toJson() {
