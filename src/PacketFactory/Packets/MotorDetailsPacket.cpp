@@ -1,209 +1,62 @@
 #include "MotorDetailsPacket.h"
 #include "../../Config/JsonDefinitions.h"
 
-namespace {
-    const int CONTROL_VALUE_OFFSET = 1;
-
-    const int CONTROL_BITS_OFFSET = 3;
-    const char CONTROL_MODE_MASK = 0x01;
-    const char MOTOR_MODE_MASK = 0x02;
-    const char SOFTWARE_ENABLE_MASK = 0x04;
-    const char DEBUG_MODE_MASK = 0x08;
-
-    const int CURRENT_MOTOR_TORQUE_OFFSET = 4;
-    const int CURRENT_RPM_VALUE_OFFSET = 6;
-    const int MOTOR_TEMPERATURE_OFFSET = 8;
-    const int INVERTER_PEAK_CURRENT_OFFSET = 9;
-    const int CURRENT_MOTOR_POWER_OFFSET = 11;
-    const int ABSOLUTE_ANGLE_OFFSET = 13;
-
-    const int WARNING_CODE_1_OFFSET = 15;
-    const short MOTOR_ABOUT_TO_STALL_MASK = 0x0001;
-    const short DELAY_IN_READING_TEMP_SENSOR_MASK = 0x0002;
-    const short DELAY_IN_READING_POS_SENSOR_MASK = 0x0004;
-    const short INVERTER_1_TEMP_VERY_HIGH_MASK = 0x0008;
-    const short INVERTER_2_TEMP_VERY_HIGH_MASK = 0x0010;
-    const short INVERTER_3_TEMP_VERY_HIGH_MASK = 0x0020;
-    const short INVERTER_4_TEMP_VERY_HIGH_MASK = 0x0040;
-    const short INVERTER_5_TEMP_VERY_HIGH_MASK = 0x0080;
-
-    const int WARNING_CODE_2_OFFSET = 17;
-    const short INVERTER_6_TEMP_VERY_HIGH_MASK = 0x0001;
-    const short CPU_TEMPERATURE_VERY_HIGH_MASK = 0x0002;
-    const short HALL_TEMPERATURE_VERY_HIGH_MASK = 0x0004;
-    const short DCLINK_TEMPERATURE_VERY_HIGH_MASK = 0x0008;
-    const short DELAY_IN_DCLINK_COMMUNICATION_MASK = 0x0010;
-    const short INVERTER_1_OVERCURRENT_WARNING_MASK = 0x0020;
-    const short INVERTER_2_OVERCURRENT_WARNING_MASK = 0x0040;
-    const short INVERTER_3_OVERCURRENT_WARNING_MASK = 0x0080;
-
-    const int WARNING_CODE_3_OFFSET = 19;
-    const short INVERTER_4_OVERCURRENT_WARNING_MASK = 0x0001;
-    const short INVERTER_5_OVERCURRENT_WARNING_MASK = 0x0002;
-    const short INVERTER_6_OVERCURRENT_WARNING_MASK = 0x0004;
-    const short DC_OVERVOLTAGE_WARNING_MASK = 0x0008;
-    const short DC_UNDERVOLTAGE_WARNING_MASK = 0x0010;
-    const short CAN_COMMS_TIMEOUT_MASK = 0x0020;
-    const short INVERTER_1_FAULT_WARNING_MASK = 0x0040;
-    const short INVERTER_2_FAULT_WARNING_MASK = 0x0080;
-
-    const int WARNING_CODE_4_OFFSET = 21;
-    const short INVERTER_3_FAULT_WARNING_MASK = 0x0001;
-    const short INVERTER_4_FAULT_WARNING_MASK = 0x0002;
-    const short INVERTER_5_FAULT_WARNING_MASK = 0x0004;
-    const short INVERTER_6_FAULT_WARNING_MASK = 0x0008;
-    const short CAN_SEND_WARNING_MASK = 0x0010;
-    const short LOST_FRAMES_ON_CAN_BUS_WARNING_MASK = 0x0020;
-    const short OVERSPEED_WARNING_MASK = 0x0040;
-    const short CPU_OVERLOAD_MASK = 0x0080;
-
-    const int WARNING_CODE_5_OFFSET = 23;
-    const char TORQUE_LIMITED_MASK = 0x01;
-    const char START_AT_HIGH_RPM_MASK = 0x02;
-
-    const int ERROR_CODE_1_OFFSET = 24;
-    const short INIT_ERROR_MASK = 0x0001;
-    const short SETTINGS_NOT_FOUND_MASK = 0x0002;
-    const short MOTOR_STALLED_MASK = 0x0004;
-    const short CONTROLLER_DATA_READING_TIMEOUT_MASK = 0x0008;
-    const short INVALID_HALL_SENSOR_SEQUENCE_MASK = 0x0010;
-    const short INVALID_HALL_SECTOR_MASK = 0x0020;
-    const short ERROR_READING_TEMP_SENSOR_MASK = 0x0040;
-    const short POSITION_SENSOR_READING_ERROR_MASK = 0x0080;
-
-    const int ERROR_CODE_2_OFFSET = 26;
-    const short ERROR_READING_ENCODER_MASK = 0x0001;
-    const short ZERO_POSITION_OFFSET_NOT_SET_MASK = 0x0002;
-    const short HW_ENABLE_NOT_SET_MASK = 0x0004;
-    const short INVERTER_1_TEMP_TOO_HIGH_MASK = 0x0008;
-    const short INVERTER_2_TEMP_TOO_HIGH_MASK = 0x0010;
-    const short INVERTER_3_TEMP_TOO_HIGH_MASK = 0x0020;
-    const short INVERTER_4_TEMP_TOO_HIGH_MASK = 0x0040;
-    const short INVERTER_5_TEMP_TOO_HIGH_MASK = 0x0080;
-
-    const int ERROR_CODE_3_OFFSET = 28;
-    const short INVERTER_6_TEMP_TOO_HIGH_MASK = 0x0001;
-    const short CPU_TEMPERATURE_TOO_HIGH_MASK = 0x0002;
-    const short HALL_TEMPERATURE_TOO_HIGH_MASK = 0x0004;
-    const short DCLINK_TEMPERATURE_TOO_HIGH_MASK = 0x0008;
-    const short ERROR_IN_DCLINK_COMMUNICATION_MASK = 0x0010;
-    const short INVERTER_1_OVERCURRENT_ERROR_MASK = 0x0020;
-    const short INVERTER_2_OVERCURRENT_ERROR_MASK = 0x0040;
-    const short INVERTER_3_OVERCURRENT_ERROR_MASK = 0x0080;
-
-    const int ERROR_CODE_4_OFFSET = 30;
-    const short INVERTER_4_OVERCURRENT_ERROR_MASK = 0x0001;
-    const short INVERTER_5_OVERCURRENT_ERROR_MASK = 0x0002;
-    const short INVERTER_6_OVERCURRENT_ERROR_MASK = 0x0004;
-    const short DC_OVERVOLTAGE_ERROR_MASK = 0x0008;
-    const short DC_UNDERVOLTAGE_ERROR_MASK = 0x0010;
-    const short DOUBLE_CAN_ID_ON_BUS_MASK = 0x0020;
-    const short CAN_COMMS_TIMEOUT_ERROR_MASK = 0x0040;
-    const short INVERTER_1_FAULT_ERROR_MASK = 0x0080;
-    const short INVERTER_2_FAULT_ERROR_MASK = 0x0100;
-    const short INVERTER_3_FAULT_ERROR_MASK = 0x0200;
-    const short INVERTER_4_FAULT_ERROR_MASK = 0x0400;
-    const short INVERTER_5_FAULT_ERROR_MASK = 0x0800;
-    const short INVERTER_6_FAULT_ERROR_MASK = 0x1000;
-    const short CAN_SEND_ERROR_MASK = 0x2000;
-    const short LOST_FRAMES_ON_CAN_BUS_ERROR_MASK = 0x4000;
-    const short OVERSPEED_ERROR_MASK = 0x8000;
-
-    const int ERROR_CODE_5_OFFSET = 32;
-    const char CPU_OVERLOADED_MASK = 0x01;
-}
-
 MotorDetailsPacket::MotorDetailsPacket() {
-    setControlValue(0);
-
-    setControlMode(false);
-    setMotorMode(false);
-    setSoftwareEnable(false);
-    setDebugMode(false);
-
-    setCurrentMotorTorque(0);
-    setCurrentRpmValue(0);
-    setMotorTemperature(0);
-    setInverterPeakCurrent(0);
-    setCurrentMotorPower(0);
-    setAbsuluteAngle(0);
-
-    setMotorAboutToStall(false);
-    setDelayInReadingTempSensor(false);
-    setDelayInReadingPosSensor(false);
-    setInverter1TempVeryHigh(false);
-    setInverter2TempVeryHigh(false);
-    setInverter3TempVeryHigh(false);
-    setInverter4TempVeryHigh(false);
-    setInverter5TempVeryHigh(false);
-    setInverter6TempVeryHigh(false);
-    setCpuTemperatureVeryHigh(false);
-    setHallTemperatureVeryHigh(false);
-    setDclinkTemperatureVeryHigh(false);
-    setDelayInDclinkCommunication(false);
-    setInverter1OverCurrentWarning(false);
-    setInverter2OverCurrentWarning(false);
-    setInverter3OverCurrentWarning(false);
-    setInverter4OverCurrentWarning(false);
-    setInverter5OverCurrentWarning(false);
-    setInverter6OverCurrentWarning(false);
-    setDcOvervoltageWarning(false);
-    setDcUndervoltageWarning(false);
-    setCanCommsTimeout(false);
-    setInverter1FaultWarning(false);
-    setInverter2FaultWarning(false);
-    setInverter3FaultWarning(false);
-    setInverter4FaultWarning(false);
-    setInverter5FaultWarning(false);
-    setInverter6FaultWarning(false);
-    setCanSendWarning(false);
-    setLostFramesOnCanBusWarning(false);
-    setOverspeedWarning(false);
-    setCpuOverload(false);
-    setTorqueLimited(false);
-    setStartAtHighRpm(false);
-
-    setInitError(false);
-    setSettingsNotFound(false);
-    setMotorStalled(false);
-    setControllerDataReadingTimeout(false);
-    setInvalidHallSensorSequence(false);
-    setInvalidHallSector(false);
-    setErrorReadingTempSensor(false);
-    setPositionSensorReadingError(false);
-    setErrorReadingEncoder(false);
-    setZeroPositionOffsetNotSet(false);
-    setHwEnableNotSet(false);
-    setInverter1TempTooHigh(false);
-    setInverter2TempTooHigh(false);
-    setInverter3TempTooHigh(false);
-    setInverter4TempTooHigh(false);
-    setInverter5TempTooHigh(false);
-    setInverter6TempTooHigh(false);
-    setCpuTemperatureTooHigh(false);
-    setHallTemperatureTooHigh(false);
-    setDclinkTemperatureTooHigh(false);
-    setErrorInDclinkCommunication(false);
-    setInverter1OvercurrentError(false);
-    setInverter2OvercurrentError(false);
-    setInverter3OvercurrentError(false);
-    setInverter4OvercurrentError(false);
-    setInverter5OvercurrentError(false);
-    setInverter6OvercurrentError(false);
-    setDcOvervoltageError(false);
-    setDcUndervoltageError(false);
-    setDoubleCanIdOnBus(false);
-    setCanCommsTimeoutError(false);
-    setInverter1FaultError(false);
-    setInverter2FaultError(false);
-    setInverter3FaultError(false);
-    setInverter4FaultError(false);
-    setInverter5FaultError(false);
-    setInverter6FaultError(false);
-    setCanSendError(false);
-    setLostFramesOnCanBusError(false);
-    setOverspeedError(false);
-    setCpuOverloaded(false);
+    // Initialize all properties to 0/false
+    setTritiumId(0);
+    setSerialNumber(0);
+    
+    setLimitFlags(0);
+    setErrorFlags(0);
+    setActiveMotor(0);
+    setTxErrorCount(0);
+    setRxErrorCount(0);
+    
+    setBusVoltage(0);
+    setBusCurrent(0);
+    
+    setMotorVelocity(0);
+    setVehicleVelocity(0);
+    
+    setPhaseCurrentB(0);
+    setPhaseCurrentC(0);
+    
+    setVq(0);
+    setVd(0);
+    
+    setIq(0);
+    setId(0);
+    
+    setBEMFq(0);
+    setBEMFd(0);
+    
+    setSupply15V(0);
+    setReservedSupply15V(0);
+    
+    setSupply1V9(0);
+    setSupply3V3(0);
+    
+    setReserved0A0(0);
+    setReserved0A1(0);
+    
+    setMotorTemp(0);
+    setHeatsinkTemp(0);
+    
+    setDspBoardTemp(0);
+    setReservedDspBoardTemp(0);
+    
+    setReserved0D0(0);
+    setReserved0D1(0);
+    
+    setOdometer(0);
+    setDCBusAh(0);
+    
+    setSlipSpeed(0);
+    setReservedSlipSpeed(0);
+    
+    setMotorId(0);
+    
+    initializeIdActionMap();
 }
 
 void MotorDetailsPacket::populatePacket(const QByteArray& data) {
@@ -321,106 +174,330 @@ void MotorDetailsPacket::populatePacket(const QByteArray& data) {
 QJsonObject MotorDetailsPacket::toJson() {
     QJsonObject json;
     
-    json[JsonDefinitions::CONTROL_VALUE] = ControlValue_;
-
-    json[JsonDefinitions::CONTROL_MODE] = ControlMode_;
-    json[JsonDefinitions::MOTOR_MODE] = MotorMode_;
-    json[JsonDefinitions::SOFTWARE_ENABLE] = SoftwareEnable_;
-    json[JsonDefinitions::DEBUG_MODE] = DebugMode_;
-
-    json[JsonDefinitions::CURRENT_MOTOR_TORQUE] = CurrentMotorTorque_;
-    json[JsonDefinitions::CURRENT_RPM_VALUE] = CurrentRpmValue_;
-    json[JsonDefinitions::MOTOR_TEMPERATURE] = MotorTemperature_;
-    json[JsonDefinitions::INVERTER_PEAK_CURRENT] = InverterPeakCurrent_;
-    json[JsonDefinitions::CURRENT_MOTOR_POWER] = CurrentMotorPower_;
-    json[JsonDefinitions::ABSOLUTE_ANGLE] = AbsuluteAngle_;
-
-    // Warning Flags
-    QJsonObject warnings;
-
-    warnings[JsonDefinitions::MOTOR_ABOUT_TO_STALL] = MotorAboutToStall_;
-    warnings[JsonDefinitions::DELAY_IN_READING_TEMP_SENSOR] = DelayInReadingTempSensor_;
-    warnings[JsonDefinitions::DELAY_IN_READING_POS_SENSOR] = DelayInReadingPosSensor_;
-    warnings[JsonDefinitions::INVERTER1_TEMP_VERY_HIGH] = Inverter1TempVeryHigh_;
-    warnings[JsonDefinitions::INVERTER2_TEMP_VERY_HIGH] = Inverter2TempVeryHigh_;
-    warnings[JsonDefinitions::INVERTER3_TEMP_VERY_HIGH] = Inverter3TempVeryHigh_;
-    warnings[JsonDefinitions::INVERTER4_TEMP_VERY_HIGH] = Inverter4TempVeryHigh_;
-    warnings[JsonDefinitions::INVERTER5_TEMP_VERY_HIGH] = Inverter5TempVeryHigh_;
-    warnings[JsonDefinitions::INVERTER6_TEMP_VERY_HIGH] = Inverter6TempVeryHigh_;
-    warnings[JsonDefinitions::CPU_TEMPERATURE_VERY_HIGH] = CpuTemperatureVeryHigh_;
-    warnings[JsonDefinitions::HALL_TEMPERATURE_VERY_HIGH] = HallTemperatureVeryHigh_;
-    warnings[JsonDefinitions::DCLINK_TEMPERATURE_VERY_HIGH] = DclinkTemperatureVeryHigh_;
-    warnings[JsonDefinitions::DELAY_IN_DCLINK_COMMUNICATION] = DelayInDclinkCommunication_;
-    warnings[JsonDefinitions::INVERTER1_OVER_CURRENT_WARNING] = Inverter1OverCurrentWarning_;
-    warnings[JsonDefinitions::INVERTER2_OVER_CURRENT_WARNING] = Inverter2OverCurrentWarning_;
-    warnings[JsonDefinitions::INVERTER3_OVER_CURRENT_WARNING] = Inverter3OverCurrentWarning_;
-    warnings[JsonDefinitions::INVERTER4_OVER_CURRENT_WARNING] = Inverter4OverCurrentWarning_;
-    warnings[JsonDefinitions::INVERTER5_OVER_CURRENT_WARNING] = Inverter5OverCurrentWarning_;
-    warnings[JsonDefinitions::INVERTER6_OVER_CURRENT_WARNING] = Inverter6OverCurrentWarning_;
-    warnings[JsonDefinitions::DC_OVERVOLTAGE_WARNING] = DcOvervoltageWarning_;
-    warnings[JsonDefinitions::DC_UNDERVOLTAGE_WARNING] = DcUndervoltageWarning_;
-    warnings[JsonDefinitions::CAN_COMMS_TIMEOUT_WARNING] = CanCommsTimeout_;
-    warnings[JsonDefinitions::INVERTER1_FAULT_WARNING] = Inverter1FaultWarning_;
-    warnings[JsonDefinitions::INVERTER2_FAULT_WARNING] = Inverter2FaultWarning_;
-    warnings[JsonDefinitions::INVERTER3_FAULT_WARNING] = Inverter3FaultWarning_;
-    warnings[JsonDefinitions::INVERTER4_FAULT_WARNING] = Inverter4FaultWarning_;
-    warnings[JsonDefinitions::INVERTER5_FAULT_WARNING] = Inverter5FaultWarning_;
-    warnings[JsonDefinitions::INVERTER6_FAULT_WARNING] = Inverter6FaultWarning_;
-    warnings[JsonDefinitions::CAN_SEND_WARNING] = CanSendWarning_;
-    warnings[JsonDefinitions::LOST_FRAMES_ON_CAN_BUS_WARNING] = LostFramesOnCanBusWarning_;
-    warnings[JsonDefinitions::OVERSPEED_WARNING] = OverspeedWarning_;
-    warnings[JsonDefinitions::CPU_OVERLOAD] = CpuOverload_;
-    warnings[JsonDefinitions::TORQUE_LIMITED] = TorqueLimited_;
-    warnings[JsonDefinitions::START_AT_HIGH_RPM] = StartAtHighRpm_;
-
-    json[JsonDefinitions::MOTOR_WARNINGS] = warnings;
-
-    // Error Flags
-    QJsonObject errors;
-
-    errors[JsonDefinitions::INIT_ERROR] = InitError_;
-    errors[JsonDefinitions::SETTINGS_NOT_FOUND] = SettingsNotFound_;
-    errors[JsonDefinitions::MOTOR_STALLED] = MotorStalled_;
-    errors[JsonDefinitions::CONTROLLER_DATA_READING_TIMEOUT] = ControllerDataReadingTimeout_;
-    errors[JsonDefinitions::INVALID_HALL_SENSOR_SEQUENCE] = InvalidHallSensorSequence_;
-    errors[JsonDefinitions::INVALID_HALL_SECTOR] = InvalidHallSector_;
-    errors[JsonDefinitions::ERROR_READING_TEMP_SENSOR] = ErrorReadingTempSensor_;
-    errors[JsonDefinitions::POSITION_SENSOR_READING_ERROR] = PositionSensorReadingError_;
-    errors[JsonDefinitions::ERROR_READING_ENCODER] = ErrorReadingEncoder_;
-    errors[JsonDefinitions::ZERO_POSITION_OFFSET_NOT_SET] = ZeroPositionOffsetNotSet_;
-    errors[JsonDefinitions::HW_ENABLE_NOT_SET] = HwEnableNotSet_;
-    errors[JsonDefinitions::INVERTER1_TEMP_TOO_HIGH] = Inverter1TempTooHigh_;
-    errors[JsonDefinitions::INVERTER2_TEMP_TOO_HIGH] = Inverter2TempTooHigh_;
-    errors[JsonDefinitions::INVERTER3_TEMP_TOO_HIGH] = Inverter3TempTooHigh_;
-    errors[JsonDefinitions::INVERTER4_TEMP_TOO_HIGH] = Inverter4TempTooHigh_;
-    errors[JsonDefinitions::INVERTER5_TEMP_TOO_HIGH] = Inverter5TempTooHigh_;
-    errors[JsonDefinitions::INVERTER6_TEMP_TOO_HIGH] = Inverter6TempTooHigh_;
-    errors[JsonDefinitions::CPU_TEMP_TOO_HIGH] = CpuTemperatureTooHigh_;
-    errors[JsonDefinitions::HALL_TEMP_TOO_HIGH] = HallTemperatureTooHigh_;
-    errors[JsonDefinitions::DCLINK_TEMP_TOO_HIGH] = DclinkTemperatureTooHigh_;
-    errors[JsonDefinitions::ERROR_IN_DCLINK_COMMUNICATION] = ErrorInDclinkCommunication_;
-    errors[JsonDefinitions::INVERTER1_OVERCURRENT_ERROR] = Inverter1OvercurrentError_;
-    errors[JsonDefinitions::INVERTER2_OVERCURRENT_ERROR] = Inverter2OvercurrentError_;
-    errors[JsonDefinitions::INVERTER3_OVERCURRENT_ERROR] = Inverter3OvercurrentError_;
-    errors[JsonDefinitions::INVERTER4_OVERCURRENT_ERROR] = Inverter4OvercurrentError_;
-    errors[JsonDefinitions::INVERTER5_OVERCURRENT_ERROR] = Inverter5OvercurrentError_;
-    errors[JsonDefinitions::INVERTER6_OVERCURRENT_ERROR] = Inverter6OvercurrentError_;
-    errors[JsonDefinitions::DC_OVERVOLTAGE_ERROR] = DcOvervoltageError_;
-    errors[JsonDefinitions::DC_UNDERVOLTAGE_ERROR] = DcUndervoltageError_;
-    errors[JsonDefinitions::DOUBLE_CAN_ID_ON_BUS] = DoubleCanIdOnBus_;
-    errors[JsonDefinitions::CAN_COMMS_TIMEOUT_ERROR] = CanCommsTimeoutError_;
-    errors[JsonDefinitions::INVERTER1_FAULT_ERROR] = Inverter1FaultError_;
-    errors[JsonDefinitions::INVERTER2_FAULT_ERROR] = Inverter2FaultError_;
-    errors[JsonDefinitions::INVERTER3_FAULT_ERROR] = Inverter3FaultError_;
-    errors[JsonDefinitions::INVERTER4_FAULT_ERROR] = Inverter4FaultError_;
-    errors[JsonDefinitions::INVERTER5_FAULT_ERROR] = Inverter5FaultError_;
-    errors[JsonDefinitions::INVERTER6_FAULT_ERROR] = Inverter6FaultError_;
-    errors[JsonDefinitions::CAN_SEND_ERROR] = CanSendError_;
-    errors[JsonDefinitions::LOST_FRAMES_ON_CAN_BUS_ERROR] = LostFramesOnCanBusError_;
-    errors[JsonDefinitions::OVERSPEED_ERROR] = OverspeedError_;
-    errors[JsonDefinitions::CPU_OVERLOADED] = CpuOverloaded_;
-
-    json[JsonDefinitions::MOTOR_ERRORS] = errors;
-
+    // Motor identification
+    json[JsonDefinitions::MOTOR_ID] = MotorId_;
+    
+    // ID Info
+    json[JsonDefinitions::TRITIUM_ID] = TritiumId_;
+    json[JsonDefinitions::SERIAL_NUMBER] = SerialNumber_;
+    
+    // Status
+    json[JsonDefinitions::LIMIT_FLAGS] = LimitFlags_;
+    json[JsonDefinitions::ERROR_FLAGS] = ErrorFlags_;
+    json[JsonDefinitions::ACTIVE_MOTOR] = ActiveMotor_;
+    json[JsonDefinitions::TX_ERROR_COUNT] = TxErrorCount_;
+    json[JsonDefinitions::RX_ERROR_COUNT] = RxErrorCount_;
+    
+    // Bus Measurement
+    json[JsonDefinitions::BUS_VOLTAGE] = BusVoltage_;
+    json[JsonDefinitions::BUS_CURRENT] = BusCurrent_;
+    
+    // Velocity Measurement
+    json[JsonDefinitions::MOTOR_VELOCITY] = MotorVelocity_;
+    json[JsonDefinitions::VEHICLE_VELOCITY] = VehicleVelocity_;
+    
+    // Phase Current Measurement
+    json[JsonDefinitions::PHASE_CURRENT_B] = PhaseCurrentB_;
+    json[JsonDefinitions::PHASE_CURRENT_C] = PhaseCurrentC_;
+    
+    // Motor Voltage Vector Measurement
+    json[JsonDefinitions::VQ] = Vq_;
+    json[JsonDefinitions::VD] = Vd_;
+    
+    // Motor Current Vector Measurement
+    json[JsonDefinitions::IQ] = Iq_;
+    json[JsonDefinitions::ID] = Id_;
+    
+    // Motor Back EMF Measurement/Prediction
+    json[JsonDefinitions::BEMF_Q] = BEMFq_;
+    json[JsonDefinitions::BEMF_D] = BEMFd_;
+    
+    // Voltage Rail Measurements
+    json[JsonDefinitions::SUPPLY_15V] = Supply15V_;
+    json[JsonDefinitions::SUPPLY_1V9] = Supply1V9_;
+    json[JsonDefinitions::SUPPLY_3V3] = Supply3V3_;
+    
+    // Temperature Measurements
+    json[JsonDefinitions::MOTOR_TEMPERATURE] = MotorTemp_;
+    json[JsonDefinitions::HEATSINK_TEMPERATURE] = HeatsinkTemp_;
+    json[JsonDefinitions::DSP_BOARD_TEMPERATURE] = DspBoardTemp_;
+    
+    // Odometer and Bus Ah
+    json[JsonDefinitions::ODOMETER] = Odometer_;
+    json[JsonDefinitions::DC_BUS_AH] = DCBusAh_;
+    
+    // Slip Speed
+    json[JsonDefinitions::SLIP_SPEED] = SlipSpeed_;
+    
     return json;
+}
+
+void MotorDetailsPacket::initializeIdActionMap() {
+    qDebug() << "Initializing Motor Details Packet ID Action Map";
+    
+    // Motor 0 (Left) - Base ID 0x400
+    // ID Info (0x400)
+    idActionMap[0x400] = {
+        [this](QByteArray payload){
+            setMotorId(0); // Left motor
+            setTritiumId(getValue<unsigned int>(payload, 0));
+            setSerialNumber(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Status (0x401)
+    idActionMap[0x401] = {
+        [this](QByteArray payload){
+            setLimitFlags(getValue<unsigned short>(payload, 0));
+            setErrorFlags(getValue<unsigned short>(payload, 2));
+            setActiveMotor(getValue<unsigned short>(payload, 4));
+            setTxErrorCount(getValue<unsigned char>(payload, 6));
+            setRxErrorCount(getValue<unsigned char>(payload, 7));
+        }
+    };
+    
+    // Bus Measurement (0x402)
+    idActionMap[0x402] = {
+        [this](QByteArray payload){
+            setBusVoltage(getValue<unsigned int>(payload, 0));
+            setBusCurrent(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Velocity Measurement (0x403)
+    idActionMap[0x403] = {
+        [this](QByteArray payload){
+            setMotorVelocity(getValue<unsigned int>(payload, 0));
+            setVehicleVelocity(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Phase Current Measurement (0x404)
+    idActionMap[0x404] = {
+        [this](QByteArray payload){
+            setPhaseCurrentB(getValue<unsigned int>(payload, 0));
+            setPhaseCurrentC(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Motor Voltage Vector Measurement (0x405)
+    idActionMap[0x405] = {
+        [this](QByteArray payload){
+            setVq(getValue<unsigned int>(payload, 0));
+            setVd(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Motor Current Vector Measurement (0x406)
+    idActionMap[0x406] = {
+        [this](QByteArray payload){
+            setIq(getValue<unsigned int>(payload, 0));
+            setId(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Motor Back EMF Measurement/Prediction (0x407)
+    idActionMap[0x407] = {
+        [this](QByteArray payload){
+            setBEMFq(getValue<unsigned int>(payload, 0));
+            setBEMFd(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Voltage Rail 15V Measurement (0x408)
+    idActionMap[0x408] = {
+        [this](QByteArray payload){
+            setSupply15V(getValue<unsigned int>(payload, 4));
+            setReservedSupply15V(getValue<unsigned int>(payload, 0));
+        }
+    };
+    
+    // Voltage Rail 3V3/1V9 Measurement (0x409)
+    idActionMap[0x409] = {
+        [this](QByteArray payload){
+            setSupply1V9(getValue<unsigned int>(payload, 0));
+            setSupply3V3(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Reserved 0A (0x40A)
+    idActionMap[0x40A] = {
+        [this](QByteArray payload){
+            setReserved0A0(getValue<unsigned int>(payload, 0));
+            setReserved0A1(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Heatsink/Motor Temp Measurement (0x40B)
+    idActionMap[0x40B] = {
+        [this](QByteArray payload){
+            setMotorTemp(getValue<unsigned int>(payload, 0));
+            setHeatsinkTemp(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // DSP Board Temp Measurement (0x40C)
+    idActionMap[0x40C] = {
+        [this](QByteArray payload){
+            setDspBoardTemp(getValue<unsigned int>(payload, 0));
+            setReservedDspBoardTemp(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Reserved 0D (0x40D)
+    idActionMap[0x40D] = {
+        [this](QByteArray payload){
+            setReserved0D0(getValue<unsigned int>(payload, 0));
+            setReserved0D1(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Odometer/Bus Ah Measurement (0x40E)
+    idActionMap[0x40E] = {
+        [this](QByteArray payload){
+            setOdometer(getValue<unsigned int>(payload, 0));
+            setDCBusAh(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Slip Speed Measurement (0x417)
+    idActionMap[0x417] = {
+        [this](QByteArray payload){
+            setSlipSpeed(getValue<unsigned int>(payload, 4));
+            setReservedSlipSpeed(getValue<unsigned int>(payload, 0));
+        }
+    };
+    
+    // Motor 1 (Right) - Base ID 0x420
+    // ID Info (0x420)
+    idActionMap[0x420] = {
+        [this](QByteArray payload){
+            setMotorId(1); // Right motor
+            setTritiumId(getValue<unsigned int>(payload, 0));
+            setSerialNumber(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Status (0x421)
+    idActionMap[0x421] = {
+        [this](QByteArray payload){
+            setLimitFlags(getValue<unsigned short>(payload, 0));
+            setErrorFlags(getValue<unsigned short>(payload, 2));
+            setActiveMotor(getValue<unsigned short>(payload, 4));
+            setTxErrorCount(getValue<unsigned char>(payload, 6));
+            setRxErrorCount(getValue<unsigned char>(payload, 7));
+        }
+    };
+    
+    // Bus Measurement (0x422)
+    idActionMap[0x422] = {
+        [this](QByteArray payload){
+            setBusVoltage(getValue<unsigned int>(payload, 0));
+            setBusCurrent(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Velocity Measurement (0x423)
+    idActionMap[0x423] = {
+        [this](QByteArray payload){
+            setMotorVelocity(getValue<unsigned int>(payload, 0));
+            setVehicleVelocity(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Phase Current Measurement (0x424)
+    idActionMap[0x424] = {
+        [this](QByteArray payload){
+            setPhaseCurrentB(getValue<unsigned int>(payload, 0));
+            setPhaseCurrentC(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Motor Voltage Vector Measurement (0x425)
+    idActionMap[0x425] = {
+        [this](QByteArray payload){
+            setVq(getValue<unsigned int>(payload, 0));
+            setVd(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Motor Current Vector Measurement (0x426)
+    idActionMap[0x426] = {
+        [this](QByteArray payload){
+            setIq(getValue<unsigned int>(payload, 0));
+            setId(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Motor Back EMF Measurement/Prediction (0x427)
+    idActionMap[0x427] = {
+        [this](QByteArray payload){
+            setBEMFq(getValue<unsigned int>(payload, 0));
+            setBEMFd(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Voltage Rail 15V Measurement (0x428)
+    idActionMap[0x428] = {
+        [this](QByteArray payload){
+            setSupply15V(getValue<unsigned int>(payload, 4));
+            setReservedSupply15V(getValue<unsigned int>(payload, 0));
+        }
+    };
+    
+    // Voltage Rail 3V3/1V9 Measurement (0x429)
+    idActionMap[0x429] = {
+        [this](QByteArray payload){
+            setSupply1V9(getValue<unsigned int>(payload, 0));
+            setSupply3V3(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Reserved 0A (0x42A)
+    idActionMap[0x42A] = {
+        [this](QByteArray payload){
+            setReserved0A0(getValue<unsigned int>(payload, 0));
+            setReserved0A1(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Heatsink/Motor Temp Measurement (0x42B)
+    idActionMap[0x42B] = {
+        [this](QByteArray payload){
+            setMotorTemp(getValue<unsigned int>(payload, 0));
+            setHeatsinkTemp(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // DSP Board Temp Measurement (0x42C)
+    idActionMap[0x42C] = {
+        [this](QByteArray payload){
+            setDspBoardTemp(getValue<unsigned int>(payload, 0));
+            setReservedDspBoardTemp(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Reserved 0D (0x42D)
+    idActionMap[0x42D] = {
+        [this](QByteArray payload){
+            setReserved0D0(getValue<unsigned int>(payload, 0));
+            setReserved0D1(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Odometer/Bus Ah Measurement (0x42E)
+    idActionMap[0x42E] = {
+        [this](QByteArray payload){
+            setOdometer(getValue<unsigned int>(payload, 0));
+            setDCBusAh(getValue<unsigned int>(payload, 4));
+        }
+    };
+    
+    // Slip Speed Measurement (0x437)
+    idActionMap[0x437] = {
+        [this](QByteArray payload){
+            setSlipSpeed(getValue<unsigned int>(payload, 4));
+            setReservedSlipSpeed(getValue<unsigned int>(payload, 0));
+        }
+    };
 }
