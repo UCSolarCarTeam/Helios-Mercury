@@ -6,6 +6,8 @@
 
 class BatteryFaultsPacket : public IPacket {
     Q_OBJECT
+
+    // DTC flags  
     DEFINE_PROPERTY(bool, InternalCommunicationFault)
     DEFINE_PROPERTY(bool, InternalConversionFault)
     DEFINE_PROPERTY(bool, WeakCellFault)
@@ -27,7 +29,8 @@ class BatteryFaultsPacket : public IPacket {
     DEFINE_PROPERTY(bool, InternalMemoryFault)
     DEFINE_PROPERTY(bool, InternalThermistorFault)
     DEFINE_PROPERTY(bool, InternalLogicFault)
-
+    
+    // Limit flags 
     DEFINE_PROPERTY(bool, DclReducedDueToLowSoc)
     DEFINE_PROPERTY(bool, DclReducedDueToHighCellResistance)
     DEFINE_PROPERTY(bool, DclReducedDueToTemperature)
