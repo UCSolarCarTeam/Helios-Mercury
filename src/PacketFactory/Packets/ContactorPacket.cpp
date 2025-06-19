@@ -185,8 +185,8 @@ void ContactorPacket::initializeIdActionMap() {
             setCommonContactorClosed((common >> 3) & 0x01);
             setCommonContactorClosing((common >> 4) & 0x01);
             setCommonContactorError((common >> 5) & 0x01);
-            setCommonLineCurrent((common >> 6) & 0xFFF);        // bits 6-17
-            setCommonChargeCurrent((common >> 18) & 0xFFF);     // bits 18-29
+            setCommonLineCurrent((common >> 6) & 0xFFF);
+            setCommonChargeCurrent((common >> 18) & 0xFFF);
             setCommonContactorOpeningError((common >> 30) & 0x01);
         }
     };
@@ -201,8 +201,8 @@ void ContactorPacket::initializeIdActionMap() {
             setMotorContactorClosed((motor >> 3) & 0x01);
             setMotorContactorClosing((motor >> 4) & 0x01);
             setMotorContactorError((motor >> 5) & 0x01);
-            setMotorLineCurrent((motor >> 6) & 0xFFF);         // bits 6-17
-            setMotorChargeCurrent((motor >> 18) & 0xFFF);      // bits 18-29
+            setMotorLineCurrent((motor >> 6) & 0xFFF); 
+            setMotorChargeCurrent((motor >> 18) & 0xFFF); 
             setMotorBPSError((motor >> 30) & 0x01);
         }
     };
@@ -217,8 +217,8 @@ void ContactorPacket::initializeIdActionMap() {
             setArrayContactorClosed((array >> 3) & 0x01);
             setArrayContactorClosing((array >> 4) & 0x01);
             setArrayContactorError((array >> 5) & 0x01);
-            setArrayLineCurrent((array >> 6) & 0xFFF);         // bits 6-17
-            setArrayChargeCurrent((array >> 18) & 0xFFF);      // bits 18-29
+            setArrayLineCurrent((array >> 6) & 0xFFF); 
+            setArrayChargeCurrent((array >> 18) & 0xFFF); 
             setArrayBPSError((array >> 30) & 0x01);
         }
     };
@@ -233,8 +233,8 @@ void ContactorPacket::initializeIdActionMap() {
             setLvContactorClosed((lv >> 3) & 0x01);
             setLvContactorClosing((lv >> 4) & 0x01);
             setLvContactorError((lv >> 5) & 0x01);
-            setLvLineCurrent((lv >> 6) & 0xFFF);            // bits 6-17
-            setLvChargeCurrent((lv >> 18) & 0xFFF);         // bits 18-29
+            setLvLineCurrent((lv >> 6) & 0xFFF);    
+            setLvChargeCurrent((lv >> 18) & 0xFFF);    
             setLvBpsError((lv >> 30) & 0x01);
         }
     };
@@ -249,8 +249,8 @@ void ContactorPacket::initializeIdActionMap() {
             setChargeContactorClosed((charge >> 3) & 0x01);
             setChargeContactorClosing((charge >> 4) & 0x01);
             setChargeContactorError((charge >> 5) & 0x01);
-            setChargeLineCurrent((charge >> 6) & 0xFFF);        // bits 6-17
-            setChargeChargeCurrent((charge >> 18) & 0xFFF);     // bits 18-29
+            setChargeLineCurrent((charge >> 6) & 0xFFF);
+            setChargeChargeCurrent((charge >> 18) & 0xFFF);
             setChargeBPSError((charge >> 30) & 0x01);
         }
     };

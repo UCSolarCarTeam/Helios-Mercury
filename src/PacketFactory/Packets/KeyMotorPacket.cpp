@@ -6,9 +6,10 @@ KeyMotor::KeyMotor() {
     // Motor Drive Command
     setMotorVelocity(0.0f);
     setMotorCurrent(0.0f);
-    setBusCurrentOut(0.0f);
 
     // Motor Power Command
+    setBusCurrentOut(0.0f);
+
     initializeIdActionMap();
 }
 
