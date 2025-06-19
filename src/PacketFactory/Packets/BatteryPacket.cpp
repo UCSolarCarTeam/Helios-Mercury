@@ -124,17 +124,17 @@ void BatteryPacket::initializeIdActionMap() {
         setIsChargingSignalStatus(relayStatus & 0x80);
 
         setPopulatedCells(getValue<unsigned char>(payload, 1));
-        setInput12V(getValue<unsigned short>(payload, 2) * 0.1f); // 0.1V
-        setFanVoltage(getValue<unsigned short>(payload, 4) * 0.01f); // 0.01V
+        setInput12V(getValue<unsigned short>(payload, 2)); // 0.1V
+        setFanVoltage(getValue<unsigned short>(payload, 4)); // 0.01V
     };
 
     // Pack Info (0x302)
     idActionMap[0x302] = [this](QByteArray payload) {
-        setPackCurrent(getValue<short>(payload, 0) * 0.1f); // 0.1A
-        setPackVoltage(getValue<unsigned short>(payload, 2) * 0.1f); // 0.1V
-        setPackStateOfCharge(getValue<unsigned char>(payload, 4) * 0.5f); // 0.5%
-        setPackAmphours(getValue<unsigned short>(payload, 5) * 0.1f); // 0.1Ah
-        setPackDepthOfDischarge(getValue<unsigned char>(payload, 7) * 0.5f); // 0.5%
+        setPackCurrent(getValue<short>(payload, 0)); // 0.1A
+        setPackVoltage(getValue<unsigned short>(payload, 2)); // 0.1V
+        setPackStateOfCharge(getValue<unsigned char>(payload, 4)); // 0.5%
+        setPackAmphours(getValue<unsigned short>(payload, 5)); // 0.1Ah
+        setPackDepthOfDischarge(getValue<unsigned char>(payload, 7)); // 0.5%
     };
 
     // Temp Info (0x304)
