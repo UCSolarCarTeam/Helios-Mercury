@@ -1,6 +1,5 @@
 #include "KeyMotor.h"
 #include "../../Config/JsonDefinitions.h"
-#include <QtEndian>
 #include <cstring>
 
 KeyMotor::KeyMotor() {
@@ -8,7 +7,7 @@ KeyMotor::KeyMotor() {
     setMotorVelocity(0.0f);
     setMotorCurrent(0.0f);
     setBusCurrentOut(0.0f);
-    
+
     // Motor Power Command
     initializeIdActionMap();
 }
