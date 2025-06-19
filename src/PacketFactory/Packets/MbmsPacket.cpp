@@ -258,36 +258,36 @@ void MbmsPacket::initializeIdActionMap() {
     idActionMap[0x101] = {
         [this](QByteArray payload){
             unsigned char contactorCommands = getValue<unsigned char>(payload, 0);
-            setCommonContactorCommand(contactorCommands & 0x01);  // Bit 0
-            setMotorContactorCommand(contactorCommands & 0x02);   // Bit 1
-            setArrayContactorCommand(contactorCommands & 0x04);   // Bit 2
-            setLvContactorCommand(contactorCommands & 0x08);      // Bit 3
-            setChargeContactorCommand(contactorCommands & 0x10);  // Bit 4
+            setCommonContactorCommand(contactorCommands & 0x01); // Bit 0
+            setMotorContactorCommand(contactorCommands & 0x02); // Bit 1
+            setArrayContactorCommand(contactorCommands & 0x04); // Bit 2
+            setLvContactorCommand(contactorCommands & 0x08); // Bit 3
+            setChargeContactorCommand(contactorCommands & 0x10); // Bit 4
         }
     };
     
     // MBMS Status - 0x102
     idActionMap[0x102] = {
         [this](QByteArray payload){
-            // Bits 0-4: Auxiliary Battery Voltage (VAuxiliary Battery Voltage)
+            // Bits 0-4: VAuxiliary Battery Voltage
             setAuxiliaryBatteryVoltage(getValue<unsigned char>(payload, 0) & 0x1F);
             
             unsigned char statusByte1 = getValue<unsigned char>(payload, 0);
-            setStrobeBmsLight(statusByte1 & 0x20);      // Bit 5
-            setChargeEnable(statusByte1 & 0x40);        // Bit 6
-            setChargeSafety(statusByte1 & 0x80);        // Bit 7
+            setStrobeBmsLight(statusByte1 & 0x20); // Bit 5
+            setChargeEnable(statusByte1 & 0x40); // Bit 6
+            setChargeSafety(statusByte1 & 0x80); // Bit 7
             
             unsigned char statusByte2 = getValue<unsigned char>(payload, 1);
-            setDischargeEnable(statusByte2 & 0x01);     // Bit 8
-            setOrionCanReceivedRecently(statusByte2 & 0x02);  // Bit 9
+            setDischargeEnable(statusByte2 & 0x01); // Bit 8
+            setOrionCanReceivedRecently(statusByte2 & 0x02); // Bit 9
             setDischargeShouldTrip(statusByte2 & 0x04); // Bit 10
-            setChargeShouldTrip(statusByte2 & 0x08);    // Bit 11
+            setChargeShouldTrip(statusByte2 & 0x08); // Bit 11
             
-            // Bits 12-15: Startup State (Unsigned 4)
+            // Bits 12-15: Startup State
             setStartupState((statusByte2 & 0xF0) >> 4);
-            
             unsigned char statusByte3 = getValue<unsigned char>(payload, 2);
-            // Bits 16-18: System State (Car State) (Unsigned 3)
+
+            // Bits 16-18: System State (Car State)
             setSystemState(statusByte3 & 0x07);
         }
     };
