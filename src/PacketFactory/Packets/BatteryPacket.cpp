@@ -1,45 +1,11 @@
 #include "BatteryPacket.h"
 #include "../../Config/JsonDefinitions.h"
 
-namespace {
-    const int BMU_ALIVE_OFFSET = 1;
-
-    const int BMS_RELAY_STATUS_OFFSET = 2;
-    const unsigned char DISCHARGE_RELAY_ENABLED_MASK = 0x01;
-    const unsigned char CHARGE_RELAY_ENABLED_MASK = 0x02;
-    const unsigned char CHARGER_SAFETY_RELAY_ENABLED_MASK = 0x04;
-    const unsigned char MALFUNCTION_INDICATOR_ACTIVE_MASK = 0x08;
-    const unsigned char MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK = 0x10;
-    const unsigned char ALWAYS_ON_SIGNAL_STATUS_MASK = 0x20;
-    const unsigned char IS_READY_SIGNAL_STATUS_MASK = 0x40;
-    const unsigned char IS_CHARGING_SIGNAL_STATUS_MASK = 0x80;
-
-    const int POPULATED_CELLS_OFFSET = 3;
-    const int INPUT_12V_OFFSET = 4;
-    const int FAN_VOLTAGE_OFFSET = 8;
-    const int PACK_CURRENT_OFFSET = 12;
-    const int PACK_VOLTAGE_OFFSET = 16;
-    const int PACK_STATE_OF_CHARGE_OFFSET = 20;
-    const int PACK_AMPHOURS_OFFSET = 24;
-    const int PACK_DEPTH_OF_DISCHARGE_OFFSET = 28;
-    const int HIGH_TEMPERATURE_OFFSET = 32;
-    const int HIGH_THERMISTOR_ID_OFFSET = 33;
-    const int LOW_TEMPERATURE_OFFSET = 34;
-    const int LOW_THERMISTOR_ID_OFFSET = 35;
-    const int AVERAGE_TEMPERATURE_OFFSET = 36;
-    const int INTERNAL_TEMPERATURE_OFFSET = 37;
-    const int FAN_SPEED_OFFSET = 38;
-    const int REQUESTED_FAN_SPEED_OFFSET = 39;
-    const int LOW_CELL_VOLTAGE_OFFSET = 40;
-    const int LOW_CELL_VOLTAGE_ID_OFFSET = 42;
-    const int HIGH_CELL_VOLTAGE_OFFSET = 43;
-    const int HIGH_CELL_VOLTAGE_ID_OFFSET = 45;
-    const int AVERAGE_CELL_VOLTAGE_OFFSET = 46;
-}
-
 BatteryPacket::BatteryPacket() {
+    // BMU Heartbeat
     setBmuAlive(0);
 
+    // Startup Info
     setDischargeRelayEnabled(false);
     setChargeRelayEnabled(false);
     setChargerSafetyEnabled(false);
@@ -48,17 +14,18 @@ BatteryPacket::BatteryPacket() {
     setAlwaysOnSignalStatus(false);
     setIsReadySignalStatus(false);
     setIsChargingSignalStatus(false);
-
     setPopulatedCells(0);
     setInput12V(0.0f);
     setFanVoltage(0.0f);
 
+    // Pack Info
     setPackCurrent(0.0f);
     setPackVoltage(0.0f);
     setPackStateOfCharge(0.0f);
     setPackAmphours(0.0f);
     setPackDepthOfDischarge(0.0f);
 
+    // Temp Info
     setHighTemperature(0);
     setHighThermistorId(0);
     setLowTemperature(0);
@@ -68,55 +35,20 @@ BatteryPacket::BatteryPacket() {
     setFanSpeed(0);
     setRequestedFanSpeed(0);
 
+    // Cell Voltages
     setLowCellVoltage(0);
     setLowCellVoltageId(0);
     setHighCellVoltage(0);
     setHighCellVoltageId(0);
     setAverageCellVoltage(0);
 
+    // Max Min Voltages
     setMaximumCellVoltage(0);
     setMinimumCellVoltage(0);
     setMaximumPackVoltage(0);
     setMinimumPackVoltage(0);
 
     initializeIdActionMap();
-}
-
-void BatteryPacket::populatePacket(const QByteArray& data) {
-    setBmuAlive(getValue<unsigned char>(data, BMU_ALIVE_OFFSET));
-
-    unsigned char bmsRelayStatus = getValue<unsigned char>(data, BMS_RELAY_STATUS_OFFSET);
-    setDischargeRelayEnabled(bmsRelayStatus & DISCHARGE_RELAY_ENABLED_MASK);
-    setChargeRelayEnabled(bmsRelayStatus & CHARGE_RELAY_ENABLED_MASK);
-    setChargerSafetyEnabled(bmsRelayStatus & CHARGER_SAFETY_RELAY_ENABLED_MASK);
-    setMalfunctionIndicatorActive(bmsRelayStatus & MALFUNCTION_INDICATOR_ACTIVE_MASK);
-    setMultiPurposeInputSignalStatus(bmsRelayStatus & MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK);
-    setAlwaysOnSignalStatus(bmsRelayStatus & ALWAYS_ON_SIGNAL_STATUS_MASK);
-    setIsReadySignalStatus(bmsRelayStatus & IS_READY_SIGNAL_STATUS_MASK);
-    setIsChargingSignalStatus(bmsRelayStatus & IS_CHARGING_SIGNAL_STATUS_MASK);
-
-    setPopulatedCells(getValue<unsigned char>(data, POPULATED_CELLS_OFFSET));
-    setInput12V(getValue<float>(data, INPUT_12V_OFFSET));
-    setFanVoltage(getValue<float>(data, FAN_VOLTAGE_OFFSET));
-    setPackCurrent(getValue<float>(data, PACK_CURRENT_OFFSET));
-    setPackVoltage(getValue<float>(data, PACK_VOLTAGE_OFFSET));
-    setPackStateOfCharge(getValue<float>(data, PACK_STATE_OF_CHARGE_OFFSET));
-    setPackAmphours(getValue<float>(data, PACK_AMPHOURS_OFFSET));
-    setPackDepthOfDischarge(getValue<float>(data, PACK_DEPTH_OF_DISCHARGE_OFFSET));
-    setHighTemperature(getValue<unsigned char>(data, HIGH_TEMPERATURE_OFFSET));
-    setHighThermistorId(getValue<unsigned char>(data, HIGH_THERMISTOR_ID_OFFSET));
-    setLowTemperature(getValue<unsigned char>(data, LOW_TEMPERATURE_OFFSET));
-    setLowThermistorId(getValue<unsigned char>(data, LOW_THERMISTOR_ID_OFFSET));
-    setAverageTemperature(getValue<unsigned char>(data, AVERAGE_TEMPERATURE_OFFSET));
-    setInternalTemperature(getValue<unsigned char>(data, INTERNAL_TEMPERATURE_OFFSET));
-    setFanSpeed(getValue<unsigned char>(data, FAN_SPEED_OFFSET));
-    setRequestedFanSpeed(getValue<unsigned char>(data, REQUESTED_FAN_SPEED_OFFSET));
-
-    setLowCellVoltage(getValue<unsigned short>(data, LOW_CELL_VOLTAGE_OFFSET));
-    setLowCellVoltageId(getValue<unsigned char>(data, LOW_CELL_VOLTAGE_ID_OFFSET));
-    setHighCellVoltage(getValue<unsigned short>(data, HIGH_CELL_VOLTAGE_OFFSET));
-    setHighCellVoltageId(getValue<unsigned char>(data, HIGH_CELL_VOLTAGE_ID_OFFSET));
-    setAverageCellVoltage(getValue<unsigned short>(data, AVERAGE_CELL_VOLTAGE_OFFSET));
 }
 
 QJsonObject BatteryPacket::toJson() {
@@ -145,7 +77,7 @@ QJsonObject BatteryPacket::toJson() {
     json[JsonDefinitions::PACK_AMPHOURS] = PackAmphours_;
     json[JsonDefinitions::PACK_DEPTH_OF_DISCHARGE] = PackDepthOfDischarge_;
 
-    // TempInfo
+    // Temp Info
     json[JsonDefinitions::HIGH_TEMPERATURE] = HighTemperature_;
     json[JsonDefinitions::HIGH_THERMISTOR_ID] = HighThermistorId_;
     json[JsonDefinitions::LOW_TEMPERATURE] = LowTemperature_;
@@ -182,14 +114,14 @@ void BatteryPacket::initializeIdActionMap() {
     // Startup Info (0x301)
     idActionMap[0x301] = [this](QByteArray payload) {
         unsigned char relayStatus = getValue<unsigned char>(payload, 0);
-        setDischargeRelayEnabled(relayStatus & DISCHARGE_RELAY_ENABLED_MASK);
-        setChargeRelayEnabled(relayStatus & CHARGE_RELAY_ENABLED_MASK);
-        setChargerSafetyEnabled(relayStatus & CHARGER_SAFETY_RELAY_ENABLED_MASK);
-        setMalfunctionIndicatorActive(relayStatus & MALFUNCTION_INDICATOR_ACTIVE_MASK);
-        setMultiPurposeInputSignalStatus(relayStatus & MULTI_PURPOSE_INPUT_SIGNAL_STATUS_MASK);
-        setAlwaysOnSignalStatus(relayStatus & ALWAYS_ON_SIGNAL_STATUS_MASK);
-        setIsReadySignalStatus(relayStatus & IS_READY_SIGNAL_STATUS_MASK);
-        setIsChargingSignalStatus(relayStatus & IS_CHARGING_SIGNAL_STATUS_MASK);
+        setDischargeRelayEnabled(relayStatus & 0x01);
+        setChargeRelayEnabled(relayStatus & 0x02);
+        setChargerSafetyEnabled(relayStatus & 0x04);
+        setMalfunctionIndicatorActive(relayStatus & 0x08);
+        setMultiPurposeInputSignalStatus(relayStatus & 0x10);
+        setAlwaysOnSignalStatus(relayStatus & 0x20);
+        setIsReadySignalStatus(relayStatus & 0x40);
+        setIsChargingSignalStatus(relayStatus & 0x80);
 
         setPopulatedCells(getValue<unsigned char>(payload, 1));
         setInput12V(getValue<unsigned short>(payload, 2) * 0.1f); // 0.1V
@@ -205,7 +137,7 @@ void BatteryPacket::initializeIdActionMap() {
         setPackDepthOfDischarge(getValue<unsigned char>(payload, 7) * 0.5f); // 0.5%
     };
 
-    // TempInfo (0x304)
+    // Temp Info (0x304)
     idActionMap[0x304] = [this](QByteArray payload) {
         setHighTemperature(getValue<char>(payload, 0)); // 1°C
         setHighThermistorId(getValue<unsigned char>(payload, 1));
