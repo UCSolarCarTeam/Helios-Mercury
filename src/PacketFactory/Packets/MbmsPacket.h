@@ -74,6 +74,7 @@ class MbmsPacket : public IPacket {
     DEFINE_PROPERTY(bool, ChargeHighCurrentWarning)
     DEFINE_PROPERTY(bool, HighTemperatureWarning)
     DEFINE_PROPERTY(bool, LowTemperatureWarning)
+    DEFINE_PROPERTY(bool, CanOc12VWarning) 
 
 public:
     MbmsPacket();

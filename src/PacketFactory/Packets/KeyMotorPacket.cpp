@@ -1,10 +1,9 @@
-#include "KeyMotor.h"
+#include "KeyMotorPacket.h"
 #include "../../Config/JsonDefinitions.h"
-#include <cstring>
 
-KeyMotor::KeyMotor() {
+KeyMotorPacket::KeyMotorPacket() {
     // Motor Drive Command
-    setMotorVelocity(0.0f);
+    setKeyMotorVelocity(0.0f);
     setMotorCurrent(0.0f);
 
     // Motor Power Command
@@ -13,11 +12,11 @@ KeyMotor::KeyMotor() {
     initializeIdActionMap();
 }
 
-QJsonObject KeyMotor::toJson() {
+QJsonObject KeyMotorPacket::toJson() {
     QJsonObject json;
 
     // Motor Drive Command
-    json[JsonDefinitions::MOTOR_VELOCITY] = MotorVelocity_;
+    json[JsonDefinitions::KEY_MOTOR_VELOCITY] = KeyMotorVelocity_;
     json[JsonDefinitions::MOTOR_CURRENT] = MotorCurrent_;
 
     // Motor Power Command
@@ -25,12 +24,15 @@ QJsonObject KeyMotor::toJson() {
     return json;
 }
 
-void KeyMotor::initializeIdActionMap() {
+void KeyMotorPacket::populatePacket(const QByteArray& data) {
+}
+
+void KeyMotorPacket::initializeIdActionMap() {
     // Motor Drive Command - 0x501
     idActionMap[0x501] = {
         [this](QByteArray payload){
             float velocity = getValue<float>(payload, 0);
-            setMotorVelocity(velocity);
+            setKeyMotorVelocity(velocity);
             float current = getValue<float>(payload, 4);
             setMotorCurrent(current);
         }

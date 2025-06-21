@@ -26,7 +26,7 @@ Item {
         x: 608
         y: 15
         z: 1000
-        isOn: b3.LeftSignalIn || b3.HazardLightsIn
+        isOn: b3.RightSignalInput || b3.HazardLightsInput
         rotation: 180
     }
 
@@ -35,7 +35,7 @@ Item {
         x: 1278
         y: 15
         z: 1000
-        isOn: b3.RightSignalIn || b3.HazardLightsIn
+        isOn: b3.LeftSignalInput || b3.HazardLightsInput
     }
 
     RaceClusterIcons {
@@ -59,7 +59,7 @@ Item {
         y: -8
         minValue: 0
         maxValue: 1500
-        value: ( motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue ) / 2
+        value: ( motorDetails0.MotorVelocity + motorDetails1.MotorVelocity ) / 2
         flipped: true
     }
     
@@ -103,29 +103,29 @@ Item {
         maxValue: 100
         gaugeTitle: "Motor Temp"
         units: "°C"
-        value: (motorDetails0.MotorTemperature + motorDetails1.MotorTemperature) / 2
+        value: (motorDetails0.MotorTemp + motorDetails1.MotorTemp) / 2
     }
 
     ThreeQuarterGauge {
-        id: netConsumptionGauge
+        id: packVoltageGauge
         x: 68
         y: 180
         minValue: 0
         maxValue: 100
-        gaugeTitle: "Net Consumption"
+        gaugeTitle: "Pack Voltage"
         units: "mV"
-        value: battery.AverageCellVoltage / 10
+        value: battery.PackVoltage / 10
     }
 
     ThreeQuarterGauge {
-        id: averageCellTempGauge
+        id: highCellTempGauge
         x: 178
         y: 290
         minValue: 0
         maxValue: 100
-        gaugeTitle: "AVG Cell Temp"
+        gaugeTitle: "High Cell Temp"
         units: "°C"
-        value: battery.AverageTemperature
+        value: battery.HighTemperature
     }
 
     ContactorStatus {

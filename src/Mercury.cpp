@@ -70,6 +70,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     MbmsPacket &mbmsPacket = packetFactory->getMbmsPacket();
     ProximitySensorsPacket &proximitySensorsPacket = packetFactory->getProximitySensorsPacket();
     PiPacket &piPacket = packetFactory->getPiPacket();
+    ContactorPacket &contactorPacket = packetFactory->getContactorPacket();
 
 
     engine_.rootContext()->setContextProperty("keyMotor", &keyMotorPacket);
@@ -86,6 +87,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("mbms", &mbmsPacket);
     engine_.rootContext()->setContextProperty("proximitySensors", &proximitySensorsPacket);
     engine_.rootContext()->setContextProperty("pi", &piPacket);
+    engine_.rootContext()->setContextProperty("contactor", &contactorPacket);
 
     qmlRegisterSingletonType(QUrl("qrc:/qt/qml/content/Config/Config.qml"), "Mercury", 1, 0, "Config");
 

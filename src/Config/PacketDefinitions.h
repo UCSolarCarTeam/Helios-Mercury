@@ -62,6 +62,9 @@ namespace PacketDefinitions {
     const int PROXIMITY_SENSORS_ID_MIN = 0x700;
     const int PROXIMITY_SENSORS_ID_MAX = 0x703;
 
+    const int CONTACTOR_ID_MIN = 0x200;
+    const int CONTACTOR_ID_MAX = 0x214; 
+
     const std::array<int, 11> packetLength = {
         -69,
         KEY_MOTOR_LENGTH,

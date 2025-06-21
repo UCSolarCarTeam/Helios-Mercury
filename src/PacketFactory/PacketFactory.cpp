@@ -12,6 +12,7 @@ PacketFactory::PacketFactory() {
     batteryFaultsPacket_.reset(new BatteryFaultsPacket());
     b3Packet_.reset(new B3Packet());
     piPacket_.reset(new PiPacket());
+    contactorPacket_.reset(new ContactorPacket());
 
     for (int i = 0; i < config.getNumberOfMotors(); i++) {
         motorDetailsPackets_.append(new MotorDetailsPacket());
@@ -66,4 +67,8 @@ MotorDetailsPacket& PacketFactory::getMotorDetailsPacket(int index) {
 
 MpptPacket& PacketFactory::getMpptPacket(int index) {
     return *mpptPackets_[index];
+}
+
+ContactorPacket& PacketFactory::getContactorPacket() {
+    return *contactorPacket_;
 }

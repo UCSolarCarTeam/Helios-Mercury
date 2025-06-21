@@ -4,18 +4,18 @@
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
 
-class KeyMotor : public IPacket {
+class KeyMotorPacket : public IPacket {
     Q_OBJECT
 
     // Motor Drive Command
-    DEFINE_PROPERTY(float, MotorVelocity)
+    DEFINE_PROPERTY(float, KeyMotorVelocity)
     DEFINE_PROPERTY(float, MotorCurrent)
 
     // Motor Power Command
     DEFINE_PROPERTY(float, BusCurrentOut)
 
 public:
-    KeyMotor();
+    KeyMotorPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 

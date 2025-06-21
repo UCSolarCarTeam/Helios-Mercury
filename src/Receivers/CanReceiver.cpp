@@ -93,6 +93,10 @@ void CanReceiver::handleReadyRead() {
             // Proximity Sensors Data (0x700-0x703)
             packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
         }
+        else if(id >= PacketDefinitions::CONTACTOR_ID_MIN && id <= PacketDefinitions::CONTACTOR_ID_MAX) {
+            // Proximity Sensors Data (0x700-0x703)
+            packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
+        }
         else {
             qWarning() << "UNKNOWN ID: 0x" << QString::number(id, 16).toUpper() 
                        << "With payload:" << payload.toHex();

@@ -11,6 +11,7 @@
 #include "Packets/BatteryFaultsPacket.h"
 #include "Packets/B3Packet.h"
 #include "Packets/PiPacket.h"
+#include "Packets/ContactorPacket.h"
 
 #include <QScopedPointer>
 
@@ -28,6 +29,7 @@ public:
     BatteryFaultsPacket& getBatteryFaultsPacket();
     B3Packet& getB3Packet();
     PiPacket& getPiPacket();
+    ContactorPacket& getContactorPacket();
 
     MotorDetailsPacket& getMotorDetailsPacket(int index);
     MpptPacket& getMpptPacket(int index);
@@ -41,6 +43,7 @@ private:
     QScopedPointer<BatteryFaultsPacket> batteryFaultsPacket_;
     QScopedPointer<B3Packet> b3Packet_;
     QScopedPointer<PiPacket> piPacket_;
+    QScopedPointer<ContactorPacket> contactorPacket_;
 
     //amounts defined in config.ini
     QVector<MotorDetailsPacket*> motorDetailsPackets_;

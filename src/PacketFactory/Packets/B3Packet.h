@@ -8,7 +8,7 @@ class B3Packet : public IPacket {
     Q_OBJECT
 
     // Heartbeat
-    DEFINE_PROPERTY(bool, Heartbeat)
+    DEFINE_PROPERTY(bool, B3Heartbeat)
 
     // Lights Inputs
     DEFINE_PROPERTY(bool, RightSignalInput)

@@ -51,6 +51,9 @@ BatteryPacket::BatteryPacket() {
     initializeIdActionMap();
 }
 
+void BatteryPacket::populatePacket(const QByteArray& data) {
+}
+
 QJsonObject BatteryPacket::toJson() {
     QJsonObject json;
 

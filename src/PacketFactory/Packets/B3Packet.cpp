@@ -4,7 +4,7 @@
 
 B3Packet::B3Packet() {
     // Heartbeat 
-    setHeartbeat(false);
+    setB3Heartbeat(false);
 
     // Lights Inputs
     setRightSignalInput(false);
@@ -38,6 +38,9 @@ B3Packet::B3Packet() {
     initializeIdActionMap();
 }
 
+void B3Packet::populatePacket(const QByteArray& data) {
+}
+
 QJsonObject B3Packet::toJson() {
     QJsonObject json;
 
@@ -51,11 +54,10 @@ QJsonObject B3Packet::toJson() {
     json[JsonDefinitions::HEADLIGHTS_SWITCH_INPUT] = HeadlightsSwitchInput_;
 
     // Digital Inputs
-    json[JsonDefinitions::FORWARD_SWITCH_DIGITAL] = ForwardSwitchDigital_;
-    json[JsonDefinitions::HORN_SWITCH_DIGITAL] = HornSwitchDigital_;
     json[JsonDefinitions::FORWARD_DIGITAL] = ForwardDigital_;
     json[JsonDefinitions::NEUTRAL_DIGITAL] = NeutralDigital_;
     json[JsonDefinitions::REVERSE_DIGITAL] = ReverseDigital_;
+    json[JsonDefinitions::HORN_SWITCH_DIGITAL] = HornSwitchDigital_;
     json[JsonDefinitions::BRAKE_SWITCH_DIGITAL] = BrakeSwitchDigital_;
     json[JsonDefinitions::HANDBRAKE_SWITCH_DIGITAL] = HandbrakeSwitchDigital_;
     json[JsonDefinitions::MOTOR_RESET_DIGITAL] = MotorResetDigital_;
@@ -67,12 +69,12 @@ QJsonObject B3Packet::toJson() {
     json[JsonDefinitions::REGEN_BRAKING] = RegenBraking_;
 
     // Lights Status
-    json[JsonDefinitions::RIGHT_SIGNAL_LIGHTS] = RightSignalLights_;
-    json[JsonDefinitions::LEFT_SIGNAL_LIGHTS] = LeftSignalLights_;
-    json[JsonDefinitions::DAYTIME_RUNNING_LIGHT_SIGNAL_LIGHTS] = DaytimeRunningLightSignalLights_;
-    json[JsonDefinitions::HEADLIGHT_SIGNAL_LIGHTS] = HeadlightSignalLights_;
-    json[JsonDefinitions::BRAKE_LIGHT_SIGNAL_LIGHTS] = BrakeLightSignalLights_;
-    json[JsonDefinitions::HORN_SIGNAL_LIGHTS] = HornSignalLights_;
+    json[JsonDefinitions::RIGHT_SIGNAL_STATUS] = RightSignalStatus_;
+    json[JsonDefinitions::LEFT_SIGNAL_STATUS] = LeftSignalStatus_;
+    json[JsonDefinitions::DAYTIME_RUNNING_LIGHT_SIGNAL_STATUS] = DaytimeRunningLightSignalStatus_;
+    json[JsonDefinitions::HEADLIGHT_SIGNAL_STATUS] = HeadlightSignalStatus_;
+    json[JsonDefinitions::BRAKE_LIGHT_SIGNAL_STATUS] = BrakeLightSignalStatus_;
+    json[JsonDefinitions::HORN_SIGNAL_STATUS] = HornSignalStatus_;
 
     return json;
 }
@@ -84,7 +86,7 @@ void B3Packet::initializeIdActionMap() {
     idActionMap[0x100] = {
         [this](QByteArray payload){
             unsigned char heartbeat = getValue<unsigned char>(payload, 0);
-            setHeartbeat(heartbeat & 0x01);
+            setB3Heartbeat(heartbeat & 0x01);
         }
     };
 
@@ -92,26 +94,26 @@ void B3Packet::initializeIdActionMap() {
     idActionMap[0x610] = {
         [this](QByteArray payload){
             unsigned char lightInputs = getValue<unsigned char>(payload, 0);
-            setRightSignalIn(lightInputs & 0x01);
-            setLeftSignalIn(lightInputs & 0x02);
-            setHazardLightsIn(lightInputs & 0x04);
-            setHeadlightsSwitchIn(lightInputs & 0x08);
+            setRightSignalInput(lightInputs & 0x01);
+            setLeftSignalInput(lightInputs & 0x02);
+            setHazardLightsInput(lightInputs & 0x04);
+            setHeadlightsSwitchInput(lightInputs & 0x08);
         }
     };
 
-    // Digital Inputs - 6x611
-    idActionMap[0x611] = { //Note this section removed ForwardSwitchIn and ZoomZoom
+    // Digital Inputs - 0x611
+    idActionMap[0x611] = {
         [this](QByteArray payload){
             unsigned short digitalInputs = getValue<unsigned short>(payload, 0);
-            setForwardIn(digitalInputs & 0x0001);
-            setNeutral(digitalInputs & 0x0002);
-            setReverse(digitalInputs & 0x0004);
-            setHornSwitchIn(digitalInputs & 0x0008);
-            setBrakeSwitch(digitalInputs & 0x0010);
-            setHandbrakeSwitch(digitalInputs & 0x0020);
-            setMotorReset(digitalInputs & 0x0040);
-            setRaceMode(digitalInputs & 0x0080);
-            setLap(digitalInputs & 0x0100);
+            setForwardDigital(digitalInputs & 0x0001);
+            setNeutralDigital(digitalInputs & 0x0002);
+            setReverseDigital(digitalInputs & 0x0004);
+            setHornSwitchDigital(digitalInputs & 0x0008);
+            setBrakeSwitchDigital(digitalInputs & 0x0010);
+            setHandbrakeSwitchDigital(digitalInputs & 0x0020);
+            setMotorResetDigital(digitalInputs & 0x0040);
+            setRaceModeDigital(digitalInputs & 0x0080);
+            setLapDigital(digitalInputs & 0x0100);
         }
     };
 
@@ -127,12 +129,12 @@ void B3Packet::initializeIdActionMap() {
     idActionMap[0x620] = {
         [this](QByteArray payload){
             unsigned char lightsStatus = getValue<unsigned char>(payload, 0);
-            setRightSignalOut(lightsStatus & 0x01);
-            setLeftSignalOut(lightsStatus & 0x02);
-            setDaytimeRunningLightSignalOut(lightsStatus & 0x04);
-            setHeadlightSignalOut(lightsStatus & 0x08);
-            setBrakeLightSignalOut(lightsStatus & 0x10);
-            setHornSignalOut(lightsStatus & 0x20);
+            setRightSignalStatus(lightsStatus & 0x01);
+            setLeftSignalStatus(lightsStatus & 0x02);
+            setDaytimeRunningLightSignalStatus(lightsStatus & 0x04);
+            setHeadlightSignalStatus(lightsStatus & 0x08);
+            setBrakeLightSignalStatus(lightsStatus & 0x10);
+            setHornSignalStatus(lightsStatus & 0x20);
         }
     };
 }
