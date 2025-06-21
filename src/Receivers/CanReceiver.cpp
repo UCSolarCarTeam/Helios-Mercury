@@ -83,7 +83,7 @@ void CanReceiver::handleReadyRead() {
         }
         else if(id >= PacketDefinitions::MPPT_ID_MIN && id <= PacketDefinitions::MPPT_ID_MAX) {
             // MPPT Data (0x600-0x607)
-            packetFactory_->getMpptPacket(0).IPacket::populatePacket(id, payload);  // Added index 0
+            packetFactory_->getMpptPacket().IPacket::populatePacket(id, payload);
         }
         else if(id >= PacketDefinitions::MBMS_ID_MIN && id <= PacketDefinitions::MBMS_ID_MAX) {
             // MBMS Data (0x100-0x105)
@@ -94,7 +94,7 @@ void CanReceiver::handleReadyRead() {
             packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
         }
         else if(id >= PacketDefinitions::CONTACTOR_ID_MIN && id <= PacketDefinitions::CONTACTOR_ID_MAX) {
-            // Proximity Sensors Data (0x700-0x703)
+            // Contactors Data (0x200-0x214)
             packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
         }
         else {

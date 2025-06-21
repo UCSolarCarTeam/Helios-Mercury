@@ -13,19 +13,15 @@ PacketFactory::PacketFactory() {
     b3Packet_.reset(new B3Packet());
     piPacket_.reset(new PiPacket());
     contactorPacket_.reset(new ContactorPacket());
+    mpptPacket_.reset(new MpptPacket());
 
     for (int i = 0; i < config.getNumberOfMotors(); i++) {
         motorDetailsPackets_.append(new MotorDetailsPacket());
-    }
-
-    for (int i = 0; i < config.getNumberOfMppts(); i++) {
-        mpptPackets_.append(new MpptPacket());
     }
 }
 
 PacketFactory::~PacketFactory() {
     qDeleteAll(motorDetailsPackets_);
-    qDeleteAll(mpptPackets_);
 }
 
 //Getters
@@ -65,8 +61,8 @@ MotorDetailsPacket& PacketFactory::getMotorDetailsPacket(int index) {
     return *motorDetailsPackets_[index];
 }
 
-MpptPacket& PacketFactory::getMpptPacket(int index) {
-    return *mpptPackets_[index];
+MpptPacket& PacketFactory::getMpptPacket() {
+    return *mpptPacket_;
 }
 
 ContactorPacket& PacketFactory::getContactorPacket() {
