@@ -1,6 +1,5 @@
 #include "B3Packet.h"
 #include "../../Config/JsonDefinitions.h"
-#include <cstdint>
 
 B3Packet::B3Packet() {
     // Heartbeat 
