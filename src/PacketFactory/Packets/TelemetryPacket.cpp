@@ -47,24 +47,6 @@ TelemetryPacket::TelemetryPacket() {
 }
 
 void TelemetryPacket::populatePacket(const QByteArray& data) {
-    setGpsYear(getValue<unsigned short>(data, GPS_YEAR_OFFSET));
-    setGpsMonth(getValue<unsigned char>(data, GPS_MONTH_OFFSET));
-    setGpsDay(getValue<unsigned char>(data, GPS_DAY_OFFSET));
-    setGpsHour(getValue<unsigned char>(data, GPS_HOUR_OFFSET));
-    setGpsMinute(getValue<unsigned char>(data, GPS_MINUTE_OFFSET));
-    setGpsSecond(getValue<unsigned char>(data, GPS_SECOND_OFFSET));
-    setGpsValidityFlags(getValue<unsigned char>(data, GPS_VALIDITY_FLAGS_OFFSET));
-    setGpsFixStatusFlags(getValue<unsigned char>(data, GPS_FIX_STATUS_FLAGS_OFFSET));
-    setGpsAdditionalFlags(getValue<unsigned char>(data, GPS_ADDITIONAL_FLAGS_OFFSET));
-    setGpsLongitude(getValue<float>(data, GPS_LONGITUDE_OFFSET));
-    setGpsLatitude(getValue<float>(data, GPS_LATITUDE_OFFSET));
-    setMpuAccelerationX(getValue<unsigned short>(data, MPU_ACCELERATION_X_OFFSET));
-    setMpuAccelerationY(getValue<unsigned short>(data, MPU_ACCELERATION_Y_OFFSET));
-    setMpuAccelerationZ(getValue<unsigned short>(data, MPU_ACCELERATION_Z_OFFSET));
-    setMpuRotationX(getValue<unsigned short>(data, MPU_ROTATION_X_OFFSET));
-    setMpuRotationY(getValue<unsigned short>(data, MPU_ROTATION_Y_OFFSET));
-    setMpuRotationZ(getValue<unsigned short>(data, MPU_ROTATION_Z_OFFSET));
-    setMpuTemperature(getValue<unsigned short>(data, MPU_TEMPERATURE_OFFSET));
 }
 
 QJsonObject TelemetryPacket::toJson() {

@@ -1,20 +1,26 @@
-#ifndef KEYMOTORPACKET_H
-#define KEYMOTORPACKET_H
+#ifndef KEYMOTOR_H
+#define KEYMOTOR_H
 
 #include "../IPacket.h"
 #include "../../Config/PropertyDefinitions.h"
 
 class KeyMotorPacket : public IPacket {
     Q_OBJECT
-    DEFINE_PROPERTY(unsigned short, MotorSetpoint)
-    DEFINE_PROPERTY(bool, ControlMode)
-    DEFINE_PROPERTY(bool, MotorMode)
-    DEFINE_PROPERTY(bool, SoftwareEnable)
-    DEFINE_PROPERTY(bool, DebugMode)
+
+    // Motor Drive Command
+    DEFINE_PROPERTY(float, KeyMotorVelocity)
+    DEFINE_PROPERTY(float, MotorCurrent)
+
+    // Motor Power Command
+    DEFINE_PROPERTY(float, BusCurrentOut)
+
 public:
     KeyMotorPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
+
+protected:
+    void initializeIdActionMap() override;
 };
 
-#endif // KEYMOTORPACKET_H
+#endif // KEYMOTOR_H

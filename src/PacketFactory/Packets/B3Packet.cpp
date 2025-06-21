@@ -1,175 +1,139 @@
 #include "B3Packet.h"
 #include "../../Config/JsonDefinitions.h"
 
-namespace {
-    //Serial offsets -> TODO: phase out
-    const int LIGHT_INPUTS_OFFSET = 1;
-    const char RIGHT_SIGNAL_IN_MASK = 0x01;
-    const char LEFT_SIGNAL_IN_MASK = 0x02;
-    const char HAZARD_LIGHTS_IN_MASK = 0x04;
-    const char HEADLIGHTS_SWITCH_IN_MASK = 0x08;
-
-    const int DRIVER_INPUTS_OFFSET = 2;
-    const unsigned short FORWARD_SWITCH_IN_MASK = 0x0001;
-    const unsigned short HORN_SWITCH_IN_MASK = 0x0002;
-    const unsigned short FORWARD_IN_MASK = 0x0004;
-    const unsigned short NEUTRAL_MASK = 0x0008;
-    const unsigned short REVERSE_MASK = 0x0010;
-    const unsigned short BRAKE_SWITCH_MASK = 0x0020;
-    const unsigned short HANDBRAKE_SWITCH_MASK = 0x0040;
-    const unsigned short MOTOR_RESET_MASK = 0x0080;
-    const unsigned short RACE_MODE_MASK = 0x0100;
-    const unsigned short LAP_MASK = 0x0200;
-    const unsigned short ZOOM_ZOOM_MASK = 0x0400;
-
-    const int ACCELERATION_OFFSET = 4;
-    const int REGEN_BRAKING_OFFSET = 5;
-
-    const int LIGHT_OUTPUTS_OFFSET = 6;
-    const char RIGHT_SIGNAL_OUT_MASK = 0x01;
-    const char LEFT_SIGNAL_OUT_MASK = 0x02;
-    const char DAYTIME_RUNNING_LIGHT_SIGNAL_OUT_MASK = 0x04;
-    const char HEADLIGHT_SIGNAL_OUT_MASK = 0x08;
-    const char BRAKE_LIGHT_SIGNAL_OUT_MASK = 0x10;
-    const char HORN_SIGNAL_OUT_MASK = 0x20;
-}
-
 B3Packet::B3Packet() {
-    setRightSignalIn(false);
-    setLeftSignalIn(false);
-    setHazardLightsIn(false);
-    setHeadlightsSwitchIn(false);
-    setForwardSwitchIn(false);
-    setHornSwitchIn(false);
-    setForwardIn(false);
+    // Heartbeat 
+    setB3Heartbeat(false);
 
-    setNeutral(false);
-    setReverse(false);
-    setBrakeSwitch(false);
-    setHandbrakeSwitch(false);
-    setMotorReset(false);
-    setRaceMode(false);
-    setLap(false);
-    setZoomZoom(false);
+    // Lights Inputs
+    setRightSignalInput(false);
+    setLeftSignalInput(false);
+    setHazardLightsInput(false);
+    setHeadlightsSwitchInput(false);
 
+    // Digital Inputs
+    setForwardDigital(false);
+    setNeutralDigital(false);
+    setReverseDigital(false);
+    setHornSwitchDigital(false);
+    setBrakeSwitchDigital(false);
+    setHandbrakeSwitchDigital(false);
+    setMotorResetDigital(false);
+    setRaceModeDigital(false);
+    setLapDigital(false);
+
+    // Analog Inputs
     setAcceleration(0);
     setRegenBraking(0);
 
-    setRightSignalOut(false);
-    setLeftSignalOut(false);
-    setDaytimeRunningLightSignalOut(false);
-    setHeadlightSignalOut(false);
-    setBrakeLightSignalOut(false);
-    setHornSignalOut(false);
+    // Lights Status
+    setRightSignalStatus(false);
+    setLeftSignalStatus(false);
+    setDaytimeRunningLightSignalStatus(false);
+    setHeadlightSignalStatus(false);
+    setBrakeLightSignalStatus(false);
+    setHornSignalStatus(false);
 
     initializeIdActionMap();
 }
 
 void B3Packet::populatePacket(const QByteArray& data) {
-    unsigned char lightInputs = getValue<unsigned char>(data, LIGHT_INPUTS_OFFSET);
-    setRightSignalIn(lightInputs & RIGHT_SIGNAL_IN_MASK);
-    setLeftSignalIn(lightInputs & LEFT_SIGNAL_IN_MASK);
-    setHazardLightsIn(lightInputs & HAZARD_LIGHTS_IN_MASK);
-    setHeadlightsSwitchIn(lightInputs & HEADLIGHTS_SWITCH_IN_MASK);
-
-    unsigned short driverInputs = getValue<unsigned short>(data, DRIVER_INPUTS_OFFSET);
-    setForwardSwitchIn(driverInputs & FORWARD_SWITCH_IN_MASK); //TODO: Verify if Required
-    setHornSwitchIn(driverInputs & HORN_SWITCH_IN_MASK);
-    setForwardIn(driverInputs & FORWARD_IN_MASK);
-    setNeutral(driverInputs & NEUTRAL_MASK);
-    setReverse(driverInputs & REVERSE_MASK);
-    setBrakeSwitch(driverInputs & BRAKE_SWITCH_MASK);
-    setHandbrakeSwitch(driverInputs & HANDBRAKE_SWITCH_MASK);
-    setMotorReset(driverInputs & MOTOR_RESET_MASK);
-    setRaceMode(driverInputs & RACE_MODE_MASK);
-    setLap(driverInputs & LAP_MASK);
-    setZoomZoom(driverInputs & ZOOM_ZOOM_MASK); //TODO: Verify if Required
-
-    setAcceleration(getValue<unsigned char>(data, ACCELERATION_OFFSET));
-    setRegenBraking(getValue<unsigned char>(data, REGEN_BRAKING_OFFSET));
-
-    unsigned char lightOutputs = getValue<unsigned char>(data, LIGHT_OUTPUTS_OFFSET);
-    setRightSignalOut(lightOutputs & RIGHT_SIGNAL_OUT_MASK);
-    setLeftSignalOut(lightOutputs & LEFT_SIGNAL_OUT_MASK);
-    setDaytimeRunningLightSignalOut(lightOutputs & DAYTIME_RUNNING_LIGHT_SIGNAL_OUT_MASK);
-    setHeadlightSignalOut(lightOutputs & HEADLIGHT_SIGNAL_OUT_MASK);
-    setBrakeLightSignalOut(lightOutputs & BRAKE_LIGHT_SIGNAL_OUT_MASK);
-    setHornSignalOut(lightOutputs & HORN_SIGNAL_OUT_MASK);
 }
 
 QJsonObject B3Packet::toJson() {
     QJsonObject json;
-    
-    json[JsonDefinitions::RIGHT_SIGNAL_IN] = RightSignalIn_;
-    json[JsonDefinitions::LEFT_SIGNAL_IN] = LeftSignalIn_;
-    json[JsonDefinitions::HAZARD_LIGHTS_IN] = HazardLightsIn_;
-    json[JsonDefinitions::HEADLIGHTS_SWITCH_IN] = HeadlightsSwitchIn_;
-    json[JsonDefinitions::FORWARD_SWITCH_IN] = ForwardSwitchIn_;
-    json[JsonDefinitions::HORN_SWITCH_IN] = HornSwitchIn_;
-    json[JsonDefinitions::FORWARD_IN] = ForwardIn_;
 
-    json[JsonDefinitions::NEUTRAL] = Neutral_;
-    json[JsonDefinitions::REVERSE] = Reverse_;
-    json[JsonDefinitions::BRAKE_SWITCH] = BrakeSwitch_;
-    json[JsonDefinitions::HANDBRAKE_SWITCH] = HandbrakeSwitch_;
-    json[JsonDefinitions::MOTOR_RESET] = MotorReset_;
-    json[JsonDefinitions::RACE_MODE] = RaceMode_;
-    json[JsonDefinitions::LAP] = Lap_;
-    json[JsonDefinitions::ZOOM_ZOOM] = ZoomZoom_;
+    // Heartbeat
+    json[JsonDefinitions::B3_HEARTBEAT] = B3Heartbeat_;
 
+    // Lights Inputs
+    json[JsonDefinitions::RIGHT_SIGNAL_INPUT] = RightSignalInput_;
+    json[JsonDefinitions::LEFT_SIGNAL_INPUT] = LeftSignalInput_;
+    json[JsonDefinitions::HAZARD_LIGHTS_INPUT] = HazardLightsInput_;
+    json[JsonDefinitions::HEADLIGHTS_SWITCH_INPUT] = HeadlightsSwitchInput_;
+
+    // Digital Inputs
+    json[JsonDefinitions::FORWARD_DIGITAL] = ForwardDigital_;
+    json[JsonDefinitions::NEUTRAL_DIGITAL] = NeutralDigital_;
+    json[JsonDefinitions::REVERSE_DIGITAL] = ReverseDigital_;
+    json[JsonDefinitions::HORN_SWITCH_DIGITAL] = HornSwitchDigital_;
+    json[JsonDefinitions::BRAKE_SWITCH_DIGITAL] = BrakeSwitchDigital_;
+    json[JsonDefinitions::HANDBRAKE_SWITCH_DIGITAL] = HandbrakeSwitchDigital_;
+    json[JsonDefinitions::MOTOR_RESET_DIGITAL] = MotorResetDigital_;
+    json[JsonDefinitions::RACE_MODE_DIGITAL] = RaceModeDigital_;
+    json[JsonDefinitions::LAP_DIGITAL] = LapDigital_;
+
+    // Analog Inputs
     json[JsonDefinitions::ACCELERATION] = Acceleration_;
     json[JsonDefinitions::REGEN_BRAKING] = RegenBraking_;
 
-    json[JsonDefinitions::RIGHT_SIGNAL_OUT] = RightSignalOut_;
-    json[JsonDefinitions::LEFT_SIGNAL_OUT] = LeftSignalOut_;
-    json[JsonDefinitions::DAYTIME_RUNNING_LIGHT_SIGNAL_OUT] = DaytimeRunningLightSignalOut_;
-    json[JsonDefinitions::HEADLIGHT_SIGNAL_OUT] = HeadlightSignalOut_;
-    json[JsonDefinitions::BRAKE_LIGHT_SIGNAL_OUT] = BrakeLightSignalOut_;
-    json[JsonDefinitions::HORN_SIGNAL_OUT] = HornSignalOut_;
+    // Lights Status
+    json[JsonDefinitions::RIGHT_SIGNAL_STATUS] = RightSignalStatus_;
+    json[JsonDefinitions::LEFT_SIGNAL_STATUS] = LeftSignalStatus_;
+    json[JsonDefinitions::DAYTIME_RUNNING_LIGHT_SIGNAL_STATUS] = DaytimeRunningLightSignalStatus_;
+    json[JsonDefinitions::HEADLIGHT_SIGNAL_STATUS] = HeadlightSignalStatus_;
+    json[JsonDefinitions::BRAKE_LIGHT_SIGNAL_STATUS] = BrakeLightSignalStatus_;
+    json[JsonDefinitions::HORN_SIGNAL_STATUS] = HornSignalStatus_;
 
     return json;
 }
 
 void B3Packet::initializeIdActionMap() {
     qDebug() << "Initializing B3 Packet ID Action Map";
+
+    // Heartbeat - 0x609
+    idActionMap[0x100] = {
+        [this](QByteArray payload){
+            unsigned char heartbeat = getValue<unsigned char>(payload, 0);
+            setB3Heartbeat(heartbeat & 0x01);
+        }
+    };
+
+    // Lights Inputs - 0x610
     idActionMap[0x610] = {
         [this](QByteArray payload){
             unsigned char lightInputs = getValue<unsigned char>(payload, 0);
-            setRightSignalIn(lightInputs & RIGHT_SIGNAL_IN_MASK);
-            setLeftSignalIn(lightInputs & LEFT_SIGNAL_IN_MASK);
-            setHazardLightsIn(lightInputs & HAZARD_LIGHTS_IN_MASK);
-            setHeadlightsSwitchIn(lightInputs & HEADLIGHTS_SWITCH_IN_MASK);
+            setRightSignalInput(lightInputs & 0x01);
+            setLeftSignalInput(lightInputs & 0x02);
+            setHazardLightsInput(lightInputs & 0x04);
+            setHeadlightsSwitchInput(lightInputs & 0x08);
         }
     };
-    idActionMap[0x611] = { //Note this section removed ForwardSwitchIn and ZoomZoom
+
+    // Digital Inputs - 0x611
+    idActionMap[0x611] = {
         [this](QByteArray payload){
             unsigned short digitalInputs = getValue<unsigned short>(payload, 0);
-            setForwardIn(digitalInputs & 0x0001);
-            setNeutral(digitalInputs & 0x0002);
-            setReverse(digitalInputs & 0x0004);
-            setHornSwitchIn(digitalInputs & 0x0008);
-            setBrakeSwitch(digitalInputs & 0x0010);
-            setHandbrakeSwitch(digitalInputs & 0x0020);
-            setMotorReset(digitalInputs & 0x0040);
-            setRaceMode(digitalInputs & 0x0080);
-            setLap(digitalInputs & 0x0100);
+            setForwardDigital(digitalInputs & 0x0001);
+            setNeutralDigital(digitalInputs & 0x0002);
+            setReverseDigital(digitalInputs & 0x0004);
+            setHornSwitchDigital(digitalInputs & 0x0008);
+            setBrakeSwitchDigital(digitalInputs & 0x0010);
+            setHandbrakeSwitchDigital(digitalInputs & 0x0020);
+            setMotorResetDigital(digitalInputs & 0x0040);
+            setRaceModeDigital(digitalInputs & 0x0080);
+            setLapDigital(digitalInputs & 0x0100);
         }
     };
+
+    // Analog Inputs - 0x612 
     idActionMap[0x612] = {
         [this](QByteArray payload){
-            setAcceleration(getValue<unsigned char>(payload, 0));
-            setRegenBraking(getValue<unsigned char>(payload, 1));
+            setAcceleration(static_cast<uint8_t>(getValue<uint8_t>(payload, 0)));
+            setRegenBraking(static_cast<uint8_t>(getValue<uint8_t>(payload, 1)));
         }
     };
+
+    // Lights Status - 0x620
     idActionMap[0x620] = {
         [this](QByteArray payload){
             unsigned char lightsStatus = getValue<unsigned char>(payload, 0);
-            setRightSignalOut(lightsStatus & RIGHT_SIGNAL_OUT_MASK);
-            setLeftSignalOut(lightsStatus & LEFT_SIGNAL_OUT_MASK);
-            setDaytimeRunningLightSignalOut(lightsStatus & DAYTIME_RUNNING_LIGHT_SIGNAL_OUT_MASK);
-            setHeadlightSignalOut(lightsStatus & HEADLIGHT_SIGNAL_OUT_MASK);
-            setBrakeLightSignalOut(lightsStatus & BRAKE_LIGHT_SIGNAL_OUT_MASK);
-            setHornSignalOut(lightsStatus & HORN_SIGNAL_OUT_MASK);
+            setRightSignalStatus(lightsStatus & 0x01);
+            setLeftSignalStatus(lightsStatus & 0x02);
+            setDaytimeRunningLightSignalStatus(lightsStatus & 0x04);
+            setHeadlightSignalStatus(lightsStatus & 0x08);
+            setBrakeLightSignalStatus(lightsStatus & 0x10);
+            setHornSignalStatus(lightsStatus & 0x20);
         }
     };
 }

@@ -11,7 +11,7 @@ Item {
 
     // Property to track selected gear (0: R, 1: N, 2: D)
     property var gears: ["R", "N", "D"]
-    property int currentGear: b3.Reverse ? 0 : (b3.ForwardIn ? 2 : 1)
+    property int currentGear: b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
 
     // Faint Horizontal Line
     Rectangle {

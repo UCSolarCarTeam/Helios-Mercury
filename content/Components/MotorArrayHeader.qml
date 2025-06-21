@@ -49,14 +49,14 @@ Item {
             id: motor0Header
             width: motorHeadersColumn.width
             height: motorHeadersColumn.height / 2
-            text: formatMotorText(0, motorDetails0.InverterPeakCurrent)
+            text: formatMotorText(0, motorDetails0.BusCurrent)
         }
 
         StyledText {
             id: motor1Header
             width: motorHeadersColumn.width
             height: motorHeadersColumn.height / 2
-            text: formatMotorText(1, motorDetails1.InverterPeakCurrent)
+            text: formatMotorText(1, motorDetails1.BusCurrent)
         }
     }
 
@@ -95,10 +95,10 @@ Item {
 
             Repeater {
                 model: [
-                    { id: "0", current: mppt0.ArrayCurrent },
-                    { id: "1", current: mppt1.ArrayCurrent },
-                    { id: "2", current: mppt2.ArrayCurrent },
-                    { id: "3", current: mppt3.ArrayCurrent }
+                    { id: "0, 0", current: mppt.Mppt0Ch0ArrayCurrent },
+                    { id: "0, 1", current: mppt.Mppt0Ch1ArrayCurrent },
+                    { id: "1, 0", current: mppt.Mppt1Ch0ArrayCurrent },
+                    { id: "1, 1", current: mppt.Mppt1Ch1ArrayCurrent }
                 ]
                 
                 StyledText {

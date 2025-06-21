@@ -190,9 +190,9 @@ void StreamProcessor::validateAndForwardPacket(QByteArray& packetBody) {
             return;
         case PacketDefinitions::MPPT_ID: {
             //TODO: This step is currently done twice, once here and once in the populatePacket function - fix this
-            const unsigned char mpptNum = static_cast<unsigned char>(packetBody.at(1)) & 0x03;
-            qDebug() << "MPPT Packet: " << mpptNum;
-            packetFactory_->getMpptPacket(mpptNum).populatePacket(packetBody);
+            // const unsigned char mpptNum = static_cast<unsigned char>(packetBody.at(1)) & 0x03;
+            qDebug() << "MPPT Packet: ";
+            packetFactory_->getMpptPacket().populatePacket(packetBody);
             return;
         }
         case PacketDefinitions::MBMS_ID:

@@ -63,13 +63,11 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     TelemetryPacket &telemetryPacket = packetFactory->getTelemetryPacket();
     BatteryFaultsPacket &batteryFaultsPacket = packetFactory->getBatteryFaultsPacket();
     BatteryPacket &batteryPacket = packetFactory->getBatteryPacket();
-    MpptPacket &mppt0Packet = packetFactory->getMpptPacket(0);
-    MpptPacket &mppt1Packet = packetFactory->getMpptPacket(1);
-    MpptPacket &mppt2Packet = packetFactory->getMpptPacket(2);
-    MpptPacket &mppt3Packet = packetFactory->getMpptPacket(3);
+    MpptPacket &mpptPacket = packetFactory->getMpptPacket();
     MbmsPacket &mbmsPacket = packetFactory->getMbmsPacket();
     ProximitySensorsPacket &proximitySensorsPacket = packetFactory->getProximitySensorsPacket();
     PiPacket &piPacket = packetFactory->getPiPacket();
+    ContactorPacket &contactorPacket = packetFactory->getContactorPacket();
 
 
     engine_.rootContext()->setContextProperty("keyMotor", &keyMotorPacket);
@@ -79,13 +77,11 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("telemetry", &telemetryPacket);
     engine_.rootContext()->setContextProperty("batteryFaults", &batteryFaultsPacket);
     engine_.rootContext()->setContextProperty("battery", &batteryPacket);
-    engine_.rootContext()->setContextProperty("mppt0", &mppt0Packet);
-    engine_.rootContext()->setContextProperty("mppt1", &mppt1Packet);
-    engine_.rootContext()->setContextProperty("mppt2", &mppt2Packet);
-    engine_.rootContext()->setContextProperty("mppt3", &mppt3Packet);
+    engine_.rootContext()->setContextProperty("mppt", &mpptPacket);
     engine_.rootContext()->setContextProperty("mbms", &mbmsPacket);
     engine_.rootContext()->setContextProperty("proximitySensors", &proximitySensorsPacket);
     engine_.rootContext()->setContextProperty("pi", &piPacket);
+    engine_.rootContext()->setContextProperty("contactor", &contactorPacket);
 
     qmlRegisterSingletonType(QUrl("qrc:/qt/qml/content/Config/Config.qml"), "Mercury", 1, 0, "Config");
 

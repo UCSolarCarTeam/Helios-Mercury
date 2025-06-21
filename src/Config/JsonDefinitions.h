@@ -13,129 +13,71 @@ namespace JsonDefinitions {
      * Key motor keys
      */
     constexpr const char* KEY_MOTOR = "KeyMotor";
-    constexpr const char* MOTOR_SETPOINT = "MotorSetpoint";
-    constexpr const char* CONTROL_MODE = "ControlMode";
-    constexpr const char* MOTOR_MODE = "MotorMode";
-    constexpr const char* SOFTWARE_ENABLE = "SoftwareEnable";
-    constexpr const char* DEBUG_MODE= "DebugMode";
+    constexpr const char* KEY_MOTOR_VELOCITY = "KeyMotorVelocity";
+    constexpr const char* MOTOR_CURRENT = "MotorCurrent";
+    constexpr const char* BUS_CURRENT_OUT = "BusCurrentOut";
 
     /**
      * Motor details keys
      */
     constexpr const char* MOTOR_DETAILS = "MotorDetails";
-    constexpr const char* CONTROL_VALUE = "ControlValue";
-    constexpr const char* CURRENT_MOTOR_TORQUE = "CurrentMotorTorque";
-    constexpr const char* CURRENT_RPM_VALUE = "CurrentRpmValue";
+    constexpr const char* MOTOR_ID = "MotorId";
+    constexpr const char* TRITIUM_ID = "TritiumId";
+    constexpr const char* SERIAL_NUMBER = "SerialNumber";
+    constexpr const char* LIMIT_FLAGS = "LimitFlags";
+    constexpr const char* ERROR_FLAGS = "ErrorFlags";
+    constexpr const char* ACTIVE_MOTOR = "ActiveMotor";
+    constexpr const char* TX_ERROR_COUNT = "TxErrorCount";
+    constexpr const char* RX_ERROR_COUNT = "RxErrorCount";
+    constexpr const char* BUS_VOLTAGE = "BusVoltage";
+    constexpr const char* BUS_CURRENT = "BusCurrent";
+    constexpr const char* MOTOR_VELOCITY = "MotorVelocity";
+    constexpr const char* VEHICLE_VELOCITY = "VehicleVelocity";
+    constexpr const char* PHASE_CURRENT_B = "PhaseCurrentB";
+    constexpr const char* PHASE_CURRENT_C = "PhaseCurrentC";
+    constexpr const char* VQ = "Vq";
+    constexpr const char* VD = "Vd";
+    constexpr const char* IQ = "Iq";
+    constexpr const char* ID = "Id";
+    constexpr const char* BEMF_Q = "BEMF_Q";
+    constexpr const char* BEMF_D = "BEMF_D";
+    constexpr const char* SUPPLY_15V = "Supply15V";
+    constexpr const char* SUPPLY_1V9 = "Supply1V9";
+    constexpr const char* SUPPLY_3V3 = "Supply3V3";
     constexpr const char* MOTOR_TEMPERATURE = "MotorTemperature";
-    constexpr const char* INVERTER_PEAK_CURRENT = "InverterPeakCurrent";
-    constexpr const char* CURRENT_MOTOR_POWER = "CurrentMotorPower";
-    constexpr const char* ABSOLUTE_ANGLE = "AbsoluteAngle";
-    constexpr const char* MOTOR_ABOUT_TO_STALL = "MotorAboutToStall";
-    constexpr const char* DELAY_IN_READING_TEMP_SENSOR = "DelayInReadingTempSensor";
-    constexpr const char* DELAY_IN_READING_POS_SENSOR = "DelayInReadingPosSensor";
-    constexpr const char* INVERTER1_TEMP_VERY_HIGH = "Inverter1TempVeryHigh";
-    constexpr const char* INVERTER2_TEMP_VERY_HIGH = "Inverter2TempVeryHigh";
-    constexpr const char* INVERTER3_TEMP_VERY_HIGH = "Inverter3TempVeryHigh";
-    constexpr const char* INVERTER4_TEMP_VERY_HIGH = "Inverter4TempVeryHigh";
-    constexpr const char* INVERTER5_TEMP_VERY_HIGH = "Inverter5TempVeryHigh";
-    constexpr const char* INVERTER6_TEMP_VERY_HIGH = "Inverter6TempVeryHigh";
-    constexpr const char* CPU_TEMPERATURE_VERY_HIGH = "CpuTemperatureVeryHigh";
-    constexpr const char* HALL_TEMPERATURE_VERY_HIGH = "HallTemperatureVeryHigh";
-    constexpr const char* DCLINK_TEMPERATURE_VERY_HIGH = "DclinkTemperatureVeryHigh";
-    constexpr const char* DELAY_IN_DCLINK_COMMUNICATION = "DelayInDclinkCommunication";
-    constexpr const char* INVERTER1_OVER_CURRENT_WARNING = "Inverter1OverCurrentWarning";
-    constexpr const char* INVERTER2_OVER_CURRENT_WARNING = "Inverter2OverCurrentWarning";
-    constexpr const char* INVERTER3_OVER_CURRENT_WARNING = "Inverter3OverCurrentWarning";
-    constexpr const char* INVERTER4_OVER_CURRENT_WARNING = "Inverter4OverCurrentWarning";
-    constexpr const char* INVERTER5_OVER_CURRENT_WARNING = "Inverter5OverCurrentWarning";
-    constexpr const char* INVERTER6_OVER_CURRENT_WARNING = "Inverter6OverCurrentWarning";
-    constexpr const char* DC_OVERVOLTAGE_WARNING = "DcOvervoltageWarning";
-    constexpr const char* DC_UNDERVOLTAGE_WARNING = "DcUndervoltageWarning";
-    constexpr const char* CAN_COMMS_TIMEOUT_WARNING = "CanCommsTimeoutWarning";
-    constexpr const char* INVERTER1_FAULT_WARNING = "Inverter1FaultWarning";
-    constexpr const char* INVERTER2_FAULT_WARNING = "Inverter2FaultWarning";
-    constexpr const char* INVERTER3_FAULT_WARNING = "Inverter3FaultWarning";
-    constexpr const char* INVERTER4_FAULT_WARNING = "Inverter4FaultWarning";
-    constexpr const char* INVERTER5_FAULT_WARNING = "Inverter5FaultWarning";
-    constexpr const char* INVERTER6_FAULT_WARNING = "Inverter6FaultWarning";
-    constexpr const char* CAN_SEND_WARNING = "CanSendWarning";
-    constexpr const char* LOST_FRAMES_ON_CAN_BUS_WARNING = "LostFramesOnCanBusWarning";
-    constexpr const char* OVERSPEED_WARNING = "OverspeedWarning";
-    constexpr const char* CPU_OVERLOAD = "CpuOverload";
-    constexpr const char* TORQUE_LIMITED = "TorqueLimited";
-    constexpr const char* START_AT_HIGH_RPM = "StartAtHighRpm";
-    constexpr const char* INIT_ERROR = "InitError";
-    constexpr const char* SETTINGS_NOT_FOUND = "SettingsNotFound";
-    constexpr const char* MOTOR_STALLED = "MotorStalled";
-    constexpr const char* CONTROLLER_DATA_READING_TIMEOUT = "ControllerDataReadingTimeout";
-    constexpr const char* INVALID_HALL_SENSOR_SEQUENCE = "InvalidHallSensorSequence";
-    constexpr const char* INVALID_HALL_SECTOR = "InvalidHallSector";
-    constexpr const char* ERROR_READING_TEMP_SENSOR = "ErrorReadingTempSensor";
-    constexpr const char* POSITION_SENSOR_READING_ERROR = "PositionSensorReadingError";
-    constexpr const char* ERROR_READING_ENCODER = "ErrorReadingEncoder";
-    constexpr const char* ZERO_POSITION_OFFSET_NOT_SET = "ZeroPositionOffsetNotSet";
-    constexpr const char* HW_ENABLE_NOT_SET = "HwEnableNotSet";
-    constexpr const char* INVERTER1_TEMP_TOO_HIGH = "Inverter1TempTooHigh";
-    constexpr const char* INVERTER2_TEMP_TOO_HIGH = "Inverter2TempTooHigh";
-    constexpr const char* INVERTER3_TEMP_TOO_HIGH = "Inverter3TempTooHigh";
-    constexpr const char* INVERTER4_TEMP_TOO_HIGH = "Inverter4TempTooHigh";
-    constexpr const char* INVERTER5_TEMP_TOO_HIGH = "Inverter5TempTooHigh";
-    constexpr const char* INVERTER6_TEMP_TOO_HIGH = "Inverter6TempTooHigh";
-    constexpr const char* CPU_TEMP_TOO_HIGH = "CpuTempTooHigh";
-    constexpr const char* CPU_TEMPERATURE_TOO_HIGH = "CpuTempTooHigh";
-    constexpr const char* HALL_TEMP_TOO_HIGH = "HallTempTooHigh";
-    constexpr const char* DCLINK_TEMP_TOO_HIGH = "DclinkTempTooHigh";
-    constexpr const char* ERROR_IN_DCLINK_COMMUNICATION = "ErrorInDclinkCommunication";
-    constexpr const char* INVERTER1_OVERCURRENT_ERROR = "Inverter1OvercurrentError";
-    constexpr const char* INVERTER2_OVERCURRENT_ERROR = "Inverter2OvercurrentError";
-    constexpr const char* INVERTER3_OVERCURRENT_ERROR = "Inverter3OvercurrentError";
-    constexpr const char* INVERTER4_OVERCURRENT_ERROR = "Inverter4OvercurrentError";
-    constexpr const char* INVERTER5_OVERCURRENT_ERROR = "Inverter5OvercurrentError";
-    constexpr const char* INVERTER6_OVERCURRENT_ERROR = "Inverter6OvercurrentError";
-    constexpr const char* DC_OVERVOLTAGE_ERROR = "DcOvervoltageError";
-    constexpr const char* DC_UNDERVOLTAGE_ERROR = "DcUndervoltageError";
-    constexpr const char* DOUBLE_CAN_ID_ON_BUS = "DoubleCanIdOnBus";
-    constexpr const char* CAN_COMMS_TIMEOUT_ERROR = "CanCommsTimeoutError";
-    constexpr const char* INVERTER1_FAULT_ERROR = "Inverter1FaultError";
-    constexpr const char* INVERTER2_FAULT_ERROR = "Inverter2FaultError";
-    constexpr const char* INVERTER3_FAULT_ERROR = "Inverter3FaultError";
-    constexpr const char* INVERTER4_FAULT_ERROR = "Inverter4FaultError";
-    constexpr const char* INVERTER5_FAULT_ERROR = "Inverter5FaultError";
-    constexpr const char* INVERTER6_FAULT_ERROR = "Inverter6FaultError";
-    constexpr const char* CAN_SEND_ERROR = "CanSendError";
-    constexpr const char* LOST_FRAMES_ON_CAN_BUS_ERROR = "LostFramesOnCanBusError";
-    constexpr const char* OVERSPEED_ERROR = "OverspeedError";
-    constexpr const char* CPU_OVERLOADED = "CpuOverload";
-    constexpr const char* MOTOR_ERRORS = "MotorErrors";
-    constexpr const char* MOTOR_WARNINGS = "MotorWarnings";
+    constexpr const char* HEATSINK_TEMPERATURE = "HeatsinkTemperature";
+    constexpr const char* DSP_BOARD_TEMPERATURE = "DspBoardTemperature";
+    constexpr const char* ODOMETER = "Odometer";
+    constexpr const char* DC_BUS_AH = "DC_Bus_Ah";
+    constexpr const char* SLIP_SPEED = "SlipSpeed";
 
     /**
      * B3 keys
      */
     constexpr const char* B3 = "B3";
-    constexpr const char* RIGHT_SIGNAL_IN = "RightSignalIn";
-    constexpr const char* LEFT_SIGNAL_IN = "LeftSignalIn";
-    constexpr const char* HAZARD_LIGHTS_IN = "HazardLightsIn";
-    constexpr const char* HEADLIGHTS_SWITCH_IN = "HeadightsSwitchIn";
-    constexpr const char* FORWARD_SWITCH_IN = "ForwardSwitchIn";
-    constexpr const char* HORN_SWITCH_IN = "HornSwitchIn";
-    constexpr const char* FORWARD_IN = "ForwardIn";
-    constexpr const char* NEUTRAL = "Neutral";
-    constexpr const char* REVERSE = "Reverse";
-    constexpr const char* BRAKE_SWITCH = "BrakeSwitch";
-    constexpr const char* HANDBRAKE_SWITCH = "HandbrakeSwitch";
-    constexpr const char* MOTOR_RESET = "MotorReset";
-    constexpr const char* RACE_MODE = "RaceMode";
-    constexpr const char* LAP = "Lap";
-    constexpr const char* ZOOM_ZOOM = "ZoomZoom";
+    constexpr const char* B3_HEARTBEAT = "B3Heartbeat";    
+    constexpr const char* RIGHT_SIGNAL_INPUT = "RightSignalInput";
+    constexpr const char* LEFT_SIGNAL_INPUT = "LeftSignalInput";
+    constexpr const char* HAZARD_LIGHTS_INPUT = "HazardLightsInput";
+    constexpr const char* HEADLIGHTS_SWITCH_INPUT = "HeadightsSwitchInput";
+    constexpr const char* FORWARD_SWITCH_DIGITAL = "ForwardSwitchDigital";
+    constexpr const char* HORN_SWITCH_DIGITAL = "HornSwitchDigital";
+    constexpr const char* FORWARD_DIGITAL = "ForwardDigital";
+    constexpr const char* NEUTRAL_DIGITAL = "NeutralDigital";
+    constexpr const char* REVERSE_DIGITAL = "ReverseDigital";
+    constexpr const char* BRAKE_SWITCH_DIGITAL = "BrakeSwitchDigital";
+    constexpr const char* HANDBRAKE_SWITCH_DIGITAL = "HandbrakeSwitchDigital";
+    constexpr const char* MOTOR_RESET_DIGITAL = "MotorResetDigital";    
+    constexpr const char* RACE_MODE_DIGITAL = "RaceModeDigital";
+    constexpr const char* LAP_DIGITAL = "LapDigital";
     constexpr const char* ACCELERATION = "Acceleration";
     constexpr const char* REGEN_BRAKING = "RegenBraking";
-    constexpr const char* RIGHT_SIGNAL_OUT = "RightSignalOut";
-    constexpr const char* LEFT_SIGNAL_OUT = "LeftSignalOut";
-    constexpr const char* DAYTIME_RUNNING_LIGHT_SIGNAL_OUT = "DaytimeRunningLightSignalOut";
-    constexpr const char* HEADLIGHT_SIGNAL_OUT = "HeadlightSignalOut";
-    constexpr const char* BRAKE_LIGHT_SIGNAL_OUT = "BrakeLightSignalOut";
-    constexpr const char* HORN_SIGNAL_OUT = "HornSignalOut";
+    constexpr const char* RIGHT_SIGNAL_STATUS = "RightSignalStatus";
+    constexpr const char* LEFT_SIGNAL_STATUS = "LeftSignalStatus";
+    constexpr const char* DAYTIME_RUNNING_LIGHT_SIGNAL_STATUS = "DaytimeRunningLightSignalStatus";
+    constexpr const char* HEADLIGHT_SIGNAL_STATUS = "HeadlightSignalStatus";
+    constexpr const char* BRAKE_LIGHT_SIGNAL_STATUS = "BrakeLightSignalStatus";
+    constexpr const char* HORN_SIGNAL_STATUS = "HornSignalStatus";
 
     /**
      * Telemetry keys
@@ -239,58 +181,109 @@ namespace JsonDefinitions {
     constexpr const char* BATTERY_CELL = "BatteryCell";
     constexpr const char* BATTERY_FAN = "BatteryFan";
     constexpr const char* BATTERY_PACK = "BatteryPack";
-    constexpr const char* BATTERY_TEMPERATURE = "BatteryTemperature";
+    constexpr const char* MAXIMUM_CELL_VOLTAGE = "MaximumCellVoltage";
+    constexpr const char* MINIMUM_CELL_VOLTAGE = "MinimumCellVoltage";
+    constexpr const char* MAXIMUM_PACK_VOLTAGE = "MaximumPackVoltage";
+    constexpr const char* MINIMUM_PACK_VOLTAGE = "MinimumPackVoltage";
 
     /**
      * Mppt keys
      */
     constexpr const char* MPPT = "MPPT";
-    constexpr const char* CHANNEL_NUMBER = "ChannelNumber";
-    constexpr const char* IS_ALIVE = "IsAlive";
-    constexpr const char* BATTERY_VOLTAGE = "BatteryVoltage";
-    constexpr const char* TEMPERATURE = "Temperature";
+    constexpr const char* MPPT0_CH0_ARRAY_VOLTAGE = "Mppt0Ch0ArrayVoltage";
+    constexpr const char* MPPT0_CH0_ARRAY_CURRENT = "Mppt0Ch0ArrayCurrent";
+    constexpr const char* MPPT0_CH0_BATTERY_VOLTAGE = "Mppt0Ch0BatteryVoltage";
+    constexpr const char* MPPT0_CH0_UNIT_TEMPERATURE = "Mppt0Ch0UnitTemperature";
+    constexpr const char* MPPT0_CH1_ARRAY_VOLTAGE = "Mppt0Ch1ArrayVoltage";
+    constexpr const char* MPPT0_CH1_ARRAY_CURRENT = "Mppt0Ch1ArrayCurrent";
+    constexpr const char* MPPT0_CH1_BATTERY_VOLTAGE = "Mppt0Ch1BatteryVoltage";
+    constexpr const char* MPPT0_CH1_UNIT_TEMPERATURE = "Mppt0Ch1UnitTemperature";
+    constexpr const char* MPPT1_CH0_ARRAY_VOLTAGE = "Mppt1Ch0ArrayVoltage";
+    constexpr const char* MPPT1_CH0_ARRAY_CURRENT = "Mppt1Ch0ArrayCurrent";
+    constexpr const char* MPPT1_CH0_BATTERY_VOLTAGE = "Mppt1Ch0BatteryVoltage";
+    constexpr const char* MPPT1_CH0_UNIT_TEMPERATURE = "Mppt1Ch0UnitTemperature";
+    constexpr const char* MPPT1_CH1_ARRAY_VOLTAGE = "Mppt1Ch1ArrayVoltage";
+    constexpr const char* MPPT1_CH1_ARRAY_CURRENT = "Mppt1Ch1ArrayCurrent";
+    constexpr const char* MPPT1_CH1_BATTERY_VOLTAGE = "Mppt1Ch1BatteryVoltage";
+    constexpr const char* MPPT1_CH1_UNIT_TEMPERATURE = "Mppt1Ch1UnitTemperature";
+    constexpr const char* MPPT2_CH0_ARRAY_VOLTAGE = "Mppt2Ch0ArrayVoltage";
+    constexpr const char* MPPT2_CH0_ARRAY_CURRENT = "Mppt2Ch0ArrayCurrent";
+    constexpr const char* MPPT2_CH0_BATTERY_VOLTAGE = "Mppt2Ch0BatteryVoltage";
+    constexpr const char* MPPT2_CH0_UNIT_TEMPERATURE = "Mppt2Ch0UnitTemperature";
+    constexpr const char* MPPT2_CH1_ARRAY_VOLTAGE = "Mppt2Ch1ArrayVoltage";
+    constexpr const char* MPPT2_CH1_ARRAY_CURRENT = "Mppt2Ch1ArrayCurrent";
+    constexpr const char* MPPT2_CH1_BATTERY_VOLTAGE = "Mppt2Ch1BatteryVoltage";
+    constexpr const char* MPPT2_CH1_UNIT_TEMPERATURE = "Mppt2Ch1UnitTemperature";
+    constexpr const char* MPPT3_CH0_ARRAY_VOLTAGE = "Mppt3Ch0ArrayVoltage";
+    constexpr const char* MPPT3_CH0_ARRAY_CURRENT = "Mppt3Ch0ArrayCurrent";
+    constexpr const char* MPPT3_CH0_BATTERY_VOLTAGE = "Mppt3Ch0BatteryVoltage";
+    constexpr const char* MPPT3_CH0_UNIT_TEMPERATURE = "Mppt3Ch0UnitTemperature";
+    constexpr const char* MPPT3_CH1_ARRAY_VOLTAGE = "Mppt3Ch1ArrayVoltage";
+    constexpr const char* MPPT3_CH1_ARRAY_CURRENT = "Mppt3Ch1ArrayCurrent";
+    constexpr const char* MPPT3_CH1_BATTERY_VOLTAGE = "Mppt3Ch1BatteryVoltage";
+    constexpr const char* MPPT3_CH1_UNIT_TEMPERATURE = "Mppt3Ch1UnitTemperature";
 
     /**
      * Mbms keys
      */
     constexpr const char* MBMS = "MBMS";
-    constexpr const char* COMMON_CONTACTOR_STATE = "CommonContactorState";
-    constexpr const char* MOTOR_CONTACTOR_STATE = "MotorContactorState";
-    constexpr const char* ARRAY_CONTACTOR_STATE = "ArrayContactorState";
-    constexpr const char* LV_CONTACTOR_STATE = "LvContactorState";
-    constexpr const char* CHARGE_CONTACTOR_STATE = "ChargeContactorState";
-    constexpr const char* COMMON_CONTACTOR_ERROR = "CommonContactorError";
-    constexpr const char* MOTOR_CONTACTOR_ERROR = "MotorContactorError";
-    constexpr const char* ARRAY_CONTACTOR_ERROR = "ArrayContactorError";
-    constexpr const char* LV_CONTACTOR_ERROR = "LvContactorError";
-    constexpr const char* CHARGE_CONTACTOR_ERROR = "ChargeContactorError";
+    constexpr const char* HEARTBEAT = "Heartbeat";
+    constexpr const char* COMMON_CONTACTOR_COMMAND = "CommonContactorCommand";
+    constexpr const char* MOTOR_CONTACTOR_COMMAND = "MotorContactorCommand";
+    constexpr const char* ARRAY_CONTACTOR_COMMAND = "ArrayContactorCommand";
+    constexpr const char* LV_CONTACTOR_COMMAND = "LvContactorCommand";
+    constexpr const char* CHARGE_CONTACTOR_COMMAND = "ChargeContactorCommand";
+    constexpr const char* AUXILIARY_BATTERY_VOLTAGE = "AuxiliaryBatteryVoltage";
     constexpr const char* STROBE_BMS_LIGHT = "StrobeBmsLight";
-    constexpr const char* ALLOW_CHARGE = "AllowCharge";
-    constexpr const char* HIGH_VOLTAGE_ENABLE_STATE = "HighVoltageEnableState";
-    constexpr const char* ALLOW_DISCHARGE = "AllowDischarge";
+    constexpr const char* CHARGE_ENABLE = "ChargeEnable";
+    constexpr const char* CHARGE_SAFETY = "ChargeSafety";
+    constexpr const char* DISCHARGE_ENABLE = "DischargeEnable";
     constexpr const char* ORION_CAN_RECEIVED_RECENTLY = "OrionCanReceivedRecently";
     constexpr const char* DISCHARGE_SHOULD_TRIP = "DischargeShouldTrip";
     constexpr const char* CHARGE_SHOULD_TRIP = "ChargeShouldTrip";
-    constexpr const char* AUXILLARY_BATTERY_VOLTAGE = "AuxillaryBatteryVoltage";
-    constexpr const char* MOTOR_VOLTAGE = "MotorVoltage";
-    constexpr const char* ARRAY_VOLTAGE = "ArrayVoltage";
-    constexpr const char* LV_VOLTAGE = "LvVoltage";
-    constexpr const char* CHARGE_VOLTAGE = "ChargeVoltage";
-    constexpr const char* COMMON_CURRENT = "CommonCurrent";
-    constexpr const char* MOTOR_CURRENT = "MotorCurrent";
-    constexpr const char* ARRAY_CURRENT = "ArrayCurrent";
-    constexpr const char* LV_CURRENT = "LvCurrent";
-    constexpr const char* CHARGE_CURRENT = "ChargeCurrent";
+    constexpr const char* STARTUP_STATE = "StartupState";
+    constexpr const char* SYSTEM_STATE = "SystemState";
+    constexpr const char* MAIN_POWER_SWITCH = "MainPowerSwitch";
+    constexpr const char* EXTERNAL_SHUTDOWN = "ExternalShutdown";
+    constexpr const char* EN1 = "En1";
+    constexpr const char* DCDC_FAULT = "DcdcFault";
+    constexpr const char* THREE_A_OC = "ThreeAOc";
+    constexpr const char* DCDC_ON = "DcdcOn";
+    constexpr const char* CHG_FAULT = "ChgFault";
+    constexpr const char* CHG_ON = "ChgOn";
+    constexpr const char* CHG_LV_EN = "ChgLvEn";
+    constexpr const char* ABATT_DISABLE = "AbattDisable";
+    constexpr const char* KEY = "Key";
     constexpr const char* HIGH_CELL_VOLTAGE_TRIP = "HighCellVoltageTrip";
     constexpr const char* LOW_CELL_VOLTAGE_TRIP = "LowCellVoltageTrip";
-    constexpr const char* HIGH_COMMON_CURRENT_TRIP = "HighCommonCurrentTrip";
-    constexpr const char* MOTOR_HIGH_TEMPERATURE_CURRENT_TRIP = "MotorHighTemperatureCurrentTrip";
-    constexpr const char* ARRAY_HIGH_TEMPERATURE_CURRENT_TRIP = "ArrayHighTemperatureCurrentTrip";
-    constexpr const char* LV_HIGH_TEMPERATURE_CURRENT_TRIP = "LvHighTemperatureCurrentTrip";
-    constexpr const char* CHARGE_HIGH_TEMPERATURE_CURRENT_TRIP = "ChargeHighTemperatureCurrentTrip";
+    constexpr const char* COMMON_HIGH_CURRENT_TRIP = "CommonHighCurrentTrip";
+    constexpr const char* MOTOR_HIGH_CURRENT_TRIP = "MotorHighCurrentTrip";
+    constexpr const char* ARRAY_HIGH_CURRENT_TRIP = "ArrayHighCurrentTrip";
+    constexpr const char* LV_HIGH_CURRENT_TRIP = "LvHighCurrentTrip";
+    constexpr const char* CHARGE_HIGH_CURRENT_TRIP = "ChargeHighCurrentTrip";
     constexpr const char* PROTECTION_TRIP = "ProtectionTrip";
     constexpr const char* ORION_MESSAGE_TIMEOUT_TRIP = "OrionMessageTimeoutTrip";
     constexpr const char* CONTACTOR_DISCONNECTED_UNEXPECTEDLY_TRIP = "ContactorDisconnectedUnexpectedlyTrip";
+    constexpr const char* CONTACTOR_CONNECTED_UNEXPECTEDLY_TRIP = "ContactorConnectedUnexpectedlyTrip";
+    constexpr const char* COMMON_HEARTBEAT_DEAD_TRIP = "CommonHeartbeatDeadTrip";
+    constexpr const char* MOTOR_HEARTBEAT_DEAD_TRIP = "MotorHeartbeatDeadTrip";
+    constexpr const char* ARRAY_HEARTBEAT_DEAD_TRIP = "ArrayHeartbeatDeadTrip";
+    constexpr const char* LV_HEARTBEAT_DEAD_TRIP = "LvHeartbeatDeadTrip";
+    constexpr const char* CHARGE_HEARTBEAT_DEAD_TRIP = "ChargeHeartbeatDeadTrip";
+    constexpr const char* MPS_DISABLED_TRIP = "MpsDisabledTrip";
+    constexpr const char* ESD_ENABLED_TRIP = "EsdEnabledTrip";
+    constexpr const char* HIGH_TEMPERATURE_TRIP = "HighTemperatureTrip";
+    constexpr const char* LOW_TEMPERATURE_TRIP = "LowTemperatureTrip";
+    constexpr const char* HIGH_CELL_VOLTAGE_WARNING = "HighCellVoltageWarning";
+    constexpr const char* LOW_CELL_VOLTAGE_WARNING = "LowCellVoltageWarning";
+    constexpr const char* COMMON_HIGH_CURRENT_WARNING = "CommonHighCurrentWarning";
+    constexpr const char* MOTOR_HIGH_CURRENT_WARNING = "MotorHighCurrentWarning";
+    constexpr const char* ARRAY_HIGH_CURRENT_WARNING = "ArrayHighCurrentWarning";
+    constexpr const char* LV_HIGH_CURRENT_WARNING = "LvHighCurrentWarning";
+    constexpr const char* CHARGE_HIGH_CURRENT_WARNING = "ChargeHighCurrentWarning";
+    constexpr const char* HIGH_TEMPERATURE_WARNING = "HighTemperatureWarning";
+    constexpr const char* LOW_TEMPERATURE_WARNING = "LowTemperatureWarning";
+    constexpr const char* CAN_OC_12V_WARNING = "CanOc12VWarning";
 
     /**
      * Proximity Sensor keys
@@ -307,6 +300,68 @@ namespace JsonDefinitions {
     constexpr const char* PI = "Pi";
     constexpr const char* RFID = "Rfid";
     constexpr const char* DRIVER_NAME = "DriverName";
+
+    /**
+     * Contactor Keys
+     */
+    constexpr const char* CONTACTOR = "Contactor";
+    constexpr const char* COMMON_HEARTBEAT = "CommonHeartbeat";
+    constexpr const char* MOTOR_HEARTBEAT = "MotorHeartbeat";
+    constexpr const char* ARRAY_HEARTBEAT = "ArrayHeartbeat";
+    constexpr const char* LV_HEARTBEAT = "LvHeartbeat";
+    constexpr const char* CHARGE_HEARTBEAT = "ChargeHeartbeat";
+
+    constexpr const char* COMMON_PRECHARGER_CLOSED = "CommonPrechargerClosed";
+    constexpr const char* COMMON_PRECHARGER_CLOSING = "CommonPrechargerClosing";
+    constexpr const char* COMMON_PRECHARGER_ERROR = "CommonPrechargerError";
+    constexpr const char* COMMON_CONTACTOR_CLOSED = "CommonContactorClosed";
+    constexpr const char* COMMON_CONTACTOR_CLOSING = "CommonContactorClosing";
+    constexpr const char* COMMON_CONTACTOR_ERROR = "CommonContactorError";
+    constexpr const char* COMMON_LINE_CURRENT = "CommonLineCurrent";
+    constexpr const char* COMMON_CHARGE_CURRENT = "CommonChargeCurrent";
+    constexpr const char* COMMON_CONTACTOR_OPENING_ERROR = "CommonContactorOpeningError";
+
+    constexpr const char* MOTOR_PRECHARGER_CLOSED = "MotorPrechargerClosed";
+    constexpr const char* MOTOR_PRECHARGER_CLOSING = "MotorPrechargerClosing";
+    constexpr const char* MOTOR_PRECHARGER_ERROR = "MotorPrechargerError";
+    constexpr const char* MOTOR_CONTACTOR_CLOSED = "MotorContactorClosed";
+    constexpr const char* MOTOR_CONTACTOR_CLOSING = "MotorContactorClosing";
+    constexpr const char* MOTOR_CONTACTOR_ERROR = "MotorContactorError";
+    constexpr const char* MOTOR_LINE_CURRENT = "MotorLineCurrent";
+    constexpr const char* MOTOR_CHARGE_CURRENT = "MotorChargeCurrent";
+    constexpr const char* MOTOR_BPS_ERROR = "MotorBPSError";
+
+    constexpr const char* ARRAY_PRECHARGER_CLOSED = "ArrayPrechargerClosed";
+    constexpr const char* ARRAY_PRECHARGER_CLOSING = "ArrayPrechargerClosing";
+    constexpr const char* ARRAY_PRECHARGER_ERROR = "ArrayPrechargerError";
+    constexpr const char* ARRAY_CONTACTOR_CLOSED = "ArrayContactorClosed";
+    constexpr const char* ARRAY_CONTACTOR_CLOSING = "ArrayContactorClosing";
+    constexpr const char* ARRAY_CONTACTOR_ERROR = "ArrayContactorError";
+    constexpr const char* ARRAY_LINE_CURRENT = "ArrayLineCurrent";
+    constexpr const char* ARRAY_CHARGE_CURRENT = "ArrayChargeCurrent";
+    constexpr const char* ARRAY_BPS_ERROR = "ArrayBPSError";
+
+    constexpr const char* LV_PRECHARGER_CLOSED = "LvPrechargerClosed";
+    constexpr const char* LV_PRECHARGER_CLOSING = "LvPrechargerClosing";
+    constexpr const char* LV_PRECHARGER_ERROR = "LvPrechargerError";
+    constexpr const char* LV_CONTACTOR_CLOSED = "LvContactorClosed";
+    constexpr const char* LV_CONTACTOR_CLOSING = "LvContactorClosing";
+    constexpr const char* LV_CONTACTOR_ERROR = "LvContactorError";
+    constexpr const char* LV_LINE_CURRENT = "LvLineCurrent";
+    constexpr const char* LV_CHARGE_CURRENT = "LvChargeCurrent";
+    constexpr const char* LV_BPS_ERROR = "LvBpsError";
+
+    constexpr const char* CHARGE_PRECHARGER_CLOSED = "ChargePrechargerClosed";
+    constexpr const char* CHARGE_PRECHARGER_CLOSING = "ChargePrechargerClosing";
+    constexpr const char* CHARGE_PRECHARGER_ERROR = "ChargePrechargerError";
+    constexpr const char* CHARGE_CONTACTOR_CLOSED = "ChargeContactorClosed";
+    constexpr const char* CHARGE_CONTACTOR_CLOSING = "ChargeContactorClosing";
+    constexpr const char* CHARGE_CONTACTOR_ERROR = "ChargeContactorError";
+    constexpr const char* CHARGE_LINE_CURRENT = "ChargeLineCurrent";
+    constexpr const char* CHARGE_CHARGE_CURRENT = "ChargeChargeCurrent";
+    constexpr const char* CHARGE_BPS_ERROR = "ChargeBPSError";
+
+    
 }
 
 #endif // JSONDEFINITIONS_H

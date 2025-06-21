@@ -6,8 +6,10 @@
 
 class BatteryFaultsPacket : public IPacket {
     Q_OBJECT
+
+    // DTC flags  
     DEFINE_PROPERTY(bool, InternalCommunicationFault)
-    DEFINE_PROPERTY(bool, InternalConverversionFault)
+    DEFINE_PROPERTY(bool, InternalConversionFault)
     DEFINE_PROPERTY(bool, WeakCellFault)
     DEFINE_PROPERTY(bool, LowCellVoltageFault)
     DEFINE_PROPERTY(bool, OpenWiringFault)
@@ -27,7 +29,8 @@ class BatteryFaultsPacket : public IPacket {
     DEFINE_PROPERTY(bool, InternalMemoryFault)
     DEFINE_PROPERTY(bool, InternalThermistorFault)
     DEFINE_PROPERTY(bool, InternalLogicFault)
-
+    
+    // Limit flags 
     DEFINE_PROPERTY(bool, DclReducedDueToLowSoc)
     DEFINE_PROPERTY(bool, DclReducedDueToHighCellResistance)
     DEFINE_PROPERTY(bool, DclReducedDueToTemperature)
@@ -47,6 +50,9 @@ public:
     BatteryFaultsPacket();
     void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
+
+protected:
+    void initializeIdActionMap() override;
 };
 
 #endif // BATTERYFAULTSPACKET_H

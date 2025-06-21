@@ -29,13 +29,11 @@ void MessageAggregator::createJsonMessage() {
     message[JsonDefinitions::MBMS] = packetFactory_->getMbmsPacket().toJson();
     message[JsonDefinitions::PROXIMITY_SENSORS] = packetFactory_->getProximitySensorsPacket().toJson();
     message[JsonDefinitions::PI] = packetFactory_->getPiPacket().toJson();
+    message[JsonDefinitions::CONTACTOR] = packetFactory_->getContactorPacket().toJson();
+    message[JsonDefinitions::MPPT] = packetFactory_->getMpptPacket().toJson();
 
     for(int i = 0; i < ConfigManager::instance().getNumberOfMotors(); i++) {
         message[JsonDefinitions::MOTOR_DETAILS + QString::number(i)] = packetFactory_->getMotorDetailsPacket(i).toJson();
-    }
-
-    for(int i = 0; i < ConfigManager::instance().getNumberOfMppts(); i++) {
-        message[JsonDefinitions::MPPT + QString::number(i)] = packetFactory_->getMpptPacket(i).toJson();
     }
 
     emit jsonPacketReady(QJsonDocument(message).toJson(QJsonDocument::Compact));

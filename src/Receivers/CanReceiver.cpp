@@ -51,15 +51,55 @@ void CanReceiver::handleReadyRead() {
         const int id = frame.frameId();
         const QByteArray payload = frame.payload();
 
-        //TODO: Add Remaining Packets
-        if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX){
+        // Handle all packet types based on their ID ranges
+        if(id >= PacketDefinitions::KEY_MOTOR_ID_MIN && id <= PacketDefinitions::KEY_MOTOR_ID_MAX) {
+            // Key Motor Data (0x550-0x555)
+            packetFactory_->getKeyMotorPacket().IPacket::populatePacket(id, payload);
+        }
+        else if(id >= PacketDefinitions::MOTOR_DETAILS_0_ID_MIN && id <= PacketDefinitions::MOTOR_DETAILS_0_ID_MAX) {
+            // Left Motor Details (0x400-0x417)
+            packetFactory_->getMotorDetailsPacket(0).IPacket::populatePacket(id, payload);  // Added index 0
+        }
+        else if(id >= PacketDefinitions::MOTOR_DETAILS_1_ID_MIN && id <= PacketDefinitions::MOTOR_DETAILS_1_ID_MAX) {
+            // Right Motor Details (0x420-0x437)
+            packetFactory_->getMotorDetailsPacket(1).IPacket::populatePacket(id, payload);  // Added index 1
+        }
+        else if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX) {
+            // Driver Controls & Power Board Data (0x610-0x620)
             packetFactory_->getB3Packet().IPacket::populatePacket(id, payload);
-        } else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX){
+        }
+        else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX) {
+            // Telemetry Data (0x630-0x635)
             packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);
-        } else if(id >= PacketDefinitions::PROXIMITY_SENSORS_ID_MIN && id <= PacketDefinitions::PROXIMITY_SENSORS_ID_MAX){
+        }
+        else if(id >= PacketDefinitions::BATTERY_FAULTS_ID_MIN && id <= PacketDefinitions::BATTERY_FAULTS_ID_MAX) {
+            // Battery Faults Data (0x303-0x304)
+            packetFactory_->getBatteryFaultsPacket().IPacket::populatePacket(id, payload);
+        }
+        else if((id >= PacketDefinitions::BATTERY_ID_MIN_0 && id <= PacketDefinitions::BATTERY_ID_MAX_0) ||
+                (id >= PacketDefinitions::BATTERY_ID_MIN_1 && id <= PacketDefinitions::BATTERY_ID_MAX_1)) {
+            // Battery Data (0x300-0x302 and 0x304-0x30A)
+            packetFactory_->getBatteryPacket().IPacket::populatePacket(id, payload);
+        }
+        else if(id >= PacketDefinitions::MPPT_ID_MIN && id <= PacketDefinitions::MPPT_ID_MAX) {
+            // MPPT Data (0x600-0x607)
+            packetFactory_->getMpptPacket().IPacket::populatePacket(id, payload);
+        }
+        else if(id >= PacketDefinitions::MBMS_ID_MIN && id <= PacketDefinitions::MBMS_ID_MAX) {
+            // MBMS Data (0x100-0x105)
+            packetFactory_->getMbmsPacket().IPacket::populatePacket(id, payload);
+        }
+        else if(id >= PacketDefinitions::PROXIMITY_SENSORS_ID_MIN && id <= PacketDefinitions::PROXIMITY_SENSORS_ID_MAX) {
+            // Proximity Sensors Data (0x700-0x703)
             packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
-        } else {
-            qWarning() << "UNKNOWN ID:" << frame.frameId() << "With payload:" << frame.payload();
+        }
+        else if(id >= PacketDefinitions::CONTACTOR_ID_MIN && id <= PacketDefinitions::CONTACTOR_ID_MAX) {
+            // Contactors Data (0x200-0x214)
+            packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
+        }
+        else {
+            qWarning() << "UNKNOWN ID: 0x" << QString::number(id, 16).toUpper() 
+                       << "With payload:" << payload.toHex();
         }
     }
 }
