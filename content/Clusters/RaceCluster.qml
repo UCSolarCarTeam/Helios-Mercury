@@ -26,7 +26,7 @@ Item {
         x: 608
         y: 15
         z: 1000
-        isOn: b3.RightSignalInput || b3.HazardLightsInput
+        isOn: b3.LeftSignalInput || b3.HazardLightsInput
         rotation: 180
     }
 
@@ -35,7 +35,7 @@ Item {
         x: 1278
         y: 15
         z: 1000
-        isOn: b3.LeftSignalInput || b3.HazardLightsInput
+        isOn: b3.RightSignalInput || b3.HazardLightsInput
     }
 
     RaceClusterIcons {
@@ -138,25 +138,25 @@ Item {
         }
     }
 
-    Text {
-        id: driverNameComponent
-        width: 350
-        height: Config.fontSize5
-        color: Config.fontColor 
-        text: "Driver Name: " + pi.DriverName 
-        wrapMode: Text.Wrap
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font {
-            pixelSize: Config.fontSize5
-            weight: Font.Medium
-            family: Config.fontStyle
-        }
-        anchors { 
-            horizontalCenter: raceCluster.horizontalCenter
-            horizontalCenterOffset: -450
-            bottom: raceCluster.bottom
-            bottomMargin: 55
-        }
-    }
+    // Text {
+    //     id: driverNameComponent
+    //     width: 350
+    //     height: Config.fontSize5
+    //     color: Config.fontColor
+    //     text: "Driver Name: " + pi.DriverName
+    //     wrapMode: Text.Wrap
+    //     verticalAlignment: Text.AlignVCenter
+    //     horizontalAlignment: Text.AlignHCenter
+    //     font {
+    //         pixelSize: Config.fontSize5
+    //         weight: Font.Medium
+    //         family: Config.fontStyle
+    //     }
+    //     anchors {
+    //         horizontalCenter: raceCluster.horizontalCenter
+    //         horizontalCenterOffset: -450
+    //         bottom: raceCluster.bottom
+    //         bottomMargin: 55
+    //     }
+    // }
 }
