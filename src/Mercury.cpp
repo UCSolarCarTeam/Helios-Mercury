@@ -49,7 +49,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("darkModeEnabled", config.getDarkMode());
 
     //initialize MessageTransmitter which will transmit data every period of time deinifed in config.ini
-    MessageTransmitter* messageTransmitter = new MessageTransmitter();
+    MessageTransmitter* messageTransmitter = new MessageTransmitter(&packetFactory->getPiPacket());
 
     //initialize MessageAggregator which will aggregate all packets into one json message and transmit
     MessageAggregator* messageAggregator = new MessageAggregator(messageTransmitter, packetFactory);

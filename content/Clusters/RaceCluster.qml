@@ -138,6 +138,16 @@ Item {
         }
     }
 
+    TelemetryIcon {
+        id: telemetryIcon
+        anchors {
+            left: contactorsComponent.right
+            leftMargin: 30
+            bottom: contactorsComponent.bottom
+            bottomMargin: 5
+        }
+    }
+
     // Text {
     //     id: driverNameComponent
     //     width: 350

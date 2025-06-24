@@ -1,6 +1,8 @@
 #ifndef MESSAGETRANSMITTER_H
 #define MESSAGETRANSMITTER_H
 
+#include "../PacketFactory/Packets/PiPacket.h"
+
 #include <QByteArray>
 #include <QMqttClient>
 #include <QObject>
@@ -8,7 +10,7 @@
 class MessageTransmitter : public QObject {
     Q_OBJECT
 public:
-    MessageTransmitter();
+    MessageTransmitter(PiPacket* piPacket);
 
     void setupTelemetryClient();
 
@@ -18,6 +20,8 @@ public slots:
 private:
     QMqttClient* telemetryClient_;
     QString telemetryTopic_;
+
+    PiPacket* piPacket_;
 };
 
 #endif // MESSAGETRANSMITTER_H
