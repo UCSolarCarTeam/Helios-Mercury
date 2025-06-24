@@ -48,6 +48,9 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     // makes boolean variable named darkModeEnabled available
     engine_.rootContext()->setContextProperty("darkModeEnabled", config.getDarkMode());
 
+    // makes boolean variable named isMetric available
+    engine_.rootContext()->setContextProperty("isMetric", config.getMetric());
+
     //initialize MessageTransmitter which will transmit data every period of time deinifed in config.ini
     MessageTransmitter* messageTransmitter = new MessageTransmitter(&packetFactory->getPiPacket());
 

@@ -12,9 +12,9 @@ Item {
 
     // gauge properties
     property int minValue: 0
-    property int maxValue: 160
-    property string units: "KM/H"
-    property int value: Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)
+    property int maxValue: isMetric ? 160 : 100
+    property string units: isMetric ? "KM/H" : "MPH"
+    property int value: isMetric ? Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)  : Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000 / 1.60934)
 
     // animation properties 
     property int animationDuration: 300
@@ -98,14 +98,14 @@ Item {
 
     property var numberPositions: [ //TODO: automate this so we do not need to manually place
         {x: 95, y: 341, value: "0"},
-        {x: 47, y: 249, value: "20"},
-        {x: 56, y: 147, value: "40"},
-        {x: 122, y: 69, value: "60"},
-        {x: 216, y: 39, value: "80"},
-        {x: 302, y: 69, value: "100"},
-        {x: 363, y: 147, value: "120"},
-        {x: 372, y: 249, value: "140"},
-        {x: 322, y: 341, value: "160"}
+        {x: 47, y: 249, value: isMetric ? "20" : "12"},
+        {x: 56, y: 147, value: isMetric ? "40" : "25"},
+        {x: 122, y: 69, value: isMetric ? "60" : "37"},
+        {x: 216, y: 39, value: isMetric ? "80" : "50"},
+        {x: 302, y: 69, value: isMetric ? "100" : "62"},
+        {x: 363, y: 147, value: isMetric? "120" : "75"},
+        {x: 372, y: 249, value: isMetric ? "140" : "87"},
+        {x: 322, y: 341, value: isMetric ? "160" : "100"}
     ]
 
     Component.onCompleted: {
