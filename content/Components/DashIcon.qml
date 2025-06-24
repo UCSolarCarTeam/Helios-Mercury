@@ -10,6 +10,7 @@ Item {
 
     property string imageSource: "" //IMPORTANT: Image must be solid white
     property color iconMaskColor
+    property alias sourceSize: staticImage.sourceSize
 
     Image {
         id: staticImage

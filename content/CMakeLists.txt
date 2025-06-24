@@ -37,6 +37,7 @@ qt6_add_qml_module(content
         Components/GaugeTemplate.qml
         Components/Backplate.qml
         Components/RpmGauge.qml
+        Components/TelemetryIcon.qml
     RESOURCES
         fonts/fonts.txt
         Images/MotorFault.png
@@ -65,4 +66,5 @@ qt6_add_qml_module(content
         Images/CarHorn.png
         Images/RotationIcon.png
         Images/DirectionIcon.png
+        Images/ConnectionIcon.png
 )

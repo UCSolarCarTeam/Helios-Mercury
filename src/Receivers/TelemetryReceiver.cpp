@@ -37,6 +37,7 @@ void TelemetryReceiver::setup() {
 
     QObject::connect(client_, &QMqttClient::disconnected, [this]() {
         qDebug() << "Connection to RECEIVER Service Failed - retrying in 5s...";
+        piPacket_->setLatency(-69);
         QTimer::singleShot(5000, [this]() {
             client_->connectToHost();
         });
@@ -95,7 +96,7 @@ void TelemetryReceiver::handleTelemetryMessage(const QByteArray& message) {
     if (jsonObj.contains("carLatency")) {
         if (jsonObj["carLatency"].isString()) {
             bool ok;
-            int carLatency = jsonObj["carLatency"].toString().toInt(&ok);
+            double carLatency = jsonObj["carLatency"].toString().toDouble(&ok);
             if (ok) {
                 piPacket_->setLatency(carLatency);
             } else {
