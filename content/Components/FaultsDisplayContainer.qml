@@ -13,32 +13,64 @@ Rectangle {
 
     // All possible faults: we'll listen to <fault>NameChanged signals on each source object
     property var faultsData: [
-        { fault: "InternalCommunicationFault", msg: "Battery Fault: Internal Communication", severity: "high", type: "batteryFaults" },
-        { fault: "InternalConverversionFault", msg: "Battery Fault: Internal Conversion", severity: "high", type: "batteryFaults" },
-        { fault: "WeakCellFault", msg: "Battery Fault: Weak Cell", severity: "high", type: "batteryFaults" },
-        { fault: "LowCellVoltageFault", msg: "Battery Fault: Low Cell Voltage", severity: "mid",  type: "batteryFaults" },
-        { fault: "OpenWiringFault", msg: "Battery Fault: Open Wiring", severity: "mid",  type: "batteryFaults" },
-        { fault: "CurrentSensorFault", msg: "Battery Fault: Current Sensor", severity: "mid", type: "batteryFaults" },
-        { fault: "PackVoltageSensorFault", msg: "Battery Fault: Pack Voltage Sensor", severity: "mid", type: "batteryFaults" },
-        { fault: "VoltageRedundancyFault", msg: "Battery Fault: Voltage Redundancy", severity: "low", type: "batteryFaults" },
-        { fault: "FanMonitorFault", msg: "Battery Fault: Fan Monitor", severity: "low", type: "batteryFaults" },
-        { fault: "ThermistorFault", msg: "Battery Fault: Thermistor", severity: "low", type: "batteryFaults" },
-        { fault: "CanbusCommunicationFault", msg: "Battery Fault: CANBUS Communications", severity: "low", type: "batteryFaults" },
-        { fault: "AlwaysOnSupplyFault", msg: "Battery Fault: Always On Supply", severity: "mid", type: "batteryFaults" },
-        { fault: "HighVoltageIsolationFault", msg: "Battery Fault: High Voltage Isolation", severity: "mid", type: "batteryFaults" },
-        { fault: "PowerSupply12VFault", msg: "Battery Fault: Power Supply 12V", severity: "mid", type: "batteryFaults" },
-        { fault: "ChargeLimitEnforcementFault",msg: "Battery Fault: Charge Limit Enforcement", severity: "low", type: "batteryFaults" },
-        { fault: "DischargeLimitEnforcementFault", msg: "Battery Fault: Discharge Limit Enforcement", severity: "mid", type: "batteryFaults" },
-        { fault: "ChargerSafetyRelayFault", msg: "Battery Fault: Charger Safety Relay", severity: "mid", type: "batteryFaults" },
-        { fault: "HighCellVoltageTrip", msg: "MBMS SAMPLE ERROR", severity: "mid", type: "mbms" }
+        { fault: "StrobeBmsLight", msg: "Strobe SOS", severity: "bps", type: "mbms"},
+        { fault: "ChargeEnable", msg: "OBMS Charge Disabled", severity: "warn", type: "mbms"},
+        { fault: "DischargeEnable", msg: "OBMS Discharge Disabled", severity: "warn", type: "mbms"},
+        { fault: "HighCellVoltageTrip", msg: "High Cell Voltage Trip", severity: "bps", type: "mbms"},
+        { fault: "LowCellVoltageTrip", msg: "Low Cell Voltage Trip", severity: "bps", type: "mbms"},
+        { fault: "CommonHighCurrentTrip", msg: "Common High Current Trip", severity: "bps", type: "mbms"},
+        { fault: "MotorHighCurrentTrip", msg: "Motor High Current Trip", severity: "bps", type: "mbms"},
+        { fault: "ArrayHighCurrentTrip", msg: "Array High Current Trip", severity: "bps", type: "mbms"},
+        { fault: "LvHighCurrentTrip", msg: "LV High Current Trip", severity: "bps", type: "mbms"},
+        { fault: "ChargeHighCurrentTrip", msg: "Charge High Current Trip", severity: "bps", type: "mbms"},
+        { fault: "ProtectionTrip", msg: "Protection Trip", severity: "bps", type: "mbms"},
+        { fault: "OrionMessageTimeoutTrip", msg: "Orion Message Timeout Trip", severity: "bps", type: "mbms"},
+        { fault: "ContactorDisconnectedUnexpectedlyTrip", msg: "Contactor Disconnected Unexpectedly Trip", severity: "bps", type: "mbms"},
+        { fault: "ContactorConnectedUnexpectedlyTrip", msg: "Contactor Connected Unexpectely Trip", severity: "bps", type: "mbms"},
+        { fault: "CommonHeartbeatDeadTrip", msg: "Common Heartbeat Dead Trip", severity: "bps", type: "mbms"},
+        { fault: "MotorHeartbeatDeadTrip", msg: "Motor Heartbeat Dead Trip", severity: "bps", type: "mbms"},
+        { fault: "ArrayHeartbeatDeadTrip", msg: "Array Heartbeat Dead Trip", severity: "bps", type: "mbms"},
+        { fault: "LvHeartbeatDeadTrip", msg: "LV Heartbeat Dead Trip", severity: "bps", type: "mbms"},
+        { fault: "ChargeHeartbeatDeadTrip", msg: "Charge Heartbeat Dead Trip", severity: "bps", type: "mbms"},
+        { fault: "MpsDisabledTrip", msg: "MPS Disabled Trip", severity: "warn", type: "mbms"},
+        { fault: "EsdEnabledTrip", msg: "ESD Enabled Trip", severity: "bps", type: "mbms"},
+        { fault: "HighTemperatureTrip", msg: "High Temperature Trip", severity: "bps", type: "mbms"},
+        { fault: "LowTemperatureTrip", msg: "Low Temperature Trip", severity: "bps", type: "mbms"},
+        { fault: "HighCellVoltageWarning", msg: "High Cell Voltage Warning", severity: "error", type: "mbms"},
+        { fault: "LowCellVoltageWarning", msg: "Low Cell Voltage Warning", severity: "error", type: "mbms"},
+        { fault: "CommonHighCurrentWarning", msg: "Common High Current Warning", severity: "error", type: "mbms"},
+        { fault: "MotorHighCurrentWarning", msg: "Motor High Current Warning", severity: "error", type: "mbms"},
+        { fault: "ArrayHighCurrentWarning", msg: "Array High Current Warning", severity: "error", type: "mbms"},
+        { fault: "LvHighCurrentWarning", msg: "LV High Current Warning", severity: "error", type: "mbms"},
+        { fault: "ChargeHighCurrentWarning", msg: "Charge HIgh Current Warning", severity: "error", type: "mbms"},
+        { fault: "HighTemperatureWarning", msg: "High Temperature Warning", severity: "error", type: "mbms"},
+        { fault: "LowTemperatureWarning", msg: "Low Temperature Warning", severity: "error", type: "mbms"},
+        { fault: "CommonContactorError", msg: "Common Contactor Failed to Close", severity: "error", type: "contactor"},
+        { fault: "CommonContactorOpeningError", msg: "Common Contactor Failed to Open", severity: "error", type: "contactor"},
+        { fault: "MotorContactorError", msg: "Motor Contactor Failed to Close", severity: "error", type: "contactor"},
+        { fault: "MotorBPSError", msg: "Motor Contactor Failed to Open", severity: "error", type: "contactor"},
+        { fault: "ArrayContactorError", msg: "Array Contactor Failed to Close", severity: "error", type: "contactor"},
+        { fault: "ArrayBPSError", msg: "Array Contactor Failed to Open", severity: "error", type: "contactor"},
+        { fault: "LvContactorError", msg: "LV Contactor Failed to Close", severity: "error", type: "contactor"},
+        { fault: "LvBpsError", msg: "LV Contactor Failed to Open", severity: "error", type: "contactor"},
+        { fault: "ChargeContactorError", msg: "Charge Contactor Failed to Close", severity: "error", type: "contactor"},
+        { fault: "ChargeBPSError", msg: "Charge Contactor Failed to Open", severity: "error", type: "contactor"},
+        { fault: "LimitFlags", msg: "Motor 0 Hardware Over Current", severity: "error", type: "motor0"},   
+        { fault: "ErrorFlags", msg: "Motor 0 Software Over Current", severity: "error", type: "motor0"}, 
+        { fault: "ActiveMotor", msg: "Motor 0 DC Bus Over Voltage", severity: "error", type: "motor0"}, 
+        { fault: "TxErrorCount", msg: "Bad Motor 0 Position Hall Sequence", severity: "error", type: "motor0"}, 
+        { fault: "LimitFlags", msg: "Motor 1 Hardware Over Current", severity: "error", type: "motor1"}, 
+        { fault: "ErrorFlags", msg: "Motor 1 Software Over Current", severity: "error", type: "motor1"}, 
+        { fault: "ActiveMotor", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motor1"},         
+        { fault: "TxErrorCount", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motor1"}              
     ]
-
     //TODO: add levels as needed
-    //TODO: completely replace low/mid/high with number values or enum
+    //TODO: completely replace info/warn/error with number values or enum
     property var severityRankings : {
-        "high": 0,
-        "mid": 1,
-        "low": 2
+        "error": 0,
+        "warn": 1,
+        "info": 2,
+        "bps": 3
     }
 
     // The model backing the ListView
@@ -135,8 +167,8 @@ Rectangle {
         radius: 8
         clip: true
 
-        color: displayedFault ? (displayedFault.severity === "high" ? "#FC1313"
-            : displayedFault.severity === "mid"  ? "#F6EC93"
+        color: displayedFault ? (displayedFault.severity === "error" ? "#FC1313"
+            : displayedFault.severity === "warn"  ? "#F6EC93"
             : "white")
             : "#666666"
 
@@ -161,7 +193,7 @@ Rectangle {
                 text: bannerText
                 font.pixelSize: 20
                 color: displayedFault
-                    ? (displayedFault.severity === "high" ? "white" : "black")
+                    ? (displayedFault.severity === "error" ? "white" : "black")
                     : "transparent"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment:   Text.AlignVCenter
