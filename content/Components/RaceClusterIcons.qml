@@ -20,13 +20,6 @@ Item {
         }
 
         DashIcon {
-            id: drlIcon
-            iconMaskColor: b3.DaytimeRunningLightSignalStatus ? Config.primary : Config.btnDisabled
-            imageSource: "../Images/DaytimeRunningLights.png"
-            Layout.alignment: Qt.AlignCenter
-        }
-
-        DashIcon {
             id: headlightsIcon
             iconMaskColor: b3.HeadlightsSwitchInput ? Config.primary : Config.btnDisabled
             imageSource: "../Images/Headlights.png"

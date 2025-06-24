@@ -35,9 +35,9 @@ Window {
         // When the Loader is completed, set up the connection.
         Component.onCompleted: {
             if (!rawMode) {
-                b3.onRaceModeChanged.connect(function() {
+                b3.onRaceModeDigitalChanged.connect(function() {
                     // Increment the screen counter
-                    if (b3.RaceMode) {
+                    if (b3.RaceModeDigital) {
                         clusterNum = (clusterNum + 1) % clusters.length;
                     }
                 });
