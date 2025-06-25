@@ -22,7 +22,7 @@ QtObject {
 
     // Wheel diameter in meters
     property double wheelDiameter: 0.50419
-    property double rpmValue: (motorDetails0.CurrentRpmValue + motorDetails1.CurrentRpmValue) / 2
+    property double rpmValue: (motorDetails0.MotorVelocity + motorDetails1.MotorVelocity) / 2
 
     // gauge sizes
     property int extraSmallGaugeSize: 120

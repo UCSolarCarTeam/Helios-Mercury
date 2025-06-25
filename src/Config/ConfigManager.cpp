@@ -78,6 +78,10 @@ ConfigManager::ConfigManager(const QString& path){
     settings.beginGroup("ColorMode");
     darkMode_ = settings.value("darkMode", true).toBool();
     settings.endGroup();
+
+    settings.beginGroup("Units");
+    metric_ = settings.value("metric", true).toBool();
+    settings.endGroup();
 }
 
 //Getters
@@ -122,3 +126,5 @@ int ConfigManager::getRfidPin0() const { return rfidPin0_; }
 int ConfigManager::getRfidPin1() const { return rfidPin1_; }
 
 bool ConfigManager::getDarkMode() const { return darkMode_; }
+
+bool ConfigManager::getMetric() const { return metric_; }

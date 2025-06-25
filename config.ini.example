@@ -37,3 +37,6 @@ rfidPin1=21
 
 [ColorMode]
 darkMode=false
+
+[Units]
+metric=false
