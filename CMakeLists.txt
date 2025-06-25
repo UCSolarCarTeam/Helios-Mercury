@@ -19,7 +19,7 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
 endif()
 
 # Pi Dependencies
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+if (CMAKE_SYSTEM_NAME STREQUAL "TODO" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
     add_definitions(-DRUNNING_ON_PI)
     list(APPEND ADDITIONAL_SOURCES
         src/Receivers/GpioReceiver.h src/Receivers/GpioReceiver.cpp
