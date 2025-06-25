@@ -39,4 +39,4 @@ rfidPin1=21
 darkMode=false
 
 [Units]
-metric = false
+metric=false
