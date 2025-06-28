@@ -199,7 +199,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: bannerText
-            font.pixelSize: Config.fontSize6
+            font.pixelSize: 24
             font.bold: true
             color: Config.fontColor
             horizontalAlignment: Text.AlignHCenter
@@ -239,7 +239,7 @@ Rectangle {
             Text {
                 anchors.centerIn: parent
                 text: bannerText
-                font.pixelSize: Config.fontSize5
+                font.pixelSize: 20
                 color: Config.fontColor 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
