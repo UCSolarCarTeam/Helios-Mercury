@@ -1,6 +1,7 @@
 // FaultsMessage.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import Mercury
 
 Rectangle {
     id: faultMessage
@@ -19,8 +20,9 @@ Rectangle {
                         : type === "mbms" ? "../Images/MotorFault.png"
                         : "" //TODO: add other icons and default icon
 
-    property color backgroundColor: severity === "error" ? "#FC1313"
-                                  : severity === "warn" ? "#F6EC93"
+    property color backgroundColor: severity === "error" ? Config.valueHigh
+                                  : severity === "warn" ? Config.valueModerate
+                                  : severity === "info" ? Config.valueLow
                                   : "white"
     color: backgroundColor
 
@@ -34,13 +36,13 @@ Rectangle {
             width: icon ? 25 : 0
             height: icon ? 25 : 0
             imageSource: icon
-            iconMaskColor: "black"
+            iconMaskColor: Config.fontColor
         }
 
         Text {
             text: msg
             font.pixelSize: 15
-            color: "black"
+            color: Config.fontColor
             verticalAlignment: Text.AlignVCenter
         }
     }
