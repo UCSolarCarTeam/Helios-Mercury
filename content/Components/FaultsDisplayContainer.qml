@@ -8,10 +8,8 @@ Rectangle {
     height: 175
     color: "transparent"
 
-    // Height for each fault row
     property int delegateHeight: 33
 
-    // All possible faults: we'll listen to <fault>NameChanged signals on each source object
     property var faultsData: [
         { fault: "StrobeBmsLight", msg: "Strobe SOS", severity: "bps", type: "mbms"},
         { fault: "ChargeEnable", msg: "OBMS Charge Disabled", severity: "warn", type: "mbms"},
@@ -64,28 +62,31 @@ Rectangle {
         { fault: "ActiveMotor", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motor1"},         
         { fault: "TxErrorCount", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motor1"}              
     ]
-    //TODO: add levels as needed
-    //TODO: completely replace info/warn/error with number values or enum
+    
     property var severityRankings : {
-        "error": 0,
+        "info": 0,
         "warn": 1,
-        "info": 2,
+        "error": 2,
         "bps": 3
     }
 
-    // The model backing the ListView
     ListModel { id: activeModel }
 
-    // Queue + banner state
     property var pendingFaults: []
     property var displayedFault: null
     property string bannerText: ""
+    property bool showingBpsFault: false 
 
     function showNextBanner() {
         if (pendingFaults.length > 0) {
             displayedFault = pendingFaults.shift()
             bannerText = displayedFault.msg
-            bannerTimer.restart()
+            
+            if (displayedFault.severity === "bps") {
+                showingBpsFault = true
+            } else {
+                bannerTimer.restart()
+            }
         }
     }
 
@@ -95,59 +96,84 @@ Rectangle {
         repeat: false
         onTriggered: {
             if (displayedFault) {
-                var placementIndex = 0;
-                var severityRank = severityRankings[displayedFault.severity];
-
-                // Sort in the new fault in the correct place based on severity
-                while(placementIndex < activeModel.count){
-                    const currentRank = severityRankings[activeModel.get(placementIndex).severity];
-                    if(currentRank > severityRank) break;
-                    placementIndex++;
+                if (displayedFault.severity !== "bps") {
+                    var placementIndex = 0;
+                    var severityRank = severityRankings[displayedFault.severity];
+                    
+                    while(placementIndex < activeModel.count){
+                        const currentRank = severityRankings[activeModel.get(placementIndex).severity];
+                        if(currentRank > severityRank) break;
+                        placementIndex++;
+                    }
+                    
+                    activeModel.insert(placementIndex, displayedFault);
                 }
-
-                activeModel.insert(placementIndex, displayedFault);
-
+                
                 displayedFault = null;
+                showingBpsFault = false;
             }
             Qt.callLater(showNextBanner)
         }
     }
 
-    /*
-        Handle the toggling of each defined fault
-        - If the fault is active, add it to the pendingFaults and show the next banner
-        - If the fault is inactive, remove it from pendingFaults and activeModel
-    */
     function onFaultChanged(fault, isActive) {
         if (isActive) {
-            pendingFaults.push(fault)
-            if (!displayedFault) showNextBanner()
+            if (fault.severity === "bps") {
+                if (displayedFault) {
+                    pendingFaults.push(displayedFault)
+                }
+                displayedFault = fault;
+                bannerText = fault.msg;
+                showingBpsFault = true;
+            } else {
+                if (showingBpsFault) {
+                    var index = 0;
+                    var rank = severityRankings[fault.severity];
+                    while(index < activeModel.count){
+                        const current = severityRankings[activeModel.get(index).severity];
+                        if(current > rank) break;
+                        index++;
+                    }
+                    activeModel.insert(index, fault);
+                } else {
+                    pendingFaults.push(fault);
+                    if (!displayedFault) showNextBanner();
+                }
+            }
         } else {
-            // remove from queue
-            pendingFaults = pendingFaults.filter(function(pendingFault) {
-                return pendingFault.fault !== fault.fault;
-            });
+            pendingFaults = pendingFaults.filter(pendingFault => 
+                pendingFault.fault !== fault.fault
+            );
 
-            // cancel banner if showing
-            if (displayedFault?.fault === fault.fault) displayedFault = null
+            if (fault.severity === "bps") {
+                if (displayedFault?.fault === fault.fault) {
+                    displayedFault = null;
+                    showingBpsFault = false;
+                    Qt.callLater(showNextBanner);
+                }
+            } else {
+                if (displayedFault?.fault === fault.fault) {
+                    displayedFault = null;
+                }
+            }
 
-            // remove from list
             for (var i = 0; i < activeModel.count; ++i) {
                 if (activeModel.get(i).fault === fault.fault) {
-                    activeModel.remove(i)
-                    break
+                    activeModel.remove(i);
+                    break;
                 }
             }
         }
     }
 
-    // Wire up each fault’s Changed signal to onFaultChanged() on complete
     Component.onCompleted: {
         for(let fault of faultsData){
             let sourceContext = null;
 
             if(fault.type === "batteryFaults") sourceContext = batteryFaults;
             else if (fault.type === "mbms") sourceContext = mbms;
+            else if (fault.type === "motorDetails0") sourceContext = motorDetails0;
+            else if (fault.type === "motorDetails1") sourceContext = motorDetails1;
 
             sourceContext["on" + fault.fault + "Changed"].connect(function(){
                 onFaultChanged(fault, sourceContext[fault.fault]);
@@ -155,7 +181,6 @@ Rectangle {
         }
     }
 
-    // Collapsible banner
     Rectangle {
         id: bannerArea
         anchors { 
@@ -167,43 +192,53 @@ Rectangle {
         radius: 8
         clip: true
 
-        color: displayedFault ? (displayedFault.severity === "error" ? "#FC1313"
-            : displayedFault.severity === "warn"  ? "#F6EC93"
-            : "white")
-            : "#666666"
+        color: displayedFault ? (displayedFault.severity === "bps" ? "#FF0000" :
+               displayedFault.severity === "error" ? "#FC1313" :
+               displayedFault.severity === "warn"  ? "#F6EC93" :
+               "white") : "#666666"
+
+        SequentialAnimation on opacity {
+            running: showingBpsFault
+            loops: Animation.Infinite
+            NumberAnimation { to: 0.8; duration: 800; easing.type: Easing.InOutQuad }
+            NumberAnimation { to: 1.0; duration: 800; easing.type: Easing.InOutQuad }
+        }
 
         Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
-        Row {
+        Item {
             anchors.fill: parent
             anchors.margins: 12
-            spacing: 8
 
             opacity: displayedFault ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
             SequentialAnimation on scale {
                 loops: Animation.Infinite
-                running: displayedFault 
+                running: displayedFault && displayedFault.severity === "bps"
                 NumberAnimation { from: 1.0;  to: 1.05; duration: 600; easing.type: Easing.InOutQuad }
                 NumberAnimation { from: 1.05; to: 1.0;  duration: 600; easing.type: Easing.InOutQuad }
             }
 
             Text {
+                anchors.centerIn: parent
                 text: bannerText
                 font.pixelSize: 20
+                font.bold: displayedFault && displayedFault.severity === "bps"
                 color: displayedFault
-                    ? (displayedFault.severity === "error" ? "white" : "black")
+                    ? (displayedFault.severity === "bps" ? "white" : 
+                      (displayedFault.severity === "error" ? "white" : "black"))
                     : "transparent"
                 horizontalAlignment: Text.AlignHCenter
-                verticalAlignment:   Text.AlignVCenter
+                verticalAlignment: Text.AlignVCenter
                 width: parent.width
-                height: parent.height
+                wrapMode: Text.WordWrap
+                maximumLineCount: 2
+                elide: Text.ElideRight
             }
         }
     }
 
-    // Auto-scrolling ListView
     ListView {
         id: listView
         anchors { 
@@ -223,7 +258,6 @@ Rectangle {
             interval: 2000
             repeat: true
 
-            // timer only runs when there’s more faults than will fit on screen
             running: activeModel.count > faultsOnView
             property int faultsOnView: Math.floor(faultsDisplayContainer.height / delegateHeight)
             onTriggered: {

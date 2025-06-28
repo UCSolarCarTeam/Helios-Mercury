@@ -8,6 +8,7 @@ Rectangle {
     height: 33
     radius: 8
     border.color: "black"
+    border.width: 1
 
     property string type
     property string msg
@@ -18,8 +19,8 @@ Rectangle {
                         : type === "mbms" ? "../Images/MotorFault.png"
                         : "" //TODO: add other icons and default icon
 
-    property color backgroundColor: severity === "high" ? "#FC1313"
-                                  : severity === "mid" ? "#F6EC93"
+    property color backgroundColor: severity === "error" ? "#FC1313"
+                                  : severity === "warn" ? "#F6EC93"
                                   : "white"
     color: backgroundColor
 
