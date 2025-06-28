@@ -54,14 +54,14 @@ Rectangle {
         { fault: "LvBpsError", msg: "LV Contactor Failed to Open", severity: "error", type: "contactor"},
         { fault: "ChargeContactorError", msg: "Charge Contactor Failed to Close", severity: "error", type: "contactor"},
         { fault: "ChargeBPSError", msg: "Charge Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "LimitFlags", msg: "Motor 0 Hardware Over Current", severity: "error", type: "motorDetails0"},   
-        { fault: "ErrorFlags", msg: "Motor 0 Software Over Current", severity: "error", type: "motorDetails0"}, 
-        { fault: "ActiveMotor", msg: "Motor 0 DC Bus Over Voltage", severity: "error", type: "motorDetails0"}, 
-        { fault: "TxErrorCount", msg: "Bad Motor 0 Position Hall Sequence", severity: "error", type: "motorDetails0"}, 
-        { fault: "LimitFlags", msg: "Motor 1 Hardware Over Current", severity: "error", type: "motorDetails1"}, 
-        { fault: "ErrorFlags", msg: "Motor 1 Software Over Current", severity: "error", type: "motorDetails1"}, 
-        { fault: "ActiveMotor", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motorDetails1"},         
-        { fault: "TxErrorCount", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motorDetails1"}              
+        { fault: "ErrorFlags", msg: "Motor 0 Hardware Over Current", severity: "error", type: "motorDetails0", bit: 0},   
+        { fault: "ErrorFlags", msg: "Motor 0 Software Over Current", severity: "error", type: "motorDetails0", bit: 1}, 
+        { fault: "ErrorFlags", msg: "Motor 0 DC Bus Over Voltage", severity: "error", type: "motorDetails0", bit: 2}, 
+        { fault: "ErrorFlags", msg: "Bad Motor 0 Position Hall Sequence", severity: "error", type: "motorDetails0", bit: 3}, 
+        { fault: "ErrorFlags", msg: "Motor 1 Hardware Over Current", severity: "error", type: "motorDetails1", bit: 0}, 
+        { fault: "ErrorFlags", msg: "Motor 1 Software Over Current", severity: "error", type: "motorDetails1", bit: 1}, 
+        { fault: "ErrorFlags", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motorDetails1", bit: 2},         
+        { fault: "ErrorFlags", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motorDetails1", bit: 3}              
     ]
     
     property var severityRankings : {
@@ -114,7 +114,7 @@ Rectangle {
                     activeModel.insert(placementIndex, displayedFault);
                     
                     displayedFault = null;
-
+                    
                     if (!showingBpsFault) {
                         Qt.callLater(showNextBanner)
                     }
@@ -189,9 +189,17 @@ Rectangle {
             else if (fault.type === "motorDetails1") sourceContext = motorDetails1;
             else if (fault.type === "contactor") sourceContext = contactor;
 
-            sourceContext["on" + fault.fault + "Changed"].connect(function(){
-                onFaultChanged(fault, sourceContext[fault.fault]);
-            });
+            if (fault.bit !== undefined) {
+                sourceContext["on" + fault.fault + "Changed"].connect(function(){
+                    const errorFlags = sourceContext[fault.fault];
+                    const bitActive = (errorFlags & (1 << fault.bit)) !== 0;
+                    onFaultChanged(fault, bitActive);
+                });
+            } else {
+                sourceContext["on" + fault.fault + "Changed"].connect(function(){
+                    onFaultChanged(fault, sourceContext[fault.fault]);
+                });
+            }
         }
     }
 
