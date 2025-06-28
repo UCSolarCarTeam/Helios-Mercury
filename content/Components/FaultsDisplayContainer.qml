@@ -53,14 +53,14 @@ Rectangle {
         { fault: "LvBpsError", msg: "LV Contactor Failed to Open", severity: "error", type: "contactor"},
         { fault: "ChargeContactorError", msg: "Charge Contactor Failed to Close", severity: "error", type: "contactor"},
         { fault: "ChargeBPSError", msg: "Charge Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "LimitFlags", msg: "Motor 0 Hardware Over Current", severity: "error", type: "motor0"},   
-        { fault: "ErrorFlags", msg: "Motor 0 Software Over Current", severity: "error", type: "motor0"}, 
-        { fault: "ActiveMotor", msg: "Motor 0 DC Bus Over Voltage", severity: "error", type: "motor0"}, 
-        { fault: "TxErrorCount", msg: "Bad Motor 0 Position Hall Sequence", severity: "error", type: "motor0"}, 
-        { fault: "LimitFlags", msg: "Motor 1 Hardware Over Current", severity: "error", type: "motor1"}, 
-        { fault: "ErrorFlags", msg: "Motor 1 Software Over Current", severity: "error", type: "motor1"}, 
-        { fault: "ActiveMotor", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motor1"},         
-        { fault: "TxErrorCount", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motor1"}              
+        { fault: "LimitFlags", msg: "Motor 0 Hardware Over Current", severity: "error", type: "motorDetails0"},   
+        { fault: "ErrorFlags", msg: "Motor 0 Software Over Current", severity: "error", type: "motorDetails0"}, 
+        { fault: "ActiveMotor", msg: "Motor 0 DC Bus Over Voltage", severity: "error", type: "motorDetails0"}, 
+        { fault: "TxErrorCount", msg: "Bad Motor 0 Position Hall Sequence", severity: "error", type: "motorDetails0"}, 
+        { fault: "LimitFlags", msg: "Motor 1 Hardware Over Current", severity: "error", type: "motorDetails1"}, 
+        { fault: "ErrorFlags", msg: "Motor 1 Software Over Current", severity: "error", type: "motorDetails1"}, 
+        { fault: "ActiveMotor", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motorDetails1"},         
+        { fault: "TxErrorCount", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motorDetails1"}              
     ]
     
     property var severityRankings : {
