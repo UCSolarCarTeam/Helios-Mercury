@@ -182,27 +182,50 @@ Rectangle {
     }
 
     Rectangle {
+        id: bpsFullScreen
+        anchors.fill: parent
+        color: "red"
+        visible: displayedFault && displayedFault.severity === "bps"
+        radius: 8
+        z: 10 
+        
+        SequentialAnimation on scale {
+            running: true
+            loops: Animation.Infinite
+            NumberAnimation { from: 0.8; to: 1.1; duration: 800; easing.type: Easing.InOutQuad }
+            NumberAnimation { from: 1.1; to: 0.8; duration: 800; easing.type: Easing.InOutQuad }
+        }
+
+        Text {
+            anchors.centerIn: parent
+            text: bannerText
+            font.pixelSize: Config.fontSize6
+            font.bold: true
+            color: Config.fontColor
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            width: parent.width - 40
+            wrapMode: Text.WordWrap
+            maximumLineCount: 3
+            elide: Text.ElideRight
+        }
+    }
+
+    Rectangle {
         id: bannerArea
         anchors { 
             top: parent.top; 
             left: parent.left; 
             right: parent.right 
         }
-        height: displayedFault ? 60 : 0
+        height: (displayedFault && displayedFault.severity !== "bps") ? 60 : 0
         radius: 8
         clip: true
+        z: 5
 
-        color: displayedFault ? (displayedFault.severity === "bps" ? "#FF0000" :
-               displayedFault.severity === "error" ? "#FC1313" :
-               displayedFault.severity === "warn"  ? "#F6EC93" :
-               "white") : "#666666"
-
-        SequentialAnimation on opacity {
-            running: showingBpsFault
-            loops: Animation.Infinite
-            NumberAnimation { to: 0.8; duration: 800; easing.type: Easing.InOutQuad }
-            NumberAnimation { to: 1.0; duration: 800; easing.type: Easing.InOutQuad }
-        }
+        color: displayedFault ? (displayedFault.severity === "error" ? "#FF0000" :
+               displayedFault.severity === "warn"  ? "#FC1313" :
+               Config.fontColor) : Config.faintGrey
 
         Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
@@ -213,22 +236,11 @@ Rectangle {
             opacity: displayedFault ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
-            SequentialAnimation on scale {
-                loops: Animation.Infinite
-                running: displayedFault && displayedFault.severity === "bps"
-                NumberAnimation { from: 1.0;  to: 1.05; duration: 600; easing.type: Easing.InOutQuad }
-                NumberAnimation { from: 1.05; to: 1.0;  duration: 600; easing.type: Easing.InOutQuad }
-            }
-
             Text {
                 anchors.centerIn: parent
                 text: bannerText
-                font.pixelSize: 20
-                font.bold: displayedFault && displayedFault.severity === "bps"
-                color: displayedFault
-                    ? (displayedFault.severity === "bps" ? "white" : 
-                      (displayedFault.severity === "error" ? "white" : "black"))
-                    : "transparent"
+                font.pixelSize: Config.fontSize5
+                color: Config.fontColor 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 width: parent.width
@@ -250,6 +262,7 @@ Rectangle {
         model: activeModel
         interactive: false
         clip: true
+        visible: !(displayedFault && displayedFault.severity === "bps")
 
         Behavior on contentY { NumberAnimation { duration: 2000; easing.type: Easing.Linear } }
 
