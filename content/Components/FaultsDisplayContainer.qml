@@ -79,6 +79,10 @@ Rectangle {
     property bool showingBpsFault: false 
 
     function showNextBanner() {
+        if (showingBpsFault) {
+            return;
+        }
+        
         if (pendingFaults.length > 0) {
             displayedFault = pendingFaults.shift()
             bannerText = displayedFault.msg
@@ -108,29 +112,29 @@ Rectangle {
                     }
                     
                     activeModel.insert(placementIndex, displayedFault);
+                    
+                    displayedFault = null;
+
+                    if (!showingBpsFault) {
+                        Qt.callLater(showNextBanner)
+                    }
                 }
-                
-                displayedFault = null;
-                showingBpsFault = false;
             }
-            Qt.callLater(showNextBanner)
         }
     }
 
     function onFaultChanged(fault, isActive) {
         if (isActive) {
             if (fault.severity === "bps") {
-                if (displayedFault) {
-                    pendingFaults.push(displayedFault)
+                if (displayedFault && displayedFault.severity !== "bps") {
+                    pendingFaults.unshift(displayedFault) 
                 }
-                displayedFault = null;
-                showingBpsFault = false;
-
-                pendingFaults = [];
-
+                
                 displayedFault = fault;
                 bannerText = fault.msg;
                 showingBpsFault = true;
+                
+                bannerTimer.stop();
             } else {
                 if (showingBpsFault) {
                     var index = 0;
@@ -160,6 +164,9 @@ Rectangle {
             } else {
                 if (displayedFault?.fault === fault.fault) {
                     displayedFault = null;
+                    if (!showingBpsFault) {
+                        Qt.callLater(showNextBanner);
+                    }
                 }
             }
 
@@ -303,62 +310,6 @@ Rectangle {
         remove: Transition {
             NumberAnimation { property: "x"; to: width; duration: 300; easing.type: Easing.InQuad }
             NumberAnimation { property: "opacity"; to: 0; duration: 300 }
-        }
-    }
-
-    Column {
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 5
-        visible: true // Set to false in production
-        z: 20 // Ensure buttons are always visible
-
-            Row {
-            spacing: 5
-            Button {
-                text: "Trigger BPS Fault"
-                onClicked: onFaultChanged({fault: "TestBPS", msg: "TEST BPS Fault", severity: "bps", type: "mbms"}, true)
-            }
-            Button {
-                text: "Clear BPS Fault"
-                onClicked: onFaultChanged({fault: "TestBPS", msg: "TEST BPS Fault", severity: "bps", type: "mbms"}, false)
-            }
-        }
-        
-        Row {
-            spacing: 5
-            Button {
-                text: "Trigger Error"
-                onClicked: onFaultChanged({fault: "TestError", msg: "TEST Error", severity: "error", type: "mbms"}, true)
-            }
-            Button {
-                text: "Clear Error"
-                onClicked: onFaultChanged({fault: "TestError", msg: "TEST Error", severity: "error", type: "mbms"}, false)
-            }
-        }
-        
-        Row {
-            spacing: 5
-            Button {
-                text: "Trigger Warning"
-                onClicked: onFaultChanged({fault: "TestWarn", msg: "TEST Warning", severity: "warn", type: "mbms"}, true)
-            }
-            Button {
-                text: "Clear Warning"
-                onClicked: onFaultChanged({fault: "TestWarn", msg: "TEST Warning", severity: "warn", type: "mbms"}, false)
-            }
-        }
-
-        Row {
-            spacing: 5
-            Button {
-                text: "Trigger Info"
-                onClicked: onFaultChanged({fault: "TestInfo", msg: "TEST Info", severity: "info", type: "mbms"}, true)
-            }
-            Button {
-                text: "Clear Info"
-                onClicked: onFaultChanged({fault: "TestInfo", msg: "TEST Info", severity: "info", type: "mbms"}, false)
-            }
         }
     }
 }
