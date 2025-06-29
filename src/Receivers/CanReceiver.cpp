@@ -95,7 +95,7 @@ void CanReceiver::handleReadyRead() {
         }
         else if(id >= PacketDefinitions::CONTACTOR_ID_MIN && id <= PacketDefinitions::CONTACTOR_ID_MAX) {
             // Contactors Data (0x200-0x214)
-            packetFactory_->getProximitySensorsPacket().IPacket::populatePacket(id, payload);
+            packetFactory_->getContactorPacket().IPacket::populatePacket(id, payload);
         }
         else {
             qWarning() << "UNKNOWN ID: 0x" << QString::number(id, 16).toUpper() 
