@@ -13,6 +13,12 @@ Item {
         radius: 16
         color: Config.btnDisabled
 
+        transform:  Rotation { // TEMP FIX - find more elegant solution
+            origin.x: width / 2
+            axis { x: 0; y: 1; z: 0 }
+            angle: 180
+        }
+
         MediaDevices {
             id: mediaDevices
             onVideoInputsChanged: {
