@@ -113,7 +113,7 @@ Item {
         minValue: 0
         maxValue: 100
         gaugeTitle: "Pack Voltage"
-        units: "mV"
+        units: "V"
         value: battery.PackVoltage / 10
     }
 

@@ -15,11 +15,11 @@ Item {
         
         Repeater {
             model: [
-                { name: "CMN", isConnected: ! mbms.CommonContactorClosed, hasError: mbms.CommonContactorError },
-                { name: "MOTOR", isConnected: ! mbms.MotorContactorClosed, hasError: mbms.MotorContactorError },
-                { name: "ARRAY", isConnected: ! mbms.ArrayContactorClosed, hasError: mbms.ArrayContactorError },
-                { name: "CHARGE", isConnected: ! mbms.ChargeContactorCLosed, hasError: mbms.ChargeContactorError }, 
-                { name: "LV", isConnected: ! mbms.LvContactorCLosed, hasError: mbms.LvContactorError }
+                { name: "CMN", isConnected: ! contactor.CommonContactorClosed, hasError: contactor.CommonContactorError },
+                { name: "MOTOR", isConnected: ! contactor.MotorContactorClosed, hasError: contactor.MotorContactorError },
+                { name: "ARRAY", isConnected: ! contactor.ArrayContactorClosed, hasError: contactor.ArrayContactorError },
+                { name: "CHARGE", isConnected: ! contactor.ChargeContactorClosed, hasError: contactor.ChargeContactorError }, 
+                { name: "LV", isConnected: ! contactor.LvContactorClosed, hasError: contactor.LvContactorError }
             ]
             
             delegate: Item {
