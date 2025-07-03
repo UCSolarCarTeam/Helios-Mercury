@@ -72,7 +72,7 @@ void CanReceiver::handleReadyRead() {
             // Telemetry Data (0x630-0x635)
             packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);
         }
-        else if(id >= PacketDefinitions::BATTERY_FAULTS_ID_MIN && id <= PacketDefinitions::BATTERY_FAULTS_ID_MAX) {
+        else if(id == PacketDefinitions::BATTERY_FAULTS_ID_MIN) {
             // Battery Faults Data (0x303-0x304)
             packetFactory_->getBatteryFaultsPacket().IPacket::populatePacket(id, payload);
         }
