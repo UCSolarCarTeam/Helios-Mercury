@@ -1,10 +1,8 @@
 #include "Mercury.h"
 #include "Config/ConfigManager.h"
 #include "PacketFactory/PacketFactory.h"
-#include "Receivers/SerialReceiver.h"
 #include "Receivers/CanReceiver.h"
 #include "Receivers/TelemetryReceiver.h"
-#include "StreamProcessor/StreamProcessor.h"
 #include "MessageTransmitter/MessageTransmitter.h"
 #include "MessageAggregator/MessageAggregator.h"
 
@@ -32,18 +30,9 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver(&packetFactory->getPiPacket());
 
-    //Initialize either the can or serial receiver depending on mode of input
-    if(config.getCanEnabled()){
-        //initialize CanReceiver which will begin to listen to CAN interface for incoming data
-        CanReceiver* canReceiver = new CanReceiver(packetFactory);
-        //TODO: link packets to CanReceiver so they can be populated
-    }else{
-        //initialize SerialReceiver which will begin to listen to serial port for incoming data
-        SerialReceiver* serialReceiver = new SerialReceiver();
-
-        //initialize StreamProcessor which will process incoming data via signal/slot connected to serialReceiver
-        StreamProcessor* streamProcessor = new StreamProcessor(serialReceiver, packetFactory);
-    }
+    //initialize CanReceiver which will begin to listen to CAN interface for incoming data
+    CanReceiver* canReceiver = new CanReceiver(packetFactory);
+    //TODO: link packets to CanReceiver so they can be populated
 
     // makes boolean variable named darkModeEnabled available
     engine_.rootContext()->setContextProperty("darkModeEnabled", config.getDarkMode());

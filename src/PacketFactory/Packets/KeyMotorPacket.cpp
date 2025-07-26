@@ -24,9 +24,6 @@ QJsonObject KeyMotorPacket::toJson() {
     return json;
 }
 
-void KeyMotorPacket::populatePacket(const QByteArray& data) {
-}
-
 void KeyMotorPacket::initializeIdActionMap() {
     // Motor Drive Command - 0x501
     idActionMap[0x501] = {

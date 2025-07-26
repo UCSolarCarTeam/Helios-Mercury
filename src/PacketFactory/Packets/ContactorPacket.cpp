@@ -67,9 +67,6 @@ ContactorPacket::ContactorPacket() {
     initializeIdActionMap();
 }
 
-void ContactorPacket::populatePacket(const QByteArray& data) {
-}
-
 QJsonObject ContactorPacket::toJson() {
     QJsonObject json;
     // Heartbeats

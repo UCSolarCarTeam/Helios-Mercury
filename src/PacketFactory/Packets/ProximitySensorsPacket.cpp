@@ -1,14 +1,6 @@
 #include "ProximitySensorsPacket.h"
 #include "../../Config/JsonDefinitions.h"
 
-namespace {
-    //Serial offsets -> TODO: phase out
-    const int PROXIMITY_SENSOR_1_OFFSET = 1;
-    const int PROXIMITY_SENSOR_2_OFFSET = 3;
-    const int PROXIMITY_SENSOR_3_OFFSET = 5;
-    const int PROXIMITY_SENSOR_4_OFFSET = 7;
-}
-
 ProximitySensorsPacket::ProximitySensorsPacket(){
     setProximitySensor1(0);
     setProximitySensor2(0);
@@ -16,13 +8,6 @@ ProximitySensorsPacket::ProximitySensorsPacket(){
     setProximitySensor4(0);
 
     initializeIdActionMap();
-}
-
-void ProximitySensorsPacket::populatePacket(const QByteArray& data) {
-    setProximitySensor1(getValue<unsigned short>(data, PROXIMITY_SENSOR_1_OFFSET));
-    setProximitySensor2(getValue<unsigned short>(data, PROXIMITY_SENSOR_2_OFFSET));
-    setProximitySensor3(getValue<unsigned short>(data, PROXIMITY_SENSOR_3_OFFSET));
-    setProximitySensor4(getValue<unsigned short>(data, PROXIMITY_SENSOR_4_OFFSET));
 }
 
 QJsonObject ProximitySensorsPacket::toJson() {

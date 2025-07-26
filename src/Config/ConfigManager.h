@@ -22,7 +22,6 @@ public:
     int getBaudrate() const;
 
     QString getCanInterface() const;
-    bool getCanEnabled() const;
 
     QString getTelemetryTopic() const;
     QString getPingTopic() const;
@@ -55,7 +54,6 @@ private:
     int baudrate_;
 
     QString canInterface_;
-    bool canEnabled_;
 
     QString telemetryTopic_;
     QString pingTopic_;

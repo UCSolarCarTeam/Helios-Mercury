@@ -1,116 +1,5 @@
 #include "MotorDetailsPacket.h"
 #include "../../Config/JsonDefinitions.h"
-namespace {
-    const int CONTROL_VALUE_OFFSET = 1;
-
-    const int CONTROL_BITS_OFFSET = 3;
-    const char CONTROL_MODE_MASK = 0x01;
-    const char MOTOR_MODE_MASK = 0x02;
-    const char SOFTWARE_ENABLE_MASK = 0x04;
-    const char DEBUG_MODE_MASK = 0x08;
-
-    const int CURRENT_MOTOR_TORQUE_OFFSET = 4;
-    const int CURRENT_RPM_VALUE_OFFSET = 6;
-    const int MOTOR_TEMPERATURE_OFFSET = 8;
-    const int INVERTER_PEAK_CURRENT_OFFSET = 9;
-    const int CURRENT_MOTOR_POWER_OFFSET = 11;
-    const int ABSOLUTE_ANGLE_OFFSET = 13;
-
-    const int WARNING_CODE_1_OFFSET = 15;
-    const short MOTOR_ABOUT_TO_STALL_MASK = 0x0001;
-    const short DELAY_IN_READING_TEMP_SENSOR_MASK = 0x0002;
-    const short DELAY_IN_READING_POS_SENSOR_MASK = 0x0004;
-    const short INVERTER_1_TEMP_VERY_HIGH_MASK = 0x0008;
-    const short INVERTER_2_TEMP_VERY_HIGH_MASK = 0x0010;
-    const short INVERTER_3_TEMP_VERY_HIGH_MASK = 0x0020;
-    const short INVERTER_4_TEMP_VERY_HIGH_MASK = 0x0040;
-    const short INVERTER_5_TEMP_VERY_HIGH_MASK = 0x0080;
-
-    const int WARNING_CODE_2_OFFSET = 17;
-    const short INVERTER_6_TEMP_VERY_HIGH_MASK = 0x0001;
-    const short CPU_TEMPERATURE_VERY_HIGH_MASK = 0x0002;
-    const short HALL_TEMPERATURE_VERY_HIGH_MASK = 0x0004;
-    const short DCLINK_TEMPERATURE_VERY_HIGH_MASK = 0x0008;
-    const short DELAY_IN_DCLINK_COMMUNICATION_MASK = 0x0010;
-    const short INVERTER_1_OVERCURRENT_WARNING_MASK = 0x0020;
-    const short INVERTER_2_OVERCURRENT_WARNING_MASK = 0x0040;
-    const short INVERTER_3_OVERCURRENT_WARNING_MASK = 0x0080;
-
-    const int WARNING_CODE_3_OFFSET = 19;
-    const short INVERTER_4_OVERCURRENT_WARNING_MASK = 0x0001;
-    const short INVERTER_5_OVERCURRENT_WARNING_MASK = 0x0002;
-    const short INVERTER_6_OVERCURRENT_WARNING_MASK = 0x0004;
-    const short DC_OVERVOLTAGE_WARNING_MASK = 0x0008;
-    const short DC_UNDERVOLTAGE_WARNING_MASK = 0x0010;
-    const short CAN_COMMS_TIMEOUT_MASK = 0x0020;
-    const short INVERTER_1_FAULT_WARNING_MASK = 0x0040;
-    const short INVERTER_2_FAULT_WARNING_MASK = 0x0080;
-
-    const int WARNING_CODE_4_OFFSET = 21;
-    const short INVERTER_3_FAULT_WARNING_MASK = 0x0001;
-    const short INVERTER_4_FAULT_WARNING_MASK = 0x0002;
-    const short INVERTER_5_FAULT_WARNING_MASK = 0x0004;
-    const short INVERTER_6_FAULT_WARNING_MASK = 0x0008;
-    const short CAN_SEND_WARNING_MASK = 0x0010;
-    const short LOST_FRAMES_ON_CAN_BUS_WARNING_MASK = 0x0020;
-    const short OVERSPEED_WARNING_MASK = 0x0040;
-    const short CPU_OVERLOAD_MASK = 0x0080;
-
-    const int WARNING_CODE_5_OFFSET = 23;
-    const char TORQUE_LIMITED_MASK = 0x01;
-    const char START_AT_HIGH_RPM_MASK = 0x02;
-
-    const int ERROR_CODE_1_OFFSET = 24;
-    const short INIT_ERROR_MASK = 0x0001;
-    const short SETTINGS_NOT_FOUND_MASK = 0x0002;
-    const short MOTOR_STALLED_MASK = 0x0004;
-    const short CONTROLLER_DATA_READING_TIMEOUT_MASK = 0x0008;
-    const short INVALID_HALL_SENSOR_SEQUENCE_MASK = 0x0010;
-    const short INVALID_HALL_SECTOR_MASK = 0x0020;
-    const short ERROR_READING_TEMP_SENSOR_MASK = 0x0040;
-    const short POSITION_SENSOR_READING_ERROR_MASK = 0x0080;
-
-    const int ERROR_CODE_2_OFFSET = 26;
-    const short ERROR_READING_ENCODER_MASK = 0x0001;
-    const short ZERO_POSITION_OFFSET_NOT_SET_MASK = 0x0002;
-    const short HW_ENABLE_NOT_SET_MASK = 0x0004;
-    const short INVERTER_1_TEMP_TOO_HIGH_MASK = 0x0008;
-    const short INVERTER_2_TEMP_TOO_HIGH_MASK = 0x0010;
-    const short INVERTER_3_TEMP_TOO_HIGH_MASK = 0x0020;
-    const short INVERTER_4_TEMP_TOO_HIGH_MASK = 0x0040;
-    const short INVERTER_5_TEMP_TOO_HIGH_MASK = 0x0080;
-
-    const int ERROR_CODE_3_OFFSET = 28;
-    const short INVERTER_6_TEMP_TOO_HIGH_MASK = 0x0001;
-    const short CPU_TEMPERATURE_TOO_HIGH_MASK = 0x0002;
-    const short HALL_TEMPERATURE_TOO_HIGH_MASK = 0x0004;
-    const short DCLINK_TEMPERATURE_TOO_HIGH_MASK = 0x0008;
-    const short ERROR_IN_DCLINK_COMMUNICATION_MASK = 0x0010;
-    const short INVERTER_1_OVERCURRENT_ERROR_MASK = 0x0020;
-    const short INVERTER_2_OVERCURRENT_ERROR_MASK = 0x0040;
-    const short INVERTER_3_OVERCURRENT_ERROR_MASK = 0x0080;
-
-    const int ERROR_CODE_4_OFFSET = 30;
-    const short INVERTER_4_OVERCURRENT_ERROR_MASK = 0x0001;
-    const short INVERTER_5_OVERCURRENT_ERROR_MASK = 0x0002;
-    const short INVERTER_6_OVERCURRENT_ERROR_MASK = 0x0004;
-    const short DC_OVERVOLTAGE_ERROR_MASK = 0x0008;
-    const short DC_UNDERVOLTAGE_ERROR_MASK = 0x0010;
-    const short DOUBLE_CAN_ID_ON_BUS_MASK = 0x0020;
-    const short CAN_COMMS_TIMEOUT_ERROR_MASK = 0x0040;
-    const short INVERTER_1_FAULT_ERROR_MASK = 0x0080;
-    const short INVERTER_2_FAULT_ERROR_MASK = 0x0100;
-    const short INVERTER_3_FAULT_ERROR_MASK = 0x0200;
-    const short INVERTER_4_FAULT_ERROR_MASK = 0x0400;
-    const short INVERTER_5_FAULT_ERROR_MASK = 0x0800;
-    const short INVERTER_6_FAULT_ERROR_MASK = 0x1000;
-    const short CAN_SEND_ERROR_MASK = 0x2000;
-    const short LOST_FRAMES_ON_CAN_BUS_ERROR_MASK = 0x4000;
-    const short OVERSPEED_ERROR_MASK = 0x8000;
-
-    const int ERROR_CODE_5_OFFSET = 32;
-    const char CPU_OVERLOADED_MASK = 0x01;
-}
 
 MotorDetailsPacket::MotorDetailsPacket() {
     setTritiumId(0);
@@ -167,9 +56,6 @@ MotorDetailsPacket::MotorDetailsPacket() {
     setMotorId(0);
     
     initializeIdActionMap();
-}
-
-void MotorDetailsPacket::populatePacket(const QByteArray& data) {
 }
 
 QJsonObject MotorDetailsPacket::toJson() {

@@ -48,7 +48,6 @@ class BatteryFaultsPacket : public IPacket {
 
 public:
     BatteryFaultsPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:
