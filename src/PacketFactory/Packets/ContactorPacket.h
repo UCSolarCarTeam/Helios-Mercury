@@ -71,7 +71,6 @@ class ContactorPacket : public IPacket {
 
 public:
     ContactorPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:

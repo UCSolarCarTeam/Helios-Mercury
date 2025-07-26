@@ -37,8 +37,6 @@ B3Packet::B3Packet() {
     initializeIdActionMap();
 }
 
-void B3Packet::populatePacket(const QByteArray& data) {
-}
 
 QJsonObject B3Packet::toJson() {
     QJsonObject json;

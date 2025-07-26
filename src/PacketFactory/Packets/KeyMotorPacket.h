@@ -16,7 +16,6 @@ class KeyMotorPacket : public IPacket {
 
 public:
     KeyMotorPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:

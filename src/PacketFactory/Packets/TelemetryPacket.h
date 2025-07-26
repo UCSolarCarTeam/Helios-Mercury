@@ -27,7 +27,6 @@ class TelemetryPacket : public IPacket {
 
 public:
     TelemetryPacket();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:

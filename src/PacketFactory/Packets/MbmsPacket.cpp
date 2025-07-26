@@ -1,54 +1,6 @@
 #include "MbmsPacket.h"
 #include "../../Config/JsonDefinitions.h"
 
-namespace {
-    const int CONTACTOR_STATUS_OFFSET = 1;
-    const unsigned char COMMON_CONTACTOR_STATE_OFFSET = 0x01;
-    const unsigned char MOTOR_CONTACTOR_STATE_OFFSET = 0x02;
-    const unsigned char ARRAY_CONTACTOR_STATE_OFFSET = 0x04;
-    const unsigned char LV_CONTACTOR_STATE_OFFSET = 0x08;
-    const unsigned char CHARGE_CONTACTOR_STATE_OFFSET = 0x10;
-    
-    const int CONTACTOR_ERROR_OFFSET = 2;
-    const unsigned char COMMON_CONTACTOR_ERROR_OFFSET = 0x01;
-    const unsigned char MOTOR_CONTACTOR_ERROR_OFFSET = 0x02;
-    const unsigned char ARRAY_CONTACTOR_ERROR_OFFSET = 0x04;
-    const unsigned char LV_CONTACTOR_ERROR_OFFSET = 0x08;
-    const unsigned char CHARGE_CONTACTOR_ERROR_OFFSET = 0x10;
-
-    const int MISCELLANOUS_STATUS = 3;
-    const unsigned char STROBE_BMS_LIGHT_OFFSET = 0x01;
-    const unsigned char ALLOW_CHARGE_OFFSET = 0x02;
-    const unsigned char HIGH_VOLTAGE_ENABLE_STATE_OFFSET = 0x04;
-    const unsigned char ALLOW_DISCHARGE_OFFSET = 0x08;
-    const unsigned char ORION_CAN_RECEIVED_RECENTLY_OFFSET = 0x10;
-    const unsigned char DISCHARGE_SHOULD_TRIP_OFFSET = 0x20;
-    const unsigned char CHARGE_SHOULD_TRIP_OFFSET = 0x40;
-
-    const int AUXILIARY_BATTERY_VOLTAGE_OFFSET = 4;
-    const int MOTOR_VOLTAGE_OFFSET = 6;
-    const int ARRAY_VOLTAGE_OFFSET = 8;
-    const int LV_VOLTAGE_OFFSET = 10;
-    const int CHARGE_VOLTAGE_OFFSET = 12;
-    const int COMMON_CURRENT_OFFSET = 14;
-    const int MOTOR_CURRENT_OFFSET = 16;
-    const int ARRAY_CURRENT_OFFSET = 18;
-    const int LV_CURRENT_OFFSET = 20;
-    const int CHARGE_CURRENT_OFFSET = 22;
-
-    const int TRIP_FLAGS_OFFSET = 24;
-    const unsigned short HIGH_CELL_VOLTAGE_TRIP_OFFSET = 0x0001;
-    const unsigned short LOW_CELL_VOLTAGE_TRIP_OFFSET = 0x0002;
-    const unsigned short HIGH_COMMON_CURRENT_TRIP_OFFSET = 0x0004;
-    const unsigned short MOTOR_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET = 0x0008;
-    const unsigned short ARRAY_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET = 0x0010;
-    const unsigned short LV_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET = 0x0020;
-    const unsigned short CHARGE_HIGH_TEMPERATURE_CURRENT_TRIP_OFFSET = 0x0040;
-    const unsigned short PROTECTION_TRIP_OFFSET = 0x0080;
-    const unsigned short ORION_MESSAGE_TIMEOUT_TRIP_OFFSET = 0x0100;
-    const unsigned short CONTACTOR_DISCONNECTED_UNEXPECTEDLY_TRIP_OFFSET = 0x0200;
-}
-
 MbmsPacket::MbmsPacket() {
     // Base/Heartbeat
     setHeartbeat(false);
@@ -120,9 +72,6 @@ MbmsPacket::MbmsPacket() {
     setCanOc12VWarning(false);
 
     initializeIdActionMap();
-}
-
-void MbmsPacket::populatePacket(const QByteArray& data) {
 }
 
 QJsonObject MbmsPacket::toJson() {
@@ -215,11 +164,11 @@ void MbmsPacket::initializeIdActionMap() {
     idActionMap[0x101] = {
         [this](QByteArray payload){
             unsigned char contactorCommands = getValue<unsigned char>(payload, 0);
-            setCommonContactorCommand(contactorCommands & 0x01); // Bit 0
-            setMotorContactorCommand(contactorCommands & 0x02); // Bit 1
-            setArrayContactorCommand(contactorCommands & 0x04); // Bit 2
-            setLvContactorCommand(contactorCommands & 0x08); // Bit 3
-            setChargeContactorCommand(contactorCommands & 0x10); // Bit 4
+            setCommonContactorCommand(contactorCommands & 0x01);
+            setMotorContactorCommand(contactorCommands & 0x02);
+            setArrayContactorCommand(contactorCommands & 0x04);
+            setLvContactorCommand(contactorCommands & 0x08);
+            setChargeContactorCommand(contactorCommands & 0x10);
         }
     };
     
@@ -230,15 +179,15 @@ void MbmsPacket::initializeIdActionMap() {
             setAuxiliaryBatteryVoltage(getValue<unsigned char>(payload, 0) & 0x1F);
             
             unsigned char statusByte1 = getValue<unsigned char>(payload, 0);
-            setStrobeBmsLight(statusByte1 & 0x20); // Bit 5
-            setChargeEnable(statusByte1 & 0x40); // Bit 6
-            setChargeSafety(statusByte1 & 0x80); // Bit 7
+            setStrobeBmsLight(statusByte1 & 0x20);
+            setChargeEnable(statusByte1 & 0x40);
+            setChargeSafety(statusByte1 & 0x80);
             
             unsigned char statusByte2 = getValue<unsigned char>(payload, 1);
-            setDischargeEnable(statusByte2 & 0x01); // Bit 8
-            setOrionCanReceivedRecently(statusByte2 & 0x02); // Bit 9
-            setDischargeShouldTrip(statusByte2 & 0x04); // Bit 10
-            setChargeShouldTrip(statusByte2 & 0x08); // Bit 11
+            setDischargeEnable(statusByte2 & 0x01);
+            setOrionCanReceivedRecently(statusByte2 & 0x02);
+            setDischargeShouldTrip(statusByte2 & 0x04);
+            setChargeShouldTrip(statusByte2 & 0x08);
             
             // Bits 12-15: Startup State
             setStartupState((statusByte2 & 0xF0) >> 4);
@@ -253,17 +202,17 @@ void MbmsPacket::initializeIdActionMap() {
     idActionMap[0x103] = {
         [this](QByteArray payload){
             unsigned short powerStatus = getValue<unsigned short>(payload, 0);
-            setMainPowerSwitch(!(powerStatus & 0x0001));    // Bit 0 (inverted)
-            setExternalShutdown(powerStatus & 0x0002);      // Bit 1
-            setEn1(powerStatus & 0x0004);                   // Bit 2
-            setDcdcFault(!(powerStatus & 0x0008));          // Bit 3 (inverted)
-            setThreeAOc(!(powerStatus & 0x0010));           // Bit 4 (inverted)
-            setDcdcOn(!(powerStatus & 0x0020));             // Bit 5 (inverted)
-            setChgFault(!(powerStatus & 0x0040));           // Bit 6 (inverted)
-            setChgOn(!(powerStatus & 0x0080));              // Bit 7 (inverted)
-            setChgLvEn(!(powerStatus & 0x0100));            // Bit 8 (inverted)
-            setAbattDisable(powerStatus & 0x0200);          // Bit 9
-            setKey(powerStatus & 0x0400);                   // Bit 10
+            setMainPowerSwitch(!(powerStatus & 0x0001));
+            setExternalShutdown(powerStatus & 0x0002);
+            setEn1(powerStatus & 0x0004);
+            setDcdcFault(!(powerStatus & 0x0008));
+            setThreeAOc(!(powerStatus & 0x0010));
+            setDcdcOn(!(powerStatus & 0x0020));
+            setChgFault(!(powerStatus & 0x0040));
+            setChgOn(!(powerStatus & 0x0080));
+            setChgLvEn(!(powerStatus & 0x0100));
+            setAbattDisable(powerStatus & 0x0200);
+            setKey(powerStatus & 0x0400);
         }
     };
     
@@ -272,26 +221,26 @@ void MbmsPacket::initializeIdActionMap() {
         [this](QByteArray payload){
             unsigned int tripFlags = getValue<unsigned int>(payload, 0);
             
-            setHighCellVoltageTrip(tripFlags & 0x00000001);                    // Bit 0
-            setLowCellVoltageTrip(tripFlags & 0x00000002);                     // Bit 1
-            setCommonHighCurrentTrip(tripFlags & 0x00000004);                  // Bit 2
-            setMotorHighCurrentTrip(tripFlags & 0x00000008);                   // Bit 3
-            setArrayHighCurrentTrip(tripFlags & 0x00000010);                   // Bit 4
-            setLvHighCurrentTrip(tripFlags & 0x00000020);                      // Bit 5
-            setChargeHighCurrentTrip(tripFlags & 0x00000040);                  // Bit 6
-            setProtectionTrip(tripFlags & 0x00000080);                         // Bit 7
-            setOrionMessageTimeoutTrip(tripFlags & 0x00000100);                // Bit 8
-            setContactorDisconnectedUnexpectedlyTrip(tripFlags & 0x00000200);  // Bit 9
-            setContactorConnectedUnexpectedlyTrip(tripFlags & 0x00000400);     // Bit 10
-            setCommonHeartbeatDeadTrip(tripFlags & 0x00000800);                // Bit 11
-            setMotorHeartbeatDeadTrip(tripFlags & 0x00001000);                 // Bit 12
-            setArrayHeartbeatDeadTrip(tripFlags & 0x00002000);                 // Bit 13
-            setLvHeartbeatDeadTrip(tripFlags & 0x00004000);                    // Bit 14
-            setChargeHeartbeatDeadTrip(tripFlags & 0x00008000);                // Bit 15
-            setMpsDisabledTrip(tripFlags & 0x00010000);                        // Bit 16
-            setEsdEnabledTrip(tripFlags & 0x00020000);                         // Bit 17
-            setHighTemperatureTrip(tripFlags & 0x00040000);                    // Bit 18
-            setLowTemperatureTrip(tripFlags & 0x00080000);                     // Bit 19
+            setHighCellVoltageTrip(tripFlags & 0x00000001);
+            setLowCellVoltageTrip(tripFlags & 0x00000002); 
+            setCommonHighCurrentTrip(tripFlags & 0x00000004);
+            setMotorHighCurrentTrip(tripFlags & 0x00000008);
+            setArrayHighCurrentTrip(tripFlags & 0x00000010);
+            setLvHighCurrentTrip(tripFlags & 0x00000020);  
+            setChargeHighCurrentTrip(tripFlags & 0x00000040);
+            setProtectionTrip(tripFlags & 0x00000080);
+            setOrionMessageTimeoutTrip(tripFlags & 0x00000100);
+            setContactorDisconnectedUnexpectedlyTrip(tripFlags & 0x00000200);
+            setContactorConnectedUnexpectedlyTrip(tripFlags & 0x00000400);
+            setCommonHeartbeatDeadTrip(tripFlags & 0x00000800);
+            setMotorHeartbeatDeadTrip(tripFlags & 0x00001000);
+            setArrayHeartbeatDeadTrip(tripFlags & 0x00002000);
+            setLvHeartbeatDeadTrip(tripFlags & 0x00004000);
+            setChargeHeartbeatDeadTrip(tripFlags & 0x00008000);
+            setMpsDisabledTrip(tripFlags & 0x00010000);
+            setEsdEnabledTrip(tripFlags & 0x00020000);
+            setHighTemperatureTrip(tripFlags & 0x00040000);
+            setLowTemperatureTrip(tripFlags & 0x00080000);
         }
     };
     

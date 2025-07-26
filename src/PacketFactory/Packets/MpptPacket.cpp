@@ -52,9 +52,6 @@ MpptPacket::MpptPacket() {
     initializeIdActionMap();
 }
 
-void MpptPacket::populatePacket(const QByteArray& data) {
-}
-
 QJsonObject MpptPacket::toJson() {
     QJsonObject json;
 
@@ -114,65 +111,65 @@ void MpptPacket::initializeIdActionMap() {
 
     // MPPT 0 Channel 0 - 0x600
     idActionMap[0x600] = [this](QByteArray payload) {
-        setMppt0Ch0ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt0Ch0ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt0Ch0BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt0Ch0UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt0Ch0ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt0Ch0ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt0Ch0BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt0Ch0UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 0 Channel 1 - 0x601
     idActionMap[0x601] = [this](QByteArray payload) {
-        setMppt0Ch1ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt0Ch1ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt0Ch1BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt0Ch1UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt0Ch1ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt0Ch1ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt0Ch1BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt0Ch1UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 1 Channel 0 - 0x602
     idActionMap[0x602] = [this](QByteArray payload) {
-        setMppt1Ch0ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt1Ch0ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt1Ch0BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt1Ch0UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt1Ch0ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt1Ch0ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt1Ch0BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt1Ch0UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 1 Channel 1 - 0x603
     idActionMap[0x603] = [this](QByteArray payload) {
-        setMppt1Ch1ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt1Ch1ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt1Ch1BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt1Ch1UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt1Ch1ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt1Ch1ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt1Ch1BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt1Ch1UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 2 Channel 0 - 0x604
     idActionMap[0x604] = [this](QByteArray payload) {
-        setMppt2Ch0ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt2Ch0ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt2Ch0BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt2Ch0UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt2Ch0ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt2Ch0ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt2Ch0BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt2Ch0UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 2 Channel 1 - 0x605
     idActionMap[0x605] = [this](QByteArray payload) {
-        setMppt2Ch1ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt2Ch1ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt2Ch1BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt2Ch1UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt2Ch1ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt2Ch1ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt2Ch1BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt2Ch1UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 3 Channel 0 - 0x606
     idActionMap[0x606] = [this](QByteArray payload) {
-        setMppt3Ch0ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt3Ch0ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt3Ch0BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt3Ch0UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt3Ch0ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt3Ch0ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt3Ch0BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt3Ch0UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 
     // MPPT 3 Channel 1 - 0x607
     idActionMap[0x607] = [this](QByteArray payload) {
-        setMppt3Ch1ArrayVoltage(getValue<unsigned short>(payload, 0)); // 10mV
-        setMppt3Ch1ArrayCurrent(getValue<unsigned short>(payload, 2)); // 1mA
-        setMppt3Ch1BatteryVoltage(getValue<unsigned short>(payload, 4)); // 10mV
-        setMppt3Ch1UnitTemperature(getValue<unsigned short>(payload, 6)); // 10mC
+        setMppt3Ch1ArrayVoltage(getValue<unsigned short>(payload, 0));
+        setMppt3Ch1ArrayCurrent(getValue<unsigned short>(payload, 2));
+        setMppt3Ch1BatteryVoltage(getValue<unsigned short>(payload, 4));
+        setMppt3Ch1UnitTemperature(getValue<unsigned short>(payload, 6));
     };
 }

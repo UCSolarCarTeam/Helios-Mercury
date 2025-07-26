@@ -97,9 +97,6 @@ QJsonObject BatteryFaultsPacket::toJson() {
     return json;
 }
 
-void BatteryFaultsPacket::populatePacket(const QByteArray& data) {
-}
-
 void BatteryFaultsPacket::initializeIdActionMap() {
     qDebug() << "Initializing Battery Faults Packet ID Action Map";
     
