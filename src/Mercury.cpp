@@ -8,11 +8,6 @@
 
 #include <QQmlContext>
 
-// Include the GpioReceiver header file only if the program is running on a Pi
-#ifdef RUNNING_ON_PI
-#include "Receivers/GpioReceiver.h"
-#endif
-
 
 Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
@@ -21,11 +16,6 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //load in settings and initialize Packet factory
     ConfigManager& config = ConfigManager::instance();
     PacketFactory* packetFactory = new PacketFactory();
-
-    //Initialize GPIO Receiver if on Pi
-    #ifdef RUNNING_ON_PI
-        GpioReceiver* gpioReceiver = new GpioReceiver(packetFactory);
-    #endif
 
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver(&packetFactory->getPiPacket());
@@ -77,7 +67,7 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
 
     qmlRegisterSingletonType(QUrl("qrc:/qt/qml/content/Config/Config.qml"), "Mercury", 1, 0, "Config");
 
-    const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
+    const QUrl url("qrc:/qt/qml/Main/main.qml");
     QObject::connect(
         &engine_,
         &QQmlApplicationEngine::objectCreated,
