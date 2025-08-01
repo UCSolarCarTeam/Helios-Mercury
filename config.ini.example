@@ -9,10 +9,6 @@ numberOfMppts=4
 [JsonFormat]
 packetTitle=Helios
 
-[SerialPort]
-portName=/dev/pts/5
-baudrate=115200
-
 [Can]
 interface=can0
 
@@ -30,12 +26,8 @@ telemetryPassword=NiceTryBud
 loggingEnabled=true
 logPath=Mercury.log
 
-[Gpio]
-rfidPin0=20
-rfidPin1=21
-
 [ColorMode]
-darkMode=false
+darkMode=true
 
 [Units]
 metric=false
