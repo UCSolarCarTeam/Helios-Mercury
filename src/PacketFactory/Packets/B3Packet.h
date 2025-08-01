@@ -41,7 +41,6 @@ class B3Packet : public IPacket {
 
 public:
     B3Packet();
-    void populatePacket(const QByteArray& data) override;
     QJsonObject toJson() override;
 
 protected:

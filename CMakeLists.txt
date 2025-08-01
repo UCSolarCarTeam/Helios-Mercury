@@ -18,8 +18,6 @@ qt_policy(SET QTP0004 NEW)
 qt_standard_project_setup()
 
 qt_add_executable(Helios-Mercury src/main.cpp
-    src/Receivers/SerialReceiver.cpp src/Receivers/SerialReceiver.h
-    src/StreamProcessor/StreamProcessor.cpp src/StreamProcessor/StreamProcessor.h
     src/PacketFactory/IPacket.h
     src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
     src/PacketFactory/Packets/B3Packet.h src/PacketFactory/Packets/B3Packet.cpp

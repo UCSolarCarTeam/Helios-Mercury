@@ -44,14 +44,8 @@ ConfigManager::ConfigManager(const QString& path){
     packetTitle_ = settings.value("packetTitle", "Hermes").toString();
     settings.endGroup();
 
-    settings.beginGroup("SerialPort");
-    portName_ = settings.value("portName", "/dev/ttyUSB0").toString();
-    baudrate_ = settings.value("baudrate", 115200).toInt();
-    settings.endGroup();
-
     settings.beginGroup("Can");
     canInterface_ = settings.value("interface", "can0").toString();
-    canEnabled_ = settings.value("enabled", true).toBool();
     settings.endGroup();
 
     settings.beginGroup("Mqtt");
@@ -68,11 +62,6 @@ ConfigManager::ConfigManager(const QString& path){
     settings.beginGroup("Logging");
     loggingEnabled_ = settings.value("loggingEnabled", true).toBool();
     logPath_ = settings.value("logPath", "Mercury.log").toString();
-    settings.endGroup();
-
-    settings.beginGroup("Gpio");
-    rfidPin0_ = settings.value("rfidPin0", 20).toInt();
-    rfidPin1_ = settings.value("rfidPin1", 21).toInt();
     settings.endGroup();
 
     settings.beginGroup("ColorMode");
@@ -93,13 +82,7 @@ int ConfigManager::getNumberOfMppts() const { return numberOfMppts_; }
 
 QString ConfigManager::getPacketTitle() const { return packetTitle_; }
 
-QString ConfigManager::getPortName() const { return portName_; }
-
-int ConfigManager::getBaudrate() const { return baudrate_; }
-
 QString ConfigManager::getCanInterface() const { return canInterface_; }
-
-bool ConfigManager::getCanEnabled() const { return canEnabled_; }
 
 QString ConfigManager::getTelemetryTopic() const { return telemetryTopic_; }
 
@@ -120,10 +103,6 @@ QString ConfigManager::getTelemetryPassword() const { return telemetryPassword_;
 bool ConfigManager::getLoggingEnabled() const { return loggingEnabled_; }
 
 QString ConfigManager::getLogPath() const { return logPath_; }
-
-int ConfigManager::getRfidPin0() const { return rfidPin0_; }
-
-int ConfigManager::getRfidPin1() const { return rfidPin1_; }
 
 bool ConfigManager::getDarkMode() const { return darkMode_; }
 

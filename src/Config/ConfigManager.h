@@ -18,11 +18,7 @@ public:
 
     QString getPacketTitle() const;
 
-    QString getPortName() const;
-    int getBaudrate() const;
-
     QString getCanInterface() const;
-    bool getCanEnabled() const;
 
     QString getTelemetryTopic() const;
     QString getPingTopic() const;
@@ -36,9 +32,6 @@ public:
     bool getLoggingEnabled() const;
     QString getLogPath() const;
 
-    int getRfidPin0() const;
-    int getRfidPin1() const;
-
     bool getDarkMode() const;
 
     bool getMetric() const;
@@ -51,11 +44,7 @@ private:
     int numberOfMppts_;
     QString packetTitle_;
 
-    QString portName_;
-    int baudrate_;
-
     QString canInterface_;
-    bool canEnabled_;
 
     QString telemetryTopic_;
     QString pingTopic_;
@@ -68,9 +57,6 @@ private:
 
     bool loggingEnabled_;
     QString logPath_;
-
-    int rfidPin0_;
-    int rfidPin1_;
 
     bool darkMode_;
 
