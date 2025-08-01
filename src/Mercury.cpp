@@ -20,9 +20,8 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     //initialize TelemetryReceiver which will listen to telemetry MQTT service for incoming data
     TelemetryReceiver* telemetryReceiver = new TelemetryReceiver(&packetFactory->getPiPacket());
 
-    //initialize CanReceiver which will begin to listen to CAN interface for incoming data
+    //initialize CanReceiver which will begin to listen to CAN interface for incoming data and populate classes
     CanReceiver* canReceiver = new CanReceiver(packetFactory);
-    //TODO: link packets to CanReceiver so they can be populated
 
     // makes boolean variable named darkModeEnabled available
     engine_.rootContext()->setContextProperty("darkModeEnabled", config.getDarkMode());

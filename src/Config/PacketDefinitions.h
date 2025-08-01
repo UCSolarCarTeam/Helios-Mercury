@@ -38,8 +38,7 @@ namespace PacketDefinitions {
     const int PROXIMITY_SENSORS_ID_MAX = 0x703;
 
     const int CONTACTOR_ID_MIN = 0x200;
-    const int CONTACTOR_ID_MAX = 0x214; 
-
+    const int CONTACTOR_ID_MAX = 0x214;
 }
 
 #endif // PACKETDEFINITIONS_H
