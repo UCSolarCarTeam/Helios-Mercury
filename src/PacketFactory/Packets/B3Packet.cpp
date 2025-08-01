@@ -80,7 +80,7 @@ void B3Packet::initializeIdActionMap() {
     qDebug() << "Initializing B3 Packet ID Action Map";
 
     // Heartbeat - 0x609
-    idActionMap[0x100] = {
+    idActionMap[0x609] = {
         [this](QByteArray payload){
             unsigned char heartbeat = getValue<unsigned char>(payload, 0);
             setB3Heartbeat(heartbeat & 0x01);
