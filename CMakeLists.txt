@@ -11,7 +11,7 @@ set(CMAKE_AUTOUIC ON)
 
 configure_file(${CMAKE_SOURCE_DIR}/config.ini.example ${CMAKE_BINARY_DIR}/config.ini COPYONLY)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialPort SerialBus)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Qml Quick Mqtt SerialBus)
 
 qt_policy(SET QTP0001 NEW)
 qt_policy(SET QTP0004 NEW)
@@ -55,7 +55,6 @@ target_link_libraries(Helios-Mercury PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::Mqtt
-    Qt6::SerialPort
     Qt6::SerialBus
 )
 
