@@ -148,6 +148,23 @@ Item {
         }
     }
 
+    Text {
+        width: 200
+        height: 20
+        color: Config.fontColor
+        text: "IP: " + pi.Ip
+        horizontalAlignment: Text.AlignHCenter
+        anchors {
+            horizontalCenter: rnd.horizontalCenter
+            top: rnd.bottom
+        }
+        font {
+            pixelSize: Config.fontSize4
+            weight: Font.Medium
+            family: Config.fontStyle
+        }
+    }
+
     // Text {
     //     id: driverNameComponent
     //     width: 350

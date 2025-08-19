@@ -10,10 +10,14 @@ class PiPacket : public QObject{
     DEFINE_PROPERTY(QString, Rfid)
     DEFINE_PROPERTY(QString, DriverName)
     DEFINE_PROPERTY(int, Latency)
-    DEFINE_PROPERTY(bool, isTelemetryConnected)
+    DEFINE_PROPERTY(bool, IsTelemetryConnected)
+    DEFINE_PROPERTY(QString, Ip)
 public:
     PiPacket();
     QJsonObject toJson();
+
+private:
+    QString findIp() const;
 };
 
 #endif // PIPACKET_H

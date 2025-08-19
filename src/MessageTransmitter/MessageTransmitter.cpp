@@ -37,12 +37,12 @@ void MessageTransmitter::setupTelemetryClient() {
 
     QObject::connect(telemetryClient_, &QMqttClient::connected, [this]() {
         qDebug() << "Connection to TELEMETRY MQTT Service Established";
-        piPacket_->setisTelemetryConnected(true);
+        piPacket_->setIsTelemetryConnected(true);
     });
 
     QObject::connect(telemetryClient_, &QMqttClient::disconnected, [this]() {
         qDebug() << "Connection to TELEMETRY MQTT Service Failed - retrying in 5s...";
-        piPacket_->setisTelemetryConnected(false);
+        piPacket_->setIsTelemetryConnected(false);
         QTimer::singleShot(RETRY_PERIOD, [this]() {
             telemetryClient_->connectToHost();
         });
