@@ -133,7 +133,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            horizontalCenterOffset: -72
+            horizontalCenterOffset: -60
             bottomMargin: 9
         }
     }

@@ -25,6 +25,8 @@ CanReceiver::CanReceiver(PacketFactory* packetFactory){
         return; //TODO: enter retry loop
     }
 
+    packetFactory_->getPiPacket().setIsCanConnected(true);
+
     qDebug() << "Connected to CAN Interface";
 
     connect(canDevice_, &QCanBusDevice::framesReceived, this, &CanReceiver::handleReadyRead);

@@ -19,7 +19,8 @@ Item {
                 { name: "MOTOR", isConnected: mbms.MotorContactorCommand, hasError: contactor.MotorContactorError },
                 { name: "ARRAY", isConnected: mbms.ArrayContactorCommand, hasError: contactor.ArrayContactorError },
                 { name: "CHARGE", isConnected: mbms.ChargeContactorCommand, hasError: contactor.ChargeContactorError },
-                { name: "LV", isConnected: mbms.LvContactorCommand, hasError: contactor.LvContactorError }
+                { name: "LV", isConnected: mbms.LvContactorCommand, hasError: contactor.LvContactorError },
+                { name: "CAN", isConnected: pi.IsCanConnected, hasError: false }
             ]
             
             delegate: Item {
