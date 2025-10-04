@@ -187,7 +187,7 @@ Rectangle {
                         text: "Internal Communication Fault: " + batteryFaults.InternalCommunicationFault
                     }
                     Text {
-                        text: "Internal Conversion Fault: " + batteryFaults.InternalConverversionFault
+                        text: "Internal Conversion Fault: " + batteryFaults.InternalConversionFault
                     }
                     Text {
                         text: "Weak Cell Fault: " + batteryFaults.WeakCellFault
@@ -304,7 +304,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt0Ch0BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt0Ch0Temperature
+                        text: "Temperature: " + mppt.Mppt0Ch0UnitTemperature
                     }
                 }
                 Column {
@@ -321,7 +321,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt0Ch1BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt0Ch1Temperature
+                        text: "Temperature: " + mppt.Mppt0Ch1UnitTemperature
                     }
                 }
                 Column {
@@ -338,7 +338,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt1Ch0BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt1Ch0Temperature
+                        text: "Temperature: " + mppt.Mppt1Ch0UnitTemperature
                     }
                 }
                 Column {
@@ -355,7 +355,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt1Ch1BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt1Ch1Temperature
+                        text: "Temperature: " + mppt.Mppt1Ch1UnitTemperature
                     }
                 }
                 Column {
@@ -372,7 +372,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt2Ch0BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt2Ch0Temperature
+                        text: "Temperature: " + mppt.Mppt2Ch0UnitTemperature
                     }
                 }
                 Column {
@@ -389,7 +389,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt2Ch1BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt2Ch1Temperature
+                        text: "Temperature: " + mppt.Mppt2Ch1UnitTemperature
                     }
                 }
                 Column {
@@ -406,7 +406,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt3Ch0BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt3Ch0Temperature
+                        text: "Temperature: " + mppt.Mppt3Ch0UnitTemperature
                     }
                 }
                 Column {
@@ -423,7 +423,7 @@ Rectangle {
                         text: "Battery Voltage: " + mppt.Mppt3Ch1BatteryVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt.Mppt3Ch1Temperature
+                        text: "Temperature: " + mppt.Mppt3Ch1UnitTemperature
                     }
                 }
             }
@@ -619,7 +619,7 @@ Rectangle {
                         text: "Charge Relay Enabled: " + battery.ChargeRelayEnabled
                     }
                     Text {
-                        text: "Charger Safety Relay Enabled: " + battery.ChargerSafetyRelayEnabled
+                        text: "Charger Safety Enabled: " + battery.ChargerSafetyEnabled
                     }
                     Text {
                         text: "Malfunction Indicator Active: " + battery.MalfunctionIndicatorActive
@@ -710,6 +710,7 @@ Rectangle {
                     }
                     Text {
                         text: "Minimum Pack Voltage: " + battery.MinimumPackVoltage
+                    }
                 }
             }
 
@@ -781,7 +782,7 @@ Rectangle {
                         text: "Supply 15V: " + motorDetails0.Supply15V
                     }
                     Text {
-                        text: "Reserved Supply 15V: " + motorDetails0.ReservedSupply15
+                        text: "Reserved Supply 15V: " + motorDetails0.ReservedSupply15V
                     }
                     Text {
                         text: "Supply 1V9: " + motorDetails0.Supply1V9
@@ -895,7 +896,7 @@ Rectangle {
                         text: "Supply 15V: " + motorDetails1.Supply15V
                     }
                     Text {
-                        text: "Reserved Supply 15V: " + motorDetails1.ReservedSupply15
+                        text: "Reserved Supply 15V: " + motorDetails1.ReservedSupply15V
                     }
                     Text {
                         text: "Supply 1V9: " + motorDetails1.Supply1V9
@@ -981,62 +982,6 @@ Rectangle {
                     Text {
                         text: "Contactors"
                     }
-                    /**
-    // Common Board Status
-    DEFINE_PROPERTY(bool, CommonPrechargerClosed)
-    DEFINE_PROPERTY(bool, CommonPrechargerClosing)
-    DEFINE_PROPERTY(bool, CommonPrechargerError)
-    DEFINE_PROPERTY(bool, CommonContactorClosed)
-    DEFINE_PROPERTY(bool, CommonContactorClosing)
-    DEFINE_PROPERTY(bool, CommonContactorError)
-    DEFINE_PROPERTY(quint16, CommonLineCurrent)
-    DEFINE_PROPERTY(quint16, CommonChargeCurrent)
-    DEFINE_PROPERTY(bool, CommonContactorOpeningError)
-
-    // Motor Board Status
-    DEFINE_PROPERTY(bool, MotorPrechargerClosed)
-    DEFINE_PROPERTY(bool, MotorPrechargerClosing)
-    DEFINE_PROPERTY(bool, MotorPrechargerError)
-    DEFINE_PROPERTY(bool, MotorContactorClosed)
-    DEFINE_PROPERTY(bool, MotorContactorClosing)
-    DEFINE_PROPERTY(bool, MotorContactorError)
-    DEFINE_PROPERTY(quint16, MotorLineCurrent) 
-    DEFINE_PROPERTY(quint16, MotorChargeCurrent) 
-    DEFINE_PROPERTY(bool, MotorBPSError)
-
-    // Array Board Status
-    DEFINE_PROPERTY(bool, ArrayPrechargerClosed)
-    DEFINE_PROPERTY(bool, ArrayPrechargerClosing)
-    DEFINE_PROPERTY(bool, ArrayPrechargerError)
-    DEFINE_PROPERTY(bool, ArrayContactorClosed)
-    DEFINE_PROPERTY(bool, ArrayContactorClosing)
-    DEFINE_PROPERTY(bool, ArrayContactorError)
-    DEFINE_PROPERTY(quint16, ArrayLineCurrent) 
-    DEFINE_PROPERTY(quint16, ArrayChargeCurrent) 
-    DEFINE_PROPERTY(bool, ArrayBPSError)
-
-    // LV Board Status
-    DEFINE_PROPERTY(bool, LvPrechargerClosed)
-    DEFINE_PROPERTY(bool, LvPrechargerClosing)
-    DEFINE_PROPERTY(bool, LvPrechargerError)
-    DEFINE_PROPERTY(bool, LvContactorClosed)
-    DEFINE_PROPERTY(bool, LvContactorClosing)
-    DEFINE_PROPERTY(bool, LvContactorError)
-    DEFINE_PROPERTY(quint16, LvLineCurrent)    
-    DEFINE_PROPERTY(quint16, LvChargeCurrent)  
-    DEFINE_PROPERTY(bool, LvBpsError)
-
-    // Charge Board Status
-    DEFINE_PROPERTY(bool, ChargePrechargerClosed)
-    DEFINE_PROPERTY(bool, ChargePrechargerClosing)
-    DEFINE_PROPERTY(bool, ChargePrechargerError)
-    DEFINE_PROPERTY(bool, ChargeContactorClosed)
-    DEFINE_PROPERTY(bool, ChargeContactorClosing)
-    DEFINE_PROPERTY(bool, ChargeContactorError)
-    DEFINE_PROPERTY(quint16, ChargeLineCurrent)
-    DEFINE_PROPERTY(quint16, ChargeChargeCurrent)
-    DEFINE_PROPERTY(bool, ChargeBPSError)
-                    */
                     Text {
                         text: "Common Precharger Closed: " + contactor.CommonPrechargerClosed
                     }
@@ -1143,7 +1088,7 @@ Rectangle {
                         text: "LV Charge Current: " + contactor.LvChargeCurrent
                     }
                     Text {
-                        text: "LV BPS Error: " + contactor.LvBPSError
+                        text: "LV BPS Error: " + contactor.LvBpsError
                     }
                     Text {
                         text: "Charge Precharger Closed: " + contactor.ChargePrechargerClosed
