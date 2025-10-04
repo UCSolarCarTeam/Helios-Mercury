@@ -607,6 +607,9 @@ Rectangle {
 
                 Column {
                     Text {
+                        text: "Battery"
+                    }
+                    Text {
                         text: "BMU Alive: " + battery.BmuAlive
                     }
                     Text {
@@ -696,6 +699,17 @@ Rectangle {
                     Text {
                         text: "Average Cell Voltage: " + battery.AverageCellVoltage
                     }
+                    Text {
+                        text: "Maximum Cell Voltage: " + battery.MaximumCellVoltage
+                    }
+                    Text {
+                        text: "Minimum Cell Voltage: " + battery.MinimumCellVoltage
+                    }
+                    Text {
+                        text: "Maximum Pack Voltage: " + battery.MaximumPackVoltage
+                    }
+                    Text {
+                        text: "Minimum Pack Voltage: " + battery.MinimumPackVoltage
                 }
             }
 
