@@ -115,49 +115,43 @@ Rectangle {
                         text: "B3"
                     }
                     Text {
-                        text: "Right Signal In: " + b3.RightSignalIn
+                        text: "Right Signal In: " + b3.RightSignalInput
                     }
                     Text {
-                        text: "Left Signal In: " + b3.LeftSignalIn
+                        text: "Left Signal In: " + b3.LeftSignalInput
                     }
                     Text {
-                        text: "Hazard Lights In: " + b3.HazardLightsIn
+                        text: "Hazard Lights In: " + b3.HazardLightsInput
                     }
                     Text {
-                        text: "Headlights Switch In: " + b3.HeadlightsSwitchIn
+                        text: "Headlights Switch In: " + b3.HeadlightsSwitchInput
                     }
                     Text {
-                        text: "Forward Switch In: " + b3.ForwardSwitchIn
+                        text: "Forward Digital: " + b3.ForwardDigital
                     }
                     Text {
-                        text: "Horn Switch In: " + b3.HornSwitchIn
+                        text: "Neutral Digital: " + b3.NeutralDigital
                     }
                     Text {
-                        text: "Forward In: " + b3.ForwardIn
+                        text: "Reverse Digital: " + b3.ReverseDigital
                     }
                     Text {
-                        text: "Neutral: " + b3.Neutral
+                        text: "Horn Switch Digital: " + b3.HornSwitchDigital
                     }
                     Text {
-                        text: "Reverse: " + b3.Reverse
+                        text: "Brake Switch Digital: " + b3.BrakeSwitchDigital
                     }
                     Text {
-                        text: "Brake Switch: " + b3.BrakeSwitch
+                        text: "Handbrake Switch Digital: " + b3.HandbrakeSwitchDigital
                     }
                     Text {
-                        text: "Handbrake Switch: " + b3.HandbrakeSwitch
+                        text: "Motor Reset Digital: " + b3.MotorResetDigital
                     }
                     Text {
-                        text: "Motor Reset: " + b3.MotorReset
+                        text: "Race Mode Digital: " + b3.RaceModeDigital
                     }
                     Text {
-                        text: "Race Mode: " + b3.RaceMode
-                    }
-                    Text {
-                        text: "Lap: " + b3.Lap
-                    }
-                    Text {
-                        text: "Zoom Zoom: " + b3.ZoomZoom
+                        text: "LapDigital: " + b3.LapDigital
                     }
                     Text {
                         text: "Acceleration: " + b3.Acceleration
@@ -166,22 +160,22 @@ Rectangle {
                         text: "Regen Braking: " + b3.RegenBraking
                     }
                     Text {
-                        text: "Right Signal Out: " + b3.RightSignalOut
+                        text: "Right Signal Status: " + b3.RightSignalStatus
                     }
                     Text {
-                        text: "Left Signal Out: " + b3.LeftSignalOut
+                        text: "Left Signal Status: " + b3.LeftSignalStatus
                     }
                     Text {
-                        text: "Daytime Running Light Signal Out: " + b3.DaytimeRunningLightSignalOut
+                        text: "Daytime Running Light Signal Status: " + b3.DaytimeRunningLightSignalStatus
                     }
                     Text {
-                        text: "Headlight Signal Out: " + b3.HeadlightSignalOut
+                        text: "Headlight Signal Status: " + b3.HeadlightSignalStatus
                     }
                     Text {
-                        text: "Brake Light Signal Out: " + b3.BrakeLightSignalOut
+                        text: "Brake Light Signal Status: " + b3.BrakeLightSignalStatus
                     }
                     Text {
-                        text: "Horn Signal Out: " + b3.HornSignalOut
+                        text: "Horn Signal Status: " + b3.HornSignalStatus
                     }
                 }
 
