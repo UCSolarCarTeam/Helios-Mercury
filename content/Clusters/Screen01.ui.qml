@@ -435,47 +435,103 @@ Rectangle {
                     Text {
                         text: "MBMS"
                     }
+
+                    /**
+                    // Contactor Commands
+    DEFINE_PROPERTY(bool, CommonContactorCommand)
+    DEFINE_PROPERTY(bool, MotorContactorCommand)
+    DEFINE_PROPERTY(bool, ArrayContactorCommand)
+    DEFINE_PROPERTY(bool, LvContactorCommand)
+    DEFINE_PROPERTY(bool, ChargeContactorCommand)
+    
+    // MBMS Status
+    DEFINE_PROPERTY(unsigned short, AuxiliaryBatteryVoltage)
+    DEFINE_PROPERTY(bool, StrobeBmsLight)
+    DEFINE_PROPERTY(bool, ChargeEnable)
+    DEFINE_PROPERTY(bool, ChargeSafety)
+    DEFINE_PROPERTY(bool, DischargeEnable)
+    DEFINE_PROPERTY(bool, OrionCanReceivedRecently)
+    DEFINE_PROPERTY(bool, DischargeShouldTrip)
+    DEFINE_PROPERTY(bool, ChargeShouldTrip)
+    DEFINE_PROPERTY(unsigned char, StartupState)
+    DEFINE_PROPERTY(unsigned char, SystemState)
+    
+    // Power Selection Status
+    DEFINE_PROPERTY(bool, MainPowerSwitch)
+    DEFINE_PROPERTY(bool, ExternalShutdown)
+    DEFINE_PROPERTY(bool, En1)
+    DEFINE_PROPERTY(bool, DcdcFault)
+    DEFINE_PROPERTY(bool, ThreeAOc)
+    DEFINE_PROPERTY(bool, DcdcOn)
+    DEFINE_PROPERTY(bool, ChgFault)
+    DEFINE_PROPERTY(bool, ChgOn)
+    DEFINE_PROPERTY(bool, ChgLvEn)
+    DEFINE_PROPERTY(bool, AbattDisable)
+    DEFINE_PROPERTY(bool, Key)
+    
+    // MBMS Trip
+    DEFINE_PROPERTY(bool, HighCellVoltageTrip)
+    DEFINE_PROPERTY(bool, LowCellVoltageTrip)
+    DEFINE_PROPERTY(bool, CommonHighCurrentTrip)
+    DEFINE_PROPERTY(bool, MotorHighCurrentTrip)
+    DEFINE_PROPERTY(bool, ArrayHighCurrentTrip)
+    DEFINE_PROPERTY(bool, LvHighCurrentTrip)
+    DEFINE_PROPERTY(bool, ChargeHighCurrentTrip)
+    DEFINE_PROPERTY(bool, ProtectionTrip)
+    DEFINE_PROPERTY(bool, OrionMessageTimeoutTrip)
+    DEFINE_PROPERTY(bool, ContactorDisconnectedUnexpectedlyTrip)
+    DEFINE_PROPERTY(bool, ContactorConnectedUnexpectedlyTrip)
+    DEFINE_PROPERTY(bool, CommonHeartbeatDeadTrip)
+    DEFINE_PROPERTY(bool, MotorHeartbeatDeadTrip)
+    DEFINE_PROPERTY(bool, ArrayHeartbeatDeadTrip)
+    DEFINE_PROPERTY(bool, LvHeartbeatDeadTrip)
+    DEFINE_PROPERTY(bool, ChargeHeartbeatDeadTrip)
+    DEFINE_PROPERTY(bool, MpsDisabledTrip)
+    DEFINE_PROPERTY(bool, EsdEnabledTrip)
+    DEFINE_PROPERTY(bool, HighTemperatureTrip)
+    DEFINE_PROPERTY(bool, LowTemperatureTrip)
+    
+    // MBMS Soft Battery Limit Warning
+    DEFINE_PROPERTY(bool, HighCellVoltageWarning)
+    DEFINE_PROPERTY(bool, LowCellVoltageWarning)
+    DEFINE_PROPERTY(bool, CommonHighCurrentWarning)
+    DEFINE_PROPERTY(bool, MotorHighCurrentWarning)
+    DEFINE_PROPERTY(bool, ArrayHighCurrentWarning)
+    DEFINE_PROPERTY(bool, LvHighCurrentWarning)
+    DEFINE_PROPERTY(bool, ChargeHighCurrentWarning)
+    DEFINE_PROPERTY(bool, HighTemperatureWarning)
+    DEFINE_PROPERTY(bool, LowTemperatureWarning)
+    DEFINE_PROPERTY(bool, CanOc12VWarning) 
+                    */
                     Text {
-                        text: "Common Contactor State: " + mbms.CommonContactorState
+                        text: "Common Contactor Command: " + mbms.CommonContactorCommand
                     }
                     Text {
-                        text: "Motor Contactor State: " + mbms.MotorContactorState
+                        text: "Motor Contactor Command: " + mbms.MotorContactorCommand
                     }
                     Text {
-                        text: "Array Contactor State: " + mbms.ArrayContactorState
+                        text: "Array Contactor Command: " + mbms.ArrayContactorCommand
                     }
                     Text {
-                        text: "LV Contactor State: " + mbms.LvContactorState
+                        text: "LV Contactor Command: " + mbms.LvContactorCommand
                     }
                     Text {
-                        text: "Charge Contactor State: " + mbms.ChargeContactorState
+                        text: "Charge Contactor Command: " + mbms.ChargeContactorCommand
                     }
                     Text {
-                        text: "Common Contactor Error: " + mbms.CommonContactorError
-                    }
-                    Text {
-                        text: "Motor Contactor Error: " + mbms.MotorContactorError
-                    }
-                    Text {
-                        text: "Array Contactor Error: " + mbms.ArrayContactorError
-                    }
-                    Text {
-                        text: "LV Contactor Error: " + mbms.LvContactorError
-                    }
-                    Text {
-                        text: "Charge Contactor Error: " + mbms.ChargeContactorError
+                        text: "Auxiliary Battery Voltage: " + mbms.AuxiliaryBatteryVoltage
                     }
                     Text {
                         text: "Strobe BMS Light: " + mbms.StrobeBmsLight
                     }
                     Text {
-                        text: "Allow Charge: " + mbms.AllowCharge
+                        text: "Charge Enable: " + mbms.ChargeEnable
                     }
                     Text {
-                        text: "High Voltage Enable State: " + mbms.HighVoltageEnableState
+                        text: "Charge Safety: " + mbms.ChargeSafety
                     }
                     Text {
-                        text: "Allow Discharge: " + mbms.AllowDischarge
+                        text: "Discharge Enable: " + mbms.DischargeEnable
                     }
                     Text {
                         text: "Orion CAN Received Recently: " + mbms.OrionCanReceivedRecently
@@ -487,34 +543,43 @@ Rectangle {
                         text: "Charge Should Trip: " + mbms.ChargeShouldTrip
                     }
                     Text {
-                        text: "Auxillary Battery Voltage: " + mbms.AuxillaryBatteryVoltage
+                        text: "Startup State: " + mbms.StartupState
                     }
                     Text {
-                        text: "Motor Voltage: " + mbms.MotorVoltage
+                        text: "System State: " + mbms.SystemState
                     }
                     Text {
-                        text: "Array Voltage: " + mbms.ArrayVoltage
+                        text: "Main Power Switch: " + mbms.MainPowerSwitch
                     }
                     Text {
-                        text: "LV Voltage: " + mbms.LvVoltage
+                        text: "External Shutdown: " + mbms.ExternalShutdown
                     }
                     Text {
-                        text: "Charge Voltage: " + mbms.ChargeVoltage
+                        text: "En1: " + mbms.En1
                     }
                     Text {
-                        text: "Common Current: " + mbms.CommonCurrent
+                        text: "DCDC Fault: " + mbms.DcdcFault
                     }
                     Text {
-                        text: "Motor Current: " + mbms.MotorCurrent
+                        text: "Three A OC: " + mbms.ThreeAOc
                     }
                     Text {
-                        text: "Array Current: " + mbms.ArrayCurrent
+                        text: "DCDC On: " + mbms.DcdcOn
                     }
                     Text {
-                        text: "LV Current: " + mbms.LvCurrent
+                        text: "CHG Fault: " + mbms.ChgFault
                     }
                     Text {
-                        text: "Charge Current: " + mbms.ChargeCurrent
+                        text: "CHG On: " + mbms.ChgOn
+                    }
+                    Text {
+                        text: "CHG LV En: " + mbms.ChgLvEn
+                    }
+                    Text {
+                        text: "ABATT Disable: " + mbms.AbattDisable
+                    }
+                    Text {
+                        text: "Key: " + mbms.Key
                     }
                     Text {
                         text: "High Cell Voltage Trip: " + mbms.HighCellVoltageTrip
@@ -523,19 +588,19 @@ Rectangle {
                         text: "Low Cell Voltage Trip: " + mbms.LowCellVoltageTrip
                     }
                     Text {
-                        text: "High Common Current Trip: " + mbms.HighCommonCurrentTrip
+                        text: "Common High Current Trip: " + mbms.CommonHighCurrentTrip
                     }
                     Text {
-                        text: "Motor High Temperature Current Trip: " + mbms.MotorHighTemperatureCurrentTrip
+                        text: "Motor High Current Trip: " + mbms.MotorHighCurrentTrip
                     }
                     Text {
-                        text: "Array High Temperature Current Trip: " + mbms.ArrayHighTemperatureCurrentTrip
+                        text: "Array High Current Trip: " + mbms.ArrayHighCurrentTrip
                     }
                     Text {
-                        text: "LV High Temperature Current Trip: " + mbms.LvHighTemperatureCurrentTrip
+                        text: "LV High Current Trip: " + mbms.LvHighCurrentTrip
                     }
                     Text {
-                        text: "Charge High Temperature Current Trip: " + mbms.ChargeHighTemperatureCurrentTrip
+                        text: "Charge High Current Trip: " + mbms.ChargeHighCurrentTrip
                     }
                     Text {
                         text: "Protection Trip: " + mbms.ProtectionTrip
@@ -545,6 +610,66 @@ Rectangle {
                     }
                     Text {
                         text: "Contactor Disconnected Unexpectedly Trip: " + mbms.ContactorDisconnectedUnexpectedlyTrip
+                    }
+                    Text {
+                        text: "Contactor Connected Unexpectedly Trip: " + mbms.ContactorConnectedUnexpectedlyTrip
+                    }
+                    Text {
+                        text: "Common Heartbeat Dead Trip: " + mbms.CommonHeartbeatDeadTrip
+                    }
+                    Text {
+                        text: "Motor Heartbeat Dead Trip: " + mbms.MotorHeartbeatDeadTrip
+                    }
+                    Text {
+                        text: "Array Heartbeat Dead Trip: " + mbms.ArrayHeartbeatDeadTrip
+                    }
+                    Text {
+                        text: "LV Heartbeat Dead Trip: " + mbms.LvHeartbeatDeadTrip
+                    }
+                    Text {
+                        text: "Charge Heartbeat Dead Trip: " + mbms.ChargeHeartbeatDeadTrip
+                    }
+                    Text {
+                        text: "MPS Disabled Trip: " + mbms.MpsDisabledTrip
+                    }
+                    Text {
+                        text: "ESD Enabled Trip: " + mbms.EsdEnabledTrip
+                    }
+                    Text {
+                        text: "High Temperature Trip: " + mbms.HighTemperatureTrip
+                    }
+                    Text {
+                        text: "Low Temperature Trip: " + mbms.LowTemperatureTrip
+                    }
+                    Text {
+                        text: "High Cell Voltage Warning: " + mbms.HighCellVoltageWarning
+                    }
+                    Text {
+                        text: "Low Cell Voltage Warning: " + mbms.LowCellVoltageWarning
+                    }
+                    Text {
+                        text: "Common High Current Warning: " + mbms.CommonHighCurrentWarning
+                    }
+                    Text {
+                        text: "Motor High Current Warning: " + mbms.MotorHighCurrentWarning
+                    }
+                    Text {
+                        text: "Array High Current Warning: " + mbms.ArrayHighCurrentWarning
+                    }
+                    Text {
+                        text: "LV High Current Warning: " + mbms.LvHighCurrentWarning
+                    }
+                    Text {
+                        text: "Charge High Current Warning: " + mbms.ChargeHighCurrentWarning
+                    }
+                    Text {
+                        text: "High Temperature Warning: " + mbms.HighTemperatureWarning
+                    }
+                    Text {
+                        text: "Low Temperature Warning: " + mbms.LowTemperatureWarning
+                    }
+                    Text {
+                        text: "CAN OC 12V Warning: " + mbms.CanOc12VWarning
                     }
                 }
 
