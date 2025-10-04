@@ -976,6 +976,203 @@ Rectangle {
                         text: "Is Telemetry Connected: " + pi.IsTelemetryConnected
                     }
                 }
+
+                Column {
+                    Text {
+                        text: "Contactors"
+                    }
+                    /**
+    // Common Board Status
+    DEFINE_PROPERTY(bool, CommonPrechargerClosed)
+    DEFINE_PROPERTY(bool, CommonPrechargerClosing)
+    DEFINE_PROPERTY(bool, CommonPrechargerError)
+    DEFINE_PROPERTY(bool, CommonContactorClosed)
+    DEFINE_PROPERTY(bool, CommonContactorClosing)
+    DEFINE_PROPERTY(bool, CommonContactorError)
+    DEFINE_PROPERTY(quint16, CommonLineCurrent)
+    DEFINE_PROPERTY(quint16, CommonChargeCurrent)
+    DEFINE_PROPERTY(bool, CommonContactorOpeningError)
+
+    // Motor Board Status
+    DEFINE_PROPERTY(bool, MotorPrechargerClosed)
+    DEFINE_PROPERTY(bool, MotorPrechargerClosing)
+    DEFINE_PROPERTY(bool, MotorPrechargerError)
+    DEFINE_PROPERTY(bool, MotorContactorClosed)
+    DEFINE_PROPERTY(bool, MotorContactorClosing)
+    DEFINE_PROPERTY(bool, MotorContactorError)
+    DEFINE_PROPERTY(quint16, MotorLineCurrent) 
+    DEFINE_PROPERTY(quint16, MotorChargeCurrent) 
+    DEFINE_PROPERTY(bool, MotorBPSError)
+
+    // Array Board Status
+    DEFINE_PROPERTY(bool, ArrayPrechargerClosed)
+    DEFINE_PROPERTY(bool, ArrayPrechargerClosing)
+    DEFINE_PROPERTY(bool, ArrayPrechargerError)
+    DEFINE_PROPERTY(bool, ArrayContactorClosed)
+    DEFINE_PROPERTY(bool, ArrayContactorClosing)
+    DEFINE_PROPERTY(bool, ArrayContactorError)
+    DEFINE_PROPERTY(quint16, ArrayLineCurrent) 
+    DEFINE_PROPERTY(quint16, ArrayChargeCurrent) 
+    DEFINE_PROPERTY(bool, ArrayBPSError)
+
+    // LV Board Status
+    DEFINE_PROPERTY(bool, LvPrechargerClosed)
+    DEFINE_PROPERTY(bool, LvPrechargerClosing)
+    DEFINE_PROPERTY(bool, LvPrechargerError)
+    DEFINE_PROPERTY(bool, LvContactorClosed)
+    DEFINE_PROPERTY(bool, LvContactorClosing)
+    DEFINE_PROPERTY(bool, LvContactorError)
+    DEFINE_PROPERTY(quint16, LvLineCurrent)    
+    DEFINE_PROPERTY(quint16, LvChargeCurrent)  
+    DEFINE_PROPERTY(bool, LvBpsError)
+
+    // Charge Board Status
+    DEFINE_PROPERTY(bool, ChargePrechargerClosed)
+    DEFINE_PROPERTY(bool, ChargePrechargerClosing)
+    DEFINE_PROPERTY(bool, ChargePrechargerError)
+    DEFINE_PROPERTY(bool, ChargeContactorClosed)
+    DEFINE_PROPERTY(bool, ChargeContactorClosing)
+    DEFINE_PROPERTY(bool, ChargeContactorError)
+    DEFINE_PROPERTY(quint16, ChargeLineCurrent)
+    DEFINE_PROPERTY(quint16, ChargeChargeCurrent)
+    DEFINE_PROPERTY(bool, ChargeBPSError)
+                    */
+                    Text {
+                        text: "Common Precharger Closed: " + contactor.CommonPrechargerClosed
+                    }
+                    Text {
+                        text: "Common Precharger Closing: " + contactor.CommonPrechargerClosing
+                    }
+                    Text {
+                        text: "Common Precharger Error: " + contactor.CommonPrechargerError
+                    }
+                    Text {
+                        text: "Common Contactor Closed: " + contactor.CommonContactorClosed
+                    }
+                    Text {
+                        text: "Common Contactor Closing: " + contactor.CommonContactorClosing
+                    }
+                    Text {
+                        text: "Common Contactor Error: " + contactor.CommonContactorError
+                    }
+                    Text {
+                        text: "Common Line Current: " + contactor.CommonLineCurrent
+                    }
+                    Text {
+                        text: "Common Charge Current: " + contactor.CommonChargeCurrent
+                    }
+                    Text {
+                        text: "Common Contactor Opening Error: " + contactor.CommonContactorOpeningError
+                    }
+                    Text {
+                        text: "Motor Precharger Closed: " + contactor.MotorPrechargerClosed
+                    }
+                    Text {
+                        text: "Motor Precharger Closing: " + contactor.MotorPrechargerClosing
+                    }
+                    Text {
+                        text: "Motor Precharger Error: " + contactor.MotorPrechargerError
+                    }
+                    Text {
+                        text: "Motor Contactor Closed: " + contactor.MotorContactorClosed
+                    }
+                    Text {
+                        text: "Motor Contactor Closing: " + contactor.MotorContactorClosing
+                    }
+                    Text {
+                        text: "Motor Contactor Error: " + contactor.MotorContactorError
+                    }
+                    Text {
+                        text: "Motor Line Current: " + contactor.MotorLineCurrent
+                    }
+                    Text {
+                        text: "Motor Charge Current: " + contactor.MotorChargeCurrent
+                    }
+                    Text {
+                        text: "Motor BPS Error: " + contactor.MotorBPSError
+                    }
+                    Text {
+                        text: "Array Precharger Closed: " + contactor.ArrayPrechargerClosed
+                    }
+                    Text {
+                        text: "Array Precharger Closing: " + contactor.ArrayPrechargerClosing
+                    }
+                    Text {
+                        text: "Array Precharger Error: " + contactor.ArrayPrechargerError
+                    }
+                    Text {
+                        text: "Array Contactor Closed: " + contactor.ArrayContactorClosed
+                    }
+                    Text {
+                        text: "Array Contactor Closing: " + contactor.ArrayContactorClosing
+                    }
+                    Text {
+                        text: "Array Contactor Error: " + contactor.ArrayContactorError
+                    }
+                    Text {
+                        text: "Array Line Current: " + contactor.ArrayLineCurrent
+                    }
+                    Text {
+                        text: "Array Charge Current: " + contactor.ArrayChargeCurrent
+                    }
+                    Text {
+                        text: "Array BPS Error: " + contactor.ArrayBPSError
+                    }
+                    Text {
+                        text: "LV Precharger Closed: " + contactor.LvPrechargerClosed
+                    }
+                    Text {
+                        text: "LV Precharger Closing: " + contactor.LvPrechargerClosing
+                    }
+                    Text {
+                        text: "LV Precharger Error: " + contactor.LvPrechargerError
+                    }
+                    Text {
+                        text: "LV Contactor Closed: " + contactor.LvContactorClosed
+                    }
+                    Text {
+                        text: "LV Contactor Closing: " + contactor.LvContactorClosing
+                    }
+                    Text {
+                        text: "LV Contactor Error: " + contactor.LvContactorError
+                    }
+                    Text {
+                        text: "LV Line Current: " + contactor.LvLineCurrent
+                    }
+                    Text {
+                        text: "LV Charge Current: " + contactor.LvChargeCurrent
+                    }
+                    Text {
+                        text: "LV BPS Error: " + contactor.LvBPSError
+                    }
+                    Text {
+                        text: "Charge Precharger Closed: " + contactor.ChargePrechargerClosed
+                    }
+                    Text {
+                        text: "Charge Precharger Closing: " + contactor.ChargePrechargerClosing
+                    }
+                    Text {
+                        text: "Charge Precharger Error: " + contactor.ChargePrechargerError
+                    }
+                    Text {
+                        text: "Charge Contactor Closed: " + contactor.ChargeContactorClosed
+                    }
+                    Text {
+                        text: "Charge Contactor Closing: " + contactor.ChargeContactorClosing
+                    }
+                    Text {
+                        text: "Charge Contactor Error: " + contactor.ChargeContactorError
+                    }
+                    Text {
+                        text: "Charge Line Current: " + contactor.ChargeLineCurrent
+                    }
+                    Text {
+                        text: "Charge Charge Current: " + contactor.ChargeChargeCurrent
+                    }
+                    Text {
+                        text: "Charge BPS Error: " + contactor.ChargeBPSError
+                    }
+                }
             }
         }
     }
