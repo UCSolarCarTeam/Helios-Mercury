@@ -232,8 +232,7 @@ Rectangle {
                         text: "Charge Limit Enforcement Fault: " + batteryFaults.ChargeLimitEnforcementFault
                     }
                     Text {
-                        text: "Discharge Limit Enforcement Fault: "
-                            + batteryFaults.DischargeLimitEnforcementFault
+                        text: "Discharge Limit Enforcement Fault: " + batteryFaults.DischargeLimitEnforcementFault
                     }
                     Text {
                         text: "Charger Safety Relay Fault: " + batteryFaults.ChargerSafetyRelayFault
@@ -251,53 +250,43 @@ Rectangle {
                         text: "DCL Reduced Due to Low SOC: " + batteryFaults.DclReducedDueToLowSoc
                     }
                     Text {
-                        text: "DCL Reduced Due to High Cell Resistance: "
-                            + batteryFaults.DclReducedDueToHighCellResistance
+                        text: "DCL Reduced Due to High Cell Resistance: " + batteryFaults.DclReducedDueToHighCellResistance
                     }
                     Text {
                         text: "DCL Reduced Due to Temperature: " + batteryFaults.DclReducedDueToTemperature
                     }
                     Text {
-                        text: "DCL Reduced Due to Low Cell Voltage: "
-                            + batteryFaults.DclReducedDueToLowCellVoltage
+                        text: "DCL Reduced Due to Low Cell Voltage: " + batteryFaults.DclReducedDueToLowCellVoltage
                     }
                     Text {
-                        text: "DCL Reduced Due to Low Pack Voltage: "
-                            + batteryFaults.DclReducedDueToLowPackVoltage
+                        text: "DCL Reduced Due to Low Pack Voltage: " + batteryFaults.DclReducedDueToLowPackVoltage
                     }
                     Text {
-                        text: "DCL and CCL Reduced Due to Voltage Failsafe: "
-                            + batteryFaults.DclAndCclReducedDueToVoltageFailsafe
+                        text: "DCL and CCL Reduced Due to Voltage Failsafe: " + batteryFaults.DclAndCclReducedDueToVoltageFailsafe
                     }
                     Text {
-                        text: "DCL and CCL Reduced Due to Communication Failsafe: "
-                            + batteryFaults.DclAndCclReducedDueToCommunicationFailsafe
+                        text: "DCL and CCL Reduced Due to Communication Failsafe: " + batteryFaults.DclAndCclReducedDueToCommunicationFailsafe
                     }
                     Text {
                         text: "CCL Reduced Due to High SOC: " + batteryFaults.CclReducedDueToHighSoc
                     }
                     Text {
-                        text: "CCL Reduced Due to High Cell Resistance: "
-                            + batteryFaults.CclReducedDueToHighCellResistance
+                        text: "CCL Reduced Due to High Cell Resistance: " + batteryFaults.CclReducedDueToHighCellResistance
                     }
                     Text {
                         text: "CCL Reduced Due to Temperature: " + batteryFaults.CclReducedDueToTemperature
                     }
                     Text {
-                        text: "CCL Reduced Due to High Cell Voltage: "
-                            + batteryFaults.CclReducedDueToHighCellVoltage
+                        text: "CCL Reduced Due to High Cell Voltage: " + batteryFaults.CclReducedDueToHighCellVoltage
                     }
                     Text {
-                        text: "CCL Reduced Due to High Pack Voltage: "
-                            + batteryFaults.CclReducedDueToHighPackVoltage
+                        text: "CCL Reduced Due to High Pack Voltage: " + batteryFaults.CclReducedDueToHighPackVoltage
                     }
                     Text {
-                        text: "CCL Reduced Due to Charger Latch: "
-                            + batteryFaults.CclReducedDueToChargerLatch
+                        text: "CCL Reduced Due to Charger Latch: " + batteryFaults.CclReducedDueToChargerLatch
                     }
                     Text {
-                        text: "CCL Reduced Due to Alternate Current Limit: "
-                            + batteryFaults.CclReducedDueToAlternateCurrentLimit
+                        text: "CCL Reduced Due to Alternate Current Limit: " + batteryFaults.CclReducedDueToAlternateCurrentLimit
                     }
                 }
 
