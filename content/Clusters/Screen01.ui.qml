@@ -972,6 +972,9 @@ Rectangle {
                     Text {
                         text: "Car Latency: " + pi.Latency
                     }
+                    Text {
+                        text: "Is Telemetry Connected: " + pi.IsTelemetryConnected
+                    }
                 }
             }
         }
