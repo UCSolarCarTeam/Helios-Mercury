@@ -949,19 +949,13 @@ Rectangle {
                         text: "Key Motor"
                     }
                     Text {
-                        text: "Motor Setpoint: " + keyMotor.MotorSetpoint
+                        text: "Velocity: " + keyMotor.KeyMotorVelocity
                     }
                     Text {
-                        text: "Control Mode: " + keyMotor.ControlMode
+                        text: "Motor Current: " + keyMotor.MotorCurrent
                     }
                     Text {
-                        text: "Motor Mode: " + keyMotor.MotorMode
-                    }
-                    Text {
-                        text: "Software Enable: " + keyMotor.SoftwareEnable
-                    }
-                    Text {
-                        text: "Debug Mode: " + keyMotor.DebugMode
+                        text: "Bus Current Out: " + keyMotor.BusCurrentOut
                     }
                 }
 
