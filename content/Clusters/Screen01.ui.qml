@@ -292,97 +292,138 @@ Rectangle {
 
                 Column {
                     Text {
-                        text: "MPPT 0"
+                        text: "MPPT 0 Channel 0"
                     }
                     Text {
-                        text: "Channel Number: " + mppt0.ChannelNumber
+                        text: "Array Voltage: " + mppt.Mppt0Ch0ArrayVoltage
                     }
                     Text {
-                        text: "MPPT Status: " + mppt0.MpptStatus
+                        text: "Array Current: " + mppt.Mppt0Ch0ArrayCurrent
                     }
                     Text {
-                        text: "Array Voltage: " + mppt0.ArrayVoltage
+                        text: "Battery Voltage: " + mppt.Mppt0Ch0BatteryVoltage
                     }
                     Text {
-                        text: "Array Current: " + mppt0.ArrayCurrent
-                    }
-                    Text {
-                        text: "Battery Voltage: " + mppt0.BatteryVoltage
-                    }
-                    Text {
-                        text: "Temperature: " + mppt0.Temperature
+                        text: "Temperature: " + mppt.Mppt0Ch0Temperature
                     }
                 }
-
                 Column {
                     Text {
-                        text: "MPPT 1"
+                        text: "MPPT 0 Channel 1"
                     }
                     Text {
-                        text: "Channel Number: " + mppt1.ChannelNumber
+                        text: "Array Voltage: " + mppt.Mppt0Ch1ArrayVoltage
                     }
                     Text {
-                        text: "MPPT Status: " + mppt1.MpptStatus
+                        text: "Array Current: " + mppt.Mppt0Ch1ArrayCurrent
                     }
                     Text {
-                        text: "Array Voltage: " + mppt1.ArrayVoltage
+                        text: "Battery Voltage: " + mppt.Mppt0Ch1BatteryVoltage
                     }
                     Text {
-                        text: "Array Current: " + mppt1.ArrayCurrent
-                    }
-                    Text {
-                        text: "Battery Voltage: " + mppt1.BatteryVoltage
-                    }
-                    Text {
-                        text: "Temperature: " + mppt1.Temperature
+                        text: "Temperature: " + mppt.Mppt0Ch1Temperature
                     }
                 }
-
                 Column {
                     Text {
-                        text: "MPPT 2"
+                        text: "MPPT 1 Channel 0"
                     }
                     Text {
-                        text: "Channel Number: " + mppt2.ChannelNumber
+                        text: "Array Voltage: " + mppt.Mppt1Ch0ArrayVoltage
                     }
                     Text {
-                        text: "MPPT Status: " + mppt2.MpptStatus
+                        text: "Array Current: " + mppt.Mppt1Ch0ArrayCurrent
                     }
                     Text {
-                        text: "Array Voltage: " + mppt2.ArrayVoltage
+                        text: "Battery Voltage: " + mppt.Mppt1Ch0BatteryVoltage
                     }
                     Text {
-                        text: "Array Current: " + mppt2.ArrayCurrent
-                    }
-                    Text {
-                        text: "Battery Voltage: " + mppt2.BatteryVoltage
-                    }
-                    Text {
-                        text: "Temperature: " + mppt2.Temperature
+                        text: "Temperature: " + mppt.Mppt1Ch0Temperature
                     }
                 }
-
                 Column {
                     Text {
-                        text: "MPPT 3"
+                        text: "MPPT 1 Channel 1"
                     }
                     Text {
-                        text: "Channel Number: " + mppt3.ChannelNumber
+                        text: "Array Voltage: " + mppt.Mppt1Ch1ArrayVoltage
                     }
                     Text {
-                        text: "MPPT Status: " + mppt3.MpptStatus
+                        text: "Array Current: " + mppt.Mppt1Ch1ArrayCurrent
                     }
                     Text {
-                        text: "Array Voltage: " + mppt3.ArrayVoltage
+                        text: "Battery Voltage: " + mppt.Mppt1Ch1BatteryVoltage
                     }
                     Text {
-                        text: "Array Current: " + mppt3.ArrayCurrent
+                        text: "Temperature: " + mppt.Mppt1Ch1Temperature
+                    }
+                }
+                Column {
+                    Text {
+                        text: "MPPT 2 Channel 0"
                     }
                     Text {
-                        text: "Battery Voltage: " + mppt3.BatteryVoltage
+                        text: "Array Voltage: " + mppt.Mppt2Ch0ArrayVoltage
                     }
                     Text {
-                        text: "Temperature: " + mppt3.Temperature
+                        text: "Array Current: " + mppt.Mppt2Ch0ArrayCurrent
+                    }
+                    Text {
+                        text: "Battery Voltage: " + mppt.Mppt2Ch0BatteryVoltage
+                    }
+                    Text {
+                        text: "Temperature: " + mppt.Mppt2Ch0Temperature
+                    }
+                }
+                Column {
+                    Text {
+                        text: "MPPT 2 Channel 1"
+                    }
+                    Text {
+                        text: "Array Voltage: " + mppt.Mppt2Ch1ArrayVoltage
+                    }
+                    Text {
+                        text: "Array Current: " + mppt.Mppt2Ch1ArrayCurrent
+                    }
+                    Text {
+                        text: "Battery Voltage: " + mppt.Mppt2Ch1BatteryVoltage
+                    }
+                    Text {
+                        text: "Temperature: " + mppt.Mppt2Ch1Temperature
+                    }
+                }
+                Column {
+                    Text {
+                        text: "MPPT 3 Channel 0"
+                    }
+                    Text {
+                        text: "Array Voltage: " + mppt.Mppt3Ch0ArrayVoltage
+                    }
+                    Text {
+                        text: "Array Current: " + mppt.Mppt3Ch0ArrayCurrent
+                    }
+                    Text {
+                        text: "Battery Voltage: " + mppt.Mppt3Ch0BatteryVoltage
+                    }
+                    Text {
+                        text: "Temperature: " + mppt.Mppt3Ch0Temperature
+                    }
+                }
+                Column {
+                    Text {
+                        text: "MPPT 3 Channel 1"
+                    }
+                    Text {
+                        text: "Array Voltage: " + mppt.Mppt3Ch1ArrayVoltage
+                    }
+                    Text {
+                        text: "Array Current: " + mppt.Mppt3Ch1ArrayCurrent
+                    }
+                    Text {
+                        text: "Battery Voltage: " + mppt.Mppt3Ch1BatteryVoltage
+                    }
+                    Text {
+                        text: "Temperature: " + mppt.Mppt3Ch1Temperature
                     }
                 }
             }
@@ -391,6 +432,9 @@ Rectangle {
                 spacing: 20
 
                 Column {
+                    Text {
+                        text: "MBMS"
+                    }
                     Text {
                         text: "Common Contactor State: " + mbms.CommonContactorState
                     }
