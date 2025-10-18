@@ -6,17 +6,26 @@ Item {
     id: motorArrayHeader
     width: 470
     height: 40
-    // complete function to determine color based on current value, if current value is above 60, 
-    // return Config.valueHigh, if current value is above 40, return Config.valueModerate, else return Config.valueLow
-    // function formatCurrentWithColor(value, label)
 
-    // create function to format current value with color
-    // function formatCurrentWithColor(value, label) 
-    
-    // create function to format motor label with value 
-    // function formatMotorText(motorId, current) {
+    function getValueColor(value, label) {
+        if(current > 60) {
+            return Config.valueHigh
+        } else if(current > 40) {
+            return Config.valueModerate
+        } else {
+            return Config.valueLow
+        }
+    }
 
-    // component that can be used to style text
+    function formatCurrentWithColor(value, label) {
+        const currentValue = Math.floor(value / 1000);
+        return label + ": <font color=\"" + getValueColor(currentValue) + "\">" + currentValue + "</font> A";
+    }
+
+    function formatMotorText(motorId, current) {
+        return "Motor " + motorId + " Current: <font color=\"" + getValueColor(current) + "\">" + current + "</font> A";
+    }
+
     component StyledText: Text {
         verticalAlignment: Text.AlignVCenter
         font {
@@ -30,19 +39,26 @@ Item {
 
     Column {
         id: motorHeadersColumn
-
-        // motor 0 header
+        width: motorArrayHeader.width / 2
+        anchors {
+            left: motorArrayHeader.left
+            top: motorArrayHeader.top
+            bottom: motorArrayHeader.bottom
+            leftMargin: 20
+        }
         StyledText {
             id: motor0Header
-            text: motorDetails0.BusCurrent
+            width: motorHeadersColumn.width
+            height: motorHeadersColumn.height
+            text: formatMotorText(0, motorDetails0.BusCurrent)
         }
-
-        // motor 1 header
         StyledText {
             id: motor1Header
+            width: motorHeadersColumn.width
+            height: motorHeadersColumn.height
+            text: formatMotorText(1, motorDetails1.BusCurrent)
         }
     }
-
     Item {
         id: arrayCurrentSection
         width: motorArrayHeader.width / 2
@@ -52,13 +68,14 @@ Item {
             top: parent.top
             bottom: parent.bottom
         }
-
-        // total array current 
         StyledText {
             id: totalArrayCurrentLabel
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 120
+            text: "Array Current:"
         }
-        
-        // array current grid
         Grid {
             id: arrayCurrentGrid
             columns: 2
@@ -69,7 +86,21 @@ Item {
                 top: parent.top
                 bottom: parent.bottom
             }
-
+            property real cellWidth: width / columns * 1.3
+            property real cellHeight: height / rows
+            Repeater {
+                model: [
+                    {name: "0, 0", current: mppt.Mppt0Ch0ArrayCurrent }
+                    {name: "0, 1", current: mppt.Mppt0Ch1ArrayCurrent }
+                    {name: "1, 0", current: mppt.Mppt1Ch0ArrayCurrent }
+                    {name: "1, 1", current: mppt.Mppt1Ch1ArrayCurrent }
+                ]
+                StyledText {
+                    width: arrayCurreentGrid.cellHeight
+                    text: formatCurrentGrid.cellWidth
+                    height: formatCurrentWithColor(modelData.current, modelData.id)
+                }
+            }
         }
     }
 }
