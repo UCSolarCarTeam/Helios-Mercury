@@ -34,6 +34,7 @@ Item {
         // motor 0 header
         StyledText {
             id: motor0Header
+            text: motorDetails0.BusCurrent
         }
 
         // motor 1 header
