@@ -5,8 +5,8 @@
 
 namespace PacketDefinitions {
 
-    const int KEY_MOTOR_ID_MIN = 0x550;
-    const int KEY_MOTOR_ID_MAX = 0x555;
+    const int KEY_MOTOR_ID_MIN = 0x500;
+    const int KEY_MOTOR_ID_MAX = 0x503;
 
     const int MOTOR_DETAILS_0_ID_MIN = 0x400;
     const int MOTOR_DETAILS_0_ID_MAX = 0x417;
