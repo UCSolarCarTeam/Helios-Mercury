@@ -27,7 +27,6 @@ public:
     BatteryPacket& getBatteryPacket();
     MbmsPacket& getMbmsPacket();
     BatteryFaultsPacket& getBatteryFaultsPacket();
-    B3Packet& getB3Packet();
     PiPacket& getPiPacket();
     ContactorPacket& getContactorPacket();
     MpptPacket& getMpptPacket();
@@ -41,7 +40,6 @@ private:
     QScopedPointer<BatteryPacket> batteryPacket_;
     QScopedPointer<MbmsPacket> mbmsPacket_;
     QScopedPointer<BatteryFaultsPacket> batteryFaultsPacket_;
-    QScopedPointer<B3Packet> b3Packet_;
     QScopedPointer<PiPacket> piPacket_;
     QScopedPointer<ContactorPacket> contactorPacket_;
     QScopedPointer<MpptPacket> mpptPacket_;
