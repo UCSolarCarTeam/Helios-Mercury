@@ -14,7 +14,7 @@ Item {
             height: 20
             anchors.horizontalCenter: parent.horizontalCenter
             imageSource: "../Images/ConnectionIcon.png"
-            iconMaskColor: pi.isTelemetryConnected ? Config.valueLow : Config.valueHigh
+            iconMaskColor: pi.IsTelemetryConnected ? Config.valueLow : Config.valueHigh
             sourceSize: Qt.size(24, 24)
         }
 

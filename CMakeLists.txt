@@ -20,7 +20,6 @@ qt_standard_project_setup()
 qt_add_executable(Helios-Mercury src/main.cpp
     src/PacketFactory/IPacket.h
     src/PacketFactory/PacketFactory.h src/PacketFactory/PacketFactory.cpp
-    src/PacketFactory/Packets/B3Packet.h src/PacketFactory/Packets/B3Packet.cpp
     src/PacketFactory/Packets/BatteryFaultsPacket.h src/PacketFactory/Packets/BatteryFaultsPacket.cpp
     src/PacketFactory/Packets/BatteryPacket.h src/PacketFactory/Packets/BatteryPacket.cpp
     src/PacketFactory/Packets/KeyMotorPacket.h src/PacketFactory/Packets/KeyMotorPacket.cpp
