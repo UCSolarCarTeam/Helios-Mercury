@@ -64,10 +64,6 @@ void CanReceiver::handleReadyRead() {
             // Right Motor Details (0x420-0x437)
             packetFactory_->getMotorDetailsPacket(1).IPacket::populatePacket(id, payload);  // Added index 1
         }
-        else if(id >= PacketDefinitions::B3_ID_MIN && id <= PacketDefinitions::B3_ID_MAX) {
-            // Driver Controls & Power Board Data (0x610-0x620)
-            packetFactory_->getB3Packet().IPacket::populatePacket(id, payload);
-        }
         else if(id >= PacketDefinitions::TELEMETRY_ID_MIN && id <= PacketDefinitions::TELEMETRY_ID_MAX) {
             // Telemetry Data (0x630-0x635)
             packetFactory_->getTelemetryPacket().IPacket::populatePacket(id, payload);

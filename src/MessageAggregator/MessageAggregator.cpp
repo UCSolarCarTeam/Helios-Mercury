@@ -22,7 +22,6 @@ void MessageAggregator::createJsonMessage() {
     message[JsonDefinitions::TIMESTAMP] = QDateTime::currentDateTime().toSecsSinceEpoch();
 
     message[JsonDefinitions::KEY_MOTOR] = packetFactory_->getKeyMotorPacket().toJson();
-    message[JsonDefinitions::B3] = packetFactory_->getB3Packet().toJson();
     message[JsonDefinitions::TELEMETRY] = packetFactory_->getTelemetryPacket().toJson();
     message[JsonDefinitions::BATTERY_FAULTS] = packetFactory_->getBatteryFaultsPacket().toJson();
     message[JsonDefinitions::BATTERY] = packetFactory_->getBatteryPacket().toJson();

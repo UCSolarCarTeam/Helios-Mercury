@@ -10,7 +10,6 @@ PacketFactory::PacketFactory() {
     batteryPacket_.reset(new BatteryPacket());
     mbmsPacket_.reset(new MbmsPacket());
     batteryFaultsPacket_.reset(new BatteryFaultsPacket());
-    b3Packet_.reset(new B3Packet());
     piPacket_.reset(new PiPacket());
     contactorPacket_.reset(new ContactorPacket());
     mpptPacket_.reset(new MpptPacket());
@@ -47,10 +46,6 @@ MbmsPacket& PacketFactory::getMbmsPacket() {
 
 BatteryFaultsPacket& PacketFactory::getBatteryFaultsPacket() {
     return *batteryFaultsPacket_;
-}
-
-B3Packet& PacketFactory::getB3Packet() {
-    return *b3Packet_;
 }
 
 PiPacket& PacketFactory::getPiPacket(){

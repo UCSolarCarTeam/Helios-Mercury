@@ -40,7 +40,6 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     KeyMotorPacket &keyMotorPacket = packetFactory->getKeyMotorPacket();
     MotorDetailsPacket &motorDetails0Packet = packetFactory->getMotorDetailsPacket(0);
     MotorDetailsPacket &motorDetails1Packet = packetFactory->getMotorDetailsPacket(1);
-    B3Packet &b3Packet = packetFactory->getB3Packet();
     TelemetryPacket &telemetryPacket = packetFactory->getTelemetryPacket();
     BatteryFaultsPacket &batteryFaultsPacket = packetFactory->getBatteryFaultsPacket();
     BatteryPacket &batteryPacket = packetFactory->getBatteryPacket();
@@ -54,7 +53,6 @@ Mercury::Mercury(int &argc, char **argv) : QGuiApplication(argc, argv) {
     engine_.rootContext()->setContextProperty("keyMotor", &keyMotorPacket);
     engine_.rootContext()->setContextProperty("motorDetails0", &motorDetails0Packet);
     engine_.rootContext()->setContextProperty("motorDetails1", &motorDetails1Packet);
-    engine_.rootContext()->setContextProperty("b3", &b3Packet);
     engine_.rootContext()->setContextProperty("telemetry", &telemetryPacket);
     engine_.rootContext()->setContextProperty("batteryFaults", &batteryFaultsPacket);
     engine_.rootContext()->setContextProperty("battery", &batteryPacket);
