@@ -4,26 +4,65 @@ import Mercury
 
 Item {
     id: batteryIcon
-    width: 265
-    height: 367
+    width: 260
+    height: 365
     property real rawValue: battery.PackStateOfCharge
     property real value: rawValue / 2 //Unit Conversion from 0.5% to 1%
 
-    Image {
-        id: batteryImage
-        width: 31
-        height: 25.71
-        anchors {
-            top: batteryGauge.bottom
-            horizontalCenter: batteryGauge.horizontalCenter
-            topMargin: 10
+    function getBatteryColor(value) {
+        if(value>75){
+            return Config.valueLow
         }
-        source: "../Images/Battery.png"
+        if(value<=75 && value>=25){
+            return Config.valueModerate
+        }
+        if(value < 25){
+            return Config.valueHigh
+        }
     }
+    Item{
+        width:60
+        height:25
+        id: batteryImageAndPercentage
+        anchors{
+            top: batteryGauge.bottom
+            topMargin: 10
+            horizontalCenter: batteryGauge.horizontalCenter
+        }
+        Image {
+            id: batteryImage
+            width: 30
+            height: parent.height
+            source: "../Images/Battery.png"
+        }
+        Text {
+        id: batteryPercentage
+        width: 30
+        height: parent.height
+        anchors {
+            left: batteryImage.right
+            leftMargin: 10
+        }
+        color: Config.fontColor
+        text: {
+            if (Math.floor(batteryIcon.value) === batteryIcon.value) {
+                return Math.floor(batteryIcon.value) + " %";
+            } else {
+                    return batteryIcon.value.toFixed(1) + " %";
+            }
+        }
+        font.pixelSize: Config.fontSize4
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
+        font.weight: Font.Medium
+        font.family: Config.fontStyle
+    }
+    }
+        
     Rectangle {
         id: batteryGauge
-        width: 342
-        height: 23.14
+        width: 340
+        height: 20
         radius: 15
         anchors {
             bottom: parent.bottom
@@ -50,8 +89,7 @@ Item {
             width: parent.width * Math.max(0, Math.min(1, (batteryIcon.value) / 100))
             radius:15
             anchors.bottom: parent.bottom
-            color: Config.valueModerate
-
+            color: getBatteryColor(batteryIcon.value)
             Behavior on width {
                 NumberAnimation { duration: 300 }
             }
@@ -82,34 +120,11 @@ Item {
         maskInverted: false
     }
 
-    Text {
-        id: batteryPercentage
-        width: 100
-        height: 26
-        anchors {
-            top: batteryGauge.bottom
-            left: batteryImage.right
-            topMargin: 10
-            leftMargin: 10
-        }
-        color: Config.fontColor
-        text: {
-            if (Math.floor(batteryIcon.value) === batteryIcon.value) {
-                return Math.floor(batteryIcon.value) + " %";
-            } else {
-                    return batteryIcon.value.toFixed(1) + " %";
-            }
-        }
-        font.pixelSize: Config.fontSize4
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignVCenter
-        font.weight: Font.Medium
-        font.family: Config.fontStyle
-    }
+    
     Text {
         id: batteryLow
-        width: 37
-        height: 16.29
+        width: 35
+        height: 15
         color: Config.fontColor
         anchors {
             right: batteryGauge.left
@@ -123,8 +138,8 @@ Item {
     }
     Text {
         id: batteryHigh
-        width: 74
-        height: 16.29
+        width: 75
+        height: 15
         color: Config.fontColor
         anchors {
             left: batteryGauge.right
