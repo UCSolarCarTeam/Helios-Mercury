@@ -133,7 +133,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            horizontalCenterOffset: -72
+            horizontalCenterOffset: -120
             bottomMargin: 9
         }
     }
@@ -142,7 +142,7 @@ Item {
         id: telemetryIcon
         anchors {
             left: contactorsComponent.right
-            leftMargin: 30
+            leftMargin: 300
             bottom: contactorsComponent.bottom
             bottomMargin: 5
         }

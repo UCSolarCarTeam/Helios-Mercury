@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 Item {
     id: contactorStatusContainer
-    width: 100
+    width: implicitWidth
     height: 35
     RowLayout {
         id: contactorContainer
