@@ -8,6 +8,7 @@ Item {
     id: threeQuarterGauge
     width: 269
     height: 235
+     scale: 0.40
 
     // gauge properties
     property real minValue
