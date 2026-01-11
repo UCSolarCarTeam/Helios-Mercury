@@ -6,69 +6,39 @@ import QtQuick.Effects
 
 Item {
     id: rndComponent
-    width: 180
-    height: 50
+    width: 130
+    height: 95
 
     // Property to track selected gear (0: R, 1: N, 2: D)
     property var gears: ["R", "N", "D"]
     property int currentGear: b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
 
-    // Faint Horizontal Line
-    Rectangle {
-        id: baseLine
-        width: gearRow.width + 10
-        height: 2
-        color: Config.faintGrey
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 10
+    // Displays Arrow For Drive Mode
+    Image {
+        id: upDownArrow
+        width: 36
+        height: 24
+        anchors.right: gearColumn.left
+        anchors.rightMargin: 10
+        anchors.verticalCenter: gearColumn.verticalCenter          
+        source: "../Images/UpDownArrow.png"
     }
-
-    // Blue Marker for Selected Gear
-    Rectangle {
-        id: gearMarker
-        width: 24
-        height: 5
+    // Displays the selected gear
+    Text {
+        id: selectedGearText
+        text: gears[currentGear]
         color: Config.primary
-        y: baseLine.y + (baseLine.height - height) / 2
-
-        // Marker aligns with selected gear safely
-        x: {
-            if (gearRow.children.length < gears.length) {
-                return 0;
-            }
-
-            switch (currentGear) {
-                case 0:
-                    return Math.max(gearRow.children[0].x + gearRow.x - width / 2, baseLine.x);
-                case 1:
-                    return gearRow.children[1].x + gearRow.x + (gearRow.children[1].width - width) / 2;
-                case 2:
-                    return Math.min(gearRow.children[2].x + gearRow.x + gearRow.children[2].width - width / 2, baseLine.x + baseLine.width - width);
-                default:
-                    return 0;
-            }
-        }
-
-        Behavior on x {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-
-        MultiEffect {
-            source: gearMarker
-            shadowScale: 1.25
-            anchors.fill: gearMarker
-            shadowColor: Config.lightShadow
-            shadowEnabled: true
-            shadowBlur: 0.25
-            shadowOpacity: 0.75
-        }
+        font.pixelSize: Config.fontSize11
+        font.weight: index === currentGear ? 600 : 400
+        anchors.top: baseLine.bottom
+        anchors.left: gearColumn.right
+        anchors.leftMargin: 10
+        anchors.verticalCenter: gearColumn.verticalCenter
     }
-
-    // Gear Letters Row
-    Row {
-        id: gearRow
-        spacing: 15
+    // Gear column for all drive modes
+    Column {
+        id: gearColumn
+        spacing: 5
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: baseLine.bottom
         anchors.topMargin: 5
@@ -85,18 +55,8 @@ Item {
                     text: gears[index]
                     font.pixelSize: Config.fontSize5
                     font.weight: index === currentGear ? 600 : 400
-                    color: index === currentGear ? Config.primary : Config.fontColor
+                    color: Config.fontColor
                     anchors.centerIn: parent
-                }
-
-                MultiEffect {
-                    source: gearText
-                    anchors.fill: gearText
-                    shadowEnabled: index === currentGear
-                    shadowBlur: 0.5
-                    shadowColor: Config.lightShadow
-                    shadowOpacity: 0.9
-                    shadowScale: 1.4
                 }
             }
         }
