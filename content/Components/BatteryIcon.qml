@@ -88,7 +88,7 @@ Item {
             anchors.bottom: parent.bottom
             color: getBatteryColor(batteryIcon.value)
             Behavior on color {
-                NumberAnimation { duration: 300 }
+                ColorAnimation { duration: 300 }
             }
             Behavior on width {
                 NumberAnimation { duration: 300 }
