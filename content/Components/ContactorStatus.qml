@@ -15,7 +15,7 @@ Item {
             model: [
                 { name: "CMN", isConnected: mbms.CommonContactorCommand, hasError: contactor.CommonContactorError },
                 { name: "LV", isConnected: mbms.LvContactorCommand, hasError: contactor.LvContactorError },
-                { name: "HV", isConnected: mbms.HvContactorCommand, hasError: contactor.HvContactorError },
+                { name: "MOTOR", isConnected: mbms.MotorContactorCommand, hasError: contactor.MotorContactorError },
                 { name: "ARRAY", isConnected: mbms.ArrayContactorCommand, hasError: contactor.ArrayContactorError },
                 { name: "CHARGE", isConnected: mbms.ChargeContactorCommand, hasError: contactor.ChargeContactorError }
             ]
