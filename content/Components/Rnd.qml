@@ -13,10 +13,12 @@ Item {
     property var gears: ["R", "N", "D"]
     property int currentGear: b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
 
+    // Big-gear display uses this so we can animate between old/new without flicker
     property string displayedGear: gears[currentGear]
     property string _prevDisplayedGear: gears[currentGear]
     property bool _animRunning: false
 
+    // Stack model contains ONLY non-selected gears (so selected letter disappears from stack)
     ListModel { id: stackModel }
 
     function rebuildStack(excludeLabel) {
@@ -40,6 +42,8 @@ Item {
         return Qt.point(p.x, p.y)
     }
 
+    // Computes where a label would be in the stack if the other label is excluded
+    // Used for animating the old gear back into the correct stack slot.
     function estimatedStackSlotPos(label, excludeLabel) {
         var idx = -1
         for (var i = 0; i < gears.length; i++) {
@@ -58,6 +62,10 @@ Item {
         rebuildStack(displayedGear)
     }
 
+    // When drive mode changes:
+    // 1) animate old big gear -> stack slot
+    // 2) swap displayedGear + rebuild stack (selected removed)
+    // 3) animate new stack gear -> big gear
     onCurrentGearChanged: {
         var newLabel = gears[currentGear]
         if (newLabel === displayedGear) {
@@ -124,6 +132,7 @@ Item {
         }
     }
 
+    // Single flying text used for both directions (big->stack, stack->big)
     Text {
         id: floatingGear
         visible: false
@@ -145,6 +154,7 @@ Item {
             easing.type: Easing.InOutQuad
         }
 
+        // Commit the selection only after the out motion finishes
         ScriptAction {
             script: {
                 displayedGear = _pendingNew
@@ -177,36 +187,37 @@ Item {
         _animRunning = true
 
         var oldLabel = displayedGear
-
         var bigPos = pointToItem(selectedGearText)
 
+        // Find where the new label currently sits in the stack (before it gets excluded)
         var newIdx = stackIndexOf(newLabel)
         var newItem = (newIdx >= 0) ? gearList.itemAtIndex(newIdx) : null
         _newFromPos = newItem ? pointToItem(newItem) : estimatedStackSlotPos(newLabel, oldLabel)
 
+        // Phase 1: old label flies from big -> its stack slot
         floatingGear.text = oldLabel
         floatingGear.x = bigPos.x
         floatingGear.y = bigPos.y
         floatingGear.visible = true
 
         var oldToPos = estimatedStackSlotPos(oldLabel, newLabel)
-
         animOut.from = Qt.point(bigPos.x, bigPos.y)
         animOut.to   = Qt.point(oldToPos.x, oldToPos.y)
 
+        // Prepare phase 2 target
         _pendingNew = newLabel
-
         animIn.from = Qt.point(_newFromPos.x, _newFromPos.y)
         animIn.to   = Qt.point(bigPos.x, bigPos.y)
 
-        swapAnim.stop()
-        swapAnim.start()
-
+        // Set the floating gear to the new label right before animating in
         swapAnim.animations[2].script = function() {
             floatingGear.text = newLabel
             floatingGear.x = _newFromPos.x
             floatingGear.y = _newFromPos.y
             floatingGear.visible = true
         }
+
+        swapAnim.stop()
+        swapAnim.start()
     }
 }
