@@ -67,4 +67,5 @@ qt6_add_qml_module(content
         Images/RotationIcon.png
         Images/DirectionIcon.png
         Images/ConnectionIcon.png
+        Images/UpDownArrow.png
 )
