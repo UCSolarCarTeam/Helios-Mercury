@@ -10,21 +10,18 @@ Item {
     property real value: rawValue / 2 //Unit Conversion from 0.5% to 1%
 
     function getBatteryColor(value) {
-        if(value>75){
+        if (value>75) 
             return Config.valueLow
-        }
-        if(value<=75 && value>=25){
+        if (value<=75 && value>=25)
             return Config.valueModerate
-        }
-        if(value < 25){
+        if (value < 25)
             return Config.valueHigh
-        }
     }
-    Item{
-        width:60
-        height:25
+    Item {
+        width: 60
+        height: 25
         id: batteryImageAndPercentage
-        anchors{
+        anchors {
             top: batteryGauge.bottom
             topMargin: 10
             horizontalCenter: batteryGauge.horizontalCenter
@@ -36,27 +33,27 @@ Item {
             source: "../Images/Battery.png"
         }
         Text {
-        id: batteryPercentage
-        width: 30
-        height: parent.height
-        anchors {
-            left: batteryImage.right
-            leftMargin: 10
-        }
-        color: Config.fontColor
-        text: {
-            if (Math.floor(batteryIcon.value) === batteryIcon.value) {
-                return Math.floor(batteryIcon.value) + " %";
-            } else {
-                    return batteryIcon.value.toFixed(1) + " %";
+            id: batteryPercentage
+            width: 30
+            height: parent.height
+            anchors {
+                left: batteryImage.right
+                leftMargin: 10
             }
+            color: Config.fontColor
+            text: {
+                if (Math.floor(batteryIcon.value) === batteryIcon.value) {
+                    return Math.floor(batteryIcon.value) + " %";
+                } else {
+                        return batteryIcon.value.toFixed(1) + " %";
+                }
+            }
+            font.pixelSize: Config.fontSize4
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+            font.weight: Font.Medium
+            font.family: Config.fontStyle
         }
-        font.pixelSize: Config.fontSize4
-        horizontalAlignment: Text.AlignLeft
-        verticalAlignment: Text.AlignVCenter
-        font.weight: Font.Medium
-        font.family: Config.fontStyle
-    }
     }
         
     Rectangle {
@@ -90,6 +87,9 @@ Item {
             radius:15
             anchors.bottom: parent.bottom
             color: getBatteryColor(batteryIcon.value)
+            Behavior on color {
+                NumberAnimation { duration: 300 }
+            }
             Behavior on width {
                 NumberAnimation { duration: 300 }
             }
