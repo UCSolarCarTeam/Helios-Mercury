@@ -12,10 +12,10 @@ Item {
 
     property var gears: ["R", "N", "D"]
 
-    // Live input from CAN/Helios
-    property int currentGear: b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
+    // Updated from b3 via Connections (more reliable than a derived binding)
+    property int currentGear: 1
 
-    // Used for the big gear so animation can transition smoothly
+    // Big-gear display uses this so we can animate between old/new without flicker
     property string displayedGear: gears[currentGear]
 
     property bool _animRunning: false
@@ -23,9 +23,19 @@ Item {
     property string _pendingNew: ""
     property point _newFromPos: Qt.point(0, 0)
 
+    // Stack model contains ONLY non-selected gears (so selected letter disappears from stack)
     ListModel { id: stackModel }
 
-    // Rebuilds stack with selected gear removed
+    function computeGearIndex() {
+        return b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
+    }
+
+    function updateFromSignals() {
+        var g = computeGearIndex()
+        if (g !== currentGear)
+            currentGear = g
+    }
+
     function rebuildStack(excludeLabel) {
         stackModel.clear()
         for (var i = 0; i < gears.length; i++) {
@@ -46,7 +56,7 @@ Item {
         return Qt.point(p.x, p.y)
     }
 
-    // Position where label would appear in stack
+    // Computes where a label would be in the stack if the other label is excluded
     function estimatedStackSlotPos(label, excludeLabel) {
         var idx = -1
         for (var i = 0; i < gears.length; i++) {
@@ -60,11 +70,22 @@ Item {
     }
 
     Component.onCompleted: {
+        updateFromSignals()
         displayedGear = gears[currentGear]
         rebuildStack(displayedGear)
     }
 
-    // Handles gear commands from CAN signals
+    // Ensures we react when b3 booleans change (even if derived bindings don’t re-evaluate)
+    Connections {
+        target: b3
+        function onReverseDigitalChanged() { updateFromSignals() }
+        function onForwardDigitalChanged() { updateFromSignals() }
+    }
+
+    // When drive mode changes:
+    // 1) animate old big gear -> stack slot
+    // 2) commit displayedGear + rebuild stack (selected removed)
+    // 3) animate new stack gear -> big gear
     onCurrentGearChanged: {
         var newLabel = gears[currentGear]
 
@@ -89,6 +110,7 @@ Item {
         anchors.rightMargin: 10
         anchors.verticalCenter: gearList.verticalCenter
         source: "../Images/UpDownArrow.png"
+        visible: status === Image.Ready
     }
 
     Text {
@@ -137,7 +159,7 @@ Item {
         }
     }
 
-    // Single floating gear used for animation
+    // Single flying text used for both directions (big->stack, stack->big)
     Text {
         id: floatingGear
         visible: false
@@ -148,31 +170,28 @@ Item {
         z: 999
     }
 
-    // OUT: big → stack
     ParallelAnimation {
         id: outMove
         NumberAnimation { id: outX; target: floatingGear; property: "x"; duration: 220; easing.type: Easing.InOutQuad }
         NumberAnimation { id: outY; target: floatingGear; property: "y"; duration: 220; easing.type: Easing.InOutQuad }
     }
 
-    // IN: stack → big
     ParallelAnimation {
         id: inMove
         NumberAnimation { id: inX; target: floatingGear; property: "x"; duration: 220; easing.type: Easing.InOutQuad }
         NumberAnimation { id: inY; target: floatingGear; property: "y"; duration: 220; easing.type: Easing.InOutQuad }
     }
 
-    // Full animation sequence
     SequentialAnimation {
         id: swapAnim
 
         ScriptAction { script: { _animRunning = true } }
 
-        // Phase 1: old -> stack
+        // Phase 1: old selected gear flies from big -> its stack slot
         ScriptAction { script: { outMove.start() } }
         PauseAnimation { duration: 220 }
 
-        // Update selected gear and prepare phase 2
+        // Commit selection after phase 1 (updates big letter + removes it from the stack)
         ScriptAction {
             script: {
                 displayedGear = _pendingNew
@@ -188,7 +207,7 @@ Item {
             }
         }
 
-        // Phase 2: stack -> big
+        // Phase 2: new selected gear flies from stack -> big
         ScriptAction { script: { inMove.start() } }
         PauseAnimation { duration: 220 }
 
@@ -208,7 +227,6 @@ Item {
         }
     }
 
-    // Main animation handler
     function startGearSwap(newLabel) {
         if (_animRunning) {
             _queuedGear = newLabel
@@ -216,6 +234,8 @@ Item {
         }
 
         var oldLabel = displayedGear
+
+        // Build stack for old selection before reading positions
         rebuildStack(oldLabel)
 
         var bigPos = pointToItem(selectedGearText)
