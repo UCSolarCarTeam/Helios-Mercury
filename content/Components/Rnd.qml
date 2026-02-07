@@ -98,31 +98,31 @@ Item {
         NumberAnimation {
             target: returningGearGhost
             property: "x"
-            duration: 480
+            duration: 720
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearGhost
             property: "y"
-            duration: 480
+            duration: 720
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearGhost
             property: "scale"
-            duration: 480
+            duration: 720
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearGhost
             property: "opacity"
-            duration: 480
+            duration: 720
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearRotation
             property: "angle"
-            duration: 480
+            duration: 720
             easing.type: Easing.InOutQuad
         }
 
@@ -157,32 +157,22 @@ Item {
             returningGearGhost.y = startPt.y
             returningGearGhost.visible = true
 
-            // --- Correct directional fade target: R(top)=0, N(middle)=1, D(bottom)=2 ---
+            // R(top)=0, N(middle)=1, D(bottom)=2
             var idx = gears.indexOf(prev)
             if (idx < 0) idx = 1
 
             var finalScale = (Config.fontSize5 / Config.fontSize11)
-
-            // Use the real row spacing used by the ListView (delegate height + spacing).
-            // Delegate height is approximately Config.fontSize5.
             var rowStep = Config.fontSize5 + gearList.spacing
-
-            // Compute the top row center in gearList coordinates.
             var topRowCenterY = gearList.y + (Config.fontSize5 / 2)
 
-            // Pick row center based on idx (0,1,2)
             var targetCenterX = gearList.x + (gearList.width / 2)
             var targetCenterY = topRowCenterY + (idx * rowStep)
 
             var finalW = returningGearGhost.width * finalScale
             var finalH = returningGearGhost.height * finalScale
 
-            var endX = targetCenterX - (finalW / 2)
-            var endY = targetCenterY - (finalH / 2)
-            // --- End directional target ---
-
-            returnToStackAnim.animations[0].to = endX
-            returnToStackAnim.animations[1].to = endY
+            returnToStackAnim.animations[0].to = targetCenterX - (finalW / 2)
+            returnToStackAnim.animations[1].to = targetCenterY - (finalH / 2)
             returnToStackAnim.animations[2].to = finalScale
             returnToStackAnim.animations[3].to = 0.15
             returnToStackAnim.animations[4].to = -360
@@ -213,7 +203,6 @@ Item {
                 font.pixelSize: Config.fontSize5
                 font.weight: (model.label === gears[currentGear]) ? 600 : 400
 
-                // 🔵 Slightly brighter dim blue for active small gear
                 color: (model.label === gears[currentGear]) ? Config.primary : Config.fontColor
                 opacity: (model.label === gears[currentGear]) ? 0.6 : 1.0
 
