@@ -10,7 +10,6 @@ Item {
     width: 130
     height: 95
 
-    
     Item {
         id: baseLine
         width: parent.width
@@ -26,9 +25,8 @@ Item {
     // Tracks selected gear
     property int currentGear: b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
 
-    // --- Added (only): tracks what was previously highlighted so we can animate it back ---
+    // Tracks previously selected gear (for animation only)
     property string lastSelectedLabel: gears[currentGear]
-    // --- End added ---
 
     ListModel { id: gearModel }
 
@@ -73,7 +71,7 @@ Item {
         source: "../Images/UpDownArrow.png"
     }
 
-    // Highlights selected gear
+    // Highlighted (big) gear
     Text {
         id: selectedGearText
         text: gears[currentGear]
@@ -85,7 +83,7 @@ Item {
         anchors.verticalCenter: gearList.verticalCenter
     }
 
-    // --- Added (only): ghost copy that animates the PREVIOUS big gear back into the stack ---
+    // Ghost copy that animates back into the stack
     Text {
         id: returningGearGhost
         visible: false
@@ -95,9 +93,10 @@ Item {
         color: Config.primary
         font.pixelSize: Config.fontSize11
 
-        // we position this manually when the gear changes
         x: 0
         y: 0
+        scale: 1
+        opacity: 1
 
         transformOrigin: Item.Center
         transform: Rotation {
@@ -115,31 +114,31 @@ Item {
         NumberAnimation {
             target: returningGearGhost
             property: "x"
-            duration: 240
+            duration: 480
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearGhost
             property: "y"
-            duration: 240
+            duration: 480
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearGhost
             property: "scale"
-            duration: 240
+            duration: 480
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearGhost
             property: "opacity"
-            duration: 240
+            duration: 480
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: returningGearRotation
             property: "angle"
-            duration: 240
+            duration: 480
             easing.type: Easing.InOutQuad
         }
 
@@ -155,8 +154,6 @@ Item {
         target: rndComponent
 
         function onCurrentGearChanged() {
-            // animate the PREVIOUS highlighted label back into the stack
-            // (does not alter your currentGear / model logic)
             var prev = lastSelectedLabel
             lastSelectedLabel = gears[currentGear]
 
@@ -166,37 +163,28 @@ Item {
             if (returnToStackAnim.running)
                 returnToStackAnim.stop()
 
-            // set ghost to previous label and start where the big highlight is
             returningGearGhost.text = prev
             returningGearGhost.scale = 1
             returningGearGhost.opacity = 1
             returningGearRotation.angle = 0
 
-            // map selectedGearText position into rndComponent coords
             var startPt = rndComponent.mapFromItem(selectedGearText, 0, 0)
             returningGearGhost.x = startPt.x
             returningGearGhost.y = startPt.y
             returningGearGhost.visible = true
 
-            // destination: center of the gear stack (simple + robust, no delegate lookup)
             var endX = gearList.x + (gearList.width / 2) - (returningGearGhost.width / 2)
             var endY = gearList.y + (gearList.height / 2) - (returningGearGhost.height / 2)
 
-            // configure animation end values
             returnToStackAnim.animations[0].to = endX
             returnToStackAnim.animations[1].to = endY
-
-            // shrink toward list font size (approx) and fade slightly as it "slots in"
             returnToStackAnim.animations[2].to = (Config.fontSize5 / Config.fontSize11)
             returnToStackAnim.animations[3].to = 0.15
-
-            // rotate like a carousel spin
             returnToStackAnim.animations[4].to = -360
 
             returnToStackAnim.start()
         }
     }
-    // --- End added ---
 
     ListView {
         id: gearList
@@ -224,7 +212,6 @@ Item {
             }
         }
 
-        // Animation for when the active gear changes
         displaced: Transition {
             NumberAnimation {
                 properties: "x,y"
