@@ -157,12 +157,26 @@ Item {
             returningGearGhost.y = startPt.y
             returningGearGhost.visible = true
 
-            var endX = gearList.x + (gearList.width / 2) - (returningGearGhost.width / 2)
-            var endY = gearList.y + (gearList.height / 2) - (returningGearGhost.height / 2)
+            // --- Directional fade target: top/middle/bottom depending on which gear was highlighted ---
+            var idx = gears.indexOf(prev)
+            if (idx < 0) idx = 1
+
+            var finalScale = (Config.fontSize5 / Config.fontSize11)
+            var rowStep = (Config.fontSize5 + gearList.spacing)
+
+            var targetCenterX = gearList.x + (gearList.width / 2)
+            var targetCenterY = gearList.y + (idx * rowStep) + (Config.fontSize5 / 2)
+
+            var finalW = returningGearGhost.width * finalScale
+            var finalH = returningGearGhost.height * finalScale
+
+            var endX = targetCenterX - (finalW / 2)
+            var endY = targetCenterY - (finalH / 2)
+            // --- End directional target ---
 
             returnToStackAnim.animations[0].to = endX
             returnToStackAnim.animations[1].to = endY
-            returnToStackAnim.animations[2].to = (Config.fontSize5 / Config.fontSize11)
+            returnToStackAnim.animations[2].to = finalScale
             returnToStackAnim.animations[3].to = 0.15
             returnToStackAnim.animations[4].to = -360
 
