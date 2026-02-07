@@ -193,7 +193,7 @@ Item {
                 text: model.label
                 font.pixelSize: Config.fontSize5
                 font.weight: (model.label === gears[currentGear]) ? 600 : 400
-                color: Config.fontColor
+                color: (model.label === gears[currentGear]) ? Config.primary : Config.fontColor
                 anchors.centerIn: parent
             }
         }
