@@ -68,7 +68,7 @@ Item {
         anchors.verticalCenter: gearList.verticalCenter
     }
 
-    // Ghost gear animation
+    // Ghost gear that animates back into the stack
     Text {
         id: returningGearGhost
         visible: false
@@ -147,6 +147,7 @@ Item {
             if (returnToStackAnim.running)
                 returnToStackAnim.stop()
 
+            // Start from the big highlighted gear
             returningGearGhost.text = prev
             returningGearGhost.scale = 1
             returningGearGhost.opacity = 1
@@ -157,11 +158,21 @@ Item {
             returningGearGhost.y = startPt.y
             returningGearGhost.visible = true
 
-            // R(top)=0, N(middle)=1, D(bottom)=2
-            var idx = gears.indexOf(prev)
-            if (idx < 0) idx = 1
+            // --------------------------------------------------
+            // 🔽 EXPLICIT DIRECTIONAL TARGETS (R / N / D)
+            // --------------------------------------------------
+            var idx
+            if (prev === "R") {
+                idx = 0      // TOP
+            } else if (prev === "N") {
+                idx = 1      // MIDDLE
+            } else if (prev === "D") {
+                idx = 2      // BOTTOM
+            } else {
+                idx = 1
+            }
 
-            var finalScale = (Config.fontSize5 / Config.fontSize11)
+            var finalScale = Config.fontSize5 / Config.fontSize11
             var rowStep = Config.fontSize5 + gearList.spacing
             var topRowCenterY = gearList.y + (Config.fontSize5 / 2)
 
@@ -203,6 +214,7 @@ Item {
                 font.pixelSize: Config.fontSize5
                 font.weight: (model.label === gears[currentGear]) ? 600 : 400
 
+                // Dimmer blue for active small gear
                 color: (model.label === gears[currentGear]) ? Config.primary : Config.fontColor
                 opacity: (model.label === gears[currentGear]) ? 0.6 : 1.0
 
