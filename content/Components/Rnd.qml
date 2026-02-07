@@ -30,7 +30,6 @@ Item {
 
     ListModel { id: gearModel }
 
-    // Ensures reordering dosen't mess with the RND list
     function syncModelIfNeeded() {
         if (gearModel.count !== gears.length) {
             gearModel.clear()
@@ -39,7 +38,7 @@ Item {
         }
     }
 
-    // Keep model static: always R, N, D (no reordering)
+    // Keep model static: always R, N, D
     function moveSelectedToTop() {
         syncModelIfNeeded()
     }
@@ -57,7 +56,7 @@ Item {
         source: "../Images/UpDownArrow.png"
     }
 
-    // Highlighted (big) gear
+    // Big highlighted gear
     Text {
         id: selectedGearText
         text: gears[currentGear]
@@ -69,7 +68,7 @@ Item {
         anchors.verticalCenter: gearList.verticalCenter
     }
 
-    // Ghost copy that animates back into the stack
+    // Ghost gear animation
     Text {
         id: returningGearGhost
         visible: false
@@ -95,7 +94,6 @@ Item {
 
     ParallelAnimation {
         id: returnToStackAnim
-        running: false
 
         NumberAnimation {
             target: returningGearGhost
@@ -193,12 +191,15 @@ Item {
                 text: model.label
                 font.pixelSize: Config.fontSize5
                 font.weight: (model.label === gears[currentGear]) ? 600 : 400
+
+                // 🔵 Slightly brighter dim blue for active small gear
                 color: (model.label === gears[currentGear]) ? Config.primary : Config.fontColor
+                opacity: (model.label === gears[currentGear]) ? 0.6 : 1.0
+
                 anchors.centerIn: parent
             }
         }
 
-        // Animation for when the active gear changes (kept, even though model is static)
         displaced: Transition {
             NumberAnimation {
                 properties: "x,y"
