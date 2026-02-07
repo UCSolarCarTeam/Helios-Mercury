@@ -157,15 +157,22 @@ Item {
             returningGearGhost.y = startPt.y
             returningGearGhost.visible = true
 
-            // --- Directional fade target: top/middle/bottom depending on which gear was highlighted ---
+            // --- Correct directional fade target: R(top)=0, N(middle)=1, D(bottom)=2 ---
             var idx = gears.indexOf(prev)
             if (idx < 0) idx = 1
 
             var finalScale = (Config.fontSize5 / Config.fontSize11)
-            var rowStep = (Config.fontSize5 + gearList.spacing)
 
+            // Use the real row spacing used by the ListView (delegate height + spacing).
+            // Delegate height is approximately Config.fontSize5.
+            var rowStep = Config.fontSize5 + gearList.spacing
+
+            // Compute the top row center in gearList coordinates.
+            var topRowCenterY = gearList.y + (Config.fontSize5 / 2)
+
+            // Pick row center based on idx (0,1,2)
             var targetCenterX = gearList.x + (gearList.width / 2)
-            var targetCenterY = gearList.y + (idx * rowStep) + (Config.fontSize5 / 2)
+            var targetCenterY = topRowCenterY + (idx * rowStep)
 
             var finalW = returningGearGhost.width * finalScale
             var finalH = returningGearGhost.height * finalScale
