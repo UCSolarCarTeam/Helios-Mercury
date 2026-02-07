@@ -39,23 +39,9 @@ Item {
         }
     }
 
-    // Reorder model so selected gear is always at index 0
+    // Keep model static: always R, N, D (no reordering)
     function moveSelectedToTop() {
         syncModelIfNeeded()
-
-        var selectedLabel = gears[currentGear]
-        var fromIndex = -1
-
-        for (var i = 0; i < gearModel.count; i++) {
-            if (gearModel.get(i).label === selectedLabel) {
-                fromIndex = i
-                break
-            }
-        }
-
-        if (fromIndex > 0) {
-            gearModel.move(fromIndex, 0, 1)
-        }
     }
 
     Component.onCompleted: moveSelectedToTop()
@@ -212,6 +198,7 @@ Item {
             }
         }
 
+        // Animation for when the active gear changes (kept, even though model is static)
         displaced: Transition {
             NumberAnimation {
                 properties: "x,y"
