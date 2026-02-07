@@ -79,6 +79,39 @@ Item {
         anchors.left: gearList.right
         anchors.leftMargin: 10
         anchors.verticalCenter: gearList.verticalCenter
+
+        // --- Added carousel animation (only) ---
+        transformOrigin: Item.Center
+        Rotation {
+            id: selectedGearRotation
+            origin.x: selectedGearText.width / 2
+            origin.y: selectedGearText.height / 2
+            angle: 0
+        }
+
+        SequentialAnimation {
+            id: carouselReturnAnim
+            running: false
+
+            NumberAnimation {
+                target: selectedGearRotation
+                property: "angle"
+                from: 0
+                to: -360
+                duration: 220
+                easing.type: Easing.InOutQuad
+            }
+            ScriptAction { script: selectedGearRotation.angle = 0 }
+        }
+
+        onTextChanged: {
+            // rotate the previously highlighted big gear "back into" the stack
+            // whenever a different gear becomes highlighted
+            if (carouselReturnAnim.running) carouselReturnAnim.stop()
+            selectedGearRotation.angle = 0
+            carouselReturnAnim.start()
+        }
+        // --- End added carousel animation ---
     }
 
     ListView {
