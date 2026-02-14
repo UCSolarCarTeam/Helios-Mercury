@@ -29,6 +29,7 @@ Item {
         antialiasing: true
         layer.enabled: true
         layer.smooth: true
+        visible:false
     }
 
     Image {
