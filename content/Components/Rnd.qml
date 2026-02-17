@@ -68,7 +68,7 @@ Item {
         anchors.verticalCenter: gearList.verticalCenter
     }
 
-    // Ghost gear that animates back into the stack
+    // Gear that animates back into the stack
     Text {
         id: returningGearGhost
         visible: false
@@ -158,9 +158,7 @@ Item {
             returningGearGhost.y = startPt.y
             returningGearGhost.visible = true
 
-            // --------------------------------------------------
-            // 🔽 EXPLICIT DIRECTIONAL TARGETS (R / N / D)
-            // --------------------------------------------------
+       
             var idx
             if (prev === "R") {
                 idx = 0      // TOP
