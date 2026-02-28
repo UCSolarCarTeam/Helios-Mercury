@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Studio.Components 1.0
 import QtQuick.Shapes 1.0
+import Qt5Compat.GraphicalEffects
 import "../Util"
 import Mercury
 
@@ -15,7 +16,6 @@ Item {
     property int maxValue: isMetric ? 160 : 100
     property string units: isMetric ? "KM/H" : "MPH"
     property int value: isMetric ? Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)  : Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000 / 1.60934)
-
     // animation properties 
     property int animationDuration: 300
 
@@ -26,7 +26,7 @@ Item {
 
     GaugeAnimation { id: gaugeAnimation }
 
-    ArcItem { 
+    ArcItem {
         id: outerArc
         width: 460
         height: 460
@@ -41,46 +41,66 @@ Item {
     }
 
     ArcItem {
-        id: inactiveArc
-        width: 428
-        height: 428
-        anchors.centerIn: outerArc
-        strokeWidth: 0
-        strokeColor: "transparent"
-        outlineArc: true
-        fillColor: Config.btnDisabled
-        end: -135
-        begin: 135
-        arcWidth: 16
-        antialiasing: true
-    }
-
-    Item {
-        id: activeArcContainer
-        z: 2
-        anchors.fill: inactiveArc
-        property real animatedValue: speedometer.minValue
-
-        Behavior on animatedValue { NumberAnimation { duration: speedometer.animationDuration } }
-
-        Connections {
-            target: speedometer
-            function onValueChanged() { activeArcContainer.animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
+            id: inactiveArc
+            width: 428
+            height: 428
+            anchors.centerIn: outerArc
+            strokeWidth: 0
+            strokeColor: "transparent"
+            outlineArc: true
+            fillColor: "#283F43"
+            end: -135
+            begin: 135
+            arcWidth: 14
+            antialiasing: true
+            visible: true
         }
+    Item {
+            id: activeArcContainer
+            anchors.fill: inactiveArc
+            z: 2
 
-        Component.onCompleted: { animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue); }
+            property real animatedValue: speedometer.minValue
+            Behavior on animatedValue { NumberAnimation { duration: speedometer.animationDuration } }
 
-        Canvas {
-            id: activeArc
-            anchors.fill: parent
-            onPaint: { gaugeAnimation.drawGauge(activeArc, speedometer, activeArcContainer.animatedValue, 92, undefined); }
             Connections {
-                target: activeArcContainer
-                function onAnimatedValueChanged() { activeArc.requestPaint(); }
+                target: speedometer
+                function onValueChanged() {
+                    activeArcContainer.animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue);
+                }
+            }
+            Component.onCompleted: {
+                animatedValue = gaugeAnimation.clamp(speedometer.value, speedometer.minValue, speedometer.maxValue);
+            }
+
+
+            ArcItem {
+                id: activeArc
+                anchors.fill: parent
+                visible: false
+
+                begin: -135
+
+                end: -135 + (activeArcContainer.animatedValue / speedometer.maxValue) * 270
+
+                strokeWidth: 0
+                strokeColor: "transparent"
+                fillColor: "#D708FC"
+                arcWidth: 14
+                outlineArc: true
+                antialiasing: true
+                capStyle: 32
+            }
+
+            InnerShadow {
+                anchors.fill: activeArc
+                source: activeArc
+                color: "#80000000"
+                radius: 20
+                samples: 20
+                spread: 0.5
             }
         }
-    }
-
     Component {
         id: numberLabel
         Text {
@@ -134,25 +154,29 @@ Item {
         }
         
         Component {
-            id: tickMark
-            Rectangle {
-                width: isWhite ? 5 : 4
-                height: 9
-                color: isWhite ? Config.fontColor : Config.speedometerGrayTicks
-                
-                property bool isWhite: false
-                property int posX: 0
-                property int posY: 0
-                property real tickRotation: 0
-                
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.leftMargin: posX
-                anchors.topMargin: posY
-                rotation: tickRotation
-            }
-        }
-        
+                    id: tickMark
+                    Rectangle {
+                        property bool isWhite: false
+                        width: isWhite ? 5 : 4
+                        height: 9
+
+                        property int tickIndex: 0
+
+                        readonly property real tickSpeedValue: (tickIndex / 16) * speedometer.maxValue
+
+                        color: speedometer.value >= tickSpeedValue ? Config.fontColor : Config.speedometerGrayTicks
+
+                        property int posX: 0
+                        property int posY: 0
+                        property real tickRotation: 0
+
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        anchors.leftMargin: posX
+                        anchors.topMargin: posY
+                        rotation: tickRotation
+                    }
+                }
         property var tickPositions: [ //TODO: automate this so we do not need to manually place
             [62, 370, 45, true], // 1, 0
             [26, 321, 61.875, false], // 2, 10
@@ -174,13 +198,14 @@ Item {
         ]
         
         Component.onCompleted: {
-            for (var i = 0; i < tickPositions.length; i++) {
-                var data = tickPositions[i];
-                var tick = tickMark.createObject(incrementDashes, {
-                    posX: data[0],
-                    posY: data[1],
-                    tickRotation: data[2],
-                    isWhite: data[3]
+                    for (var i = 0; i < tickPositions.length; i++) {
+                        var data = tickPositions[i];
+                        var tick = tickMark.createObject(incrementDashes, {
+                            posX: data[0],
+                            posY: data[1],
+                            tickRotation: data[2],
+                            isWhite: data[3],
+                            tickIndex: i
                 });
             }
         }
@@ -194,13 +219,12 @@ Item {
         strokeWidth: 0
         strokeColor: "transparent"
         outlineArc: true
-        fillColor: Config.btnDisabled
+        fillColor: Config.innerArcColor
         end: -135
         begin: 135
-        arcWidth: 9
+        arcWidth: 2
         antialiasing: true
     }
-
     Text {
         id: speedometerValue
         width: 70
