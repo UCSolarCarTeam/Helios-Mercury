@@ -16,12 +16,6 @@ Item {
     property real threshold2: 2
     property real threshold3: 1
 
-    Text {
-    anchors.top: parent.top
-    text: "L: " + distLeft + " R: " + distRight
-    color: "white"
-}
-
     Image {
         id: proximityImage
         source:  "../Images/SensorCar.png"
