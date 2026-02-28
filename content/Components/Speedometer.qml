@@ -85,7 +85,7 @@ Item {
 
                 strokeWidth: 0
                 strokeColor: "transparent"
-                fillColor: "#D708FC"
+                fillColor: Config.fillArcColor
                 arcWidth: 14
                 outlineArc: true
                 antialiasing: true
