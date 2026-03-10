@@ -88,10 +88,10 @@ Item {
     BatteryIcon {
         id: batteryIcon
         anchors { 
-            top: raceCluster.top
+            bottom: raceCluster.bottom
+            bottomMargin: 125
             left: raceCluster.left
-            leftMargin: 75
-            topMargin: 90
+            leftMargin: 300
         }
     }
 
