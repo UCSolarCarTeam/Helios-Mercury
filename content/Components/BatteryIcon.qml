@@ -4,8 +4,6 @@ import Mercury
 
 Item {
     id: batteryIcon
-    width: 260
-    height: 365
     property real rawValue: battery.PackStateOfCharge
     property real value: rawValue / 2 //Unit Conversion from 0.5% to 1%
 
