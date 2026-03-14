@@ -113,9 +113,7 @@ Rectangle {
         { fault: "LvContactorError", msg: "LV contactor error", severity: "error", type: "contactor" }
     ]
 
-    ListModel {
-        id: activeModel
-    }
+    ListModel { id: activeModel }
 
     function getSourceContext(type) {
         if (type === "batteryFaults") {
@@ -156,25 +154,35 @@ Rectangle {
         return -1
     }
 
-    function insertionIndexFor(rank, uid) {
+    function targetIndexFor(item, ignoreIndex) {
         for (let i = 0; i < activeModel.count; i++) {
+            if (i === ignoreIndex)
+                continue
+
             const it = activeModel.get(i)
-            if (rank < it.severityRank)
+            if (item.severityRank < it.severityRank)
                 return i
-            if (rank === it.severityRank && uid < it.uid)
+            if (item.severityRank === it.severityRank && item.uid < it.uid)
                 return i
         }
-        return activeModel.count
+
+        return activeModel.count - (ignoreIndex !== -1 ? 1 : 0)
     }
 
     function insertFaultItem(item) {
-        const index = insertionIndexFor(item.severityRank, item.uid)
+        let index = 0
+        for (; index < activeModel.count; index++) {
+            const it = activeModel.get(index)
+            if (item.severityRank < it.severityRank)
+                break
+            if (item.severityRank === it.severityRank && item.uid < it.uid)
+                break
+        }
         activeModel.insert(index, item)
     }
 
     function removeFaultByKey(fault) {
-        const key = faultKeyFor(fault)
-        const idx = indexOfFaultKey(key)
+        const idx = indexOfFaultKey(faultKeyFor(fault))
         if (idx !== -1)
             activeModel.remove(idx)
     }
@@ -193,15 +201,11 @@ Rectangle {
             return
 
         const isTempTopWarn = fault.severity === "warn"
-        const rank = isTempTopWarn ? -1 : (
-            severityRankSettled[fault.severity] !== undefined
-                ? severityRankSettled[fault.severity]
-                : 99
-        )
+        const rank = isTempTopWarn ? -1 :
+                     (severityRankSettled[fault.severity] !== undefined ? severityRankSettled[fault.severity] : 99)
 
-        const uid = nextUid++
         insertFaultItem({
-            uid: uid,
+            uid: nextUid++,
             faultKey: key,
             label: fault.label || "",
             msg: fault.msg,
@@ -215,22 +219,24 @@ Rectangle {
     function settleElevatedWarnings() {
         const now = nowMs()
 
-        for (let i = activeModel.count - 1; i >= 0; i--) {
+        for (let i = 0; i < activeModel.count; i++) {
             const it = activeModel.get(i)
 
             if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
-                activeModel.remove(i)
+                activeModel.setProperty(i, "temporarilyElevated", false)
+                activeModel.setProperty(i, "elevateUntil", 0)
+                activeModel.setProperty(i, "severityRank", severityRankSettled["warn"])
 
-                insertFaultItem({
-                    uid: it.uid,
-                    faultKey: it.faultKey,
-                    label: it.label,
-                    msg: it.msg,
-                    severity: it.severity,
-                    severityRank: severityRankSettled["warn"],
-                    temporarilyElevated: false,
-                    elevateUntil: 0
-                })
+                const updated = activeModel.get(i)
+                let target = targetIndexFor(updated, i)
+
+                if (target > i)
+                    target -= 1
+
+                if (target !== i)
+                    activeModel.move(i, target, 1)
+
+                i = -1
             }
         }
     }
@@ -298,28 +304,11 @@ Rectangle {
         clip: true
         spacing: 2
 
-        add: Transition {
-            NumberAnimation {
-                properties: "x,y,opacity"
-                from: 0
-                to: 1
-                duration: 180
-            }
-        }
-
         displaced: Transition {
             NumberAnimation {
                 properties: "x,y"
                 duration: 260
                 easing.type: Easing.InOutQuad
-            }
-        }
-
-        remove: Transition {
-            NumberAnimation {
-                properties: "opacity"
-                to: 0
-                duration: 120
             }
         }
 
