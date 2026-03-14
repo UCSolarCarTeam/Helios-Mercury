@@ -41,6 +41,44 @@ Rectangle {
         { fault: "OrionMessageTimeoutTrip", msg: "Orion message timeout", severity: "error", type: "mbms" },
         { fault: "ContactorDisconnectedUnexpectedlyTrip", msg: "Contactor disconnect trip", severity: "error", type: "mbms" },
 
+        // Battery faults
+        { fault: "InternalCommunicationFault", msg: "Battery internal communication fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalConversionFault", msg: "Battery internal conversion fault", severity: "error", type: "batteryFaults" },
+        { fault: "WeakCellFault", msg: "Weak cell fault", severity: "error", type: "batteryFaults" },
+        { fault: "LowCellVoltageFault", msg: "Low cell voltage fault", severity: "error", type: "batteryFaults" },
+        { fault: "OpenWiringFault", msg: "Open wiring fault", severity: "error", type: "batteryFaults" },
+        { fault: "CurrentSensorFault", msg: "Current sensor fault", severity: "error", type: "batteryFaults" },
+        { fault: "PackVoltageSensorFault", msg: "Pack voltage sensor fault", severity: "error", type: "batteryFaults" },
+        { fault: "WeakPackFault", msg: "Weak pack fault", severity: "error", type: "batteryFaults" },
+        { fault: "VoltageRedundancyFault", msg: "Voltage redundancy fault", severity: "error", type: "batteryFaults" },
+        { fault: "FanMonitorFault", msg: "Fan monitor fault", severity: "error", type: "batteryFaults" },
+        { fault: "ThermistorFault", msg: "Thermistor fault", severity: "error", type: "batteryFaults" },
+        { fault: "CanbusCommunicationFault", msg: "Battery CAN communication fault", severity: "error", type: "batteryFaults" },
+        { fault: "AlwaysOnSupplyFault", msg: "Always-on supply fault", severity: "error", type: "batteryFaults" },
+        { fault: "HighVoltageIsolationFault", msg: "High voltage isolation fault", severity: "error", type: "batteryFaults" },
+        { fault: "PowerSupply12VFault", msg: "12V power supply fault", severity: "error", type: "batteryFaults" },
+        { fault: "ChargeLimitEnforcementFault", msg: "Charge limit enforcement fault", severity: "error", type: "batteryFaults" },
+        { fault: "DischargeLimitEnforcementFault", msg: "Discharge limit enforcement fault", severity: "error", type: "batteryFaults" },
+        { fault: "ChargerSafetyRelayFault", msg: "Charger safety relay fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalMemoryFault", msg: "Battery internal memory fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalThermistorFault", msg: "Battery internal thermistor fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalLogicFault", msg: "Battery internal logic fault", severity: "error", type: "batteryFaults" },
+
+        { fault: "DclReducedDueToLowSoc", msg: "DCL reduced due to low SOC", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToHighCellResistance", msg: "DCL reduced due to high cell resistance", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToTemperature", msg: "DCL reduced due to temperature", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToLowCellVoltage", msg: "DCL reduced due to low cell voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToLowPackVoltage", msg: "DCL reduced due to low pack voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "DclAndCclReducedDueToVoltageFailsafe", msg: "DCL/CCL reduced due to voltage failsafe", severity: "warn", type: "batteryFaults" },
+        { fault: "DclAndCclReducedDueToCommunicationFailsafe", msg: "DCL/CCL reduced due to comm failsafe", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighSoc", msg: "CCL reduced due to high SOC", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighCellResistance", msg: "CCL reduced due to high cell resistance", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToTemperature", msg: "CCL reduced due to temperature", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighCellVoltage", msg: "CCL reduced due to high cell voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighPackVoltage", msg: "CCL reduced due to high pack voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToChargerLatch", msg: "CCL reduced due to charger latch", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToAlternateCurrentLimit", msg: "CCL reduced due to alternate current limit", severity: "warn", type: "batteryFaults" },
+
         // Motor bitfield faults
         { fault: "ErrorFlags", bit: 0, msg: "Hardware overcurrent", severity: "error", type: "motorDetails0" },
         { fault: "ErrorFlags", bit: 1, msg: "Software overcurrent", severity: "error", type: "motorDetails0" },
@@ -75,14 +113,30 @@ Rectangle {
         { fault: "LvContactorError", msg: "LV contactor error", severity: "error", type: "contactor" }
     ]
 
-    ListModel { id: activeModel }
+    ListModel {
+        id: activeModel
+    }
 
     function getSourceContext(type) {
-        if (type === "batteryFaults") return batteryFaults
-        if (type === "mbms") return mbms
-        if (type === "motorDetails0") return motorDetails0
-        if (type === "motorDetails1") return motorDetails1
-        if (type === "contactor") return contactor
+        if (type === "batteryFaults") {
+            if (typeof batteryFaults !== "undefined")
+                return batteryFaults
+            if (typeof batteryFaultsPacket !== "undefined")
+                return batteryFaultsPacket
+            return null
+        }
+
+        if (type === "battery" && typeof battery !== "undefined")
+            return battery
+        if (type === "mbms" && typeof mbms !== "undefined")
+            return mbms
+        if (type === "motorDetails0" && typeof motorDetails0 !== "undefined")
+            return motorDetails0
+        if (type === "motorDetails1" && typeof motorDetails1 !== "undefined")
+            return motorDetails1
+        if (type === "contactor" && typeof contactor !== "undefined")
+            return contactor
+
         return null
     }
 
@@ -204,6 +258,7 @@ Rectangle {
         id: warnTimer
         interval: 3000
         repeat: false
+
         onTriggered: {
             if (warnMoveQueue.length > 0) {
                 const key = warnMoveQueue.shift()
@@ -219,6 +274,7 @@ Rectangle {
         interval: 200
         repeat: true
         running: true
+
         onTriggered: {
             for (let i = 0; i < faultsData.length; i++)
                 refreshFault(faultsData[i])
