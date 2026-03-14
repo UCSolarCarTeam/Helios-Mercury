@@ -12,20 +12,27 @@ Rectangle {
     property int delegateHeight: 30
     property int nextUid: 1
 
-    // Duration that a yellow warning temporarily stays above all faults
+    // Yellow warnings stay above all other faults for this long,
+    // then drop below the red section.
     property int tempWarnTopDurationMs: 3000
 
-
     /*
-      Master list describing every possible dashboard fault.
+      Master fault list.
 
       Each entry defines:
-      - the property to read from the data source
-      - the message shown to the driver
-      - severity level (bps/error/warn/info)
-      - the source object where the signal originates
+      - the source property name
+      - the text shown in the UI
+      - the severity used for color/priority
+      - the source object type to read from
+
+      MBMS names below match the properties used in your MBMS screen,
+      such as AllowCharge, AllowDischarge, HighVoltageEnableState,
+      HighCommonCurrentTrip, ProtectionTrip, and
+      ContactorDisconnectedUnexpectedlyTrip. Battery fault names below
+      match the BatteryFaultsPacket properties. 
     */
     property var faultsData: [
+        // MBMS
         { fault: "StrobeBmsLight", msg: "Strobe SOS", severity: "bps", type: "mbms" },
         { fault: "AllowCharge", msg: "Allow charge", severity: "info", type: "mbms" },
         { fault: "AllowDischarge", msg: "Allow discharge", severity: "info", type: "mbms" },
@@ -45,20 +52,81 @@ Rectangle {
         { fault: "OrionMessageTimeoutTrip", msg: "Orion message timeout", severity: "error", type: "mbms" },
         { fault: "ContactorDisconnectedUnexpectedlyTrip", msg: "Contactor disconnect trip", severity: "error", type: "mbms" },
 
-        // (battery, motor, and contactor entries unchanged)
+        // Battery faults
+        { fault: "InternalCommunicationFault", msg: "Battery internal communication fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalConversionFault", msg: "Battery internal conversion fault", severity: "error", type: "batteryFaults" },
+        { fault: "WeakCellFault", msg: "Weak cell fault", severity: "error", type: "batteryFaults" },
+        { fault: "LowCellVoltageFault", msg: "Low cell voltage fault", severity: "error", type: "batteryFaults" },
+        { fault: "OpenWiringFault", msg: "Open wiring fault", severity: "error", type: "batteryFaults" },
+        { fault: "CurrentSensorFault", msg: "Current sensor fault", severity: "error", type: "batteryFaults" },
+        { fault: "PackVoltageSensorFault", msg: "Pack voltage sensor fault", severity: "error", type: "batteryFaults" },
+        { fault: "WeakPackFault", msg: "Weak pack fault", severity: "error", type: "batteryFaults" },
+        { fault: "VoltageRedundancyFault", msg: "Voltage redundancy fault", severity: "error", type: "batteryFaults" },
+        { fault: "FanMonitorFault", msg: "Fan monitor fault", severity: "error", type: "batteryFaults" },
+        { fault: "ThermistorFault", msg: "Thermistor fault", severity: "error", type: "batteryFaults" },
+        { fault: "CanbusCommunicationFault", msg: "Battery CAN communication fault", severity: "error", type: "batteryFaults" },
+        { fault: "AlwaysOnSupplyFault", msg: "Always-on supply fault", severity: "error", type: "batteryFaults" },
+        { fault: "HighVoltageIsolationFault", msg: "High voltage isolation fault", severity: "error", type: "batteryFaults" },
+        { fault: "PowerSupply12VFault", msg: "12V power supply fault", severity: "error", type: "batteryFaults" },
+        { fault: "ChargeLimitEnforcementFault", msg: "Charge limit enforcement fault", severity: "error", type: "batteryFaults" },
+        { fault: "DischargeLimitEnforcementFault", msg: "Discharge limit enforcement fault", severity: "error", type: "batteryFaults" },
+        { fault: "ChargerSafetyRelayFault", msg: "Charger safety relay fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalMemoryFault", msg: "Battery internal memory fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalThermistorFault", msg: "Battery internal thermistor fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalLogicFault", msg: "Battery internal logic fault", severity: "error", type: "batteryFaults" },
+
+        { fault: "DclReducedDueToLowSoc", msg: "DCL reduced due to low SOC", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToHighCellResistance", msg: "DCL reduced due to high cell resistance", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToTemperature", msg: "DCL reduced due to temperature", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToLowCellVoltage", msg: "DCL reduced due to low cell voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToLowPackVoltage", msg: "DCL reduced due to low pack voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "DclAndCclReducedDueToVoltageFailsafe", msg: "DCL/CCL reduced due to voltage failsafe", severity: "warn", type: "batteryFaults" },
+        { fault: "DclAndCclReducedDueToCommunicationFailsafe", msg: "DCL/CCL reduced due to comm failsafe", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighSoc", msg: "CCL reduced due to high SOC", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighCellResistance", msg: "CCL reduced due to high cell resistance", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToTemperature", msg: "CCL reduced due to temperature", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighCellVoltage", msg: "CCL reduced due to high cell voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighPackVoltage", msg: "CCL reduced due to high pack voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToChargerLatch", msg: "CCL reduced due to charger latch", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToAlternateCurrentLimit", msg: "CCL reduced due to alternate current limit", severity: "warn", type: "batteryFaults" },
+
+        // Motor bitfield faults
+        { fault: "ErrorFlags", bit: 0, msg: "Hardware overcurrent", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 1, msg: "Software overcurrent", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 2, msg: "DC bus overvoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 3, msg: "Bad motor position", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 4, msg: "Watchdog reset", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 5, msg: "Config read error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 6, msg: "BMS fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 7, msg: "Communication error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 8, msg: "Motor overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 9, msg: "Inverter overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 10, msg: "Flux error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 11, msg: "BRAM error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 12, msg: "EEPROM error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 13, msg: "Hardware undervoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 14, msg: "Hardware overvoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 15, msg: "Hardware overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 16, msg: "Hardware fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 17, msg: "Software fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 18, msg: "DC bus undervoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 19, msg: "DC bus overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 20, msg: "Motor current fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 21, msg: "Motor speed fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 22, msg: "Motor voltage fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 23, msg: "Motor angle fault", severity: "error", type: "motorDetails0" },
+
+        // Contactor
+        { fault: "CommonContactorError", msg: "Common contactor error", severity: "error", type: "contactor" },
+        { fault: "MotorContactorError", msg: "Motor contactor error", severity: "error", type: "contactor" },
+        { fault: "ArrayContactorError", msg: "Array contactor error", severity: "error", type: "contactor" },
+        { fault: "ChargeContactorError", msg: "Charge contactor error", severity: "error", type: "contactor" },
+        { fault: "LvContactorError", msg: "LV contactor error", severity: "error", type: "contactor" }
     ]
 
-    // Active faults currently visible in the UI
     ListModel { id: activeModel }
 
-
-
-    /*
-      Returns the QML object containing the property for a given fault type.
-
-      This maps the logical type name used in faultsData to the actual
-      telemetry object exposed by Mercury.
-    */
+    // Maps each logical fault type to its live Mercury/QML source object.
     function getSourceContext(type) {
         if (type === "batteryFaults") {
             if (typeof batteryFaults !== "undefined")
@@ -81,20 +149,15 @@ Rectangle {
         return null
     }
 
-
-    // Current timestamp used for warning timers
     function nowMs() {
         return Date.now()
     }
 
-
-    // Generates a unique identifier for a fault entry
+    // Unique key for each fault so duplicates are not added.
     function faultKeyFor(fault) {
         return fault.type + ":" + fault.fault + ":" + (fault.bit !== undefined ? fault.bit : -1)
     }
 
-
-    // Finds an existing fault in the model
     function indexOfFaultKey(key) {
         for (let i = 0; i < activeModel.count; i++) {
             if (activeModel.get(i).faultKey === key)
@@ -103,12 +166,7 @@ Rectangle {
         return -1
     }
 
-
-    /*
-      Converts severity to a numeric rank for sorting.
-
-      Lower number = higher priority in the display.
-    */
+    // Red priorities first, then yellow, then green.
     function baseRankForSeverity(severity) {
         if (severity === "bps" || severity === "error")
             return 0
@@ -119,40 +177,33 @@ Rectangle {
         return 99
     }
 
-
     /*
-      Finds the first position in the list that comes AFTER all red faults.
+      Finds the index directly after the red section.
 
-      Used when settling a warning so that it moves under the red section.
+      ignoreIndex is critical here: while a yellow warning is still sitting
+      at the top, we must ignore it during the scan, otherwise the function
+      returns 0 and the warning never drops below red.
     */
     function firstIndexAfterRedSection(ignoreIndex) {
         let idx = 0
         while (idx < activeModel.count) {
-
             if (idx === ignoreIndex) {
                 idx++
                 continue
             }
 
             const it = activeModel.get(idx)
-
             if (it.severity === "bps" || it.severity === "error")
                 idx++
             else
                 break
         }
-
         return idx
     }
 
-
-    /*
-      Determines where a new fault should be inserted so that
-      the list remains sorted by severity and creation order.
-    */
+    // Normal sorted insertion by rank, then by uid.
     function sortedInsertIndex(item) {
         for (let i = 0; i < activeModel.count; i++) {
-
             const it = activeModel.get(i)
 
             if (item.severityRank < it.severityRank)
@@ -161,26 +212,20 @@ Rectangle {
             if (item.severityRank === it.severityRank && item.uid < it.uid)
                 return i
         }
-
         return activeModel.count
     }
-
 
     function insertFaultItem(item) {
         activeModel.insert(sortedInsertIndex(item), item)
     }
 
-
-
     /*
-      Adds a fault to the active list if it becomes active,
-      or removes it if it clears.
+      Adds a fault if active, removes it if inactive.
 
-      Yellow warnings are temporarily inserted with a special
-      priority rank so they appear above everything for 3 seconds.
+      New yellow warnings are intentionally given severityRank = -1 so they
+      appear above red for 3 seconds before being moved below the red section.
     */
     function addOrUpdateFault(fault, isActive) {
-
         const key = faultKeyFor(fault)
         const idx = indexOfFaultKey(key)
 
@@ -207,24 +252,19 @@ Rectangle {
         })
     }
 
-
-
     /*
-      After the 3-second timer expires, warnings are "settled".
-
-      Their rank changes to normal yellow priority and the item
-      is moved directly below the red fault section.
+      After 3 seconds, a temporary yellow warning is "settled":
+      - it stops being elevated
+      - its rank becomes normal yellow rank 1
+      - it is explicitly moved to the first slot below the red group
     */
     function settleElevatedWarnings() {
-
         const now = nowMs()
 
         for (let i = 0; i < activeModel.count; i++) {
-
             const it = activeModel.get(i)
 
             if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
-
                 const target = firstIndexAfterRedSection(i)
 
                 activeModel.setProperty(i, "temporarilyElevated", false)
@@ -243,39 +283,26 @@ Rectangle {
         }
     }
 
-
-
-    /*
-      Reads the current value of a fault property and updates the model.
-      Supports both boolean faults and bitfield faults.
-    */
+    // Reads the current value from the source object and updates the display model.
     function refreshFault(fault) {
-
         const sourceContext = getSourceContext(fault.type)
         if (!sourceContext)
             return
 
         try {
-
             if (fault.bit !== undefined) {
-
                 const flags = sourceContext[fault.fault]
                 addOrUpdateFault(fault, (flags & (1 << fault.bit)) !== 0)
-
             } else {
-
                 addOrUpdateFault(fault, !!sourceContext[fault.fault])
-
             }
-
-        } catch (e) { }
+        } catch (e) {
+        }
     }
 
-
-
     /*
-      Poll timer used as a fallback in case a property does not emit
-      a change signal. Also responsible for settling warnings.
+      Polling is kept as a fallback for fields that may not emit usable
+      ...Changed signals. It also drives the 3-second warning settle logic.
     */
     Timer {
         id: pollTimer
@@ -284,7 +311,6 @@ Rectangle {
         running: true
 
         onTriggered: {
-
             for (let i = 0; i < faultsData.length; i++)
                 refreshFault(faultsData[i])
 
@@ -292,16 +318,12 @@ Rectangle {
         }
     }
 
-
-
     /*
-      On startup we connect to property change signals so the UI
-      reacts immediately when telemetry updates.
+      On startup, connect to live change signals when available, and also
+      do one immediate refresh so the list is correct from the start.
     */
     Component.onCompleted: {
-
         for (let i = 0; i < faultsData.length; i++) {
-
             const fault = faultsData[i]
             const sourceContext = getSourceContext(fault.type)
 
@@ -312,7 +334,6 @@ Rectangle {
             const signalObj = sourceContext[signalName]
 
             if (signalObj && signalObj.connect) {
-
                 signalObj.connect((function(f) {
                     return function() {
                         refreshFault(f)
@@ -324,16 +345,11 @@ Rectangle {
         }
     }
 
-
-
     /*
-      Displays the active fault list.
-
-      Only the displacement animation is used so rows slide smoothly
-      when warnings settle below the red fault section.
+      Only use displaced animation here. That keeps row movement smooth
+      when a warning drops below the red section without creating ghost rows.
     */
     ListView {
-
         id: listView
         anchors.fill: parent
         model: activeModel
