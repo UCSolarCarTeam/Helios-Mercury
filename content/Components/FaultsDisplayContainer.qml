@@ -11,6 +11,7 @@ Rectangle {
 
     property int delegateHeight: 30
     property int nextUid: 1
+    property int tempWarnTopDurationMs: 3000
 
     property var severityRankSettled: ({
         "bps": 0,
@@ -139,8 +140,20 @@ Rectangle {
         return null
     }
 
+    function nowMs() {
+        return Date.now()
+    }
+
     function faultKeyFor(fault) {
         return fault.type + ":" + fault.fault + ":" + (fault.bit !== undefined ? fault.bit : -1)
+    }
+
+    function indexOfFaultKey(key) {
+        for (let i = 0; i < activeModel.count; i++) {
+            if (activeModel.get(i).faultKey === key)
+                return i
+        }
+        return -1
     }
 
     function insertionIndexFor(rank, uid) {
@@ -161,32 +174,30 @@ Rectangle {
 
     function removeFaultByKey(fault) {
         const key = faultKeyFor(fault)
-        for (let i = 0; i < activeModel.count; i++) {
-            const it = activeModel.get(i)
-            if (it.faultKey === key) {
-                activeModel.remove(i)
-                return
-            }
-        }
+        const idx = indexOfFaultKey(key)
+        if (idx !== -1)
+            activeModel.remove(idx)
     }
 
     function addOrUpdateFault(fault, isActive) {
         const key = faultKeyFor(fault)
+        const idx = indexOfFaultKey(key)
 
         if (!isActive) {
-            removeFaultByKey(fault)
+            if (idx !== -1)
+                activeModel.remove(idx)
             return
         }
 
-        for (let i = 0; i < activeModel.count; i++) {
-            const it = activeModel.get(i)
-            if (it.faultKey === key)
-                return
-        }
+        if (idx !== -1)
+            return
 
-        const severityRank = severityRankSettled[fault.severity] !== undefined
+        const isTempTopWarn = fault.severity === "warn"
+        const rank = isTempTopWarn ? -1 : (
+            severityRankSettled[fault.severity] !== undefined
                 ? severityRankSettled[fault.severity]
                 : 99
+        )
 
         const uid = nextUid++
         insertFaultItem({
@@ -195,8 +206,33 @@ Rectangle {
             label: fault.label || "",
             msg: fault.msg,
             severity: fault.severity,
-            severityRank: severityRank
+            severityRank: rank,
+            temporarilyElevated: isTempTopWarn,
+            elevateUntil: isTempTopWarn ? nowMs() + tempWarnTopDurationMs : 0
         })
+    }
+
+    function settleElevatedWarnings() {
+        const now = nowMs()
+
+        for (let i = activeModel.count - 1; i >= 0; i--) {
+            const it = activeModel.get(i)
+
+            if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
+                activeModel.remove(i)
+
+                insertFaultItem({
+                    uid: it.uid,
+                    faultKey: it.faultKey,
+                    label: it.label,
+                    msg: it.msg,
+                    severity: it.severity,
+                    severityRank: severityRankSettled["warn"],
+                    temporarilyElevated: false,
+                    elevateUntil: 0
+                })
+            }
+        }
     }
 
     function refreshFault(fault) {
@@ -224,6 +260,8 @@ Rectangle {
         onTriggered: {
             for (let i = 0; i < faultsData.length; i++)
                 refreshFault(faultsData[i])
+
+            settleElevatedWarnings()
         }
     }
 
@@ -248,6 +286,8 @@ Rectangle {
 
             refreshFault(fault)
         }
+
+        settleElevatedWarnings()
     }
 
     ListView {
@@ -257,6 +297,31 @@ Rectangle {
         interactive: false
         clip: true
         spacing: 2
+
+        add: Transition {
+            NumberAnimation {
+                properties: "x,y,opacity"
+                from: 0
+                to: 1
+                duration: 180
+            }
+        }
+
+        displaced: Transition {
+            NumberAnimation {
+                properties: "x,y"
+                duration: 260
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        remove: Transition {
+            NumberAnimation {
+                properties: "opacity"
+                to: 0
+                duration: 120
+            }
+        }
 
         delegate: FaultsMessage {
             width: listView.width
