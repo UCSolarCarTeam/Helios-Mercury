@@ -27,7 +27,7 @@ QtObject {
     // gauge sizes
     property int extraSmallGaugeSize: 120
     property int smallGaugeSize: 180
-    property int mediumGaugeSize: 240
+    property int mediumGaugeSize: 210
     property int largeGaugeSize: 300
 
     // color values 

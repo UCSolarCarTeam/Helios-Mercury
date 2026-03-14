@@ -134,8 +134,8 @@ Item {
         
         property bool hasIcon: gaugeTemplate.icon !== ""
 
-        property real contentHeight: iconHeight + Config[gaugeAnimation.getFontSizes(gaugeSize).l] + Config[gaugeAnimation.getFontSizes(gaugeSize).s]
-        property int numberOfSpaces: hasIcon ? 4 : 3
+        property real contentHeight: gaugeTemplate.iconHeight + Config[gaugeAnimation.getFontSizes(gaugeSize).l] + Config[gaugeAnimation.getFontSizes(gaugeSize).s]
+        property int numberOfSpaces: contentContainer.hasIcon ? 4 : 3
         property real verticalSpacing: ( contentContainer.height - contentContainer.contentHeight - gaugeTemplate.arcWidth ) / contentContainer.numberOfSpaces
         
         Loader {
@@ -144,8 +144,7 @@ Item {
             height: gaugeTemplate.iconHeight
             anchors {
                 horizontalCenter: contentContainer.horizontalCenter
-                top: contentContainer.top
-                topMargin: contentContainer.verticalSpacing * 1.5
+                top: gaugeLabel.bottom
             }
             visible: contentContainer.hasIcon
             sourceComponent: contentContainer.hasIcon ? iconComponent : null
@@ -167,10 +166,8 @@ Item {
             verticalAlignment: Text.AlignVCenter
             anchors {
                 horizontalCenter: contentContainer.horizontalCenter
-                top: contentContainer.hasIcon ? iconLoader.bottom : contentContainer.top
-                topMargin: contentContainer.hasIcon 
-                    ? (contentContainer.verticalSpacing - Config[gaugeAnimation.getFontSizes(gaugeSize).l] / 2) 
-                    : (contentContainer.height - Config[gaugeAnimation.getFontSizes(gaugeSize).l] - Config[gaugeAnimation.getFontSizes(gaugeSize).s] - contentContainer.verticalSpacing / 2) / 2
+                top: contentContainer.top
+                topMargin: contentContainer.verticalSpacing * 1.5
             }
             font.weight: Font.Medium
             font.family: Config.fontStyle
@@ -186,12 +183,9 @@ Item {
             verticalAlignment: Text.AlignVCenter
             anchors {
                 horizontalCenter: contentContainer.horizontalCenter
-                bottom: contentContainer.hasIcon ? contentContainer.bottom : undefined
-                bottomMargin: contentContainer.hasIcon ? (contentContainer.verticalSpacing + Config[gaugeAnimation.getFontSizes(gaugeSize).l]) : 0
-                top: contentContainer.hasIcon ? undefined : gaugeValue.bottom
-                topMargin: contentContainer.hasIcon ? 0 : contentContainer.verticalSpacing / 2.3
+                top: gaugeValue.bottom
             }
-            font.weight: Font.Medium
+            font.weight: Font.Small
             font.family: Config.fontStyle
         }
     }
