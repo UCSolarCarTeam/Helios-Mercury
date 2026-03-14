@@ -134,7 +134,6 @@ Rectangle {
             return motorDetails1
         if (type === "contactor" && typeof contactor !== "undefined")
             return contactor
-
         return null
     }
 
@@ -154,37 +153,19 @@ Rectangle {
         return -1
     }
 
-    function targetIndexFor(item, ignoreIndex) {
+    function sortedInsertIndex(item) {
         for (let i = 0; i < activeModel.count; i++) {
-            if (i === ignoreIndex)
-                continue
-
             const it = activeModel.get(i)
             if (item.severityRank < it.severityRank)
                 return i
             if (item.severityRank === it.severityRank && item.uid < it.uid)
                 return i
         }
-
-        return activeModel.count - (ignoreIndex !== -1 ? 1 : 0)
+        return activeModel.count
     }
 
     function insertFaultItem(item) {
-        let index = 0
-        for (; index < activeModel.count; index++) {
-            const it = activeModel.get(index)
-            if (item.severityRank < it.severityRank)
-                break
-            if (item.severityRank === it.severityRank && item.uid < it.uid)
-                break
-        }
-        activeModel.insert(index, item)
-    }
-
-    function removeFaultByKey(fault) {
-        const idx = indexOfFaultKey(faultKeyFor(fault))
-        if (idx !== -1)
-            activeModel.remove(idx)
+        activeModel.insert(sortedInsertIndex(item), item)
     }
 
     function addOrUpdateFault(fault, isActive) {
@@ -200,19 +181,16 @@ Rectangle {
         if (idx !== -1)
             return
 
-        const isTempTopWarn = fault.severity === "warn"
-        const rank = isTempTopWarn ? -1 :
-                     (severityRankSettled[fault.severity] !== undefined ? severityRankSettled[fault.severity] : 99)
-
+        const elevated = fault.severity === "warn"
         insertFaultItem({
             uid: nextUid++,
             faultKey: key,
             label: fault.label || "",
             msg: fault.msg,
             severity: fault.severity,
-            severityRank: rank,
-            temporarilyElevated: isTempTopWarn,
-            elevateUntil: isTempTopWarn ? nowMs() + tempWarnTopDurationMs : 0
+            severityRank: elevated ? -1 : (severityRankSettled[fault.severity] !== undefined ? severityRankSettled[fault.severity] : 99),
+            temporarilyElevated: elevated,
+            elevateUntil: elevated ? nowMs() + tempWarnTopDurationMs : 0
         })
     }
 
@@ -223,19 +201,19 @@ Rectangle {
             const it = activeModel.get(i)
 
             if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
-                activeModel.setProperty(i, "temporarilyElevated", false)
-                activeModel.setProperty(i, "elevateUntil", 0)
-                activeModel.setProperty(i, "severityRank", severityRankSettled["warn"])
+                const replacement = {
+                    uid: it.uid,
+                    faultKey: it.faultKey,
+                    label: it.label,
+                    msg: it.msg,
+                    severity: it.severity,
+                    severityRank: severityRankSettled["warn"],
+                    temporarilyElevated: false,
+                    elevateUntil: 0
+                }
 
-                const updated = activeModel.get(i)
-                let target = targetIndexFor(updated, i)
-
-                if (target > i)
-                    target -= 1
-
-                if (target !== i)
-                    activeModel.move(i, target, 1)
-
+                activeModel.remove(i)
+                activeModel.insert(sortedInsertIndex(replacement), replacement)
                 i = -1
             }
         }
@@ -262,11 +240,9 @@ Rectangle {
         interval: 200
         repeat: true
         running: true
-
         onTriggered: {
             for (let i = 0; i < faultsData.length; i++)
                 refreshFault(faultsData[i])
-
             settleElevatedWarnings()
         }
     }
@@ -292,8 +268,6 @@ Rectangle {
 
             refreshFault(fault)
         }
-
-        settleElevatedWarnings()
     }
 
     ListView {
