@@ -11,7 +11,6 @@ Rectangle {
 
     property int delegateHeight: 30
     property int nextUid: 1
-    property var warnMoveQueue: []
 
     property var severityRankSettled: ({
         "bps": 0,
@@ -176,9 +175,6 @@ Rectangle {
 
         if (!isActive) {
             removeFaultByKey(fault)
-            const idxWarn = warnMoveQueue.indexOf(key)
-            if (idxWarn !== -1)
-                warnMoveQueue.splice(idxWarn, 1)
             return
         }
 
@@ -199,42 +195,7 @@ Rectangle {
             label: fault.label || "",
             msg: fault.msg,
             severity: fault.severity,
-            settled: fault.severity !== "warn",
             severityRank: severityRank
-        })
-
-        if (fault.severity === "warn") {
-            warnMoveQueue.push(key)
-            warnTimer.restart()
-        }
-    }
-
-    function settleWarnByKey(key) {
-        let idx = -1
-        let item = null
-
-        for (let i = 0; i < activeModel.count; i++) {
-            const it = activeModel.get(i)
-            if (it.faultKey === key) {
-                idx = i
-                item = it
-                break
-            }
-        }
-
-        if (idx === -1 || !item)
-            return
-
-        activeModel.remove(idx)
-
-        insertFaultItem({
-            uid: item.uid,
-            faultKey: item.faultKey,
-            label: item.label,
-            msg: item.msg,
-            severity: "info",
-            settled: true,
-            severityRank: severityRankSettled["info"]
         })
     }
 
@@ -251,21 +212,6 @@ Rectangle {
                 addOrUpdateFault(fault, !!sourceContext[fault.fault])
             }
         } catch (e) {
-        }
-    }
-
-    Timer {
-        id: warnTimer
-        interval: 3000
-        repeat: false
-
-        onTriggered: {
-            if (warnMoveQueue.length > 0) {
-                const key = warnMoveQueue.shift()
-                settleWarnByKey(key)
-                if (warnMoveQueue.length > 0)
-                    warnTimer.restart()
-            }
         }
     }
 
