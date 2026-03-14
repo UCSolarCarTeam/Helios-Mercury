@@ -13,13 +13,6 @@ Rectangle {
     property int nextUid: 1
     property int tempWarnTopDurationMs: 3000
 
-    property var severityRankSettled: ({
-        "bps": 0,
-        "error": 0,
-        "warn": 1,
-        "info": 2
-    })
-
     property var faultsData: [
         // MBMS
         { fault: "StrobeBmsLight", msg: "Strobe SOS", severity: "bps", type: "mbms" },
@@ -153,11 +146,35 @@ Rectangle {
         return -1
     }
 
+    function baseRankForSeverity(severity) {
+        if (severity === "bps" || severity === "error")
+            return 0
+        if (severity === "warn")
+            return 1
+        if (severity === "info")
+            return 2
+        return 99
+    }
+
+    function firstIndexAfterRedSection() {
+        let idx = 0
+        while (idx < activeModel.count) {
+            const it = activeModel.get(idx)
+            if (it.severity === "bps" || it.severity === "error")
+                idx++
+            else
+                break
+        }
+        return idx
+    }
+
     function sortedInsertIndex(item) {
         for (let i = 0; i < activeModel.count; i++) {
             const it = activeModel.get(i)
+
             if (item.severityRank < it.severityRank)
                 return i
+
             if (item.severityRank === it.severityRank && item.uid < it.uid)
                 return i
         }
@@ -182,13 +199,14 @@ Rectangle {
             return
 
         const elevated = fault.severity === "warn"
+
         insertFaultItem({
             uid: nextUid++,
             faultKey: key,
             label: fault.label || "",
             msg: fault.msg,
             severity: fault.severity,
-            severityRank: elevated ? -1 : (severityRankSettled[fault.severity] !== undefined ? severityRankSettled[fault.severity] : 99),
+            severityRank: elevated ? -1 : baseRankForSeverity(fault.severity),
             temporarilyElevated: elevated,
             elevateUntil: elevated ? nowMs() + tempWarnTopDurationMs : 0
         })
@@ -201,19 +219,19 @@ Rectangle {
             const it = activeModel.get(i)
 
             if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
-                const replacement = {
-                    uid: it.uid,
-                    faultKey: it.faultKey,
-                    label: it.label,
-                    msg: it.msg,
-                    severity: it.severity,
-                    severityRank: severityRankSettled["warn"],
-                    temporarilyElevated: false,
-                    elevateUntil: 0
-                }
+                const target = firstIndexAfterRedSection()
 
-                activeModel.remove(i)
-                activeModel.insert(sortedInsertIndex(replacement), replacement)
+                activeModel.setProperty(i, "temporarilyElevated", false)
+                activeModel.setProperty(i, "elevateUntil", 0)
+                activeModel.setProperty(i, "severityRank", 1)
+
+                let moveTarget = target
+                if (moveTarget > i)
+                    moveTarget -= 1
+
+                if (moveTarget !== i)
+                    activeModel.move(i, moveTarget, 1)
+
                 i = -1
             }
         }
@@ -240,9 +258,11 @@ Rectangle {
         interval: 200
         repeat: true
         running: true
+
         onTriggered: {
             for (let i = 0; i < faultsData.length; i++)
                 refreshFault(faultsData[i])
+
             settleElevatedWarnings()
         }
     }
