@@ -156,9 +156,14 @@ Rectangle {
         return 99
     }
 
-    function firstIndexAfterRedSection() {
+    function firstIndexAfterRedSection(ignoreIndex) {
         let idx = 0
         while (idx < activeModel.count) {
+            if (idx === ignoreIndex) {
+                idx++
+                continue
+            }
+
             const it = activeModel.get(idx)
             if (it.severity === "bps" || it.severity === "error")
                 idx++
@@ -219,7 +224,7 @@ Rectangle {
             const it = activeModel.get(i)
 
             if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
-                const target = firstIndexAfterRedSection()
+                const target = firstIndexAfterRedSection(i)
 
                 activeModel.setProperty(i, "temporarilyElevated", false)
                 activeModel.setProperty(i, "elevateUntil", 0)
