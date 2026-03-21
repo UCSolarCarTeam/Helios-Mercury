@@ -225,6 +225,7 @@ Item {
         arcWidth: 2
         antialiasing: true
     }
+
     Text {
         id: speedometerValue
         width: 70
@@ -259,4 +260,22 @@ Item {
             horizontalCenter: innerArc.horizontalCenter
         }
     }
+    Shape {
+            id: triangularNeedle
+            anchors.centerIn: inactiveArc
+            width: 428
+            height: 428
+            rotation: -135 + (activeArcContainer.animatedValue / speedometer.maxValue) * 270
+            antialiasing: true
+            z: 10
+            ShapePath {
+                fillColor: Config.valueHigh //
+                strokeColor: "transparent"
+                startX: 210
+                startY: 91.5
+                PathLine { x: 218; y: 91.5 }
+                PathLine { x: 214; y: 0 }
+                PathLine { x: 210; y: 91.5 }
+            }
+        }
 }
