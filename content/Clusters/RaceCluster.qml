@@ -54,6 +54,7 @@ Item {
     }
 
     RpmGauge {
+        visible: false
         id: rpmGauge
         x: 1598
         y: -8
@@ -95,39 +96,78 @@ Item {
         }
     }
 
-    ThreeQuarterGauge {
+    GaugeTemplate {
         id: motorTempGauge
-        x: 212
-        y: 21
+        x: 25
+        y: 150
         minValue: 0
         maxValue: 100
         gaugeTitle: "Motor Temp"
         units: "°C"
         value: (motorDetails0.MotorTemp + motorDetails1.MotorTemp) / 2
+        iconWidth: 50
+        iconHeight: 35
+        icon: "MotorIcon.png"
+        gaugeSize: Config.mediumGaugeSize
     }
 
-    ThreeQuarterGauge {
+    GaugeTemplate {
         id: packVoltageGauge
-        x: 68
-        y: 180
+        x: 250
+        y: 150
         minValue: 0
         maxValue: 100
-        gaugeTitle: "Pack Voltage"
+        gaugeTitle: "Cell Voltage"
         units: "V"
         value: battery.PackVoltage / 10
+        iconWidth: 40
+        iconHeight: 40
+        icon: "BoltIcon.png"
+        gaugeSize: Config.mediumGaugeSize
     }
 
-    ThreeQuarterGauge {
+    GaugeTemplate {
         id: highCellTempGauge
-        x: 178
-        y: 290
+        x: 475
+        y: 150
         minValue: 0
         maxValue: 100
         gaugeTitle: "High Cell Temp"
         units: "°C"
         value: battery.HighTemperature
+        iconWidth: 35
+        iconHeight: 35
+        icon: "ThermometerIcon.png"
+        gaugeSize: Config.mediumGaugeSize
     }
-
+    GaugeTemplate {
+        id: motorCurrentRight
+        x: 1730
+        y: 130
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Motor Current"
+        units: "A"
+        icon: "RightMotor.png"
+        value: motorDetails1.BusCurrent
+        iconWidth: 40
+        iconHeight: 30
+        gaugeSize: Config.extraSmallGaugeSize
+    }
+    GaugeTemplate {
+        id: motorCurrentLeft
+        x: 1730
+        y: 285
+        minValue: 0
+        maxValue: 100
+        gaugeTitle: "Motor Current"
+        units: "A"
+        icon: "LeftMotor.png"
+        value: motorDetails0.BusCurrent
+        iconWidth: 40
+        iconHeight: 25
+        gaugeSize: Config.extraSmallGaugeSize
+    }
     ContactorStatus {
         id: contactorsComponent
         anchors {
