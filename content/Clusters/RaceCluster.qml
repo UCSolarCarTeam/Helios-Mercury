@@ -54,6 +54,7 @@ Item {
     }
 
     RpmGauge {
+        visible: false
         id: rpmGauge
         x: 1598
         y: -8
@@ -141,30 +142,30 @@ Item {
     }
     GaugeTemplate {
         id: motorCurrentRight
-        x: 1700
+        x: 1730
         y: 130
         minValue: 0
         maxValue: 100
         gaugeTitle: "Motor Current"
         units: "A"
         icon: "RightMotor.png"
-        value: motorDetails1.MotorCurrent
+        value: motorDetails1.BusCurrent
         iconWidth: 40
         iconHeight: 30
         gaugeSize: Config.extraSmallGaugeSize
     }
     GaugeTemplate {
         id: motorCurrentLeft
-        x: 1705
-        y: 275
+        x: 1730
+        y: 285
         minValue: 0
         maxValue: 100
         gaugeTitle: "Motor Current"
         units: "A"
         icon: "LeftMotor.png"
-        value: motorDetails0.MotorCurrent
+        value: motorDetails0.BusCurrent
         iconWidth: 40
-        iconHeight: 30
+        iconHeight: 25
         gaugeSize: Config.extraSmallGaugeSize
     }
     ContactorStatus {
