@@ -29,6 +29,7 @@ qt6_add_qml_module(content
         Components/Rnd.qml
         Components/RaceClusterIcons.qml
         Components/ContactorStatus.qml
+        Components/ProximitySensor.qml
         Config/Config.qml
         Components/BatteryIcon.qml
         Components/ThreeQuarterGauge.qml
@@ -67,4 +68,14 @@ qt6_add_qml_module(content
         Images/RotationIcon.png
         Images/DirectionIcon.png
         Images/ConnectionIcon.png
+        Images/SensorCar.png
+        Images/SensorRearTop.png
+        Images/SensorRearMiddle.png
+        Images/SensorRearBottom.png
+        Images/SensorLeftTop.png
+        Images/SensorLeftMiddle.png
+        Images/SensorLeftBottom.png
+        Images/SensorRightTop.png
+        Images/SensorRightMiddle.png
+        Images/SensorRightBottom.png
 )
