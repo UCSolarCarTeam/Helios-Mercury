@@ -25,7 +25,7 @@ QtObject {
     property double rpmValue: (motorDetails0.MotorVelocity + motorDetails1.MotorVelocity) / 2
 
     // gauge sizes
-    property int extraSmallGaugeSize: 120
+    property int extraSmallGaugeSize: 130
     property int smallGaugeSize: 180
     property int mediumGaugeSize: 210
     property int largeGaugeSize: 300
