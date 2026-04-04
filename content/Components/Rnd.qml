@@ -1,3 +1,4 @@
+// Rnd.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Mercury
@@ -6,98 +7,224 @@ import QtQuick.Effects
 
 Item {
     id: rndComponent
-    width: 180
-    height: 50
+    width: 130
+    height: 95
 
-    // Property to track selected gear (0: R, 1: N, 2: D)
+    Item {
+        id: baseLine
+        width: parent.width
+        height: 0
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.topMargin: 0
+    }
+
     property var gears: ["R", "N", "D"]
+
+    // Tracks selected gear
     property int currentGear: b3.ReverseDigital ? 0 : (b3.ForwardDigital ? 2 : 1)
 
-    // Faint Horizontal Line
-    Rectangle {
-        id: baseLine
-        width: gearRow.width + 10
-        height: 2
-        color: Config.faintGrey
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 10
+    // Tracks previously selected gear (for animation only)
+    property string lastSelectedLabel: gears[currentGear]
+
+    ListModel { id: gearModel }
+
+    function syncModelIfNeeded() {
+        if (gearModel.count !== gears.length) {
+            gearModel.clear()
+            for (var i = 0; i < gears.length; i++)
+                gearModel.append({ label: gears[i] })
+        }
     }
 
-    // Blue Marker for Selected Gear
-    Rectangle {
-        id: gearMarker
-        width: 24
-        height: 5
+    // Keep model static: always R, N, D
+    function moveSelectedToTop() {
+        syncModelIfNeeded()
+    }
+
+    Component.onCompleted: moveSelectedToTop()
+    onCurrentGearChanged: moveSelectedToTop()
+
+    Image {
+        id: upDownArrow
+        width: 36
+        height: 24
+        anchors.right: gearList.left
+        anchors.rightMargin: 10
+        anchors.verticalCenter: gearList.verticalCenter
+        source: "../Images/UpDownArrow.png"
+    }
+
+    // Big highlighted gear
+    Text {
+        id: selectedGearText
+        text: gears[currentGear]
         color: Config.primary
-        y: baseLine.y + (baseLine.height - height) / 2
+        font.pixelSize: Config.fontSize11
+        anchors.top: baseLine.bottom
+        anchors.left: gearList.right
+        anchors.leftMargin: 10
+        anchors.verticalCenter: gearList.verticalCenter
+    }
 
-        // Marker aligns with selected gear safely
-        x: {
-            if (gearRow.children.length < gears.length) {
-                return 0;
-            }
+    // Gear that animates back into the stack
+    Text {
+        id: returningGearGhost
+        visible: false
+        z: 999
 
-            switch (currentGear) {
-                case 0:
-                    return Math.max(gearRow.children[0].x + gearRow.x - width / 2, baseLine.x);
-                case 1:
-                    return gearRow.children[1].x + gearRow.x + (gearRow.children[1].width - width) / 2;
-                case 2:
-                    return Math.min(gearRow.children[2].x + gearRow.x + gearRow.children[2].width - width / 2, baseLine.x + baseLine.width - width);
-                default:
-                    return 0;
-            }
-        }
+        text: ""
+        color: Config.primary
+        font.pixelSize: Config.fontSize11
 
-        Behavior on x {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
+        x: 0
+        y: 0
+        scale: 1
+        opacity: 1
 
-        MultiEffect {
-            source: gearMarker
-            shadowScale: 1.25
-            anchors.fill: gearMarker
-            shadowColor: Config.lightShadow
-            shadowEnabled: true
-            shadowBlur: 0.25
-            shadowOpacity: 0.75
+        transformOrigin: Item.Center
+        transform: Rotation {
+            id: returningGearRotation
+            origin.x: returningGearGhost.width / 2
+            origin.y: returningGearGhost.height / 2
+            angle: 0
         }
     }
 
-    // Gear Letters Row
-    Row {
-        id: gearRow
-        spacing: 15
+    ParallelAnimation {
+        id: returnToStackAnim
+
+        NumberAnimation {
+            target: returningGearGhost
+            property: "x"
+            duration: 720
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: returningGearGhost
+            property: "y"
+            duration: 720
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: returningGearGhost
+            property: "scale"
+            duration: 720
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: returningGearGhost
+            property: "opacity"
+            duration: 720
+            easing.type: Easing.InOutQuad
+        }
+        NumberAnimation {
+            target: returningGearRotation
+            property: "angle"
+            duration: 720
+            easing.type: Easing.InOutQuad
+        }
+
+        onStopped: {
+            returningGearGhost.visible = false
+            returningGearGhost.opacity = 1
+            returningGearGhost.scale = 1
+            returningGearRotation.angle = 0
+        }
+    }
+
+    Connections {
+        target: rndComponent
+
+        function onCurrentGearChanged() {
+            var prev = lastSelectedLabel
+            lastSelectedLabel = gears[currentGear]
+
+            if (!prev || prev === lastSelectedLabel)
+                return
+
+            if (returnToStackAnim.running)
+                returnToStackAnim.stop()
+
+            // Start from the big highlighted gear
+            returningGearGhost.text = prev
+            returningGearGhost.scale = 1
+            returningGearGhost.opacity = 1
+            returningGearRotation.angle = 0
+
+            var startPt = rndComponent.mapFromItem(selectedGearText, 0, 0)
+            returningGearGhost.x = startPt.x
+            returningGearGhost.y = startPt.y
+            returningGearGhost.visible = true
+
+       
+            var idx
+            if (prev === "R") {
+                idx = 0      // TOP
+            } else if (prev === "N") {
+                idx = 1      // MIDDLE
+            } else if (prev === "D") {
+                idx = 2      // BOTTOM
+            } else {
+                idx = 1
+            }
+
+            var finalScale = Config.fontSize5 / Config.fontSize11
+            var rowStep = Config.fontSize5 + gearList.spacing
+            var topRowCenterY = gearList.y + (Config.fontSize5 / 2)
+
+            var targetCenterX = gearList.x + (gearList.width / 2)
+            var targetCenterY = topRowCenterY + (idx * rowStep)
+
+            var finalW = returningGearGhost.width * finalScale
+            var finalH = returningGearGhost.height * finalScale
+
+            returnToStackAnim.animations[0].to = targetCenterX - (finalW / 2)
+            returnToStackAnim.animations[1].to = targetCenterY - (finalH / 2)
+            returnToStackAnim.animations[2].to = finalScale
+            returnToStackAnim.animations[3].to = 0.15
+            returnToStackAnim.animations[4].to = -360
+
+            returnToStackAnim.start()
+        }
+    }
+
+    ListView {
+        id: gearList
+        width: 40
+        height: (Config.fontSize5 + 5) * gears.length
+        spacing: 5
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: baseLine.bottom
         anchors.topMargin: 5
+        interactive: false
+        clip: false
+        model: gearModel
 
-        Repeater {
-            model: gears.length
+        delegate: Item {
+            width: gearText.width
+            height: gearText.height
 
-            Item {
-                width: gearText.width
-                height: gearText.height
+            Text {
+                id: gearText
+                text: model.label
+                font.pixelSize: Config.fontSize5
+                font.weight: (model.label === gears[currentGear]) ? 600 : 400
 
-                Text {
-                    id: gearText
-                    text: gears[index]
-                    font.pixelSize: Config.fontSize5
-                    font.weight: index === currentGear ? 600 : 400
-                    color: index === currentGear ? Config.primary : Config.fontColor
-                    anchors.centerIn: parent
-                }
+                // Dimmer blue for active small gear
+                color: (model.label === gears[currentGear]) ? Config.primary : Config.fontColor
+                opacity: (model.label === gears[currentGear]) ? 0.6 : 1.0
 
-                MultiEffect {
-                    source: gearText
-                    anchors.fill: gearText
-                    shadowEnabled: index === currentGear
-                    shadowBlur: 0.5
-                    shadowColor: Config.lightShadow
-                    shadowOpacity: 0.9
-                    shadowScale: 1.4
-                }
+                anchors.centerIn: parent
+            }
+        }
+
+        displaced: Transition {
+            NumberAnimation {
+                properties: "x,y"
+                duration: 220
+                easing.type: Easing.InOutQuad
             }
         }
     }
