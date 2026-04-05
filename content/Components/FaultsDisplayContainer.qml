@@ -9,315 +9,368 @@ Rectangle {
     height: 175
     color: "transparent"
 
-    property int delegateHeight: 33
+    property int delegateHeight: 30
+    property int nextUid: 1
 
+    // Yellow warnings stay above all other faults for this long,
+    // then drop below the red section.
+    property int tempWarnTopDurationMs: 3000
+
+    /*
+      Master fault list.
+
+      Each entry defines:
+      - the source property name
+      - the text shown in the UI
+      - the severity used for color/priority
+      - the source object type to read from
+
+      MBMS names below match the properties used in your MBMS screen,
+      such as AllowCharge, AllowDischarge, HighVoltageEnableState,
+      HighCommonCurrentTrip, ProtectionTrip, and
+      ContactorDisconnectedUnexpectedlyTrip. Battery fault names below
+      match the BatteryFaultsPacket properties. 
+    */
     property var faultsData: [
-        { fault: "StrobeBmsLight", msg: "Strobe SOS", severity: "bps", type: "mbms"},
-        { fault: "ChargeEnable", msg: "OBMS Charge Disabled", severity: "warn", type: "mbms"},
-        { fault: "DischargeEnable", msg: "OBMS Discharge Disabled", severity: "warn", type: "mbms"},
-        { fault: "HighCellVoltageTrip", msg: "High Cell Voltage Trip", severity: "bps", type: "mbms"},
-        { fault: "LowCellVoltageTrip", msg: "Low Cell Voltage Trip", severity: "bps", type: "mbms"},
-        { fault: "CommonHighCurrentTrip", msg: "Common High Current Trip", severity: "bps", type: "mbms"},
-        { fault: "MotorHighCurrentTrip", msg: "Motor High Current Trip", severity: "bps", type: "mbms"},
-        { fault: "ArrayHighCurrentTrip", msg: "Array High Current Trip", severity: "bps", type: "mbms"},
-        { fault: "LvHighCurrentTrip", msg: "LV High Current Trip", severity: "bps", type: "mbms"},
-        { fault: "ChargeHighCurrentTrip", msg: "Charge High Current Trip", severity: "bps", type: "mbms"},
-        { fault: "ProtectionTrip", msg: "Protection Trip", severity: "bps", type: "mbms"},
-        { fault: "OrionMessageTimeoutTrip", msg: "Orion Message Timeout Trip", severity: "bps", type: "mbms"},
-        { fault: "ContactorDisconnectedUnexpectedlyTrip", msg: "Contactor Disconnected Unexpectedly Trip", severity: "bps", type: "mbms"},
-        { fault: "ContactorConnectedUnexpectedlyTrip", msg: "Contactor Connected Unexpectely Trip", severity: "bps", type: "mbms"},
-        { fault: "CommonHeartbeatDeadTrip", msg: "Common Heartbeat Dead Trip", severity: "bps", type: "mbms"},
-        { fault: "MotorHeartbeatDeadTrip", msg: "Motor Heartbeat Dead Trip", severity: "bps", type: "mbms"},
-        { fault: "ArrayHeartbeatDeadTrip", msg: "Array Heartbeat Dead Trip", severity: "bps", type: "mbms"},
-        { fault: "LvHeartbeatDeadTrip", msg: "LV Heartbeat Dead Trip", severity: "bps", type: "mbms"},
-        { fault: "ChargeHeartbeatDeadTrip", msg: "Charge Heartbeat Dead Trip", severity: "bps", type: "mbms"},
-        { fault: "MpsDisabledTrip", msg: "MPS Disabled Trip", severity: "warn", type: "mbms"},
-        { fault: "EsdEnabledTrip", msg: "ESD Enabled Trip", severity: "bps", type: "mbms"},
-        { fault: "HighTemperatureTrip", msg: "High Temperature Trip", severity: "bps", type: "mbms"},
-        { fault: "LowTemperatureTrip", msg: "Low Temperature Trip", severity: "bps", type: "mbms"},
-        { fault: "HighCellVoltageWarning", msg: "High Cell Voltage Warning", severity: "error", type: "mbms"},
-        { fault: "LowCellVoltageWarning", msg: "Low Cell Voltage Warning", severity: "error", type: "mbms"},
-        { fault: "CommonHighCurrentWarning", msg: "Common High Current Warning", severity: "error", type: "mbms"},
-        { fault: "MotorHighCurrentWarning", msg: "Motor High Current Warning", severity: "error", type: "mbms"},
-        { fault: "ArrayHighCurrentWarning", msg: "Array High Current Warning", severity: "error", type: "mbms"},
-        { fault: "LvHighCurrentWarning", msg: "LV High Current Warning", severity: "error", type: "mbms"},
-        { fault: "ChargeHighCurrentWarning", msg: "Charge HIgh Current Warning", severity: "error", type: "mbms"},
-        { fault: "HighTemperatureWarning", msg: "High Temperature Warning", severity: "error", type: "mbms"},
-        { fault: "LowTemperatureWarning", msg: "Low Temperature Warning", severity: "error", type: "mbms"},
-        { fault: "CommonContactorError", msg: "Common Contactor Failed to Close", severity: "error", type: "contactor"},
-        { fault: "CommonContactorOpeningError", msg: "Common Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "MotorContactorError", msg: "Motor Contactor Failed to Close", severity: "error", type: "contactor"},
-        { fault: "MotorBPSError", msg: "Motor Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "ArrayContactorError", msg: "Array Contactor Failed to Close", severity: "error", type: "contactor"},
-        { fault: "ArrayBPSError", msg: "Array Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "LvContactorError", msg: "LV Contactor Failed to Close", severity: "error", type: "contactor"},
-        { fault: "LvBpsError", msg: "LV Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "ChargeContactorError", msg: "Charge Contactor Failed to Close", severity: "error", type: "contactor"},
-        { fault: "ChargeBPSError", msg: "Charge Contactor Failed to Open", severity: "error", type: "contactor"},
-        { fault: "ErrorFlags", msg: "Motor 0 Hardware Over Current", severity: "error", type: "motorDetails0", bit: 0},   
-        { fault: "ErrorFlags", msg: "Motor 0 Software Over Current", severity: "error", type: "motorDetails0", bit: 1}, 
-        { fault: "ErrorFlags", msg: "Motor 0 DC Bus Over Voltage", severity: "error", type: "motorDetails0", bit: 2}, 
-        { fault: "ErrorFlags", msg: "Bad Motor 0 Position Hall Sequence", severity: "error", type: "motorDetails0", bit: 3}, 
-        { fault: "ErrorFlags", msg: "Motor 1 Hardware Over Current", severity: "error", type: "motorDetails1", bit: 0}, 
-        { fault: "ErrorFlags", msg: "Motor 1 Software Over Current", severity: "error", type: "motorDetails1", bit: 1}, 
-        { fault: "ErrorFlags", msg: "Motor 1 DC Bus Over Voltage", severity: "error", type: "motorDetails1", bit: 2},         
-        { fault: "ErrorFlags", msg: "Bad Motor 1 Position Hall Sequence", severity: "error", type: "motorDetails1", bit: 3}              
+        // MBMS
+        { fault: "StrobeBmsLight", msg: "Strobe SOS", severity: "bps", type: "mbms" },
+        { fault: "AllowCharge", msg: "Allow charge", severity: "info", type: "mbms" },
+        { fault: "AllowDischarge", msg: "Allow discharge", severity: "info", type: "mbms" },
+        { fault: "ChargeShouldTrip", msg: "Charge should trip", severity: "warn", type: "mbms" },
+        { fault: "HighVoltageEnableState", msg: "High voltage enabled", severity: "info", type: "mbms" },
+        { fault: "OrionCanReceivedRecently", msg: "Orion CAN recent", severity: "info", type: "mbms" },
+        { fault: "DischargeShouldTrip", msg: "Discharge should trip", severity: "warn", type: "mbms" },
+
+        { fault: "HighCellVoltageTrip", msg: "High cell voltage trip", severity: "warn", type: "mbms" },
+        { fault: "LowCellVoltageTrip", msg: "Low cell voltage trip", severity: "warn", type: "mbms" },
+        { fault: "HighCommonCurrentTrip", msg: "High common current trip", severity: "warn", type: "mbms" },
+        { fault: "MotorHighTemperatureCurrentTrip", msg: "Motor high TC trip", severity: "warn", type: "mbms" },
+        { fault: "ArrayHighTemperatureCurrentTrip", msg: "Array high TC trip", severity: "warn", type: "mbms" },
+        { fault: "LvHighTemperatureCurrentTrip", msg: "LV high TC trip", severity: "warn", type: "mbms" },
+        { fault: "ChargeHighTemperatureCurrentTrip", msg: "Charge high temp trip", severity: "warn", type: "mbms" },
+        { fault: "ProtectionTrip", msg: "Protection trip", severity: "error", type: "mbms" },
+        { fault: "OrionMessageTimeoutTrip", msg: "Orion message timeout", severity: "error", type: "mbms" },
+        { fault: "ContactorDisconnectedUnexpectedlyTrip", msg: "Contactor disconnect trip", severity: "error", type: "mbms" },
+
+        // Battery faults
+        { fault: "InternalCommunicationFault", msg: "Battery internal communication fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalConversionFault", msg: "Battery internal conversion fault", severity: "error", type: "batteryFaults" },
+        { fault: "WeakCellFault", msg: "Weak cell fault", severity: "error", type: "batteryFaults" },
+        { fault: "LowCellVoltageFault", msg: "Low cell voltage fault", severity: "error", type: "batteryFaults" },
+        { fault: "OpenWiringFault", msg: "Open wiring fault", severity: "error", type: "batteryFaults" },
+        { fault: "CurrentSensorFault", msg: "Current sensor fault", severity: "error", type: "batteryFaults" },
+        { fault: "PackVoltageSensorFault", msg: "Pack voltage sensor fault", severity: "error", type: "batteryFaults" },
+        { fault: "WeakPackFault", msg: "Weak pack fault", severity: "error", type: "batteryFaults" },
+        { fault: "VoltageRedundancyFault", msg: "Voltage redundancy fault", severity: "error", type: "batteryFaults" },
+        { fault: "FanMonitorFault", msg: "Fan monitor fault", severity: "error", type: "batteryFaults" },
+        { fault: "ThermistorFault", msg: "Thermistor fault", severity: "error", type: "batteryFaults" },
+        { fault: "CanbusCommunicationFault", msg: "Battery CAN communication fault", severity: "error", type: "batteryFaults" },
+        { fault: "AlwaysOnSupplyFault", msg: "Always-on supply fault", severity: "error", type: "batteryFaults" },
+        { fault: "HighVoltageIsolationFault", msg: "High voltage isolation fault", severity: "error", type: "batteryFaults" },
+        { fault: "PowerSupply12VFault", msg: "12V power supply fault", severity: "error", type: "batteryFaults" },
+        { fault: "ChargeLimitEnforcementFault", msg: "Charge limit enforcement fault", severity: "error", type: "batteryFaults" },
+        { fault: "DischargeLimitEnforcementFault", msg: "Discharge limit enforcement fault", severity: "error", type: "batteryFaults" },
+        { fault: "ChargerSafetyRelayFault", msg: "Charger safety relay fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalMemoryFault", msg: "Battery internal memory fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalThermistorFault", msg: "Battery internal thermistor fault", severity: "error", type: "batteryFaults" },
+        { fault: "InternalLogicFault", msg: "Battery internal logic fault", severity: "error", type: "batteryFaults" },
+
+        { fault: "DclReducedDueToLowSoc", msg: "DCL reduced due to low SOC", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToHighCellResistance", msg: "DCL reduced due to high cell resistance", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToTemperature", msg: "DCL reduced due to temperature", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToLowCellVoltage", msg: "DCL reduced due to low cell voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "DclReducedDueToLowPackVoltage", msg: "DCL reduced due to low pack voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "DclAndCclReducedDueToVoltageFailsafe", msg: "DCL/CCL reduced due to voltage failsafe", severity: "warn", type: "batteryFaults" },
+        { fault: "DclAndCclReducedDueToCommunicationFailsafe", msg: "DCL/CCL reduced due to comm failsafe", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighSoc", msg: "CCL reduced due to high SOC", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighCellResistance", msg: "CCL reduced due to high cell resistance", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToTemperature", msg: "CCL reduced due to temperature", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighCellVoltage", msg: "CCL reduced due to high cell voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToHighPackVoltage", msg: "CCL reduced due to high pack voltage", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToChargerLatch", msg: "CCL reduced due to charger latch", severity: "warn", type: "batteryFaults" },
+        { fault: "CclReducedDueToAlternateCurrentLimit", msg: "CCL reduced due to alternate current limit", severity: "warn", type: "batteryFaults" },
+
+        // Motor bitfield faults
+        { fault: "ErrorFlags", bit: 0, msg: "Hardware overcurrent", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 1, msg: "Software overcurrent", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 2, msg: "DC bus overvoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 3, msg: "Bad motor position", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 4, msg: "Watchdog reset", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 5, msg: "Config read error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 6, msg: "BMS fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 7, msg: "Communication error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 8, msg: "Motor overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 9, msg: "Inverter overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 10, msg: "Flux error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 11, msg: "BRAM error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 12, msg: "EEPROM error", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 13, msg: "Hardware undervoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 14, msg: "Hardware overvoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 15, msg: "Hardware overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 16, msg: "Hardware fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 17, msg: "Software fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 18, msg: "DC bus undervoltage", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 19, msg: "DC bus overtemperature", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 20, msg: "Motor current fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 21, msg: "Motor speed fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 22, msg: "Motor voltage fault", severity: "error", type: "motorDetails0" },
+        { fault: "ErrorFlags", bit: 23, msg: "Motor angle fault", severity: "error", type: "motorDetails0" },
+
+        // Contactor
+        { fault: "CommonContactorError", msg: "Common contactor error", severity: "error", type: "contactor" },
+        { fault: "MotorContactorError", msg: "Motor contactor error", severity: "error", type: "contactor" },
+        { fault: "ArrayContactorError", msg: "Array contactor error", severity: "error", type: "contactor" },
+        { fault: "ChargeContactorError", msg: "Charge contactor error", severity: "error", type: "contactor" },
+        { fault: "LvContactorError", msg: "LV contactor error", severity: "error", type: "contactor" }
     ]
-    
-    property var severityRankings : {
-        "info": 0,
-        "warn": 1,
-        "error": 2,
-        "bps": 3
-    }
 
     ListModel { id: activeModel }
 
-    property var pendingFaults: []
-    property var displayedFault: null
-    property string bannerText: ""
-    property bool showingBpsFault: false 
-
-    function showNextBanner() {
-        if (showingBpsFault) {
-            return;
+    // Maps each logical fault type to its live Mercury/QML source object.
+    function getSourceContext(type) {
+        if (type === "batteryFaults") {
+            if (typeof batteryFaults !== "undefined")
+                return batteryFaults
+            if (typeof batteryFaultsPacket !== "undefined")
+                return batteryFaultsPacket
+            return null
         }
-        
-        if (pendingFaults.length > 0) {
-            displayedFault = pendingFaults.shift()
-            bannerText = displayedFault.msg
-            
-            if (displayedFault.severity === "bps") {
-                showingBpsFault = true
-            } else {
-                bannerTimer.restart()
+
+        if (type === "battery" && typeof battery !== "undefined")
+            return battery
+        if (type === "mbms" && typeof mbms !== "undefined")
+            return mbms
+        if (type === "motorDetails0" && typeof motorDetails0 !== "undefined")
+            return motorDetails0
+        if (type === "motorDetails1" && typeof motorDetails1 !== "undefined")
+            return motorDetails1
+        if (type === "contactor" && typeof contactor !== "undefined")
+            return contactor
+        return null
+    }
+
+    function nowMs() {
+        return Date.now()
+    }
+
+    // Unique key for each fault so duplicates are not added.
+    function faultKeyFor(fault) {
+        return fault.type + ":" + fault.fault + ":" + (fault.bit !== undefined ? fault.bit : -1)
+    }
+
+    function indexOfFaultKey(key) {
+        for (let i = 0; i < activeModel.count; i++) {
+            if (activeModel.get(i).faultKey === key)
+                return i
+        }
+        return -1
+    }
+
+    // Red priorities first, then yellow, then green.
+    function baseRankForSeverity(severity) {
+        if (severity === "bps" || severity === "error")
+            return 0
+        if (severity === "warn")
+            return 1
+        if (severity === "info")
+            return 2
+        return 99
+    }
+
+    /*
+      Finds the index directly after the red section.
+
+      ignoreIndex is critical here: while a yellow warning is still sitting
+      at the top, we must ignore it during the scan, otherwise the function
+      returns 0 and the warning never drops below red.
+    */
+    function firstIndexAfterRedSection(ignoreIndex) {
+        let idx = 0
+        while (idx < activeModel.count) {
+            if (idx === ignoreIndex) {
+                idx++
+                continue
+            }
+
+            const it = activeModel.get(idx)
+            if (it.severity === "bps" || it.severity === "error")
+                idx++
+            else
+                break
+        }
+        return idx
+    }
+
+    // Normal sorted insertion by rank, then by uid.
+    function sortedInsertIndex(item) {
+        for (let i = 0; i < activeModel.count; i++) {
+            const it = activeModel.get(i)
+
+            if (item.severityRank < it.severityRank)
+                return i
+
+            if (item.severityRank === it.severityRank && item.uid < it.uid)
+                return i
+        }
+        return activeModel.count
+    }
+
+    function insertFaultItem(item) {
+        activeModel.insert(sortedInsertIndex(item), item)
+    }
+
+    /*
+      Adds a fault if active, removes it if inactive.
+
+      New yellow warnings are intentionally given severityRank = -1 so they
+      appear above red for 3 seconds before being moved below the red section.
+    */
+    function addOrUpdateFault(fault, isActive) {
+        const key = faultKeyFor(fault)
+        const idx = indexOfFaultKey(key)
+
+        if (!isActive) {
+            if (idx !== -1)
+                activeModel.remove(idx)
+            return
+        }
+
+        if (idx !== -1)
+            return
+
+        const elevated = fault.severity === "warn"
+
+        insertFaultItem({
+            uid: nextUid++,
+            faultKey: key,
+            label: fault.label || "",
+            msg: fault.msg,
+            severity: fault.severity,
+            severityRank: elevated ? -1 : baseRankForSeverity(fault.severity),
+            temporarilyElevated: elevated,
+            elevateUntil: elevated ? nowMs() + tempWarnTopDurationMs : 0
+        })
+    }
+
+    /*
+      After 3 seconds, a temporary yellow warning is "settled":
+      - it stops being elevated
+      - its rank becomes normal yellow rank 1
+      - it is explicitly moved to the first slot below the red group
+    */
+    function settleElevatedWarnings() {
+        const now = nowMs()
+
+        for (let i = 0; i < activeModel.count; i++) {
+            const it = activeModel.get(i)
+
+            if (it.severity === "warn" && it.temporarilyElevated && now >= it.elevateUntil) {
+                const target = firstIndexAfterRedSection(i)
+
+                activeModel.setProperty(i, "temporarilyElevated", false)
+                activeModel.setProperty(i, "elevateUntil", 0)
+                activeModel.setProperty(i, "severityRank", 1)
+
+                let moveTarget = target
+                if (moveTarget > i)
+                    moveTarget -= 1
+
+                if (moveTarget !== i)
+                    activeModel.move(i, moveTarget, 1)
+
+                i = -1
             }
         }
     }
 
-    Timer {
-        id: bannerTimer
-        interval: 2000
-        repeat: false
-        onTriggered: {
-            if (displayedFault) {
-                if (displayedFault.severity !== "bps") {
-                    var placementIndex = 0;
-                    var severityRank = severityRankings[displayedFault.severity];
-                    
-                    while(placementIndex < activeModel.count){
-                        const currentRank = severityRankings[activeModel.get(placementIndex).severity];
-                        if(currentRank > severityRank) break;
-                        placementIndex++;
-                    }
-                    
-                    activeModel.insert(placementIndex, displayedFault);
-                    
-                    displayedFault = null;
-                    
-                    if (!showingBpsFault) {
-                        Qt.callLater(showNextBanner)
-                    }
-                }
-            }
-        }
-    }
+    // Reads the current value from the source object and updates the display model.
+    function refreshFault(fault) {
+        const sourceContext = getSourceContext(fault.type)
+        if (!sourceContext)
+            return
 
-    function onFaultChanged(fault, isActive) {
-        if (isActive) {
-            if (fault.severity === "bps") {
-                if (displayedFault && displayedFault.severity !== "bps") {
-                    pendingFaults.unshift(displayedFault) 
-                }
-                
-                displayedFault = fault;
-                bannerText = fault.msg;
-                showingBpsFault = true;
-                
-                bannerTimer.stop();
-            } else {
-                if (showingBpsFault) {
-                    var index = 0;
-                    var rank = severityRankings[fault.severity];
-                    while(index < activeModel.count){
-                        const current = severityRankings[activeModel.get(index).severity];
-                        if(current > rank) break;
-                        index++;
-                    }
-                    activeModel.insert(index, fault);
-                } else {
-                    pendingFaults.push(fault);
-                    if (!displayedFault) showNextBanner();
-                }
-            }
-        } else {
-            pendingFaults = pendingFaults.filter(pendingFault => 
-                pendingFault.fault !== fault.fault
-            );
-
-            if (fault.severity === "bps") {
-                if (displayedFault?.fault === fault.fault) {
-                    displayedFault = null;
-                    showingBpsFault = false;
-                    Qt.callLater(showNextBanner);
-                }
-            } else {
-                if (displayedFault?.fault === fault.fault) {
-                    displayedFault = null;
-                    if (!showingBpsFault) {
-                        Qt.callLater(showNextBanner);
-                    }
-                }
-            }
-
-            for (var i = 0; i < activeModel.count; ++i) {
-                if (activeModel.get(i).fault === fault.fault) {
-                    activeModel.remove(i);
-                    break;
-                }
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        for(let fault of faultsData){
-            let sourceContext = null;
-
-            if(fault.type === "batteryFaults") sourceContext = batteryFaults;
-            else if (fault.type === "mbms") sourceContext = mbms;
-            else if (fault.type === "motorDetails0") sourceContext = motorDetails0;
-            else if (fault.type === "motorDetails1") sourceContext = motorDetails1;
-            else if (fault.type === "contactor") sourceContext = contactor;
-
+        try {
             if (fault.bit !== undefined) {
-                sourceContext["on" + fault.fault + "Changed"].connect(function(){
-                    const errorFlags = sourceContext[fault.fault];
-                    const bitActive = (errorFlags & (1 << fault.bit)) !== 0;
-                    onFaultChanged(fault, bitActive);
-                });
+                const flags = sourceContext[fault.fault]
+                addOrUpdateFault(fault, (flags & (1 << fault.bit)) !== 0)
             } else {
-                sourceContext["on" + fault.fault + "Changed"].connect(function(){
-                    onFaultChanged(fault, sourceContext[fault.fault]);
-                });
+                addOrUpdateFault(fault, !!sourceContext[fault.fault])
             }
+        } catch (e) {
         }
     }
 
-    Rectangle {
-        id: bpsFullScreen
-        anchors.fill: parent
-        color: Config.valueHigh
-        visible: displayedFault && displayedFault.severity === "bps"
-        radius: 8
-        z: 10 
-        
-        SequentialAnimation on scale {
-            running: true
-            loops: Animation.Infinite
-            NumberAnimation { from: 0.8; to: 1.1; duration: 800; easing.type: Easing.InOutQuad }
-            NumberAnimation { from: 1.1; to: 0.8; duration: 800; easing.type: Easing.InOutQuad }
-        }
+    /*
+      Polling is kept as a fallback for fields that may not emit usable
+      ...Changed signals. It also drives the 3-second warning settle logic.
+    */
+    Timer {
+        id: pollTimer
+        interval: 200
+        repeat: true
+        running: true
 
-        Text {
-            anchors.centerIn: parent
-            text: bannerText
-            font.pixelSize: Config.fontSize6
-            font.bold: true
-            color: Config.fontColor
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            width: parent.width - 40
-            wrapMode: Text.WordWrap
-            maximumLineCount: 3
-            elide: Text.ElideRight
+        onTriggered: {
+            for (let i = 0; i < faultsData.length; i++)
+                refreshFault(faultsData[i])
+
+            settleElevatedWarnings()
         }
     }
 
-    Rectangle {
-        id: bannerArea
-        anchors { 
-            top: parent.top; 
-            left: parent.left; 
-            right: parent.right 
-        }
-        height: (displayedFault && displayedFault.severity !== "bps") ? 60 : 0
-        radius: 8
-        clip: true
-        z: 5
+    /*
+      On startup, connect to live change signals when available, and also
+      do one immediate refresh so the list is correct from the start.
+    */
+    Component.onCompleted: {
+        for (let i = 0; i < faultsData.length; i++) {
+            const fault = faultsData[i]
+            const sourceContext = getSourceContext(fault.type)
 
-        color: displayedFault ? (displayedFault.severity === "error" ? Config.valueHigh :
-               displayedFault.severity === "warn"  ? Config.valueModerate :
-               displayedFault.severity === "info"  ? Config.valueLow :
-               Config.fontColor) : Config.faintGrey
+            if (!sourceContext)
+                continue
 
-        Behavior on height { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
+            const signalName = fault.fault + "Changed"
+            const signalObj = sourceContext[signalName]
 
-        Item {
-            anchors.fill: parent
-            anchors.margins: 12
-
-            opacity: displayedFault ? 1 : 0
-            Behavior on opacity { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
-
-            Text {
-                anchors.centerIn: parent
-                text: bannerText
-                font.pixelSize: Config.fontSize5
-                color: Config.fontColor 
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                width: parent.width
-                wrapMode: Text.WordWrap
-                maximumLineCount: 2
-                elide: Text.ElideRight
+            if (signalObj && signalObj.connect) {
+                signalObj.connect((function(f) {
+                    return function() {
+                        refreshFault(f)
+                    }
+                })(fault))
             }
+
+            refreshFault(fault)
         }
     }
 
+    /*
+      Only use displaced animation here. That keeps row movement smooth
+      when a warning drops below the red section without creating ghost rows.
+    */
     ListView {
         id: listView
-        anchors { 
-            top: bannerArea.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom 
-        }
+        anchors.fill: parent
         model: activeModel
         interactive: false
         clip: true
-        visible: !(displayedFault && displayedFault.severity === "bps")
+        spacing: 2
 
-        Behavior on contentY { NumberAnimation { duration: 2000; easing.type: Easing.Linear } }
-
-        Timer {
-            id: scrollTimer
-            interval: 2000
-            repeat: true
-
-            running: activeModel.count > faultsOnView
-            property int faultsOnView: Math.floor(faultsDisplayContainer.height / delegateHeight)
-            onTriggered: {
-                var newY = listView.contentY + delegateHeight
-                var maxY = (activeModel.count - faultsOnView) * delegateHeight
-                listView.contentY = newY > maxY ? 0 : newY
+        displaced: Transition {
+            NumberAnimation {
+                properties: "x,y"
+                duration: 260
+                easing.type: Easing.InOutQuad
             }
         }
 
         delegate: FaultsMessage {
-            type: model.type
-            severity: model.severity
-            msg: model.msg
             width: listView.width
             height: delegateHeight
-        }
-
-        add: Transition {
-            NumberAnimation { property: "x"; from: width; to: 0; duration: 300; easing.type: Easing.OutBack }
-            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 300 }
-        }
-        remove: Transition {
-            NumberAnimation { property: "x"; to: width; duration: 300; easing.type: Easing.InQuad }
-            NumberAnimation { property: "opacity"; to: 0; duration: 300 }
+            severity: model.severity
+            label: model.label || ""
+            msg: model.msg
         }
     }
 }

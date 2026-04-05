@@ -5,45 +5,34 @@ import Mercury
 
 Rectangle {
     id: faultMessage
-    width: parent.width
-    height: 33
+
+    implicitWidth: 426
+    implicitHeight: 30
+
     radius: 8
-    border.color: "black"
+    color: "black"
     border.width: 1
 
-    property string type
-    property string msg
-    property string severity
+    property string msg: ""
+    property string severity: "info"
+    property string label: ""
 
-    property string icon: type === "motor" ? "../Images/MotorFault.png"
-                        : type === "batteryFaults" ? "../Images/BatteryFault.png"
-                        : type === "mbms" ? "../Images/MotorFault.png"
-                        : "" //TODO: add other icons and default icon
+    property color accentColor: severity === "error" ? Config.valueHigh
+                           : severity === "warn"  ? Config.valueModerate
+                           : severity === "info"  ? Config.valueLow
+                           : severity === "bps"   ? Config.valueHigh
+                           : "white"
 
-    property color backgroundColor: severity === "error" ? Config.valueHigh
-                                  : severity === "warn" ? Config.valueModerate
-                                  : severity === "info" ? Config.valueLow
-                                  : "white"
-    color: backgroundColor
+    border.color: accentColor
 
-    Row {
+    Text {
         anchors.fill: parent
-        anchors.margins: 5
-        spacing: 8
-
-        DashIcon {
-            id: faultIcon
-            width: icon ? 25 : 0
-            height: icon ? 25 : 0
-            imageSource: icon
-            iconMaskColor: Config.fontColor
-        }
-
-        Text {
-            text: msg
-            font.pixelSize: 15
-            color: Config.fontColor
-            verticalAlignment: Text.AlignVCenter
-        }
+        anchors.leftMargin: 18
+        anchors.rightMargin: 12
+        verticalAlignment: Text.AlignVCenter
+        text: (label.length > 0 ? label + ": " : "") + msg
+        font.pixelSize: 19
+        color: accentColor
+        elide: Text.ElideRight
     }
 }
