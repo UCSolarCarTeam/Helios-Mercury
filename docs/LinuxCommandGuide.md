@@ -230,4 +230,30 @@ Example: python3 wiegand_test.py
 
 To stop, CTRL C
 
+# Alpine Linux Package Management
 
+Alpine Linux uses the **apk** package manager to install, update, and manage software packages.
+
+#### **apk update**
+
+Updates the package index so the system knows about the latest available software.
+
+Example: apk update
+
+#### **apk add**
+
+Installs a software package.
+
+Example: apk add git
+
+#### **apk upgrade**
+
+Updates installed packages to the latest available versions.
+
+Example: apk upgrade
+
+#### **apk search**
+
+Searches the repository for available packages.
+
+Example: apk search pigpio
