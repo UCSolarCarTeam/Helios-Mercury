@@ -32,7 +32,7 @@ Laptop
 
  Connect using SSH
 
-arp -a
+#### arp -a
 
 What it does
 
@@ -52,7 +52,7 @@ This tells us the Raspberry Pi's IP address is 192.168.1.15.
 
 We can then use that address to connect to the Pi.
 
-ipconfig
+#### ipconfig
 
 Shows the network configuration of our computer.
 
@@ -66,7 +66,7 @@ Important fields include:
 
 We use this command to confirm our laptop is connected to the same network as the Raspberry Pi.
 
-ip a
+#### ip a
 
 Displays all network interfaces on a Linux machine.
 
@@ -86,7 +86,8 @@ This command is important because it shows:
 
 • whether the CAN interface (can0) exists
 
-ping
+#### ping
+
 example:
 
 ping 192.168.1.15
