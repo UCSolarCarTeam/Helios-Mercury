@@ -70,7 +70,7 @@ Example: git fetch
 
 # Typical VisComm Workflow
 
-A common VisComm development workflow starts with receiving a ticket, creating a branch from the `master` branch, completing the assigned work, testing it, and then pushing the changes for review.
+A common VisComm development workflow starts with receiving a ticket, creating a branch from the `master` branch, completing the assigned work, testing it, and then pushing the changes where either me or ahmed will review it.
 
 Laptop  
 
@@ -100,7 +100,7 @@ Complete development work
 
 ↓  
 
-Test changes locally(In QT)
+Test changes locally (In QT)
 
 ↓  
 
@@ -112,7 +112,7 @@ Push branch to GitHub
 
 ↓  
 
-Open pull request(No Comments = sybau)
+Open pull request (No Comments = sybau)
 
 ↓  
 

@@ -1,6 +1,6 @@
 # VisComm Dashboard Overview
 
-Hi, I'm Mahmood, the 2026 VisComm Team Lead, and I work primarily on the dashboard side of the solar car software system.
+Hi, I'm Mahmood, one of the 2026 VisComm Team Leads, and I work primarily on the dashboard side of the solar car software system.
 
 This document is meant to give new VisComm recruits a clear overview of how the dashboard system and telemetry pipeline actually works.
 
