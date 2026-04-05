@@ -98,3 +98,68 @@ Example CAN messages:
 
 So in practice, the entire car is constantly sending numerical messages across the CAN network.
 
+# The Dashboard Computer (Raspberry Pi)
+
+Inside the car there is a Raspberry Pi computer that runs the dashboard software.
+
+This computer runs the Mercury dashboard system, which is responsible for:
+
+• Listening to CAN messages
+
+• Converting raw CAN data into structured values
+
+• Displaying information on the driver dashboard
+
+• Sending telemetry data to cloud servers
+
+Mercury is written primarily in:
+
+• C++ (backend logic)
+
+• Qt Framework
+
+• QML (dashboard UI)
+
+The dashboard software connects to the CAN interface on the Pi.
+
+Typically this interface is:
+
+can0
+
+Once running, the software continuously listens for CAN messages.
+
+# The Dashboard User Interface (QML)
+
+The dashboard display is built using QML, which is a UI language used with Qt.
+
+The UI simply reads values from packets and displays them visually.
+
+Example:
+
+batteryPacket.packVoltage
+
+b3Packet.acceleration
+
+mpptPacket.inputPower
+
+When packet values change, the dashboard updates automatically.
+
+So the UI layer is mainly responsible for visualization, not data processing.
+
+# What New Developers Should Focus On First
+
+If you are new to the VisComm team, focus on understanding these key ideas:
+
+The CAN communication system
+
+The packet architecture
+
+How Mercury converts CAN into packets
+
+How the QML dashboard reads packets
+
+How telemetry JSON packets are built
+
+Once these pieces make sense, the rest of the system becomes much easier to understand.
+
+
