@@ -100,3 +100,62 @@ Expected output:
 
 If we receive responses, the network connection is working.
 
+# Remote Access (Connecting to the Pi)
+
+Once we know the IP address, we connect to the Raspberry Pi using SSH.
+
+Laptop
+
+ ↓
+
+ SSH connection
+
+ ↓
+
+Remote terminal on Raspberry Pi
+
+#### **ssh admin@IP_ADDRESS**
+
+Connects to the Raspberry Pi using SSH (Secure Shell).
+
+Example:
+
+ssh admin@192.168.1.15
+
+Explanation:
+
+• **ssh** → secure shell protocol used to remotely access another computer  
+
+• **admin** → user account on the Raspberry Pi  
+
+• **IP_ADDRESS** → address of the Raspberry Pi on the local network  
+
+This command opens a remote terminal session on the Raspberry Pi, allowing us to run commands directly on the dashboard computer.
+
+#### **ssh root@IP_ADDRESS**
+
+Logs into the Raspberry Pi as the root (administrator) user.
+
+Example:
+
+ssh root@192.168.1.15
+
+Root access allows:
+
+• installing software  
+
+• modifying system configuration  
+
+• restarting services  
+
+• accessing protected system directories  
+
+#### **exit**
+
+Closes the SSH session.
+
+Example:
+
+exit
+
+Returns you to your local computer terminal.
