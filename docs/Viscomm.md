@@ -11,6 +11,7 @@ The goal is not for you to understand every technical detail immediately but rat
 # What the Dashboard / VisComm Team Does
 
 The VisComm (Visual Communication) team is responsible for software systems that:
+
 • Display real-time vehicle data to the driver
 
 • Collect telemetry data from the car
@@ -78,10 +79,15 @@ CAN is a lightweight communication system used in vehicles where multiple electr
 Each message on the network is called a CAN frame.
 
 A CAN frame looks like:
+
 CAN ID + Payload
+
 Where:
+
 • CAN ID identifies the type of message
+
 • Payload contains the data (usually 8 bytes)
+
 Example CAN messages:
 
 0x610 ↓ Driver controls
