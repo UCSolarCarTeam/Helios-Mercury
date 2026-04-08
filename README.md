@@ -12,6 +12,8 @@
 
 - [VisComm Intro](docs/Viscomm.md)
 
+- [Projects](docs/Projects.md)
+
 #### Qt Version
 - Qt 6.7.2
 
