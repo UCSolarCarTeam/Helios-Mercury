@@ -13,6 +13,7 @@ Item {
 
     // gauge properties
     property int minValue: 0
+    property bool isMetric: true
     property int maxValue: isMetric ? 160 : 100
     property string units: isMetric ? "KM/H" : "MPH"
     property int value: isMetric ? Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000)  : Math.round(Config.rpmValue * (Math.PI * Config.wheelDiameter) * 60 / 1000 / 1.60934)
@@ -22,7 +23,7 @@ Item {
     // canvas properties
     property int arcEnd: 405
     property int arcBegin: 135
-    property real arcWidth: 16 
+    property real arcWidth: 16
 
     GaugeAnimation { id: gaugeAnimation }
 
@@ -39,7 +40,6 @@ Item {
         arcWidth: 16
         antialiasing: true
     }
-
     ArcItem {
             id: inactiveArc
             width: 428
