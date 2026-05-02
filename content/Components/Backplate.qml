@@ -26,11 +26,10 @@ Item {
     MultiEffect {
         anchors.fill: raceClusterFrameBackground
         source: raceClusterFrameBackground
-        colorization: 1.0 
-        colorizationColor: Config.backplateColor
         antialiasing: true
         layer.enabled: true
         layer.smooth: true
+        visible:false
     }
 
     Image {
@@ -50,10 +49,10 @@ Item {
     MultiEffect {
         anchors.fill: raceClusterFrameOutline
         source: raceClusterFrameOutline
-        colorization: 1.0 
-        colorizationColor: Config.primary
         antialiasing: true
         layer.enabled: true
         layer.smooth: true
+        colorization: 0.9
+        colorizationColor: Config.primary
     }
 }
