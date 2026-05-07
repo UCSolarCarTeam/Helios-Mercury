@@ -34,8 +34,8 @@ Item {
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.outerArcColor
-        end: -180
-        begin: 90
+        end: -135
+        begin: 135
         arcWidth: 2
         antialiasing: true
     }
@@ -54,8 +54,8 @@ Item {
         strokeColor: "transparent"
         outlineArc: true
         fillColor: Config.btnDisabled
-        end: -180
-        begin: 90
+        end: -135
+        begin: 135
         arcWidth: 20
         antialiasing: true
     }
