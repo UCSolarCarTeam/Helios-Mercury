@@ -70,4 +70,5 @@ qt6_add_qml_module(content
         RESOURCES Images/MotorIcon.png
         RESOURCES Images/RightMotor.png
         RESOURCES Images/LeftMotor.png
+        Images/UpDownArrow.png
 )

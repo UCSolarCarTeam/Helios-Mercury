@@ -89,10 +89,10 @@ Item {
     BatteryIcon {
         id: batteryIcon
         anchors { 
-            top: raceCluster.top
+            bottom: raceCluster.bottom
+            bottomMargin: 125
             left: raceCluster.left
-            leftMargin: 75
-            topMargin: 90
+            leftMargin: 300
         }
     }
 
@@ -173,18 +173,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            horizontalCenterOffset: -72
-            bottomMargin: 9
-        }
-    }
-
-    TelemetryIcon {
-        id: telemetryIcon
-        anchors {
-            left: contactorsComponent.right
-            leftMargin: 30
-            bottom: contactorsComponent.bottom
-            bottomMargin: 5
+            bottomMargin: 12
         }
     }
 
