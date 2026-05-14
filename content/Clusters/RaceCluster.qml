@@ -21,6 +21,11 @@ Item {
         }
     }
 
+    ProximitySensor {
+        id: proximitySensor
+
+    }
+
     ArrowIndicator {
         id: leftArrowIndicator
         x: 608
