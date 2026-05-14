@@ -7,10 +7,10 @@ Item {
     width: 450
     height: 850
 
-    property real distRearLeft:  Proximity.Sensor1
-    property real distRearRight: Proximity.Sensor2
-    property real distLeft:   Proximity.Sensor3
-    property real distRight:  Proximity.Sensor4
+    property real distRearLeft:  proximitySensors.ProximitySensor1
+    property real distRearRight: proximitySensors.ProximitySensor2
+    property real distLeft:      proximitySensors.ProximitySensor3
+    property real distRight:     proximitySensors.ProximitySensor4
 
     property real threshold1: 3
     property real threshold2: 2
