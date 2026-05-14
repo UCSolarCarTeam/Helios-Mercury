@@ -20,10 +20,10 @@ Item {
         id: proximityImage
         source:  "../Images/SensorCar.png"
         anchors.centerIn: parent
-        visible: (distRearLeft < threshold1 ||
-                  distRearRight < threshold1 ||
-                  distLeft < threshold1 ||
-                  distRight < threshold1)
+        visible: (distRearLeft > 0 && distRearLeft < threshold1) ||
+                  (distRearRight > 0 && distRearRight < threshold1) ||
+                  (distLeft > 0 && distLeft < threshold1) ||
+                  (distRight > 0 && distRight < threshold1)
     }
 
     Image {
@@ -31,7 +31,7 @@ Item {
         source: "../Images/SensorRearTop.png"
         anchors.top: proximityImage.bottom
         anchors.right: proximityImage.horizontalCenter
-        visible: distRearLeft < threshold1
+        visible: (distRearLeft > 0 && distRearLeft < threshold1)
     }
 
     Image {
@@ -39,7 +39,7 @@ Item {
         source: "../Images/SensorRearMiddle.png"
         anchors.top: rearTopLeft.bottom
         anchors.right: proximityImage.horizontalCenter
-        visible: distRearLeft < threshold2
+        visible: (distRearLeft > 0 && distRearLeft < threshold2)
     }
 
     Image {
@@ -47,7 +47,7 @@ Item {
         source: "../Images/SensorRearBottom.png"
         anchors.top: rearMiddleLeft.bottom
         anchors.right: proximityImage.horizontalCenter
-        visible: distRearLeft < threshold3
+        visible: (distRearLeft > 0 && distRearLeft < threshold3)
     }
 
 
@@ -56,7 +56,7 @@ Item {
         source: "../Images/SensorRearTop.png"
         anchors.top: proximityImage.bottom
         anchors.left: proximityImage.horizontalCenter
-        visible: distRearRight < threshold1
+        visible: (distRearRight > 0 && distRearRight < threshold1)
     }
 
     Image {
@@ -64,7 +64,7 @@ Item {
         source: "../Images/SensorRearMiddle.png"
         anchors.top: rearTopRight.bottom
         anchors.left: proximityImage.horizontalCenter
-        visible: distRearRight < threshold2
+        visible: (distRearRight > 0 && distRearRight < threshold2)
     }
 
     Image {
@@ -72,7 +72,7 @@ Item {
         source: "../Images/SensorRearBottom.png"
         anchors.top: rearMiddleRight.bottom
         anchors.left: proximityImage.horizontalCenter
-        visible: distRearRight < threshold3
+        visible: (distRearRight > 0 && distRearRight < threshold3)
     }
 
     Image {
@@ -82,7 +82,7 @@ Item {
         anchors.left: proximityImage.right
         anchors.verticalCenterOffset: -8
         anchors.leftMargin: -17
-        visible: distRight < threshold1
+        visible: (distRight > 0 && distRight < threshold1)
     }
 
     Image {
@@ -92,7 +92,7 @@ Item {
         anchors.topMargin: -34
         anchors.left: proximityImage.right
         anchors.leftMargin: -5
-        visible: distRight < threshold2
+        visible: (distRight > 0 && distRight < threshold2)
     }
 
     Image {
@@ -102,7 +102,7 @@ Item {
         anchors.topMargin: -34
         anchors.left: proximityImage.right
         anchors.leftMargin: 1
-        visible: distRight < threshold3
+        visible: (distRight > 0 && distRight < threshold3)
     }
 
     Image {
@@ -112,7 +112,7 @@ Item {
         anchors.right: proximityImage.left
         anchors.verticalCenterOffset: -10
         anchors.rightMargin: -16
-        visible: distLeft < threshold1
+        visible: (distLeft > 0 && distLeft < threshold1)
     }
 
     Image {
@@ -122,7 +122,7 @@ Item {
         anchors.topMargin: -33
         anchors.right: proximityImage.left
         anchors.rightMargin: -4
-        visible: distLeft < threshold2
+        visible: (distLeft > 0 && distLeft < threshold2)
     }
 
     Image {
@@ -132,6 +132,6 @@ Item {
         anchors.topMargin: -33
         anchors.right: proximityImage.left
         anchors.rightMargin: 2
-        visible: distLeft < threshold3
+        visible: (distLeft > 0 && distLeft < threshold3)
     }
 }
