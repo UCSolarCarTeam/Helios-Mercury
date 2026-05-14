@@ -134,4 +134,16 @@ Item {
         anchors.rightMargin: 2
         visible: (distLeft > 0 && distLeft < threshold3)
     }
+    
+    Text {
+    anchors.top: parent.top
+    anchors.left: parent.left
+    color: "red"
+    font.pixelSize: 24
+    text: "RL: " + distRearLeft +
+          " RR: " + distRearRight +
+          " L: " + distLeft +
+          " R: " + distRight
+}
+
 }
