@@ -4,7 +4,7 @@ import QtQuick 2.15
 QtObject {
     property int windowWidth: 1920
     property int windowHeight: 550
-
+    property bool darkModeEnabled: true
     property string fontStyle: "SF Pro"
 
     // font sizes
@@ -19,15 +19,16 @@ QtObject {
     property int fontSize8: 34
     property int fontSize9: 40
     property int fontSize10: 86
+    property int fontSize11: 70
 
     // Wheel diameter in meters
     property double wheelDiameter: 0.50419
     property double rpmValue: (motorDetails0.MotorVelocity + motorDetails1.MotorVelocity) / 2
 
     // gauge sizes
-    property int extraSmallGaugeSize: 120
+    property int extraSmallGaugeSize: 130
     property int smallGaugeSize: 180
-    property int mediumGaugeSize: 240
+    property int mediumGaugeSize: 210
     property int largeGaugeSize: 300
 
     // color values 
@@ -39,7 +40,11 @@ QtObject {
     property color valueHigh: "#FF0000"
     property color lightShadow: "#74DCFF"
     property color faintGrey: darkModeEnabled ? "#AAAAAA" : "#5C5C5C"
-    property color fontColor: darkModeEnabled ? "#FFFFFF" : "#111111"
+    property color fontColor: darkModeEnabled ? "#565656" : "#111111"
     property color outerArcColor: darkModeEnabled ? "#242627" : "#AEB8BD"
     property color speedometerGrayTicks: darkModeEnabled ? "#515253" : "#97999c"
+    property color innerArcColor: "#78BBC2"
+    property color fillArcColor: "#D708FC"
+    property color transparent : darkModeEnabled ? "#FFFFFF22" : "#00000011"
+
 }

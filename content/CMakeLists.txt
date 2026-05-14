@@ -78,4 +78,8 @@ qt6_add_qml_module(content
         Images/SensorRightTop.png
         Images/SensorRightMiddle.png
         Images/SensorRightBottom.png
+        RESOURCES Images/MotorIcon.png
+        RESOURCES Images/RightMotor.png
+        RESOURCES Images/LeftMotor.png
+        Images/UpDownArrow.png
 )
