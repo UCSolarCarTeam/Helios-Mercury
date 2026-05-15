@@ -44,20 +44,6 @@ Item {
             bottom: motorArrayHeader.bottom
             leftMargin: 20
         }
-
-        StyledText {
-            id: motor0Header
-            width: motorHeadersColumn.width
-            height: motorHeadersColumn.height / 2
-            text: formatMotorText(0, motorDetails0.BusCurrent)
-        }
-
-        StyledText {
-            id: motor1Header
-            width: motorHeadersColumn.width
-            height: motorHeadersColumn.height / 2
-            text: formatMotorText(1, motorDetails1.BusCurrent)
-        }
     }
 
     Item {
