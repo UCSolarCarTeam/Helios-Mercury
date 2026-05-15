@@ -15,9 +15,9 @@ Item {
         id: motorArrayHeader
         anchors {
             horizontalCenter: parent.horizontalCenter
-            horizontalCenterOffset: -30
+            horizontalCenterOffset: -700
             top: parent.top
-            topMargin: 7
+            topMargin: 75
         }
     }
 
@@ -29,7 +29,7 @@ Item {
     ArrowIndicator {
         id: leftArrowIndicator
         x: 608
-        y: 15
+        y: 25
         z: 1000
         isOn: b3.LeftSignalInput || b3.HazardLightsInput
         rotation: 180
@@ -38,7 +38,7 @@ Item {
     ArrowIndicator {
         id: rightArrowIndicator
         x: 1278
-        y: 15
+        y: 25
         z: 1000
         isOn: b3.RightSignalInput || b3.HazardLightsInput
     }
