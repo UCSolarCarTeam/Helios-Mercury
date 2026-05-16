@@ -16,6 +16,7 @@
 
 #### Qt Version
 - Qt 6.7.2
+- Install Qt Creator: https://www.qt.io/download-open-source
 
 ## Building From Terminal
 In a terminal, navigate to the Helios-Mercury repository. Run the following commands:
