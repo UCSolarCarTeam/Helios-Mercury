@@ -59,7 +59,7 @@ namespace JsonDefinitions {
     constexpr const char* RIGHT_SIGNAL_INPUT = "RightSignalInput";
     constexpr const char* LEFT_SIGNAL_INPUT = "LeftSignalInput";
     constexpr const char* HAZARD_LIGHTS_INPUT = "HazardLightsInput";
-    constexpr const char* HEADLIGHTS_SWITCH_INPUT = "HeadightsSwitchInput";
+    constexpr const char* HEADLIGHTS_SWITCH_INPUT = "HeadlightsSwitchInput";
     constexpr const char* FORWARD_SWITCH_DIGITAL = "ForwardSwitchDigital";
     constexpr const char* HORN_SWITCH_DIGITAL = "HornSwitchDigital";
     constexpr const char* FORWARD_DIGITAL = "ForwardDigital";
