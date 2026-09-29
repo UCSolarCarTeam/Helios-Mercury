@@ -1,84 +1,313 @@
-# CAN Interface Setup (Virtual CAN for the VM)
+# CAN Interface Setup
 
-When developing on the VM without physical CAN hardware, we use a **virtual CAN interface (`vcan0`)**.  
-This allows the dashboard software to communicate with a simulated CAN bus.
+When developing in the Ubuntu VM without physical CAN hardware, we use a **virtual CAN interface called `vcan0`**.
 
-## sudo ip link add dev vcan0 type vcan
+This lets Mercury communicate with a simulated CAN bus using the same Linux SocketCAN interface style used for physical CAN.
 
-Creates the Virtual CAN Interface
+---
 
-If the interface already exists, you may see: RTNETLINK answers: File exists
+# Quick Start
 
-This simply means vcan0 was already created.
+Inside the Ubuntu VM:
 
-## sudo ip link set up vcan0
+```bash
+cd ~/Helios-Mercury
+sudo ip link add dev vcan0 type vcan
+sudo ip link set up vcan0
+ip link show vcan0
+```
 
-Enables the Interface
+Then make sure Mercury's active config uses:
 
-Once enabled, the VM can send and receive CAN messages through vcan0.
+```ini
+[Can]
+interface=vcan0
+```
 
-## ip link show vcan0
+Run Mercury and use `candump` / `cansend` to test traffic.
 
-Verifys the Interface
+---
 
-• UP → the interface is active
+# 1. Verify CAN Tools Are Installed
 
-• LOWER_UP → the link is operational
+Run:
 
-# Fixing the Interface if the Dashboard Uses the Wrong CAN Device
+```bash
+which cansend
+which candump
+which cansniffer
+```
 
-Sometimes the dashboard software is configured to use: can0
+If they are missing:
 
-instead of: vcan0
+```bash
+sudo apt update
+sudo apt install can-utils
+```
 
-This will cause connection errors on the VM.
+---
 
-Example error: failed to connect to can device on interface can0
+# 2. Create `vcan0`
 
-## Step 1 — Check Available Interfaces
+Run:
 
-Run: ip link show
+```bash
+sudo ip link add dev vcan0 type vcan
+```
 
-Look for: can0 vcan0
+This creates the virtual CAN interface.
 
-To check only the virtual interface: ip link show vcan0
+If you see:
 
-## Step 2 — Find the Interface Configuration
+```text
+RTNETLINK answers: File exists
+```
 
-The dashboard reads the CAN interface from configuration files.
+that only means `vcan0` already exists. Continue to the next step.
 
-Common locations: ./build/config.ini or ./build/Desktop_Qt_6_8_4-Debug/config.ini
+If the system reports that the virtual CAN type is unavailable, load the kernel module and try again:
 
-If unsure where the interface is defined, search for it.
+```bash
+sudo modprobe vcan
+sudo ip link add dev vcan0 type vcan
+```
 
-Terminal search: grep -R "interface" .
+---
 
-Or in VS Code: Ctrl + Shift + F
+# 3. Bring `vcan0` Up
 
-Search for: interface
+Run:
 
-## Step 3 — Open the Configuration File
+```bash
+sudo ip link set up vcan0
+```
 
-Example: nano ./build/config.ini or nano ./build/Desktop_Qt_6_8_4-Debug/config.ini
+Verify:
 
-## Step 4 — Change the Interface
+```bash
+ip link show vcan0
+```
 
-Inside the file you may see: interface = can or interface = can0
+You should see `vcan0` listed and enabled. Virtual interfaces do not always display exactly the same state flags as a physical CAN adapter, so the important part is that the interface exists and is up.
 
-Change it to: interface = vcan0
+`vcan0` normally needs to be recreated after the VM is restarted.
 
-This tells the dashboard to connect to the virtual CAN bus.
+---
 
-## Step 5 — Save the File
+# 4. Configure Mercury to Use `vcan0`
 
-## Step 6 — Check Other Config Files
+Mercury's example configuration is:
 
-If multiple config files exist, update them all.
+```text
+config.ini.example
+```
 
-Common files: ./build/config.ini and ./build/Desktop_Qt_6_8_4-Debug/config.ini
+A fresh clone may not have a root `config.ini` yet.
 
-Each should contain: interface = vcan0
+Create one:
 
-## Step 7 — Restart the Dashboard
+```bash
+cd ~/Helios-Mercury
+cp config.ini.example config.ini
+```
 
-After saving the changes, restart the dashboard software so it reads the updated configuration.
+Open it:
+
+```bash
+nano config.ini
+```
+
+or:
+
+```bash
+vi config.ini
+```
+
+Find:
+
+```ini
+[Can]
+interface=can0
+```
+
+Change it to:
+
+```ini
+[Can]
+interface=vcan0
+```
+
+Save the file.
+
+Mercury's code defaults to `can0` when no interface setting is available, so a missing or wrong config can cause the dashboard to try the physical interface.
+
+---
+
+# 5. Check the Build Configuration
+
+Qt builds may also have a copied `config.ini` inside the build directory.
+
+Common location:
+
+```text
+./build/Desktop_Qt_6_8_4-Debug/config.ini
+```
+
+Search all active configs:
+
+```bash
+grep -R "interface=" config.ini build 2>/dev/null
+```
+
+For VM development, the active config used by Mercury should show:
+
+```text
+interface=vcan0
+```
+
+If the build copy still says `can0`, update that copy or rebuild/reconfigure Mercury so the current configuration is used.
+
+---
+
+# 6. Verify Virtual CAN Traffic
+
+Open **Terminal 1**:
+
+```bash
+candump vcan0
+```
+
+Leave it running.
+
+Open **Terminal 2** and send a basic test frame:
+
+```bash
+cansend vcan0 123#1122334455667788
+```
+
+Terminal 1 should display the frame.
+
+This proves that `vcan0` itself works.
+
+Important: CAN ID `123` is only a generic bus test. Mercury may ignore it because Mercury only processes CAN IDs and payload layouts that its parser understands.
+
+For a dashboard-level smoke test, use a known Mercury/vehicle CAN frame provided by the current CAN specification or a team lead.
+
+Stop `candump` with:
+
+```text
+Ctrl + C
+```
+
+---
+
+# 7. Run Mercury
+
+Once `vcan0` exists and Mercury is configured for it:
+
+1. Open Qt Creator in the Ubuntu VM.
+2. Open `~/Helios-Mercury/CMakeLists.txt`.
+3. Select the Qt 6.8.4 GCC kit.
+4. Build Mercury.
+5. Run Mercury.
+
+If Mercury starts without a `can0` connection error, the CAN interface configuration is being read correctly.
+
+---
+
+# Troubleshooting
+
+## `RTNETLINK answers: File exists`
+
+`vcan0` already exists.
+
+Check it:
+
+```bash
+ip link show vcan0
+```
+
+Then bring it up if needed:
+
+```bash
+sudo ip link set up vcan0
+```
+
+## `Cannot find device "vcan0"`
+
+Create it:
+
+```bash
+sudo ip link add dev vcan0 type vcan
+sudo ip link set up vcan0
+```
+
+## `Operation not supported` when creating `vcan0`
+
+Try:
+
+```bash
+sudo modprobe vcan
+```
+
+Then create the interface again.
+
+## `candump: command not found`
+
+Install CAN utilities:
+
+```bash
+sudo apt update
+sudo apt install can-utils
+```
+
+## Mercury says it failed to connect to `can0`
+
+Check the interface:
+
+```bash
+ip link show vcan0
+```
+
+Then search the Mercury configs:
+
+```bash
+grep -R "interface=" config.ini build 2>/dev/null
+```
+
+Change any active VM configuration still using `can0` to:
+
+```text
+vcan0
+```
+
+Restart Mercury after changing the config.
+
+## Unsure which CAN interfaces exist
+
+Run:
+
+```bash
+ip link show
+```
+
+Typical names include:
+
+```text
+vcan0  -> virtual CAN in the VM
+can0   -> physical CAN interface / adapter
+```
+
+---
+
+# Useful CAN Commands
+
+```bash
+ip link show
+ip link show vcan0
+candump vcan0
+cansniffer vcan0
+cansend vcan0 123#1122334455667788
+```
+
+For general Linux, SSH, networking, and Raspberry Pi commands, see [LinuxCommandGuide.md](LinuxCommandGuide.md).

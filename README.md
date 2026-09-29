@@ -1,45 +1,17 @@
-# Helios-Mercury
+# Helios Mercury — Interface Systems
 
-### Genereal Viscomm Documentation
+## Quick Links
 
-## Documentation
+- [Interface Systems Overview](./docs/InterfaceSystems.md)
+- [New Recruit Machine Setup](./docs/MachineSetupGuide.md)
+- [Virtual Machine Setup](./docs/VMSetupGuide.md)
+- [CAN Setup Guide](./docs/CanSetupGuide.md)
+- [Workflow Guide](./docs/Workflow.md)
+- [Linux / Raspberry Pi Guide](./docs/LinuxCommandGuide.md)
+- [Interface Systems Projects](./docs/Projects.md)
 
-- [CAN Setup Guide](docs/CanSetupGuide.md)
+## Architecture
 
-- [Git Guide](docs/GitGuide.md)
+![Mercury Architecture Diagram](./MercuryArchitectureDiagram.png)
 
-- [Linux Command Guide](docs/LinuxCommandGuide.md)
-
-- [VisComm Intro](docs/Viscomm.md)
-
-- [Projects](docs/Projects.md)
-
-#### Qt Version
-- Qt 6.7.2
-- Install Qt Creator: https://www.qt.io/download-open-source
-
-## Building From Terminal
-In a terminal, navigate to the Helios-Mercury repository. Run the following commands:
-
-#### Step 1
-`mkdir build`
-
-`cd build`
-
-#### Step 2
-For Linux:
-
-`path/to/Qt/6.7.2/gcc_64/bin/qt-cmake ..`
-
-For Mac:
-
-`path/to/Qt/6.7.2/macos/bin/qt-cmake ..`
-
-#### Step 3
-`make`
-
-## Architecture Diagram
-![Diagram](MercuryArchitectureDiagram.png)
-
-## Overview Diagram
-![Diagram](HighLevelOverview.png)
+![High-Level System Overview](./HighLevelOverview.png)

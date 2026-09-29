@@ -1,259 +1,526 @@
-# Raspberry Pi / Alpine Linux Command Guide (VisComm)
+# Linux, Raspberry Pi, and Network Command Guide
 
-The Mercury dashboard runs on a Raspberry Pi using Alpine Linux.
+Interface Systems uses Linux in two different places:
 
- When we work on the solar car software, we frequently connect to the Pi to:
+```text
+Ubuntu VM        -> development, Qt, virtual CAN testing
+Raspberry Pi     -> in-car dashboard computer running Alpine Linux
+```
 
-• run the dashboard
+The basic shell commands are similar, but package management is different:
 
-• debug telemetry
+```text
+Ubuntu VM  -> apt
+Alpine Pi  -> apk
+```
 
-• monitor CAN communication
+Do not use `apt` instructions on the Alpine Raspberry Pi, and do not use `apk` instructions in the Ubuntu VM.
 
-• update software
+---
 
-The commands below are the most common commands we use when working with the solar car Raspberry Pi.
+# 1. Basic File and Directory Commands
 
-### Network Discovery (Finding the Raspberry Pi)
+## `pwd`
 
-When the Pi is connected to the same network as our laptop, we first need to find its IP address.
+Shows your current directory.
 
-Laptop
+```bash
+pwd
+```
 
- ↓
+## `ls`
 
- Scan local network
+Lists files and folders.
 
- ↓
+```bash
+ls
+ls -la
+```
 
- Identify Raspberry Pi
+`ls -la` also shows hidden files and more details.
 
- ↓
+## `cd`
 
- Connect using SSH
+Changes directory.
 
-#### arp -a
+```bash
+cd Helios-Mercury
+cd ..
+cd ~
+```
 
-What it does
+## `mkdir`
 
-Displays a table of devices that our computer has recently communicated with on the local network.
+Creates a directory.
 
-How we use it
+```bash
+mkdir telemetry_logs
+```
 
-When the Raspberry Pi connects to the network, it appears in this list as:
+## `cp`
 
-IP Address  ↓ MAC Address
+Copies a file or folder.
 
-Example: 192.168.1.15   b8:27:eb:45:3a:12
+```bash
+cp config.ini.example config.ini
+```
 
-This tells us the Raspberry Pi's IP address is 192.168.1.15.
+Copy a folder recursively:
 
-We can then use that address to connect to the Pi.
+```bash
+cp -r source_folder destination_folder
+```
 
-#### ipconfig
+## `mv`
 
-Shows the network configuration of our computer.
+Moves or renames a file.
 
-Important fields include:
+```bash
+mv old_name.txt new_name.txt
+```
 
-• IPv4 address
+## `rm`
 
-• subnet mask
+Deletes a file.
 
-• default gateway
+```bash
+rm file.txt
+```
 
-We use this command to confirm our laptop is connected to the same network as the Raspberry Pi.
+Delete a directory recursively:
 
-#### ip a
+```bash
+rm -r folder_name
+```
 
-Displays all network interfaces on a Linux machine.
+Be careful with `rm`; it does not use a recycle bin.
 
-Example interfaces: eth0 wlan0 can0
+## `cat`
 
-This command is important because it shows:
+Prints a text file to the terminal.
 
-• whether ethernet is active
+```bash
+cat config.ini
+```
 
-• whether Wi-Fi is active
+## `grep`
 
-• whether the CAN interface (can0) exists
+Searches text.
 
-#### ping
+```bash
+grep "interface" config.ini
+grep -R "interface" .
+```
 
-example: ping 192.168.1.15
+## `less`
 
-Tests whether the Raspberry Pi is reachable over the network.
+Views a long text file one page at a time.
 
-Expected output: 64 bytes from 192.168.1.15
+```bash
+less Mercury.log
+```
 
-If we receive responses, the network connection is working.
+Press `q` to exit.
 
-# Remote Access (Connecting to the Pi)
+## `tail`
 
-Once we know the IP address, we connect to the Raspberry Pi using SSH.
+Shows the end of a file.
 
-Laptop
+```bash
+tail Mercury.log
+```
 
- ↓
+Follow a log live:
 
- SSH connection
+```bash
+tail -f Mercury.log
+```
 
- ↓
+Stop with `Ctrl + C`.
 
-Remote terminal on Raspberry Pi
+---
 
-#### **ssh admin@IP_ADDRESS**
+# 2. Editing Files in the Linux Terminal
 
-Connects to the Raspberry Pi using SSH (Secure Shell).
+Quick changes inside the VM or Pi are often made with `nano` or `vi`.
 
-Example: ssh admin@192.168.1.15
+## Nano
 
-Explanation:
+Open a file:
 
-• **ssh** → secure shell protocol used to remotely access another computer  
+```bash
+nano config.ini
+```
 
-• **admin** → user account on the Raspberry Pi  
+Useful shortcuts:
 
-• **IP_ADDRESS** → address of the Raspberry Pi on the local network  
+```text
+Ctrl + O  -> save
+Enter     -> confirm filename
+Ctrl + X  -> exit
+Ctrl + W  -> search
+```
 
-This command opens a remote terminal session on the Raspberry Pi, allowing us to run commands directly on the dashboard computer.
+## Vi
 
-#### **ssh root@IP_ADDRESS**
+Open a file:
 
-Logs into the Raspberry Pi as the root (administrator) user.
+```bash
+vi wiegand_test.py
+```
 
-Example: ssh root@192.168.1.15
-
-Root access allows:
-
-• installing software  
-
-• modifying system configuration  
-
-• restarting services  
-
-• accessing protected system directories  
-
-#### **exit**
-
-Closes the SSH session.
-
-Example: exit
-
-Returns you to your local computer terminal.
-
-# Transferring Files to the Pi
-
-Sometimes we need to copy files or update the dashboard code remotely.
-
-Laptop  
-
-→ Secure transfer  
-
-→ Raspberry Pi filesystem  
-
-#### **scp**
-
-Securely copies a file from your computer to the Raspberry Pi.
-
-Example: scp config.ini admin@192.168.1.15:/home/admin/
-
-#### **rsync**
-
-Synchronizes folders between your computer and the Raspberry Pi.
-
-Example: rsync -av Helios-Mercury/ admin@192.168.1.15:/home/admin/
-
-# File System Navigation
-
-Once connected to the Pi, we use these commands to move around the filesystem and manage files.
-
-#### **ls**
-
-Lists files and folders in the current directory.
-
-Example: ls
-
-#### **cd**
-
-Changes the current directory.
-
-Example: cd Helios-Mercury
-
-#### **pwd**
-
-Shows the full path of the current directory.
-
-Example: pwd
-
-#### **mkdir**
-
-Creates a new directory.
-
-Example: mkdir telemetry_logs
-
-#### **rm**
-
-Deletes a file from the filesystem.
-
-Example: rm file.txt
-
-# Editing Files on the Pi
-
-Most quick edits are done directly on the Raspberry Pi using a terminal text editor.
-
-#### **vi**
-
-Opens a file in the terminal-based editor.
-
-Example: vi wiegand_test.py
-
-##### Important **vi** Commands
-
-These commands are used while inside the `vi` editor.
+Important commands:
 
 | Key | Function |
+|---|---|
+| `i` | Enter insert mode |
+| `Esc` | Leave insert mode |
+| `:w` | Save |
+| `:q` | Quit |
+| `:wq` | Save and quit |
+| `:q!` | Quit without saving |
 
-|----|----|
+---
 
-| **i** | Enter insert mode (allows you to type and edit text) |
+# 3. Running Programs
 
-| **Esc** | Exit insert mode |
+Run a Python script:
 
-| **:wq** | Save the file and exit the editor |
+```bash
+python3 script.py
+```
 
-# Running Programs
+Example:
 
-To run Python scripts: python3 script.py
+```bash
+python3 wiegand_test.py
+```
 
-Example: python3 wiegand_test.py
+Stop a running foreground program with:
 
-To stop, CTRL C
+```text
+Ctrl + C
+```
 
-# Alpine Linux Package Management
+Check running processes:
 
-Alpine Linux uses the **apk** package manager to install, update, and manage software packages.
+```bash
+ps aux
+```
 
-#### **apk update**
+Search for a process:
 
-Updates the package index so the system knows about the latest available software.
+```bash
+ps aux | grep Mercury
+```
 
-Example: apk update
+---
 
-#### **apk add**
+# 4. Network Commands
 
-Installs a software package.
+These commands are useful when working with the Ubuntu VM, Raspberry Pi, and other hardware.
 
-Example: apk add git
+## Linux: `ip a`
 
-#### **apk upgrade**
+Shows network interfaces and addresses.
 
-Updates installed packages to the latest available versions.
+```bash
+ip a
+```
 
-Example: apk upgrade
+Shorter view:
 
-#### **apk search**
+```bash
+ip -br addr
+```
 
-Searches the repository for available packages.
+Example interfaces may include:
 
-Example: apk search pigpio
+```text
+eth0
+enp0s17
+wlan0
+can0
+vcan0
+```
+
+## `ip route`
+
+Shows the routing table and default gateway.
+
+```bash
+ip route
+```
+
+## `ip neigh`
+
+Shows nearby devices the Linux machine has learned on the local network.
+
+```bash
+ip neigh
+```
+
+## `ping`
+
+Tests whether another device is reachable.
+
+```bash
+ping 192.168.1.15
+```
+
+On Linux, stop with `Ctrl + C`.
+
+---
+
+# 5. Finding the Raspberry Pi from Your Laptop
+
+The laptop and Pi should normally be connected to the same network for direct SSH access.
+
+## Windows
+
+```powershell
+ipconfig
+arp -a
+ping PI_IP_ADDRESS
+```
+
+`ipconfig` shows the laptop's IPv4 address, subnet mask, and default gateway.
+
+`arp -a` shows devices your computer has recently learned about on the local network.
+
+## macOS
+
+```bash
+ifconfig
+arp -a
+ping PI_IP_ADDRESS
+```
+
+## Ubuntu VM
+
+```bash
+ip -br addr
+ip route
+ip neigh
+ping PI_IP_ADDRESS
+```
+
+The exact Pi IP address may change depending on the network.
+
+---
+
+# 6. Connecting to the Raspberry Pi with SSH
+
+Once you know the Pi's IP address and current team username:
+
+```bash
+ssh USERNAME@PI_IP_ADDRESS
+```
+
+Example:
+
+```bash
+ssh admin@192.168.1.15
+```
+
+Use the username and authentication method given by a team lead. Do not put Pi passwords or private keys in the repository.
+
+Root access should only be used when it is actually required:
+
+```bash
+ssh root@PI_IP_ADDRESS
+```
+
+Exit the remote session with:
+
+```bash
+exit
+```
+
+---
+
+# 7. Copying Files to and from the Pi
+
+## `scp`
+
+Copy one file to the Pi:
+
+```bash
+scp config.ini admin@192.168.1.15:/home/admin/
+```
+
+Copy a file from the Pi back to your laptop:
+
+```bash
+scp admin@192.168.1.15:/home/admin/Mercury.log .
+```
+
+## `rsync`
+
+Synchronize a directory:
+
+```bash
+rsync -av Helios-Mercury/ admin@192.168.1.15:/home/admin/Helios-Mercury/
+```
+
+Use `rsync` carefully. Make sure the source and destination are correct before running it.
+
+---
+
+# 8. Ubuntu VM Package Management (`apt`)
+
+The development VM runs Ubuntu Linux.
+
+Update the package list:
+
+```bash
+sudo apt update
+```
+
+Install packages:
+
+```bash
+sudo apt install git
+```
+
+Common Interface Systems development packages:
+
+```bash
+sudo apt install -y git build-essential cmake ninja-build python3 can-utils nano vim
+```
+
+Upgrade installed packages when appropriate:
+
+```bash
+sudo apt upgrade
+```
+
+Search for a package:
+
+```bash
+apt search PACKAGE_NAME
+```
+
+---
+
+# 9. Raspberry Pi Package Management (`apk`)
+
+The dashboard Raspberry Pi runs Alpine Linux.
+
+Update package indexes:
+
+```bash
+apk update
+```
+
+Install a package:
+
+```bash
+apk add git
+```
+
+Upgrade installed packages:
+
+```bash
+apk upgrade
+```
+
+Search for a package:
+
+```bash
+apk search PACKAGE_NAME
+```
+
+Example:
+
+```bash
+apk search pigpio
+```
+
+Depending on how the Pi is configured, package-management commands may require root access.
+
+---
+
+# 10. CAN Interfaces on Linux
+
+List network interfaces:
+
+```bash
+ip link show
+```
+
+Common CAN interface names:
+
+```text
+can0   -> physical CAN adapter / car CAN interface
+vcan0  -> virtual CAN interface used in the Ubuntu VM
+```
+
+For creating and testing `vcan0`, see [CanSetupGuide.md](CanSetupGuide.md).
+
+---
+
+# 11. Useful Git Commands on Linux
+
+Inside either the VM or Pi repository clone:
+
+```bash
+git status
+git branch --show-current
+git fetch
+git pull
+```
+
+For the complete team Git workflow, see [Workflow.md](Workflow.md).
+
+---
+
+# 12. Quick Linux Troubleshooting
+
+## Where am I?
+
+```bash
+pwd
+```
+
+## What files are here?
+
+```bash
+ls -la
+```
+
+## What IP address do I have?
+
+```bash
+ip -br addr
+```
+
+## Can I reach GitHub?
+
+```bash
+ping -c 4 github.com
+```
+
+## Can I reach the Pi?
+
+```bash
+ping PI_IP_ADDRESS
+```
+
+## What CAN interfaces exist?
+
+```bash
+ip link show
+```
+
+## Is Mercury running?
+
+```bash
+ps aux | grep Mercury
+```
+
+## What does Mercury's log say?
+
+```bash
+tail -f Mercury.log
+```
